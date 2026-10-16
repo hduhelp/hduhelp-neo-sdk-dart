@@ -1,0 +1,34 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'library_reading_response_body.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+LibraryReadingResponseBody _$LibraryReadingResponseBodyFromJson(
+        Map<String, dynamic> json) =>
+    $checkedCreate(
+      'LibraryReadingResponseBody',
+      json,
+      ($checkedConvert) {
+        final val = LibraryReadingResponseBody(
+          data: $checkedConvert(
+              'data',
+              (v) => v == null
+                  ? null
+                  : LibraryReadingData.fromJson(v as Map<String, dynamic>)),
+          code: $checkedConvert('code', (v) => (v as num?)?.toInt()),
+          msg: $checkedConvert('msg', (v) => v as String?),
+        );
+        return val;
+      },
+    );
+
+Map<String, dynamic> _$LibraryReadingResponseBodyToJson(
+        LibraryReadingResponseBody instance) =>
+    <String, dynamic>{
+      if (instance.data?.toJson() case final value?) 'data': value,
+      if (instance.code case final value?) 'code': value,
+      if (instance.msg case final value?) 'msg': value,
+    };

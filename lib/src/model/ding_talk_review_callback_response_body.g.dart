@@ -1,0 +1,49 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'ding_talk_review_callback_response_body.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+DingTalkReviewCallbackResponseBody _$DingTalkReviewCallbackResponseBodyFromJson(
+        Map<String, dynamic> json) =>
+    $checkedCreate(
+      'DingTalkReviewCallbackResponseBody',
+      json,
+      ($checkedConvert) {
+        final val = DingTalkReviewCallbackResponseBody(
+          cardTemplateId:
+              $checkedConvert('cardTemplateId', (v) => v as String?),
+          outTrackId: $checkedConvert('outTrackId', (v) => v as String?),
+          cardOptions: $checkedConvert(
+              'cardOptions',
+              (v) => v == null
+                  ? null
+                  : CardUpdateOptions.fromJson(v as Map<String, dynamic>)),
+          cardData: $checkedConvert(
+              'cardData',
+              (v) => v == null
+                  ? null
+                  : ReviewCardData.fromJson(v as Map<String, dynamic>)),
+          userPrivateData: $checkedConvert(
+              'userPrivateData',
+              (v) => v == null
+                  ? null
+                  : ReviewCardPrivateData.fromJson(v as Map<String, dynamic>)),
+        );
+        return val;
+      },
+    );
+
+Map<String, dynamic> _$DingTalkReviewCallbackResponseBodyToJson(
+        DingTalkReviewCallbackResponseBody instance) =>
+    <String, dynamic>{
+      if (instance.cardTemplateId case final value?) 'cardTemplateId': value,
+      if (instance.outTrackId case final value?) 'outTrackId': value,
+      if (instance.cardOptions?.toJson() case final value?)
+        'cardOptions': value,
+      if (instance.cardData?.toJson() case final value?) 'cardData': value,
+      if (instance.userPrivateData?.toJson() case final value?)
+        'userPrivateData': value,
+    };
