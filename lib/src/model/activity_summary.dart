@@ -18,13 +18,8 @@ class ActivitySummary {
   ActivitySummary({
     this.id,
     this.title,
-    this.category,
-    this.organization,
     this.startAt,
     this.endAt,
-    this.location,
-    this.recruitmentCount,
-    this.deadlineAt,
     this.status,
     this.isUrgent,
     this.urgentAt,
@@ -48,20 +43,6 @@ class ActivitySummary {
   final String? title;
 
   @JsonKey(
-    name: r'category',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? category;
-
-  @JsonKey(
-    name: r'organization',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? organization;
-
-  @JsonKey(
     name: r'startAt',
     required: false,
     includeIfNull: false,
@@ -74,27 +55,6 @@ class ActivitySummary {
     includeIfNull: false,
   )
   final int? endAt;
-
-  @JsonKey(
-    name: r'location',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? location;
-
-  @JsonKey(
-    name: r'recruitmentCount',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? recruitmentCount;
-
-  @JsonKey(
-    name: r'deadlineAt',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? deadlineAt;
 
   @JsonKey(
     name: r'status',
@@ -144,13 +104,8 @@ class ActivitySummary {
       other is ActivitySummary &&
           other.id == id &&
           other.title == title &&
-          other.category == category &&
-          other.organization == organization &&
           other.startAt == startAt &&
           other.endAt == endAt &&
-          other.location == location &&
-          other.recruitmentCount == recruitmentCount &&
-          other.deadlineAt == deadlineAt &&
           other.status == status &&
           other.isUrgent == isUrgent &&
           other.urgentAt == urgentAt &&
@@ -162,13 +117,8 @@ class ActivitySummary {
   int get hashCode =>
       id.hashCode +
       title.hashCode +
-      category.hashCode +
-      organization.hashCode +
       startAt.hashCode +
       endAt.hashCode +
-      location.hashCode +
-      recruitmentCount.hashCode +
-      deadlineAt.hashCode +
       status.hashCode +
       isUrgent.hashCode +
       urgentAt.hashCode +

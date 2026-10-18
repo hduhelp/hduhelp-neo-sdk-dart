@@ -12,12 +12,8 @@ import 'package:hduhelp_neo/src/model/activity_operation_data.dart';
 import 'package:hduhelp_neo/src/model/activity_operation_response_body.dart';
 import 'package:hduhelp_neo/src/model/activity_page.dart';
 import 'package:hduhelp_neo/src/model/activity_page_response_body.dart';
-import 'package:hduhelp_neo/src/model/activity_position.dart';
-import 'package:hduhelp_neo/src/model/activity_position_input.dart';
 import 'package:hduhelp_neo/src/model/activity_registration_data.dart';
 import 'package:hduhelp_neo/src/model/activity_registration_response_body.dart';
-import 'package:hduhelp_neo/src/model/activity_session.dart';
-import 'package:hduhelp_neo/src/model/activity_session_input.dart';
 import 'package:hduhelp_neo/src/model/activity_summary.dart';
 import 'package:hduhelp_neo/src/model/add_chunk_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_app_detail.dart';
@@ -277,6 +273,7 @@ import 'package:hduhelp_neo/src/model/create_site_announcement_request_body.dart
 import 'package:hduhelp_neo/src/model/create_source_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_tenant_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_tenant_response_body.dart';
+import 'package:hduhelp_neo/src/model/create_volunteer_activity_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_we_chat_qr_login_data.dart';
 import 'package:hduhelp_neo/src/model/create_we_chat_qr_login_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_we_chat_qr_login_response_body.dart';
@@ -1008,24 +1005,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ActivityPageResponseBody':
       return ActivityPageResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'ActivityPosition':
-      return ActivityPosition.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'ActivityPositionInput':
-      return ActivityPositionInput.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'ActivityRegistrationData':
       return ActivityRegistrationData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'ActivityRegistrationResponseBody':
       return ActivityRegistrationResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'ActivitySession':
-      return ActivitySession.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'ActivitySessionInput':
-      return ActivitySessionInput.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'ActivitySummary':
       return ActivitySummary.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -1782,6 +1767,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CreateTenantResponseBody':
       return CreateTenantResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'CreateVolunteerActivityRequestBody':
+      return CreateVolunteerActivityRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'CreateWeChatQRLoginData':
       return CreateWeChatQRLoginData.fromJson(value as Map<String, dynamic>)
           as ReturnType;

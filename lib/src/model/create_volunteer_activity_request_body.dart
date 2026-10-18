@@ -5,7 +5,7 @@
 // ignore_for_file: unused_element
 import 'package:json_annotation/json_annotation.dart';
 
-part 'activity_session.g.dart';
+part 'create_volunteer_activity_request_body.g.dart';
 
 @JsonSerializable(
   checked: true,
@@ -13,83 +13,75 @@ part 'activity_session.g.dart';
   disallowUnrecognizedKeys: false,
   explicitToJson: true,
 )
-class ActivitySession {
-  /// Returns a new [ActivitySession] instance.
-  ActivitySession({
-    this.id,
-    this.name,
+class CreateVolunteerActivityRequestBody {
+  /// Returns a new [CreateVolunteerActivityRequestBody] instance.
+  CreateVolunteerActivityRequestBody({
+    this.title,
     this.startAt,
     this.endAt,
-    this.recruitmentCount,
-    this.sortOrder,
+    this.description,
+    this.status,
   });
 
   @JsonKey(
-    name: r'id',
+    name: r'title',
     required: false,
     includeIfNull: false,
   )
-  final String? id;
+  final String? title;
 
   @JsonKey(
-    name: r'name',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? name;
-
-  @JsonKey(
-    name: r'startAt',
+    name: r'start_at',
     required: false,
     includeIfNull: false,
   )
   final int? startAt;
 
   @JsonKey(
-    name: r'endAt',
+    name: r'end_at',
     required: false,
     includeIfNull: false,
   )
   final int? endAt;
 
   @JsonKey(
-    name: r'recruitmentCount',
+    name: r'description',
     required: false,
     includeIfNull: false,
   )
-  final int? recruitmentCount;
+  final String? description;
 
   @JsonKey(
-    name: r'sortOrder',
+    name: r'status',
     required: false,
     includeIfNull: false,
   )
-  final int? sortOrder;
+  final String? status;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ActivitySession &&
-          other.id == id &&
-          other.name == name &&
+      other is CreateVolunteerActivityRequestBody &&
+          other.title == title &&
           other.startAt == startAt &&
           other.endAt == endAt &&
-          other.recruitmentCount == recruitmentCount &&
-          other.sortOrder == sortOrder;
+          other.description == description &&
+          other.status == status;
 
   @override
   int get hashCode =>
-      id.hashCode +
-      name.hashCode +
+      title.hashCode +
       startAt.hashCode +
       endAt.hashCode +
-      recruitmentCount.hashCode +
-      sortOrder.hashCode;
+      description.hashCode +
+      status.hashCode;
 
-  factory ActivitySession.fromJson(Map<String, dynamic> json) =>
-      _$ActivitySessionFromJson(json);
+  factory CreateVolunteerActivityRequestBody.fromJson(
+          Map<String, dynamic> json) =>
+      _$CreateVolunteerActivityRequestBodyFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ActivitySessionToJson(this);
+  Map<String, dynamic> toJson() =>
+      _$CreateVolunteerActivityRequestBodyToJson(this);
 
   @override
   String toString() {

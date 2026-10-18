@@ -20,6 +20,7 @@ import 'package:hduhelp_neo/src/model/card_balance_response_body.dart';
 import 'package:hduhelp_neo/src/model/card_consume_response_body.dart';
 import 'package:hduhelp_neo/src/model/card_info_response_body.dart';
 import 'package:hduhelp_neo/src/model/category_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/create_volunteer_activity_request_body.dart';
 import 'package:hduhelp_neo/src/model/electric_balance_response_body.dart';
 import 'package:hduhelp_neo/src/model/electric_binding_response_body.dart';
 import 'package:hduhelp_neo/src/model/electric_building_list_response_body.dart';
@@ -75,6 +76,189 @@ class CampusLifeServiceApi {
         .replaceAll('{' r'id' '}', id.toString());
     final _options = Options(
       method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ActivityDetailResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
+              rawData, 'ActivityDetailResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ActivityDetailResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 管理员创建志愿活动
+  ///
+  ///
+  /// Parameters:
+  /// * [createVolunteerActivityRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ActivityDetailResponseBody>>
+      campusLifeServiceAdminCreateVolunteerActivity({
+    CreateVolunteerActivityRequestBody? createVolunteerActivityRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/volunteer-admin/activities';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(createVolunteerActivityRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ActivityDetailResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
+              rawData, 'ActivityDetailResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ActivityDetailResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 管理员结束志愿活动
+  ///
+  ///
+  /// Parameters:
+  /// * [id]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ActivityDetailResponseBody>>
+      campusLifeServiceAdminEndVolunteerActivity({
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/volunteer-admin/activities/{id}/end'
+        .replaceAll('{' r'id' '}', id.toString());
+    final _options = Options(
+      method: r'POST',
       headers: <String, dynamic>{
         ...?headers,
       },
@@ -219,16 +403,11 @@ class CampusLifeServiceApi {
   /// Parameters:
   /// * [page]
   /// * [pageSize]
-  /// * [category]
-  /// * [organization]
   /// * [startAtFrom]
   /// * [startAtTo]
-  /// * [deadlineAtFrom]
-  /// * [deadlineAtTo]
   /// * [isUrgent]
   /// * [keyword]
   /// * [status]
-  /// * [createdByUserId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -242,16 +421,11 @@ class CampusLifeServiceApi {
       campusLifeServiceAdminListVolunteerActivities({
     int? page,
     int? pageSize,
-    String? category,
-    String? organization,
     int? startAtFrom,
     int? startAtTo,
-    int? deadlineAtFrom,
-    int? deadlineAtTo,
     bool? isUrgent,
     String? keyword,
     String? status,
-    String? createdByUserId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -281,16 +455,11 @@ class CampusLifeServiceApi {
     final _queryParameters = <String, dynamic>{
       if (page != null) r'page': page,
       if (pageSize != null) r'page_size': pageSize,
-      if (category != null) r'category': category,
-      if (organization != null) r'organization': organization,
       if (startAtFrom != null) r'start_at_from': startAtFrom,
       if (startAtTo != null) r'start_at_to': startAtTo,
-      if (deadlineAtFrom != null) r'deadline_at_from': deadlineAtFrom,
-      if (deadlineAtTo != null) r'deadline_at_to': deadlineAtTo,
       if (isUrgent != null) r'is_urgent': isUrgent,
       if (keyword != null) r'keyword': keyword,
       if (status != null) r'status': status,
-      if (createdByUserId != null) r'created_by_user_id': createdByUserId,
     };
 
     final _response = await _dio.request<Object>(
@@ -333,7 +502,7 @@ class CampusLifeServiceApi {
     );
   }
 
-  /// 管理员下架志愿活动
+  /// 管理员删除志愿活动
   ///
   ///
   /// Parameters:
@@ -2971,16 +3140,11 @@ class CampusLifeServiceApi {
   /// Parameters:
   /// * [page]
   /// * [pageSize]
-  /// * [category]
-  /// * [organization]
   /// * [startAtFrom]
   /// * [startAtTo]
-  /// * [deadlineAtFrom]
-  /// * [deadlineAtTo]
   /// * [isUrgent]
   /// * [keyword]
   /// * [status]
-  /// * [createdByUserId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -2994,16 +3158,11 @@ class CampusLifeServiceApi {
       campusLifeServiceListVolunteerActivities({
     int? page,
     int? pageSize,
-    String? category,
-    String? organization,
     int? startAtFrom,
     int? startAtTo,
-    int? deadlineAtFrom,
-    int? deadlineAtTo,
     bool? isUrgent,
     String? keyword,
     String? status,
-    String? createdByUserId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -3027,16 +3186,11 @@ class CampusLifeServiceApi {
     final _queryParameters = <String, dynamic>{
       if (page != null) r'page': page,
       if (pageSize != null) r'page_size': pageSize,
-      if (category != null) r'category': category,
-      if (organization != null) r'organization': organization,
       if (startAtFrom != null) r'start_at_from': startAtFrom,
       if (startAtTo != null) r'start_at_to': startAtTo,
-      if (deadlineAtFrom != null) r'deadline_at_from': deadlineAtFrom,
-      if (deadlineAtTo != null) r'deadline_at_to': deadlineAtTo,
       if (isUrgent != null) r'is_urgent': isUrgent,
       if (keyword != null) r'keyword': keyword,
       if (status != null) r'status': status,
-      if (createdByUserId != null) r'created_by_user_id': createdByUserId,
     };
 
     final _response = await _dio.request<Object>(
