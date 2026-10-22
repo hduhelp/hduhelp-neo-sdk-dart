@@ -32,6 +32,7 @@ import 'package:hduhelp_neo/src/model/create_sensitive_word_request_body.dart';
 import 'package:hduhelp_neo/src/model/curation_response_body.dart';
 import 'package:hduhelp_neo/src/model/cursor_comment_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/cursor_post_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/emoji_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/follow_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/hashtag_block_response_body.dart';
@@ -4015,6 +4016,8 @@ class MomentsServiceApi {
   /// * [id]
   /// * [cursor]
   /// * [limit]
+  /// * [sort] - sort 取 default（先发先看，缺省）| latest（最新在前）| most_liked（表情总数多的在前， 同数按最新在前）；不认识的值按 default。游标与排序绑定，换排序要从首页重新拉， 带着另一种排序的游标会被当作无效游标拒绝。
+  /// * [focus] - focus 是通知跳转要定位的评论 ID；是回复时取它的一级评论。该一级评论确属本帖且仍已发布时， 首页（不带 cursor）把它放在最前并标 pinned_for_focus，其后照常按 sort 取满 limit 条—— 置顶那条不占 limit，has_more 与 next_cursor 只看其后的常规条目。翻后续页时客户端须带上 同一个 focus，服务端据此把它从常规结果里剔除，整串翻下来不重复也不漏。 评论不存在、已撤回或下架、不属于本帖时静默忽略，照常返回列表（通知可能指向已删的评论）。
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -4028,6 +4031,8 @@ class MomentsServiceApi {
     required String id,
     String? cursor,
     int? limit,
+    String? sort,
+    String? focus,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -4058,6 +4063,8 @@ class MomentsServiceApi {
     final _queryParameters = <String, dynamic>{
       if (cursor != null) r'cursor': cursor,
       if (limit != null) r'limit': limit,
+      if (sort != null) r'sort': sort,
+      if (focus != null) r'focus': focus,
     };
 
     final _response = await _dio.request<Object>(
@@ -4626,6 +4633,97 @@ class MomentsServiceApi {
     );
   }
 
+  /// 我表情回复过的评论
+  /// 按最近一次表情倒序，每条带所在帖子的卡片；已撤回、已下架的评论，所在一级评论已失效的回复，以及帖子已对本人不可见的评论都不列出
+  ///
+  /// Parameters:
+  /// * [cursor]
+  /// * [limit]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [CursorReactedCommentListResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<CursorReactedCommentListResponseBody>>
+      momentsServiceListMyCommentReactions({
+    String? cursor,
+    int? limit,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/moments/me/comment-reactions';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (cursor != null) r'cursor': cursor,
+      if (limit != null) r'limit': limit,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    CursorReactedCommentListResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<CursorReactedCommentListResponseBody,
+                  CursorReactedCommentListResponseBody>(
+              rawData, 'CursorReactedCommentListResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<CursorReactedCommentListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 我的帖子
   /// 包含本人被撤回与被下架的帖子
   ///
@@ -4907,6 +5005,7 @@ class MomentsServiceApi {
   /// * [id]
   /// * [cursor]
   /// * [limit]
+  /// * [focus] - focus 是要定位的回复 ID，语义同 PostCommentsRequest.focus：只有它属于这条一级评论且仍已发布 才置顶到首页最前；翻后续页须带上同一个 focus。
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -4920,6 +5019,7 @@ class MomentsServiceApi {
     required String id,
     String? cursor,
     int? limit,
+    String? focus,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -4950,6 +5050,7 @@ class MomentsServiceApi {
     final _queryParameters = <String, dynamic>{
       if (cursor != null) r'cursor': cursor,
       if (limit != null) r'limit': limit,
+      if (focus != null) r'focus': focus,
     };
 
     final _response = await _dio.request<Object>(

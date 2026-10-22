@@ -21,7 +21,7 @@ class ElectricHistoryItem {
     this.time,
   });
 
-  /// 当日余额（元）
+  /// time 当天 0 点的余额快照（元）
   @JsonKey(
     name: r'fee',
     required: false,
@@ -29,7 +29,7 @@ class ElectricHistoryItem {
   )
   final String? fee;
 
-  /// 相较前一日的变化（元），首日为 \"-\"
+  /// 与上一个快照的差（元）：无符号为余额下降，\"+\" 前缀为余额上升（多为充值），最早一条为 \"-\"
   @JsonKey(
     name: r'change',
     required: false,
@@ -37,7 +37,7 @@ class ElectricHistoryItem {
   )
   final String? change;
 
-  /// 日期 YYYY-MM-DD
+  /// 快照日期 YYYY-MM-DD
   @JsonKey(
     name: r'time',
     required: false,

@@ -18,6 +18,7 @@ PostViewerState _$PostViewerStateFromJson(Map<String, dynamic> json) =>
           canWithdraw: $checkedConvert('can_withdraw', (v) => v as bool?),
           canEdit: $checkedConvert('can_edit', (v) => v as bool?),
           reportedByMe: $checkedConvert('reported_by_me', (v) => v as bool?),
+          isMine: $checkedConvert('is_mine', (v) => v as bool?),
         );
         return val;
       },
@@ -25,7 +26,8 @@ PostViewerState _$PostViewerStateFromJson(Map<String, dynamic> json) =>
         'followingAuthor': 'following_author',
         'canWithdraw': 'can_withdraw',
         'canEdit': 'can_edit',
-        'reportedByMe': 'reported_by_me'
+        'reportedByMe': 'reported_by_me',
+        'isMine': 'is_mine'
       },
     );
 
@@ -36,4 +38,5 @@ Map<String, dynamic> _$PostViewerStateToJson(PostViewerState instance) =>
       if (instance.canWithdraw case final value?) 'can_withdraw': value,
       if (instance.canEdit case final value?) 'can_edit': value,
       if (instance.reportedByMe case final value?) 'reported_by_me': value,
+      if (instance.isMine case final value?) 'is_mine': value,
     };

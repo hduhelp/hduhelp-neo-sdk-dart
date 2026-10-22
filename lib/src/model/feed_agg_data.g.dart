@@ -30,6 +30,11 @@ FeedAggData _$FeedAggDataFromJson(Map<String, dynamic> json) => $checkedCreate(
               (v) => (v as List<dynamic>?)
                   ?.map((e) => (e as num).toInt())
                   .toList()),
+          skipped: $checkedConvert(
+              'skipped',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => FeedItem.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -43,4 +48,6 @@ Map<String, dynamic> _$FeedAggDataToJson(FeedAggData instance) =>
       if (instance.more case final value?) 'more': value,
       if (instance.time?.toJson() case final value?) 'time': value,
       if (instance.settings case final value?) 'settings': value,
+      if (instance.skipped?.map((e) => e.toJson()).toList() case final value?)
+        'skipped': value,
     };

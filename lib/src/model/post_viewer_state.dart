@@ -21,6 +21,7 @@ class PostViewerState {
     this.canWithdraw,
     this.canEdit,
     this.reportedByMe,
+    this.isMine,
   });
 
   @JsonKey(
@@ -30,6 +31,7 @@ class PostViewerState {
   )
   final bool? collected;
 
+  /// 匿名帖恒为 false
   @JsonKey(
     name: r'following_author',
     required: false,
@@ -58,6 +60,14 @@ class PostViewerState {
   )
   final bool? reportedByMe;
 
+  /// isMine 表示调用者就是这条帖子的真实作者。匿名帖的 author 不再能和本人对上， 客户端靠它给本人显示「匿名发布」。只对用户主体下发。
+  @JsonKey(
+    name: r'is_mine',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? isMine;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -66,7 +76,8 @@ class PostViewerState {
           other.followingAuthor == followingAuthor &&
           other.canWithdraw == canWithdraw &&
           other.canEdit == canEdit &&
-          other.reportedByMe == reportedByMe;
+          other.reportedByMe == reportedByMe &&
+          other.isMine == isMine;
 
   @override
   int get hashCode =>
@@ -74,7 +85,8 @@ class PostViewerState {
       followingAuthor.hashCode +
       canWithdraw.hashCode +
       canEdit.hashCode +
-      reportedByMe.hashCode;
+      reportedByMe.hashCode +
+      isMine.hashCode;
 
   factory PostViewerState.fromJson(Map<String, dynamic> json) =>
       _$PostViewerStateFromJson(json);

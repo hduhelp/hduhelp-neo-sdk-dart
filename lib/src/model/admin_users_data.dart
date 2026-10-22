@@ -20,6 +20,7 @@ class AdminUsersData {
   AdminUsersData({
     this.items,
     this.user,
+    this.unitNamesUnavailable,
   });
 
   @JsonKey(
@@ -36,13 +37,24 @@ class AdminUsersData {
   )
   final AdminUserDetail? user;
 
+  @JsonKey(
+    name: r'unitNamesUnavailable',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? unitNamesUnavailable;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is AdminUsersData && other.items == items && other.user == user;
+      other is AdminUsersData &&
+          other.items == items &&
+          other.user == user &&
+          other.unitNamesUnavailable == unitNamesUnavailable;
 
   @override
-  int get hashCode => items.hashCode + user.hashCode;
+  int get hashCode =>
+      items.hashCode + user.hashCode + unitNamesUnavailable.hashCode;
 
   factory AdminUsersData.fromJson(Map<String, dynamic> json) =>
       _$AdminUsersDataFromJson(json);

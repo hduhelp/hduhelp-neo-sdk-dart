@@ -372,6 +372,7 @@ class FeedbackServiceApi {
   ///
   /// Parameters:
   /// * [status]
+  /// * [category]
   /// * [page]
   /// * [pageSize]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -385,6 +386,7 @@ class FeedbackServiceApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<FeedbackPageResponseBody>> feedbackServiceListAdminFeedbacks({
     String? status,
+    String? category,
     int? page,
     int? pageSize,
     CancelToken? cancelToken,
@@ -415,6 +417,7 @@ class FeedbackServiceApi {
 
     final _queryParameters = <String, dynamic>{
       if (status != null) r'status': status,
+      if (category != null) r'category': category,
       if (page != null) r'page': page,
       if (pageSize != null) r'page_size': pageSize,
     };

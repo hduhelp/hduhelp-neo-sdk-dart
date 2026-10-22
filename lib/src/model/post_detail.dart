@@ -39,6 +39,7 @@ class PostDetail {
     this.takedownReason,
     this.createdAt,
     this.updatedAt,
+    this.anonymous,
   });
 
   @JsonKey(
@@ -156,6 +157,14 @@ class PostDetail {
   )
   final int? updatedAt;
 
+  /// anonymous 同 PostCard.anonymous。
+  @JsonKey(
+    name: r'anonymous',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? anonymous;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -175,7 +184,8 @@ class PostDetail {
           other.version == version &&
           other.takedownReason == takedownReason &&
           other.createdAt == createdAt &&
-          other.updatedAt == updatedAt;
+          other.updatedAt == updatedAt &&
+          other.anonymous == anonymous;
 
   @override
   int get hashCode =>
@@ -194,7 +204,8 @@ class PostDetail {
       version.hashCode +
       takedownReason.hashCode +
       createdAt.hashCode +
-      updatedAt.hashCode;
+      updatedAt.hashCode +
+      anonymous.hashCode;
 
   factory PostDetail.fromJson(Map<String, dynamic> json) =>
       _$PostDetailFromJson(json);

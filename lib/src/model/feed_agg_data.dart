@@ -23,6 +23,7 @@ class FeedAggData {
     this.more,
     this.time,
     this.settings,
+    this.skipped,
   });
 
   /// 各卡片及其可用性
@@ -64,6 +65,14 @@ class FeedAggData {
   )
   final List<int>? settings;
 
+  /// 因 unbound/unauthorized/unsupported 而未取数的卡片（available=false，带 unavailableReason）。单列而不并入 items，是为了不改变旧客户端对 items 的理解： items 里 available=false 仍只表示取数失败。
+  @JsonKey(
+    name: r'skipped',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<FeedItem>? skipped;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -72,7 +81,8 @@ class FeedAggData {
           other.sort == sort &&
           other.more == more &&
           other.time == time &&
-          other.settings == settings;
+          other.settings == settings &&
+          other.skipped == skipped;
 
   @override
   int get hashCode =>
@@ -80,7 +90,8 @@ class FeedAggData {
       sort.hashCode +
       more.hashCode +
       time.hashCode +
-      settings.hashCode;
+      settings.hashCode +
+      skipped.hashCode;
 
   factory FeedAggData.fromJson(Map<String, dynamic> json) =>
       _$FeedAggDataFromJson(json);

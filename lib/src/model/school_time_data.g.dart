@@ -19,6 +19,9 @@ SchoolTimeData _$SchoolTimeDataFromJson(Map<String, dynamic> json) =>
               $checkedConvert('weekDayNow', (v) => (v as num?)?.toInt()),
           section: $checkedConvert('section', (v) => (v as num?)?.toInt()),
           timeStamp: $checkedConvert('timeStamp', (v) => (v as num?)?.toInt()),
+          termStartDate: $checkedConvert('termStartDate', (v) => v as String?),
+          termEndDate: $checkedConvert('termEndDate', (v) => v as String?),
+          termWeeks: $checkedConvert('termWeeks', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -32,4 +35,7 @@ Map<String, dynamic> _$SchoolTimeDataToJson(SchoolTimeData instance) =>
       if (instance.weekDayNow case final value?) 'weekDayNow': value,
       if (instance.section case final value?) 'section': value,
       if (instance.timeStamp case final value?) 'timeStamp': value,
+      if (instance.termStartDate case final value?) 'termStartDate': value,
+      if (instance.termEndDate case final value?) 'termEndDate': value,
+      if (instance.termWeeks case final value?) 'termWeeks': value,
     };

@@ -30,6 +30,7 @@ class AdminPostSummary {
     this.takedownReason,
     this.takedownByOperatorId,
     this.createdAt,
+    this.anonymousName,
   });
 
   @JsonKey(
@@ -116,6 +117,14 @@ class AdminPostSummary {
   )
   final int? createdAt;
 
+  /// anonymousName 只在匿名帖上有值。管理面的 author 始终是真实作者，用户面看到的是这个花名。
+  @JsonKey(
+    name: r'anonymous_name',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? anonymousName;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -131,7 +140,8 @@ class AdminPostSummary {
           other.reportCount == reportCount &&
           other.takedownReason == takedownReason &&
           other.takedownByOperatorId == takedownByOperatorId &&
-          other.createdAt == createdAt;
+          other.createdAt == createdAt &&
+          other.anonymousName == anonymousName;
 
   @override
   int get hashCode =>
@@ -146,7 +156,8 @@ class AdminPostSummary {
       reportCount.hashCode +
       takedownReason.hashCode +
       takedownByOperatorId.hashCode +
-      createdAt.hashCode;
+      createdAt.hashCode +
+      anonymousName.hashCode;
 
   factory AdminPostSummary.fromJson(Map<String, dynamic> json) =>
       _$AdminPostSummaryFromJson(json);

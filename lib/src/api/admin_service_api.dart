@@ -49,6 +49,8 @@ import 'package:hduhelp_neo/src/model/delete_user_campus_identity_response_body.
 import 'package:hduhelp_neo/src/model/delete_user_social_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/electricity_meter_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/electricity_meter_mutate_response_body.dart';
+import 'package:hduhelp_neo/src/model/issue_user_session_request_body.dart';
+import 'package:hduhelp_neo/src/model/issue_user_session_response_body.dart';
 import 'package:hduhelp_neo/src/model/login_client_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/login_method_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/operator_list_response_body.dart';
@@ -2202,6 +2204,106 @@ class AdminServiceApi {
     }
 
     return Response<ConfigGetResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 管理员代登录用户
+  /// 仅具备独立代登录权限的管理员可填写原因后签发短时普通用户会话；记录操作者、目标用户和会话 ID。该会话的业务操作按目标用户身份执行。
+  ///
+  /// Parameters:
+  /// * [issueUserSessionRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [IssueUserSessionResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<IssueUserSessionResponseBody>> adminServiceIssueUserSession({
+    IssueUserSessionRequestBody? issueUserSessionRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/impersonation';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(issueUserSessionRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    IssueUserSessionResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<IssueUserSessionResponseBody,
+                  IssueUserSessionResponseBody>(
+              rawData, 'IssueUserSessionResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<IssueUserSessionResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

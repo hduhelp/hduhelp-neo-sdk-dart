@@ -61,6 +61,7 @@ PostDetail _$PostDetailFromJson(Map<String, dynamic> json) => $checkedCreate(
               $checkedConvert('takedown_reason', (v) => v as String?),
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
           updatedAt: $checkedConvert('updated_at', (v) => (v as num?)?.toInt()),
+          anonymous: $checkedConvert('anonymous', (v) => v as bool?),
         );
         return val;
       },
@@ -97,4 +98,5 @@ Map<String, dynamic> _$PostDetailToJson(PostDetail instance) =>
       if (instance.takedownReason case final value?) 'takedown_reason': value,
       if (instance.createdAt case final value?) 'created_at': value,
       if (instance.updatedAt case final value?) 'updated_at': value,
+      if (instance.anonymous case final value?) 'anonymous': value,
     };

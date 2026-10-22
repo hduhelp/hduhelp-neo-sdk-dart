@@ -35,6 +35,7 @@ PublishPostRequestBody _$PublishPostRequestBodyFromJson(
                   : PostLocation.fromJson(v as Map<String, dynamic>)),
           categoryIds: $checkedConvert('category_ids',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          anonymous: $checkedConvert('anonymous', (v) => v as bool?),
         );
         return val;
       },
@@ -54,4 +55,5 @@ Map<String, dynamic> _$PublishPostRequestBodyToJson(
         'images': value,
       if (instance.location?.toJson() case final value?) 'location': value,
       if (instance.categoryIds case final value?) 'category_ids': value,
+      if (instance.anonymous case final value?) 'anonymous': value,
     };

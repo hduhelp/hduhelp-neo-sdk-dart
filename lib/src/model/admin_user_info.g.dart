@@ -19,6 +19,9 @@ AdminUserInfo _$AdminUserInfoFromJson(Map<String, dynamic> json) =>
           banReason: $checkedConvert('banReason', (v) => v as String?),
           bannedAt: $checkedConvert('bannedAt', (v) => (v as num?)?.toInt()),
           createdAt: $checkedConvert('createdAt', (v) => (v as num?)?.toInt()),
+          staffName: $checkedConvert('staffName', (v) => v as String?),
+          staffId: $checkedConvert('staffId', (v) => v as String?),
+          unitName: $checkedConvert('unitName', (v) => v as String?),
         );
         return val;
       },
@@ -33,4 +36,7 @@ Map<String, dynamic> _$AdminUserInfoToJson(AdminUserInfo instance) =>
       if (instance.banReason case final value?) 'banReason': value,
       if (instance.bannedAt case final value?) 'bannedAt': value,
       if (instance.createdAt case final value?) 'createdAt': value,
+      if (instance.staffName case final value?) 'staffName': value,
+      if (instance.staffId case final value?) 'staffId': value,
+      if (instance.unitName case final value?) 'unitName': value,
     };

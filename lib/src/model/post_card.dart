@@ -30,6 +30,9 @@ class PostCard {
     this.hashtags,
     this.location,
     this.createdAt,
+    this.reactedByMe,
+    this.anonymous,
+    this.isMine,
   });
 
   @JsonKey(
@@ -102,6 +105,30 @@ class PostCard {
   )
   final int? createdAt;
 
+  /// 观察者是否已点「赞」（like 表情），供瀑布流卡片直接点赞。观察者态，只对 登录用户下发；匿名与应用主体不下发。其他表情不计入。
+  @JsonKey(
+    name: r'reacted_by_me',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? reactedByMe;
+
+  /// anonymous 只在匿名帖上出现且为 true，此时 author.kind=anonymous。
+  @JsonKey(
+    name: r'anonymous',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? anonymous;
+
+  /// isMine 同 PostViewerState.isMine，供「我的笔记」与信息流给本人的匿名帖打标。
+  @JsonKey(
+    name: r'is_mine',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? isMine;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -115,7 +142,10 @@ class PostCard {
           other.categoryIds == categoryIds &&
           other.hashtags == hashtags &&
           other.location == location &&
-          other.createdAt == createdAt;
+          other.createdAt == createdAt &&
+          other.reactedByMe == reactedByMe &&
+          other.anonymous == anonymous &&
+          other.isMine == isMine;
 
   @override
   int get hashCode =>
@@ -128,7 +158,10 @@ class PostCard {
       categoryIds.hashCode +
       hashtags.hashCode +
       location.hashCode +
-      createdAt.hashCode;
+      createdAt.hashCode +
+      reactedByMe.hashCode +
+      anonymous.hashCode +
+      isMine.hashCode;
 
   factory PostCard.fromJson(Map<String, dynamic> json) =>
       _$PostCardFromJson(json);

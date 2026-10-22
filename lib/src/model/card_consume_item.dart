@@ -22,8 +22,10 @@ class CardConsumeItem {
     this.feeName,
     this.remaining,
     this.createTime,
+    this.createdAt,
   });
 
+  /// 交易地点/终端名，如 “第一食堂”
   @JsonKey(
     name: r'deviceName',
     required: false,
@@ -38,7 +40,7 @@ class CardConsumeItem {
   )
   final String? deviceNum;
 
-  /// 交易金额（元）
+  /// 交易金额（元）：负数为支出，正数为充值或转入
   @JsonKey(
     name: r'totalFee',
     required: false,
@@ -46,7 +48,7 @@ class CardConsumeItem {
   )
   final double? totalFee;
 
-  /// 交易类型
+  /// 交易类型，如 “消费”“第三方支付平台转账”
   @JsonKey(
     name: r'feeName',
     required: false,
@@ -54,7 +56,7 @@ class CardConsumeItem {
   )
   final String? feeName;
 
-  /// 交易后余额（元）
+  /// 交易后余额（元）；转账类可能是中间快照，当前余额以 card balance 为准
   @JsonKey(
     name: r'remaining',
     required: false,
@@ -62,13 +64,21 @@ class CardConsumeItem {
   )
   final double? remaining;
 
-  /// unix 秒
+  /// unix 秒；上游时间无法解析时为 0
   @JsonKey(
     name: r'createTime',
     required: false,
     includeIfNull: false,
   )
   final int? createTime;
+
+  /// 交易时间（服务器本地时区 Asia/Shanghai），yyyy-MM-dd HH:mm:ss；createTime 为 0 时不下发
+  @JsonKey(
+    name: r'createdAt',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? createdAt;
 
   @override
   bool operator ==(Object other) =>
@@ -79,7 +89,8 @@ class CardConsumeItem {
           other.totalFee == totalFee &&
           other.feeName == feeName &&
           other.remaining == remaining &&
-          other.createTime == createTime;
+          other.createTime == createTime &&
+          other.createdAt == createdAt;
 
   @override
   int get hashCode =>
@@ -88,7 +99,8 @@ class CardConsumeItem {
       totalFee.hashCode +
       feeName.hashCode +
       remaining.hashCode +
-      createTime.hashCode;
+      createTime.hashCode +
+      createdAt.hashCode;
 
   factory CardConsumeItem.fromJson(Map<String, dynamic> json) =>
       _$CardConsumeItemFromJson(json);

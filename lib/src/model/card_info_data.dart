@@ -30,7 +30,7 @@ class CardInfoData {
   )
   final double? remaining;
 
-  /// 今日消费（元）
+  /// 今日支出合计（元，正数），只统计 flow 里今天的负数交易
   @JsonKey(
     name: r'todayFee',
     required: false,

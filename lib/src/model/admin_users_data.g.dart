@@ -23,6 +23,8 @@ AdminUsersData _$AdminUsersDataFromJson(Map<String, dynamic> json) =>
               (v) => v == null
                   ? null
                   : AdminUserDetail.fromJson(v as Map<String, dynamic>)),
+          unitNamesUnavailable:
+              $checkedConvert('unitNamesUnavailable', (v) => v as bool?),
         );
         return val;
       },
@@ -33,4 +35,6 @@ Map<String, dynamic> _$AdminUsersDataToJson(AdminUsersData instance) =>
       if (instance.items?.map((e) => e.toJson()).toList() case final value?)
         'items': value,
       if (instance.user?.toJson() case final value?) 'user': value,
+      if (instance.unitNamesUnavailable case final value?)
+        'unitNamesUnavailable': value,
     };

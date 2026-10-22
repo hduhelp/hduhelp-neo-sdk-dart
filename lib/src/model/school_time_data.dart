@@ -22,6 +22,9 @@ class SchoolTimeData {
     this.weekDayNow,
     this.section,
     this.timeStamp,
+    this.termStartDate,
+    this.termEndDate,
+    this.termWeeks,
   });
 
   /// 学年全称，如 2025-2026
@@ -72,6 +75,30 @@ class SchoolTimeData {
   )
   final int? timeStamp;
 
+  /// 本学期第 1 教学周首日，yyyy-MM-dd。termStartDate/termEndDate/termWeeks 取自覆盖 今天的教务校历行，校历缺当前学期时都不下发（此时 weekNow=0，schoolYear/semester 按月份粗推）。
+  @JsonKey(
+    name: r'termStartDate',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? termStartDate;
+
+  /// 本学期校历覆盖的最后一天，yyyy-MM-dd
+  @JsonKey(
+    name: r'termEndDate',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? termEndDate;
+
+  /// 本学期最大教学周；剩余教学周 = termWeeks - weekNow
+  @JsonKey(
+    name: r'termWeeks',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? termWeeks;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -81,7 +108,10 @@ class SchoolTimeData {
           other.weekNow == weekNow &&
           other.weekDayNow == weekDayNow &&
           other.section == section &&
-          other.timeStamp == timeStamp;
+          other.timeStamp == timeStamp &&
+          other.termStartDate == termStartDate &&
+          other.termEndDate == termEndDate &&
+          other.termWeeks == termWeeks;
 
   @override
   int get hashCode =>
@@ -90,7 +120,10 @@ class SchoolTimeData {
       weekNow.hashCode +
       weekDayNow.hashCode +
       section.hashCode +
-      timeStamp.hashCode;
+      timeStamp.hashCode +
+      termStartDate.hashCode +
+      termEndDate.hashCode +
+      termWeeks.hashCode;
 
   factory SchoolTimeData.fromJson(Map<String, dynamic> json) =>
       _$SchoolTimeDataFromJson(json);

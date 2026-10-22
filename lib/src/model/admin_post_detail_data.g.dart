@@ -23,13 +23,15 @@ AdminPostDetailData _$AdminPostDetailDataFromJson(Map<String, dynamic> json) =>
               $checkedConvert('published_by_operator_id', (v) => v as String?),
           reportCount:
               $checkedConvert('report_count', (v) => (v as num?)?.toInt()),
+          anonymousName: $checkedConvert('anonymous_name', (v) => v as String?),
         );
         return val;
       },
       fieldKeyMap: const {
         'realAuthorUserId': 'real_author_user_id',
         'publishedByOperatorId': 'published_by_operator_id',
-        'reportCount': 'report_count'
+        'reportCount': 'report_count',
+        'anonymousName': 'anonymous_name'
       },
     );
 
@@ -42,4 +44,5 @@ Map<String, dynamic> _$AdminPostDetailDataToJson(
       if (instance.publishedByOperatorId case final value?)
         'published_by_operator_id': value,
       if (instance.reportCount case final value?) 'report_count': value,
+      if (instance.anonymousName case final value?) 'anonymous_name': value,
     };

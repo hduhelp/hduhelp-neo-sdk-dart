@@ -33,6 +33,8 @@ FeedbackItem _$FeedbackItemFromJson(Map<String, dynamic> json) =>
           replyTaskId: $checkedConvert('replyTaskId', (v) => v as String?),
           createdAt: $checkedConvert('createdAt', (v) => (v as num?)?.toInt()),
           updatedAt: $checkedConvert('updatedAt', (v) => (v as num?)?.toInt()),
+          category: $checkedConvert('category',
+              (v) => $enumDecodeNullable(_$FeedbackItemCategoryEnumEnumMap, v)),
         );
         return val;
       },
@@ -53,4 +55,15 @@ Map<String, dynamic> _$FeedbackItemToJson(FeedbackItem instance) =>
       if (instance.replyTaskId case final value?) 'replyTaskId': value,
       if (instance.createdAt case final value?) 'createdAt': value,
       if (instance.updatedAt case final value?) 'updatedAt': value,
+      if (_$FeedbackItemCategoryEnumEnumMap[instance.category]
+          case final value?)
+        'category': value,
     };
+
+const _$FeedbackItemCategoryEnumEnumMap = {
+  FeedbackItemCategoryEnum.bug: 'bug',
+  FeedbackItemCategoryEnum.suggestion: 'suggestion',
+  FeedbackItemCategoryEnum.content: 'content',
+  FeedbackItemCategoryEnum.account: 'account',
+  FeedbackItemCategoryEnum.other: 'other',
+};

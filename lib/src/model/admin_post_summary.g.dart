@@ -37,6 +37,7 @@ AdminPostSummary _$AdminPostSummaryFromJson(Map<String, dynamic> json) =>
           takedownByOperatorId:
               $checkedConvert('takedown_by_operator_id', (v) => v as String?),
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
+          anonymousName: $checkedConvert('anonymous_name', (v) => v as String?),
         );
         return val;
       },
@@ -46,7 +47,8 @@ AdminPostSummary _$AdminPostSummaryFromJson(Map<String, dynamic> json) =>
         'reportCount': 'report_count',
         'takedownReason': 'takedown_reason',
         'takedownByOperatorId': 'takedown_by_operator_id',
-        'createdAt': 'created_at'
+        'createdAt': 'created_at',
+        'anonymousName': 'anonymous_name'
       },
     );
 
@@ -67,4 +69,5 @@ Map<String, dynamic> _$AdminPostSummaryToJson(AdminPostSummary instance) =>
       if (instance.takedownByOperatorId case final value?)
         'takedown_by_operator_id': value,
       if (instance.createdAt case final value?) 'created_at': value,
+      if (instance.anonymousName case final value?) 'anonymous_name': value,
     };

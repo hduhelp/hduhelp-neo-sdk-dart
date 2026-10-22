@@ -287,6 +287,8 @@ import 'package:hduhelp_neo/src/model/cursor_comment_list_data.dart';
 import 'package:hduhelp_neo/src/model/cursor_comment_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/cursor_post_list_data.dart';
 import 'package:hduhelp_neo/src/model/cursor_post_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_data.dart';
+import 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_admin_notice_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_campus_response_body.dart';
@@ -337,6 +339,7 @@ import 'package:hduhelp_neo/src/model/electric_binding_data.dart';
 import 'package:hduhelp_neo/src/model/electric_binding_response_body.dart';
 import 'package:hduhelp_neo/src/model/electric_building_item.dart';
 import 'package:hduhelp_neo/src/model/electric_building_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/electric_daily_usage.dart';
 import 'package:hduhelp_neo/src/model/electric_floor_item.dart';
 import 'package:hduhelp_neo/src/model/electric_floor_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/electric_history_data.dart';
@@ -460,6 +463,9 @@ import 'package:hduhelp_neo/src/model/introspect_token_response_body.dart';
 import 'package:hduhelp_neo/src/model/invite_data.dart';
 import 'package:hduhelp_neo/src/model/invite_request_body.dart';
 import 'package:hduhelp_neo/src/model/invite_response_body.dart';
+import 'package:hduhelp_neo/src/model/issue_user_session_data.dart';
+import 'package:hduhelp_neo/src/model/issue_user_session_request_body.dart';
+import 'package:hduhelp_neo/src/model/issue_user_session_response_body.dart';
 import 'package:hduhelp_neo/src/model/item_detail_response_body.dart';
 import 'package:hduhelp_neo/src/model/item_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/item_state_request_body.dart';
@@ -639,6 +645,7 @@ import 'package:hduhelp_neo/src/model/qa_strategies_data.dart';
 import 'package:hduhelp_neo/src/model/qa_strategies_response_body.dart';
 import 'package:hduhelp_neo/src/model/qa_strategy_item.dart';
 import 'package:hduhelp_neo/src/model/react_request_body.dart';
+import 'package:hduhelp_neo/src/model/reacted_comment.dart';
 import 'package:hduhelp_neo/src/model/reaction_bucket.dart';
 import 'package:hduhelp_neo/src/model/reaction_mutation_data.dart';
 import 'package:hduhelp_neo/src/model/reaction_mutation_response_body.dart';
@@ -1807,6 +1814,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CursorPostListResponseBody':
       return CursorPostListResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'CursorReactedCommentListData':
+      return CursorReactedCommentListData.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'CursorReactedCommentListResponseBody':
+      return CursorReactedCommentListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'DeleteAdminNoticeResponseBody':
       return DeleteAdminNoticeResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -1955,6 +1968,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ElectricBuildingListResponseBody':
       return ElectricBuildingListResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'ElectricDailyUsage':
+      return ElectricDailyUsage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ElectricFloorItem':
       return ElectricFloorItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2286,6 +2302,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'InviteResponseBody':
       return InviteResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'IssueUserSessionData':
+      return IssueUserSessionData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'IssueUserSessionRequestBody':
+      return IssueUserSessionRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'IssueUserSessionResponseBody':
+      return IssueUserSessionResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'ItemDetailResponseBody':
       return ItemDetailResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2793,6 +2818,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ReactRequestBody':
       return ReactRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ReactedComment':
+      return ReactedComment.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'ReactionBucket':
       return ReactionBucket.fromJson(value as Map<String, dynamic>)

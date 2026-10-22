@@ -31,6 +31,7 @@ class Comment {
     this.status,
     this.takedownReason,
     this.createdAt,
+    this.pinnedForFocus,
   });
 
   @JsonKey(
@@ -119,6 +120,14 @@ class Comment {
   )
   final int? createdAt;
 
+  /// pinnedForFocus 只出现在按 focus 置顶的那一条上（值为 true），供客户端闪一下定位； 其余评论不带这个字段。
+  @JsonKey(
+    name: r'pinned_for_focus',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? pinnedForFocus;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -134,7 +143,8 @@ class Comment {
           other.reportedByMe == reportedByMe &&
           other.status == status &&
           other.takedownReason == takedownReason &&
-          other.createdAt == createdAt;
+          other.createdAt == createdAt &&
+          other.pinnedForFocus == pinnedForFocus;
 
   @override
   int get hashCode =>
@@ -149,7 +159,8 @@ class Comment {
       reportedByMe.hashCode +
       status.hashCode +
       takedownReason.hashCode +
-      createdAt.hashCode;
+      createdAt.hashCode +
+      pinnedForFocus.hashCode;
 
   factory Comment.fromJson(Map<String, dynamic> json) =>
       _$CommentFromJson(json);

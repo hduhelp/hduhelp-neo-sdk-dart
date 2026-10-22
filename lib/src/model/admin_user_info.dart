@@ -23,6 +23,9 @@ class AdminUserInfo {
     this.banReason,
     this.bannedAt,
     this.createdAt,
+    this.staffName,
+    this.staffId,
+    this.unitName,
   });
 
   @JsonKey(
@@ -74,6 +77,27 @@ class AdminUserInfo {
   )
   final int? createdAt;
 
+  @JsonKey(
+    name: r'staffName',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? staffName;
+
+  @JsonKey(
+    name: r'staffId',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? staffId;
+
+  @JsonKey(
+    name: r'unitName',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? unitName;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -84,7 +108,10 @@ class AdminUserInfo {
           other.status == status &&
           other.banReason == banReason &&
           other.bannedAt == bannedAt &&
-          other.createdAt == createdAt;
+          other.createdAt == createdAt &&
+          other.staffName == staffName &&
+          other.staffId == staffId &&
+          other.unitName == unitName;
 
   @override
   int get hashCode =>
@@ -94,7 +121,10 @@ class AdminUserInfo {
       status.hashCode +
       banReason.hashCode +
       bannedAt.hashCode +
-      createdAt.hashCode;
+      createdAt.hashCode +
+      staffName.hashCode +
+      staffId.hashCode +
+      unitName.hashCode;
 
   factory AdminUserInfo.fromJson(Map<String, dynamic> json) =>
       _$AdminUserInfoFromJson(json);

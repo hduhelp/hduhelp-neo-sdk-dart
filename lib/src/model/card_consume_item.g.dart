@@ -20,6 +20,7 @@ CardConsumeItem _$CardConsumeItemFromJson(Map<String, dynamic> json) =>
               $checkedConvert('remaining', (v) => (v as num?)?.toDouble()),
           createTime:
               $checkedConvert('createTime', (v) => (v as num?)?.toInt()),
+          createdAt: $checkedConvert('createdAt', (v) => v as String?),
         );
         return val;
       },
@@ -33,4 +34,5 @@ Map<String, dynamic> _$CardConsumeItemToJson(CardConsumeItem instance) =>
       if (instance.feeName case final value?) 'feeName': value,
       if (instance.remaining case final value?) 'remaining': value,
       if (instance.createTime case final value?) 'createTime': value,
+      if (instance.createdAt case final value?) 'createdAt': value,
     };

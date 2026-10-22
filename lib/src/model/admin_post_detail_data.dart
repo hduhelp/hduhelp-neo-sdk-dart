@@ -21,6 +21,7 @@ class AdminPostDetailData {
     this.realAuthorUserId,
     this.publishedByOperatorId,
     this.reportCount,
+    this.anonymousName,
   });
 
   @JsonKey(
@@ -51,6 +52,14 @@ class AdminPostDetailData {
   )
   final int? reportCount;
 
+  /// 同 AdminPostSummary
+  @JsonKey(
+    name: r'anonymous_name',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? anonymousName;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -58,14 +67,16 @@ class AdminPostDetailData {
           other.post == post &&
           other.realAuthorUserId == realAuthorUserId &&
           other.publishedByOperatorId == publishedByOperatorId &&
-          other.reportCount == reportCount;
+          other.reportCount == reportCount &&
+          other.anonymousName == anonymousName;
 
   @override
   int get hashCode =>
       post.hashCode +
       realAuthorUserId.hashCode +
       publishedByOperatorId.hashCode +
-      reportCount.hashCode;
+      reportCount.hashCode +
+      anonymousName.hashCode;
 
   factory AdminPostDetailData.fromJson(Map<String, dynamic> json) =>
       _$AdminPostDetailDataFromJson(json);

@@ -24,6 +24,7 @@ class PublishPostRequestBody {
     this.images,
     this.location,
     this.categoryIds,
+    this.anonymous,
   });
 
   @JsonKey(
@@ -63,6 +64,14 @@ class PublishPostRequestBody {
   )
   final List<String>? categoryIds;
 
+  /// anonymous 为 true 时以服务端生成的花名发布（形如「害羞的小鲸鱼」，每帖一个、永不改变）。 仅用户主体可用；匿名帖不计入作者帖子数、不进他人视角的主页与关注流。发布后不可更改。
+  @JsonKey(
+    name: r'anonymous',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? anonymous;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -71,7 +80,8 @@ class PublishPostRequestBody {
           other.content == content &&
           other.images == images &&
           other.location == location &&
-          other.categoryIds == categoryIds;
+          other.categoryIds == categoryIds &&
+          other.anonymous == anonymous;
 
   @override
   int get hashCode =>
@@ -79,7 +89,8 @@ class PublishPostRequestBody {
       content.hashCode +
       images.hashCode +
       location.hashCode +
-      categoryIds.hashCode;
+      categoryIds.hashCode +
+      anonymous.hashCode;
 
   factory PublishPostRequestBody.fromJson(Map<String, dynamic> json) =>
       _$PublishPostRequestBodyFromJson(json);

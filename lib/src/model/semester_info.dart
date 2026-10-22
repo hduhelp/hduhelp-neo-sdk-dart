@@ -24,6 +24,7 @@ class SemesterInfo {
     this.weeks,
   });
 
+  /// 学年全称，如 2026-2027
   @JsonKey(
     name: r'schoolYear',
     required: false,
@@ -31,6 +32,7 @@ class SemesterInfo {
   )
   final String? schoolYear;
 
+  /// 学期号 \"1\"（秋）/\"2\"（春）/\"3\"（短学期）
   @JsonKey(
     name: r'semester',
     required: false,
@@ -38,7 +40,7 @@ class SemesterInfo {
   )
   final String? semester;
 
-  /// yyyy-MM-dd
+  /// 第 1 教学周首日，yyyy-MM-dd
   @JsonKey(
     name: r'startDate',
     required: false,
@@ -46,7 +48,7 @@ class SemesterInfo {
   )
   final String? startDate;
 
-  /// yyyy-MM-dd
+  /// 校历覆盖的最后一天，yyyy-MM-dd
   @JsonKey(
     name: r'endDate',
     required: false,

@@ -40,6 +40,8 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => $checkedCreate(
           takedownReason:
               $checkedConvert('takedown_reason', (v) => v as String?),
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
+          pinnedForFocus:
+              $checkedConvert('pinned_for_focus', (v) => v as bool?),
         );
         return val;
       },
@@ -50,7 +52,8 @@ Comment _$CommentFromJson(Map<String, dynamic> json) => $checkedCreate(
         'canWithdraw': 'can_withdraw',
         'reportedByMe': 'reported_by_me',
         'takedownReason': 'takedown_reason',
-        'createdAt': 'created_at'
+        'createdAt': 'created_at',
+        'pinnedForFocus': 'pinned_for_focus'
       },
     );
 
@@ -71,4 +74,5 @@ Map<String, dynamic> _$CommentToJson(Comment instance) => <String, dynamic>{
       if (instance.status case final value?) 'status': value,
       if (instance.takedownReason case final value?) 'takedown_reason': value,
       if (instance.createdAt case final value?) 'created_at': value,
+      if (instance.pinnedForFocus case final value?) 'pinned_for_focus': value,
     };

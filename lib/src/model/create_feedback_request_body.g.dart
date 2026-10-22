@@ -25,6 +25,10 @@ CreateFeedbackRequestBody _$CreateFeedbackRequestBodyFromJson(
                   : FeedbackContext.fromJson(v as Map<String, dynamic>)),
           imageKeys: $checkedConvert('imageKeys',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          category: $checkedConvert(
+              'category',
+              (v) => $enumDecodeNullable(
+                  _$CreateFeedbackRequestBodyCategoryEnumEnumMap, v)),
         );
         return val;
       },
@@ -36,4 +40,15 @@ Map<String, dynamic> _$CreateFeedbackRequestBodyToJson(
       'content': instance.content,
       if (instance.context?.toJson() case final value?) 'context': value,
       if (instance.imageKeys case final value?) 'imageKeys': value,
+      if (_$CreateFeedbackRequestBodyCategoryEnumEnumMap[instance.category]
+          case final value?)
+        'category': value,
     };
+
+const _$CreateFeedbackRequestBodyCategoryEnumEnumMap = {
+  CreateFeedbackRequestBodyCategoryEnum.bug: 'bug',
+  CreateFeedbackRequestBodyCategoryEnum.suggestion: 'suggestion',
+  CreateFeedbackRequestBodyCategoryEnum.content: 'content',
+  CreateFeedbackRequestBodyCategoryEnum.account: 'account',
+  CreateFeedbackRequestBodyCategoryEnum.other: 'other',
+};

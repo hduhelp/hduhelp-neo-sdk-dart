@@ -1049,10 +1049,10 @@ class CampusLifeServiceApi {
   }
 
   /// 查询校园卡余额
-  ///
+  /// 返回本人校园卡（一卡通）当前余额（元）
   ///
   /// Parameters:
-  /// * [xStaffId]
+  /// * [xStaffId] - 仅应用（tenant）令牌代查时必填学号；用户本人的令牌调用时不要传，默认查本人
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1131,10 +1131,10 @@ class CampusLifeServiceApi {
   }
 
   /// 查询校园卡消费流水
-  ///
+  /// 返回本人校园卡（一卡通）最近最多 100 条交易，新→旧；不支持按日期筛选，问某段时间的花费时按 createdAt 自行筛选并只对负数 totalFee 求和。条数不足以覆盖所问时段时应如实说明
   ///
   /// Parameters:
-  /// * [xStaffId]
+  /// * [xStaffId] - 仅应用（tenant）令牌代查时必填学号；用户本人的令牌调用时不要传，默认查本人
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1213,10 +1213,10 @@ class CampusLifeServiceApi {
   }
 
   /// 查询校园卡信息
-  ///
+  /// 一次返回本人校园卡（一卡通）当前余额、今日支出合计和最近最多 100 条流水（同 card consume）。问一卡通概况时优先用它
   ///
   /// Parameters:
-  /// * [xStaffId]
+  /// * [xStaffId] - 仅应用（tenant）令牌代查时必填学号；用户本人的令牌调用时不要传，默认查本人
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1295,7 +1295,7 @@ class CampusLifeServiceApi {
   }
 
   /// 查询宿舍电费余额(绑定电表)
-  ///
+  /// 返回本人已绑定电表的当前余额（元）与寝室；未绑定电表时返回业务错误。只有余额，问用电量或某段时间电费用 electric history
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -1457,7 +1457,7 @@ class CampusLifeServiceApi {
   }
 
   /// 查询近14天电费历史
-  ///
+  /// 返回本人绑定电表近 14 天每天 0 点的余额快照（history），以及按用电日拆好、已扣除充值的每日用电消费（daily）和日均消费（average）。问“本周/最近几天电费”时对 daily 按 date 求和；daily 不含今天。无参数
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation

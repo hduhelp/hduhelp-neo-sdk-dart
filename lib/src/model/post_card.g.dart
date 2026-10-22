@@ -39,12 +39,17 @@ PostCard _$PostCardFromJson(Map<String, dynamic> json) => $checkedCreate(
                   ? null
                   : PostLocation.fromJson(v as Map<String, dynamic>)),
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
+          reactedByMe: $checkedConvert('reacted_by_me', (v) => v as bool?),
+          anonymous: $checkedConvert('anonymous', (v) => v as bool?),
+          isMine: $checkedConvert('is_mine', (v) => v as bool?),
         );
         return val;
       },
       fieldKeyMap: const {
         'categoryIds': 'category_ids',
-        'createdAt': 'created_at'
+        'createdAt': 'created_at',
+        'reactedByMe': 'reacted_by_me',
+        'isMine': 'is_mine'
       },
     );
 
@@ -59,4 +64,7 @@ Map<String, dynamic> _$PostCardToJson(PostCard instance) => <String, dynamic>{
       if (instance.hashtags case final value?) 'hashtags': value,
       if (instance.location?.toJson() case final value?) 'location': value,
       if (instance.createdAt case final value?) 'created_at': value,
+      if (instance.reactedByMe case final value?) 'reacted_by_me': value,
+      if (instance.anonymous case final value?) 'anonymous': value,
+      if (instance.isMine case final value?) 'is_mine': value,
     };

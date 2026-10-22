@@ -23,7 +23,7 @@ class Author {
     this.verified,
   });
 
-  /// user | app
+  /// user | app | anonymous
   @JsonKey(
     name: r'kind',
     required: false,

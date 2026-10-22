@@ -30,6 +30,7 @@ class FeedbackItem {
     this.replyTaskId,
     this.createdAt,
     this.updatedAt,
+    this.category,
   });
 
   @JsonKey(
@@ -116,6 +117,14 @@ class FeedbackItem {
   )
   final int? updatedAt;
 
+  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
+  @JsonKey(
+    name: r'category',
+    required: false,
+    includeIfNull: false,
+  )
+  final FeedbackItemCategoryEnum? category;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -131,7 +140,8 @@ class FeedbackItem {
           other.replyContent == replyContent &&
           other.replyTaskId == replyTaskId &&
           other.createdAt == createdAt &&
-          other.updatedAt == updatedAt;
+          other.updatedAt == updatedAt &&
+          other.category == category;
 
   @override
   int get hashCode =>
@@ -146,7 +156,8 @@ class FeedbackItem {
       replyContent.hashCode +
       replyTaskId.hashCode +
       createdAt.hashCode +
-      updatedAt.hashCode;
+      updatedAt.hashCode +
+      category.hashCode;
 
   factory FeedbackItem.fromJson(Map<String, dynamic> json) =>
       _$FeedbackItemFromJson(json);
@@ -157,4 +168,34 @@ class FeedbackItem {
   String toString() {
     return toJson().toString();
   }
+}
+
+/// 老客户端不传分类，入库时记为 other，因此这里恒有值。
+enum FeedbackItemCategoryEnum {
+  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
+  @JsonValue(r'bug')
+  bug(r'bug'),
+
+  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
+  @JsonValue(r'suggestion')
+  suggestion(r'suggestion'),
+
+  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
+  @JsonValue(r'content')
+  content(r'content'),
+
+  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
+  @JsonValue(r'account')
+  account(r'account'),
+
+  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
+  @JsonValue(r'other')
+  other(r'other');
+
+  const FeedbackItemCategoryEnum(this.value);
+
+  final String value;
+
+  @override
+  String toString() => value;
 }

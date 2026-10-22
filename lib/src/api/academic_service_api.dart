@@ -66,7 +66,7 @@ class AcademicServiceApi {
   const AcademicServiceApi(this._dio);
 
   /// 获取学年学期配置
-  /// 返回学期学年表，以及课程查询/课表/考试/成绩各自的可选学年学期与默认值（读自后台系统配置 academic.terms，与教务Oracle无关，全局公开，无需登录/学号）
+  /// 返回学期学年表，以及课程查询/课表/考试/成绩各自的可选学年学期与默认值（读自后台系统配置 academic.terms，与教务Oracle无关，全局公开，无需登录/学号）。只是界面筛选项，不含日期与教学周；问校历、第几周或剩余周数用 schooltime time 或 semester list-by-date
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -3501,7 +3501,7 @@ class AcademicServiceApi {
   }
 
   /// 查询当前校历时间
-  /// ---- 校历时间 ----
+  /// 返回今天所在的学年、学期、第几教学周、星期几与当前节次，以及本学期第 1 周首日、校历结束日与总教学周数（可直接算剩余周数）。数据来自教务校历，无需登录或学号
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -3574,11 +3574,11 @@ class AcademicServiceApi {
   }
 
   /// 按日期范围查询学期列表
-  ///
+  /// 返回校历窗口与 [start_date, end_date] 有交集的学期，含各学期第 1 周首日、结束日与总教学周数；state&#x3D;1 为当前学期。只问当前学期与周次时优先用 schooltime time
   ///
   /// Parameters:
-  /// * [startDate]
-  /// * [endDate]
+  /// * [startDate] - yyyy-MM-dd，含当天。与 end_date 组成闭区间，返回校历窗口与之有交集的学期； 查某一天所在学期就把两者都设为那一天。都不传返回全部学期。
+  /// * [endDate] - yyyy-MM-dd，含当天，不得早于 start_date。
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
