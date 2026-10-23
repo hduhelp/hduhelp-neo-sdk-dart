@@ -289,6 +289,8 @@ import 'package:hduhelp_neo/src/model/cursor_post_list_data.dart';
 import 'package:hduhelp_neo/src/model/cursor_post_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_data.dart';
 import 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/cursor_relation_list_data.dart';
+import 'package:hduhelp_neo/src/model/cursor_relation_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_admin_notice_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_campus_response_body.dart';
@@ -1819,6 +1821,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'CursorReactedCommentListResponseBody':
       return CursorReactedCommentListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'CursorRelationListData':
+      return CursorRelationListData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'CursorRelationListResponseBody':
+      return CursorRelationListResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'DeleteAdminNoticeResponseBody':
       return DeleteAdminNoticeResponseBody.fromJson(

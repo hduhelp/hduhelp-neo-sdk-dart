@@ -33,6 +33,7 @@ import 'package:hduhelp_neo/src/model/curation_response_body.dart';
 import 'package:hduhelp_neo/src/model/cursor_comment_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/cursor_post_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/cursor_relation_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/emoji_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/follow_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/hashtag_block_response_body.dart';
@@ -4713,6 +4714,99 @@ class MomentsServiceApi {
     }
 
     return Response<CursorReactedCommentListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 我的互关
+  /// 与本人互相关注的用户，供 @ 选择器使用：发帖与评论只能 @ 互关的人。按本人关注对方的时间倒序；q 按昵称子串过滤
+  ///
+  /// Parameters:
+  /// * [q]
+  /// * [cursor]
+  /// * [limit]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [CursorRelationListResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<CursorRelationListResponseBody>> momentsServiceListMyMutuals({
+    String? q,
+    String? cursor,
+    int? limit,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/moments/me/mutuals';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (q != null) r'q': q,
+      if (cursor != null) r'cursor': cursor,
+      if (limit != null) r'limit': limit,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    CursorRelationListResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<CursorRelationListResponseBody,
+                  CursorRelationListResponseBody>(
+              rawData, 'CursorRelationListResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<CursorRelationListResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

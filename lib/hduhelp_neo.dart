@@ -320,6 +320,8 @@ export 'package:hduhelp_neo/src/model/cursor_post_list_data.dart';
 export 'package:hduhelp_neo/src/model/cursor_post_list_response_body.dart';
 export 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_data.dart';
 export 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_response_body.dart';
+export 'package:hduhelp_neo/src/model/cursor_relation_list_data.dart';
+export 'package:hduhelp_neo/src/model/cursor_relation_list_response_body.dart';
 export 'package:hduhelp_neo/src/model/delete_admin_notice_response_body.dart';
 export 'package:hduhelp_neo/src/model/delete_app_response_body.dart';
 export 'package:hduhelp_neo/src/model/delete_campus_response_body.dart';
