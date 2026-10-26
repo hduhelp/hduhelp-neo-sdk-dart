@@ -203,6 +203,99 @@ class FeedbackServiceApi {
     );
   }
 
+  /// 导出用户反馈 Excel
+  /// 按类型和状态导出全部匹配反馈，内存生成 XLSX 并作为附件下载，不在服务器保存文件。分页参数不参与导出。
+  ///
+  /// Parameters:
+  /// * [status]
+  /// * [page]
+  /// * [pageSize]
+  /// * [feedbackType]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [String] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<String>> feedbackServiceExportAdminFeedbacks({
+    String? status,
+    int? page,
+    int? pageSize,
+    String? feedbackType,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/feedbacks/export';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (status != null) r'status': status,
+      if (page != null) r'page': page,
+      if (pageSize != null) r'page_size': pageSize,
+      if (feedbackType != null) r'feedback_type': feedbackType,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    String? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<String, String>(rawData, 'String', growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<String>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 查看用户反馈
   ///
   ///
@@ -372,9 +465,9 @@ class FeedbackServiceApi {
   ///
   /// Parameters:
   /// * [status]
-  /// * [category]
   /// * [page]
   /// * [pageSize]
+  /// * [feedbackType]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -386,9 +479,9 @@ class FeedbackServiceApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<FeedbackPageResponseBody>> feedbackServiceListAdminFeedbacks({
     String? status,
-    String? category,
     int? page,
     int? pageSize,
+    String? feedbackType,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -417,9 +510,9 @@ class FeedbackServiceApi {
 
     final _queryParameters = <String, dynamic>{
       if (status != null) r'status': status,
-      if (category != null) r'category': category,
       if (page != null) r'page': page,
       if (pageSize != null) r'page_size': pageSize,
+      if (feedbackType != null) r'feedback_type': feedbackType,
     };
 
     final _response = await _dio.request<Object>(

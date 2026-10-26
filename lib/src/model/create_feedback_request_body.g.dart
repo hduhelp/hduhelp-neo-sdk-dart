@@ -25,10 +25,12 @@ CreateFeedbackRequestBody _$CreateFeedbackRequestBodyFromJson(
                   : FeedbackContext.fromJson(v as Map<String, dynamic>)),
           imageKeys: $checkedConvert('imageKeys',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
-          category: $checkedConvert(
-              'category',
+          notifyPlatform:
+              $checkedConvert('notifyPlatform', (v) => v as String?),
+          feedbackType: $checkedConvert(
+              'feedbackType',
               (v) => $enumDecodeNullable(
-                  _$CreateFeedbackRequestBodyCategoryEnumEnumMap, v)),
+                  _$CreateFeedbackRequestBodyFeedbackTypeEnumEnumMap, v)),
         );
         return val;
       },
@@ -40,15 +42,14 @@ Map<String, dynamic> _$CreateFeedbackRequestBodyToJson(
       'content': instance.content,
       if (instance.context?.toJson() case final value?) 'context': value,
       if (instance.imageKeys case final value?) 'imageKeys': value,
-      if (_$CreateFeedbackRequestBodyCategoryEnumEnumMap[instance.category]
+      if (instance.notifyPlatform case final value?) 'notifyPlatform': value,
+      if (_$CreateFeedbackRequestBodyFeedbackTypeEnumEnumMap[
+              instance.feedbackType]
           case final value?)
-        'category': value,
+        'feedbackType': value,
     };
 
-const _$CreateFeedbackRequestBodyCategoryEnumEnumMap = {
-  CreateFeedbackRequestBodyCategoryEnum.bug: 'bug',
-  CreateFeedbackRequestBodyCategoryEnum.suggestion: 'suggestion',
-  CreateFeedbackRequestBodyCategoryEnum.content: 'content',
-  CreateFeedbackRequestBodyCategoryEnum.account: 'account',
-  CreateFeedbackRequestBodyCategoryEnum.other: 'other',
+const _$CreateFeedbackRequestBodyFeedbackTypeEnumEnumMap = {
+  CreateFeedbackRequestBodyFeedbackTypeEnum.assistant: 'assistant',
+  CreateFeedbackRequestBodyFeedbackTypeEnum.school: 'school',
 };

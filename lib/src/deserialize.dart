@@ -74,6 +74,15 @@ import 'package:hduhelp_neo/src/model/admin_wish_review_page_response_body.dart'
 import 'package:hduhelp_neo/src/model/admin_wish_review_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_wish_review_response_body.dart';
 import 'package:hduhelp_neo/src/model/all_person_info_response_body.dart';
+import 'package:hduhelp_neo/src/model/analytics_config_data.dart';
+import 'package:hduhelp_neo/src/model/analytics_config_response_body.dart';
+import 'package:hduhelp_neo/src/model/analytics_data.dart';
+import 'package:hduhelp_neo/src/model/analytics_feature_data.dart';
+import 'package:hduhelp_neo/src/model/analytics_feature_response_body.dart';
+import 'package:hduhelp_neo/src/model/analytics_feature_snapshot.dart';
+import 'package:hduhelp_neo/src/model/analytics_metric.dart';
+import 'package:hduhelp_neo/src/model/analytics_response_body.dart';
+import 'package:hduhelp_neo/src/model/analytics_snapshot.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_data.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_internal_request_body.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_internal_response_body.dart';
@@ -777,6 +786,7 @@ import 'package:hduhelp_neo/src/model/service_chat_data.dart';
 import 'package:hduhelp_neo/src/model/service_chat_request_body.dart';
 import 'package:hduhelp_neo/src/model/service_chat_response_body.dart';
 import 'package:hduhelp_neo/src/model/session_info.dart';
+import 'package:hduhelp_neo/src/model/set_academic_settings_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_app_enabled_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_app_enabled_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_app_permissions_request_body.dart';
@@ -1197,6 +1207,33 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AllPersonInfoResponseBody':
       return AllPersonInfoResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalyticsConfigData':
+      return AnalyticsConfigData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalyticsConfigResponseBody':
+      return AnalyticsConfigResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalyticsData':
+      return AnalyticsData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalyticsFeatureData':
+      return AnalyticsFeatureData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalyticsFeatureResponseBody':
+      return AnalyticsFeatureResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AnalyticsFeatureSnapshot':
+      return AnalyticsFeatureSnapshot.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalyticsMetric':
+      return AnalyticsMetric.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalyticsResponseBody':
+      return AnalyticsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnalyticsSnapshot':
+      return AnalyticsSnapshot.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AppAccessTokenData':
       return AppAccessTokenData.fromJson(value as Map<String, dynamic>)
@@ -3194,6 +3231,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'SessionInfo':
       return SessionInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'SetAcademicSettingsRequestBody':
+      return SetAcademicSettingsRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'SetAppEnabledRequestBody':
       return SetAppEnabledRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;

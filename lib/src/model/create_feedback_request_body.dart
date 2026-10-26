@@ -20,7 +20,8 @@ class CreateFeedbackRequestBody {
     required this.content,
     this.context,
     this.imageKeys,
-    this.category,
+    this.notifyPlatform,
+    this.feedbackType,
   });
 
   @JsonKey(
@@ -44,13 +45,20 @@ class CreateFeedbackRequestBody {
   )
   final List<String>? imageKeys;
 
-  /// bug=功能异常 suggestion=功能建议 content=内容问题 account=账号问题 other=其他。 缺省或空串按 other 入库，兼容不认识分类的老客户端；其余值返回 400。
   @JsonKey(
-    name: r'category',
+    name: r'notifyPlatform',
     required: false,
     includeIfNull: false,
   )
-  final CreateFeedbackRequestBodyCategoryEnum? category;
+  final String? notifyPlatform;
+
+  /// 未提供时由服务端默认为 assistant
+  @JsonKey(
+    name: r'feedbackType',
+    required: false,
+    includeIfNull: false,
+  )
+  final CreateFeedbackRequestBodyFeedbackTypeEnum? feedbackType;
 
   @override
   bool operator ==(Object other) =>
@@ -59,14 +67,16 @@ class CreateFeedbackRequestBody {
           other.content == content &&
           other.context == context &&
           other.imageKeys == imageKeys &&
-          other.category == category;
+          other.notifyPlatform == notifyPlatform &&
+          other.feedbackType == feedbackType;
 
   @override
   int get hashCode =>
       content.hashCode +
       context.hashCode +
       imageKeys.hashCode +
-      category.hashCode;
+      notifyPlatform.hashCode +
+      feedbackType.hashCode;
 
   factory CreateFeedbackRequestBody.fromJson(Map<String, dynamic> json) =>
       _$CreateFeedbackRequestBodyFromJson(json);
@@ -79,29 +89,17 @@ class CreateFeedbackRequestBody {
   }
 }
 
-/// bug=功能异常 suggestion=功能建议 content=内容问题 account=账号问题 other=其他。 缺省或空串按 other 入库，兼容不认识分类的老客户端；其余值返回 400。
-enum CreateFeedbackRequestBodyCategoryEnum {
-  /// bug=功能异常 suggestion=功能建议 content=内容问题 account=账号问题 other=其他。 缺省或空串按 other 入库，兼容不认识分类的老客户端；其余值返回 400。
-  @JsonValue(r'bug')
-  bug(r'bug'),
+/// 未提供时由服务端默认为 assistant
+enum CreateFeedbackRequestBodyFeedbackTypeEnum {
+  /// 未提供时由服务端默认为 assistant
+  @JsonValue(r'assistant')
+  assistant(r'assistant'),
 
-  /// bug=功能异常 suggestion=功能建议 content=内容问题 account=账号问题 other=其他。 缺省或空串按 other 入库，兼容不认识分类的老客户端；其余值返回 400。
-  @JsonValue(r'suggestion')
-  suggestion(r'suggestion'),
+  /// 未提供时由服务端默认为 assistant
+  @JsonValue(r'school')
+  school(r'school');
 
-  /// bug=功能异常 suggestion=功能建议 content=内容问题 account=账号问题 other=其他。 缺省或空串按 other 入库，兼容不认识分类的老客户端；其余值返回 400。
-  @JsonValue(r'content')
-  content(r'content'),
-
-  /// bug=功能异常 suggestion=功能建议 content=内容问题 account=账号问题 other=其他。 缺省或空串按 other 入库，兼容不认识分类的老客户端；其余值返回 400。
-  @JsonValue(r'account')
-  account(r'account'),
-
-  /// bug=功能异常 suggestion=功能建议 content=内容问题 account=账号问题 other=其他。 缺省或空串按 other 入库，兼容不认识分类的老客户端；其余值返回 400。
-  @JsonValue(r'other')
-  other(r'other');
-
-  const CreateFeedbackRequestBodyCategoryEnum(this.value);
+  const CreateFeedbackRequestBodyFeedbackTypeEnum(this.value);
 
   final String value;
 

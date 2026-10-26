@@ -1564,6 +1564,54 @@ paths:
       x-hduhelp-http:
         requires_user: false
         auth: bearer
+  /hduhelp-neo/admin/analytics:
+    get:
+      tags:
+      - AnalyticsService
+      summary: Neo产品运营分析
+      description: 需要 analytics.dashboard:view；days 仅允许 7 或 30。北京时间自然日，访客并非学生人数。未配置或上游不可用时不返回零值统计。
+      operationId: AnalyticsService_GetAnalytics
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: days
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsResponseBody'
+  /hduhelp-neo/admin/analytics/feature:
+    get:
+      tags:
+      - AnalyticsService
+      summary: Neo单功能链路分析
+      description: 需要 analytics.dashboard:view。匿名访客进入到获得结果的有序漏斗，相邻步骤窗口30分钟；附带失败原因、结果、入口和终端分布。
+      operationId: AnalyticsService_GetAnalyticsFeature
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: days
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: feature
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsFeatureResponseBody'
   /hduhelp-neo/admin/apps:
     get:
       tags:
@@ -1962,6 +2010,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SetConfigResponseBody'
+  /hduhelp-neo/admin/configs/academic:
+    put:
+      tags:
+      - AdminService
+      summary: 保存学期与查询设置
+      description: 校验并原子保存学期表和考试、成绩的全局禁用状态及理由，保存后生效
+      operationId: AdminService_SetAcademicSettings
+      security:
+      - OperatorBearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetAcademicSettingsRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetConfigResponseBody'
   /hduhelp-neo/admin/configs/test:
     post:
       tags:
@@ -2166,15 +2235,48 @@ paths:
           - pending
           - handled
           type: string
-      - name: category
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: feedback_type
         in: query
         schema:
           enum:
-          - bug
-          - suggestion
-          - content
-          - account
-          - other
+          - assistant
+          - school
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FeedbackPageResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/feedbacks/export:
+    get:
+      tags:
+      - FeedbackService
+      summary: 导出用户反馈 Excel
+      description: 按类型和状态导出全部匹配反馈，内存生成 XLSX 并作为附件下载，不在服务器保存文件。分页参数不参与导出。
+      operationId: FeedbackService_ExportAdminFeedbacks
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: status
+        in: query
+        schema:
+          enum:
+          - pending
+          - handled
           type: string
       - name: page
         in: query
@@ -2186,13 +2288,25 @@ paths:
         schema:
           type: integer
           format: int32
+      - name: feedback_type
+        in: query
+        schema:
+          enum:
+          - assistant
+          - school
+          type: string
       responses:
         '200':
-          description: Successful response
-          content:
-            application/json:
+          description: Excel 附件
+          headers:
+            Content-Disposition:
+              description: attachment; filename=feedbacks-YYYYMMDD-HHMMSS.xlsx
               schema:
-                $ref: '#/components/schemas/FeedbackPageResponseBody'
+                type: string
+          content:
+            application/vnd.openxmlformats-officedocument.spreadsheetml.sheet:
+              schema:
+                type: string
       x-hduhelp-http:
         auth: operator
   /hduhelp-neo/admin/feedbacks/{id}:
@@ -12398,6 +12512,12 @@ components:
         semester:
           type: string
           description: 学期号 "1"/"2"/"3"（对齐 SchoolTime/SemesterInfo）
+        disabled:
+          type: boolean
+          description: 有效禁用状态；禁用项保留在筛选列表
+        disabledReason:
+          type: string
+          description: 展示给用户的禁用理由
     Activity:
       type: object
       properties:
@@ -13708,6 +13828,137 @@ components:
           format: int64
         msg:
           type: string
+    AnalyticsConfigData:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+        websiteId:
+          type: string
+        endpoint:
+          type: string
+    AnalyticsConfigResponseBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AnalyticsConfigData'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AnalyticsData:
+      type: object
+      properties:
+        status:
+          type: string
+        detailUrl:
+          type: string
+        snapshot:
+          $ref: '#/components/schemas/AnalyticsSnapshot'
+    AnalyticsFeatureData:
+      type: object
+      properties:
+        status:
+          type: string
+        snapshot:
+          $ref: '#/components/schemas/AnalyticsFeatureSnapshot'
+    AnalyticsFeatureResponseBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AnalyticsFeatureData'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AnalyticsFeatureSnapshot:
+      type: object
+      properties:
+        startAt:
+          type: integer
+          format: int64
+        endAt:
+          type: integer
+          format: int64
+        fetchedAt:
+          type: integer
+          format: int64
+        enteredVisitors:
+          type: integer
+          format: int64
+        usedVisitors:
+          type: integer
+          format: int64
+        reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsMetric'
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsMetric'
+        sources:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsMetric'
+        environments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsMetric'
+    AnalyticsMetric:
+      type: object
+      properties:
+        x:
+          type: string
+        y:
+          type: integer
+          format: int64
+    AnalyticsResponseBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AnalyticsData'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AnalyticsSnapshot:
+      type: object
+      properties:
+        startAt:
+          type: integer
+          format: int64
+        endAt:
+          type: integer
+          format: int64
+        fetchedAt:
+          type: integer
+          format: int64
+        pageviews:
+          type: integer
+          format: int64
+        visitors:
+          type: integer
+          format: int64
+        pageviewTrend:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsMetric'
+        visitorTrend:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsMetric'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsMetric'
+        devices:
+          type: array
+          items:
+            $ref: '#/components/schemas/AnalyticsMetric'
     AppAccessTokenData:
       type: object
       properties:
@@ -16078,17 +16329,14 @@ components:
           type: array
           items:
             type: string
-        category:
-          enum:
-          - bug
-          - suggestion
-          - content
-          - account
-          - other
+        notifyPlatform:
           type: string
-          description: 'bug=功能异常 suggestion=功能建议 content=内容问题 account=账号问题 other=其他。
-
-            缺省或空串按 other 入库，兼容不认识分类的老客户端；其余值返回 400。'
+        feedbackType:
+          enum:
+          - assistant
+          - school
+          type: string
+          description: 未提供时由服务端默认为 assistant
     CreateGradeChatGroupRequestBody:
       type: object
       properties:
@@ -17873,7 +18121,12 @@ components:
 
             unauthorized（会话缺该卡片所需 scope）/ upstream_error（已取数但失败或超时）/
 
-            unsupported（服务端未接入该能力或未知卡片）。available=true 时不下发。'
+            unsupported（服务端未接入该能力或未知卡片）/ disabled（管理员暂停查询）。available=true 时不下发。'
+        disabled:
+          type: boolean
+          description: 主动暂停查询，与一般取数失败区分
+        disabledReason:
+          type: string
       description: FeedItem 是信息流中的单个卡片。name 为判别字段，data 只填 name 对应的负载字段。
     FeedTimeInfo:
       type: object
@@ -17935,15 +18188,13 @@ components:
         updatedAt:
           type: integer
           format: int64
-        category:
-          enum:
-          - bug
-          - suggestion
-          - content
-          - account
-          - other
+        notifyPlatform:
           type: string
-          description: 老客户端不传分类，入库时记为 other，因此这里恒有值。
+        feedbackType:
+          enum:
+          - assistant
+          - school
+          type: string
     FeedbackPage:
       type: object
       properties:
@@ -23862,6 +24113,15 @@ components:
         identityType:
           type: string
       description: 会话信息
+    SetAcademicSettingsRequestBody:
+      type: object
+      properties:
+        terms:
+          type: string
+          description: 学期表 JSON 数组，仅含筛选项和默认值
+        queryPolicy:
+          type: string
+          description: 考试、成绩的全局禁用状态和理由 JSON 对象
     SetAppEnabledRequestBody:
       type: object
       properties:
@@ -26207,6 +26467,7 @@ tags:
 - name: AcademicService
 - name: AdminNoticeService
 - name: AdminService
+- name: AnalyticsService
 - name: CampusLifeService
 - name: DingTalkWorkbenchService
 - name: EmptyScheduleService

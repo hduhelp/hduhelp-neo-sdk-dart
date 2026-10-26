@@ -1,5 +1,5 @@
 name: hduhelp_neo
-version: 0.3.153
+version: 0.3.154
 description: Typed Neo JSON API client for Dart and Flutter.
 homepage: https://github.com/hduhelp/hduhelp-neo-sdk-dart
 repository: https://github.com/hduhelp/hduhelp-neo-sdk-dart

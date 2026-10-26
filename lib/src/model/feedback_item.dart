@@ -30,7 +30,8 @@ class FeedbackItem {
     this.replyTaskId,
     this.createdAt,
     this.updatedAt,
-    this.category,
+    this.notifyPlatform,
+    this.feedbackType,
   });
 
   @JsonKey(
@@ -117,13 +118,19 @@ class FeedbackItem {
   )
   final int? updatedAt;
 
-  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
   @JsonKey(
-    name: r'category',
+    name: r'notifyPlatform',
     required: false,
     includeIfNull: false,
   )
-  final FeedbackItemCategoryEnum? category;
+  final String? notifyPlatform;
+
+  @JsonKey(
+    name: r'feedbackType',
+    required: false,
+    includeIfNull: false,
+  )
+  final FeedbackItemFeedbackTypeEnum? feedbackType;
 
   @override
   bool operator ==(Object other) =>
@@ -141,7 +148,8 @@ class FeedbackItem {
           other.replyTaskId == replyTaskId &&
           other.createdAt == createdAt &&
           other.updatedAt == updatedAt &&
-          other.category == category;
+          other.notifyPlatform == notifyPlatform &&
+          other.feedbackType == feedbackType;
 
   @override
   int get hashCode =>
@@ -157,7 +165,8 @@ class FeedbackItem {
       replyTaskId.hashCode +
       createdAt.hashCode +
       updatedAt.hashCode +
-      category.hashCode;
+      notifyPlatform.hashCode +
+      feedbackType.hashCode;
 
   factory FeedbackItem.fromJson(Map<String, dynamic> json) =>
       _$FeedbackItemFromJson(json);
@@ -170,29 +179,13 @@ class FeedbackItem {
   }
 }
 
-/// 老客户端不传分类，入库时记为 other，因此这里恒有值。
-enum FeedbackItemCategoryEnum {
-  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
-  @JsonValue(r'bug')
-  bug(r'bug'),
+enum FeedbackItemFeedbackTypeEnum {
+  @JsonValue(r'assistant')
+  assistant(r'assistant'),
+  @JsonValue(r'school')
+  school(r'school');
 
-  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
-  @JsonValue(r'suggestion')
-  suggestion(r'suggestion'),
-
-  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
-  @JsonValue(r'content')
-  content(r'content'),
-
-  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
-  @JsonValue(r'account')
-  account(r'account'),
-
-  /// 老客户端不传分类，入库时记为 other，因此这里恒有值。
-  @JsonValue(r'other')
-  other(r'other');
-
-  const FeedbackItemCategoryEnum(this.value);
+  const FeedbackItemFeedbackTypeEnum(this.value);
 
   final String value;
 

@@ -20,6 +20,9 @@ FeedItem _$FeedItemFromJson(Map<String, dynamic> json) => $checkedCreate(
                   : FeedCardData.fromJson(v as Map<String, dynamic>)),
           unavailableReason:
               $checkedConvert('unavailableReason', (v) => v as String?),
+          disabled: $checkedConvert('disabled', (v) => v as bool?),
+          disabledReason:
+              $checkedConvert('disabledReason', (v) => v as String?),
         );
         return val;
       },
@@ -31,4 +34,6 @@ Map<String, dynamic> _$FeedItemToJson(FeedItem instance) => <String, dynamic>{
       if (instance.data?.toJson() case final value?) 'data': value,
       if (instance.unavailableReason case final value?)
         'unavailableReason': value,
+      if (instance.disabled case final value?) 'disabled': value,
+      if (instance.disabledReason case final value?) 'disabledReason': value,
     };
