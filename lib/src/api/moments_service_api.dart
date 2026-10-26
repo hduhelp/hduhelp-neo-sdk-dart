@@ -3276,7 +3276,7 @@ class MomentsServiceApi {
   }
 
   /// 信息流
-  /// tab&#x3D;recommend 为发现流（按时间倒序），tab&#x3D;following 为关注流；可叠加板块或话题筛选。cursor 分页
+  /// tab&#x3D;recommend 为推荐流（按口味亲和 × 热度 × 时效 × 已看降权个性化排序，置顶在前，同一用户同一天翻页稳定），tab&#x3D;following 为关注流（按时间倒序）；可叠加板块或话题筛选。cursor 分页
   ///
   /// Parameters:
   /// * [tab] - recommend | following；缺省 recommend
@@ -5967,13 +5967,16 @@ class MomentsServiceApi {
   }
 
   /// 搜索
-  /// type 决定返回帖子、用户、话题或官方号，对应搜索页的四个 tab
+  /// type 决定返回帖子、用户、话题或官方号，对应搜索页的四个 tab。帖子支持 sort&#x3D;relevance|latest（缺省 relevance：相关度 × 时效 × 热度）与 category_id、hashtag 收窄
   ///
   /// Parameters:
   /// * [q]
   /// * [type] - post | user | hashtag | official
   /// * [cursor]
   /// * [limit]
+  /// * [sort] - relevance | latest，缺省 relevance
+  /// * [categoryId]
+  /// * [hashtag]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -5988,6 +5991,9 @@ class MomentsServiceApi {
     String? type,
     String? cursor,
     int? limit,
+    String? sort,
+    String? categoryId,
+    String? hashtag,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -6019,6 +6025,9 @@ class MomentsServiceApi {
       if (type != null) r'type': type,
       if (cursor != null) r'cursor': cursor,
       if (limit != null) r'limit': limit,
+      if (sort != null) r'sort': sort,
+      if (categoryId != null) r'category_id': categoryId,
+      if (hashtag != null) r'hashtag': hashtag,
     };
 
     final _response = await _dio.request<Object>(
