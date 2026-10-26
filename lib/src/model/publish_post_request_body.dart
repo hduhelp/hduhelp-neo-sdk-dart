@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:hduhelp_neo/src/model/post_location.dart';
+import 'package:hduhelp_neo/src/model/post_media_input.dart';
 import 'package:hduhelp_neo/src/model/post_image_input.dart';
 import 'package:hduhelp_neo/src/model/rich_text_node.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -25,6 +26,7 @@ class PublishPostRequestBody {
     this.location,
     this.categoryIds,
     this.anonymous,
+    this.media,
   });
 
   @JsonKey(
@@ -72,6 +74,14 @@ class PublishPostRequestBody {
   )
   final bool? anonymous;
 
+  /// media 是图片与视频混排的有序媒体列表，合计至多 9 项。与 images 二选一：同时非空即参数错误； 只传 images 的旧客户端按纯图片处理。
+  @JsonKey(
+    name: r'media',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<PostMediaInput>? media;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -81,7 +91,8 @@ class PublishPostRequestBody {
           other.images == images &&
           other.location == location &&
           other.categoryIds == categoryIds &&
-          other.anonymous == anonymous;
+          other.anonymous == anonymous &&
+          other.media == media;
 
   @override
   int get hashCode =>
@@ -90,7 +101,8 @@ class PublishPostRequestBody {
       images.hashCode +
       location.hashCode +
       categoryIds.hashCode +
-      anonymous.hashCode;
+      anonymous.hashCode +
+      media.hashCode;
 
   factory PublishPostRequestBody.fromJson(Map<String, dynamic> json) =>
       _$PublishPostRequestBodyFromJson(json);

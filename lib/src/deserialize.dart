@@ -622,6 +622,8 @@ import 'package:hduhelp_neo/src/model/post_detail_response_body.dart';
 import 'package:hduhelp_neo/src/model/post_image.dart';
 import 'package:hduhelp_neo/src/model/post_image_input.dart';
 import 'package:hduhelp_neo/src/model/post_location.dart';
+import 'package:hduhelp_neo/src/model/post_media.dart';
+import 'package:hduhelp_neo/src/model/post_media_input.dart';
 import 'package:hduhelp_neo/src/model/post_version.dart';
 import 'package:hduhelp_neo/src/model/post_version_list_data.dart';
 import 'package:hduhelp_neo/src/model/post_version_list_response_body.dart';
@@ -2768,6 +2770,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'PostLocation':
       return PostLocation.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'PostMedia':
+      return PostMedia.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'PostMediaInput':
+      return PostMediaInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'PostVersion':
       return PostVersion.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'PostVersionListData':

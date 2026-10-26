@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:hduhelp_neo/src/model/post_location.dart';
+import 'package:hduhelp_neo/src/model/post_media_input.dart';
 import 'package:hduhelp_neo/src/model/post_image_input.dart';
 import 'package:hduhelp_neo/src/model/rich_text_node.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -25,6 +26,7 @@ class AdminPublishPostRequestBody {
     this.images,
     this.location,
     this.categoryIds,
+    this.media,
   });
 
   @JsonKey(
@@ -69,6 +71,14 @@ class AdminPublishPostRequestBody {
   )
   final List<String>? categoryIds;
 
+  /// 同 PublishPostRequest.media。
+  @JsonKey(
+    name: r'media',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<PostMediaInput>? media;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -78,7 +88,8 @@ class AdminPublishPostRequestBody {
           other.content == content &&
           other.images == images &&
           other.location == location &&
-          other.categoryIds == categoryIds;
+          other.categoryIds == categoryIds &&
+          other.media == media;
 
   @override
   int get hashCode =>
@@ -87,7 +98,8 @@ class AdminPublishPostRequestBody {
       content.hashCode +
       images.hashCode +
       location.hashCode +
-      categoryIds.hashCode;
+      categoryIds.hashCode +
+      media.hashCode;
 
   factory AdminPublishPostRequestBody.fromJson(Map<String, dynamic> json) =>
       _$AdminPublishPostRequestBodyFromJson(json);

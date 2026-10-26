@@ -654,6 +654,8 @@ export 'package:hduhelp_neo/src/model/post_detail_response_body.dart';
 export 'package:hduhelp_neo/src/model/post_image.dart';
 export 'package:hduhelp_neo/src/model/post_image_input.dart';
 export 'package:hduhelp_neo/src/model/post_location.dart';
+export 'package:hduhelp_neo/src/model/post_media.dart';
+export 'package:hduhelp_neo/src/model/post_media_input.dart';
 export 'package:hduhelp_neo/src/model/post_version.dart';
 export 'package:hduhelp_neo/src/model/post_version_list_data.dart';
 export 'package:hduhelp_neo/src/model/post_version_list_response_body.dart';

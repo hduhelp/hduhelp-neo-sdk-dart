@@ -6,6 +6,7 @@
 import 'package:hduhelp_neo/src/model/post_location.dart';
 import 'package:hduhelp_neo/src/model/post_viewer_state.dart';
 import 'package:hduhelp_neo/src/model/reaction_summary.dart';
+import 'package:hduhelp_neo/src/model/post_media.dart';
 import 'package:hduhelp_neo/src/model/author.dart';
 import 'package:hduhelp_neo/src/model/post_counters.dart';
 import 'package:hduhelp_neo/src/model/rich_text_node.dart';
@@ -40,6 +41,7 @@ class PostDetail {
     this.createdAt,
     this.updatedAt,
     this.anonymous,
+    this.media,
   });
 
   @JsonKey(
@@ -165,6 +167,14 @@ class PostDetail {
   )
   final bool? anonymous;
 
+  /// media 是有序媒体列表（图片与视频混排）；images 只含其中的图片项，供旧客户端。
+  @JsonKey(
+    name: r'media',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<PostMedia>? media;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -185,7 +195,8 @@ class PostDetail {
           other.takedownReason == takedownReason &&
           other.createdAt == createdAt &&
           other.updatedAt == updatedAt &&
-          other.anonymous == anonymous;
+          other.anonymous == anonymous &&
+          other.media == media;
 
   @override
   int get hashCode =>
@@ -205,7 +216,8 @@ class PostDetail {
       takedownReason.hashCode +
       createdAt.hashCode +
       updatedAt.hashCode +
-      anonymous.hashCode;
+      anonymous.hashCode +
+      media.hashCode;
 
   factory PostDetail.fromJson(Map<String, dynamic> json) =>
       _$PostDetailFromJson(json);

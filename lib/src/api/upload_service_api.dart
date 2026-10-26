@@ -218,7 +218,7 @@ class UploadServiceApi {
   }
 
   /// 签发直传地址
-  /// 校验 filename/size/content_type 后生成对象 key 与短期 PUT URL。usage&#x3D;avatar 时预登记 pending 元数据，PUT 后调用 /upload/complete；业务首次引用会为旧客户端执行同一确认。第三方用户令牌需携带 upload:file:write。
+  /// 校验 filename/size/content_type 后生成对象 key 与短期 PUT URL。usage&#x3D;avatar 时预登记 pending 元数据，PUT 后调用 /upload/complete；业务首次引用会为旧客户端执行同一确认。usage&#x3D;moments_video 只接受 video/mp4、video/quicktime，单文件上限 200MB，不受全局类型白名单约束。第三方用户令牌需携带 upload:file:write。
   ///
   /// Parameters:
   /// * [signUploadRequestBody] - 头像签名直传会预登记 pending 元数据行；新客户端 PUT 后调用 complete， 业务首次引用也会为旧客户端执行同一确认。其它 usage 保持原有直传语义。

@@ -42,6 +42,14 @@ PostCard _$PostCardFromJson(Map<String, dynamic> json) => $checkedCreate(
           reactedByMe: $checkedConvert('reacted_by_me', (v) => v as bool?),
           anonymous: $checkedConvert('anonymous', (v) => v as bool?),
           isMine: $checkedConvert('is_mine', (v) => v as bool?),
+          media: $checkedConvert(
+              'media',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => PostMedia.fromJson(e as Map<String, dynamic>))
+                  .toList()),
+          mediaCount:
+              $checkedConvert('media_count', (v) => (v as num?)?.toInt()),
+          hasVideo: $checkedConvert('has_video', (v) => v as bool?),
         );
         return val;
       },
@@ -49,7 +57,9 @@ PostCard _$PostCardFromJson(Map<String, dynamic> json) => $checkedCreate(
         'categoryIds': 'category_ids',
         'createdAt': 'created_at',
         'reactedByMe': 'reacted_by_me',
-        'isMine': 'is_mine'
+        'isMine': 'is_mine',
+        'mediaCount': 'media_count',
+        'hasVideo': 'has_video'
       },
     );
 
@@ -67,4 +77,8 @@ Map<String, dynamic> _$PostCardToJson(PostCard instance) => <String, dynamic>{
       if (instance.reactedByMe case final value?) 'reacted_by_me': value,
       if (instance.anonymous case final value?) 'anonymous': value,
       if (instance.isMine case final value?) 'is_mine': value,
+      if (instance.media?.map((e) => e.toJson()).toList() case final value?)
+        'media': value,
+      if (instance.mediaCount case final value?) 'media_count': value,
+      if (instance.hasVideo case final value?) 'has_video': value,
     };

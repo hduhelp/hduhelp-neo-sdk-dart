@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:hduhelp_neo/src/model/post_location.dart';
+import 'package:hduhelp_neo/src/model/post_media_input.dart';
 import 'package:hduhelp_neo/src/model/post_image_input.dart';
 import 'package:hduhelp_neo/src/model/rich_text_node.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -24,6 +25,7 @@ class UpdatePostRequestBody {
     this.images,
     this.location,
     this.categoryIds,
+    this.media,
   });
 
   @JsonKey(
@@ -61,6 +63,14 @@ class UpdatePostRequestBody {
   )
   final List<String>? categoryIds;
 
+  /// 同 PublishPostRequest.media。编辑是整篇替换。
+  @JsonKey(
+    name: r'media',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<PostMediaInput>? media;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -69,7 +79,8 @@ class UpdatePostRequestBody {
           other.content == content &&
           other.images == images &&
           other.location == location &&
-          other.categoryIds == categoryIds;
+          other.categoryIds == categoryIds &&
+          other.media == media;
 
   @override
   int get hashCode =>
@@ -77,7 +88,8 @@ class UpdatePostRequestBody {
       content.hashCode +
       images.hashCode +
       location.hashCode +
-      categoryIds.hashCode;
+      categoryIds.hashCode +
+      media.hashCode;
 
   factory UpdatePostRequestBody.fromJson(Map<String, dynamic> json) =>
       _$UpdatePostRequestBodyFromJson(json);

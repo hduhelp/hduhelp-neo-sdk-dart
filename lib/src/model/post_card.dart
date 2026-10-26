@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:hduhelp_neo/src/model/post_location.dart';
+import 'package:hduhelp_neo/src/model/post_media.dart';
 import 'package:hduhelp_neo/src/model/author.dart';
 import 'package:hduhelp_neo/src/model/post_counters.dart';
 import 'package:hduhelp_neo/src/model/post_image.dart';
@@ -33,6 +34,9 @@ class PostCard {
     this.reactedByMe,
     this.anonymous,
     this.isMine,
+    this.media,
+    this.mediaCount,
+    this.hasVideo,
   });
 
   @JsonKey(
@@ -129,6 +133,29 @@ class PostCard {
   )
   final bool? isMine;
 
+  /// media 是完整的有序媒体列表；cover 取它的第一项（视频即截帧 cover_url 与视频宽高）。
+  @JsonKey(
+    name: r'media',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<PostMedia>? media;
+
+  @JsonKey(
+    name: r'media_count',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? mediaCount;
+
+  /// hasVideo 为真时媒体里至少有一个视频，供卡片显示播放角标。
+  @JsonKey(
+    name: r'has_video',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? hasVideo;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -145,7 +172,10 @@ class PostCard {
           other.createdAt == createdAt &&
           other.reactedByMe == reactedByMe &&
           other.anonymous == anonymous &&
-          other.isMine == isMine;
+          other.isMine == isMine &&
+          other.media == media &&
+          other.mediaCount == mediaCount &&
+          other.hasVideo == hasVideo;
 
   @override
   int get hashCode =>
@@ -161,7 +191,10 @@ class PostCard {
       createdAt.hashCode +
       reactedByMe.hashCode +
       anonymous.hashCode +
-      isMine.hashCode;
+      isMine.hashCode +
+      media.hashCode +
+      mediaCount.hashCode +
+      hasVideo.hashCode;
 
   factory PostCard.fromJson(Map<String, dynamic> json) =>
       _$PostCardFromJson(json);

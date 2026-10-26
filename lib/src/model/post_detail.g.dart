@@ -62,6 +62,11 @@ PostDetail _$PostDetailFromJson(Map<String, dynamic> json) => $checkedCreate(
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
           updatedAt: $checkedConvert('updated_at', (v) => (v as num?)?.toInt()),
           anonymous: $checkedConvert('anonymous', (v) => v as bool?),
+          media: $checkedConvert(
+              'media',
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) => PostMedia.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -99,4 +104,6 @@ Map<String, dynamic> _$PostDetailToJson(PostDetail instance) =>
       if (instance.createdAt case final value?) 'created_at': value,
       if (instance.updatedAt case final value?) 'updated_at': value,
       if (instance.anonymous case final value?) 'anonymous': value,
+      if (instance.media?.map((e) => e.toJson()).toList() case final value?)
+        'media': value,
     };

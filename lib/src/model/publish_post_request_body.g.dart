@@ -36,6 +36,12 @@ PublishPostRequestBody _$PublishPostRequestBodyFromJson(
           categoryIds: $checkedConvert('category_ids',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           anonymous: $checkedConvert('anonymous', (v) => v as bool?),
+          media: $checkedConvert(
+              'media',
+              (v) => (v as List<dynamic>?)
+                  ?.map(
+                      (e) => PostMediaInput.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -56,4 +62,6 @@ Map<String, dynamic> _$PublishPostRequestBodyToJson(
       if (instance.location?.toJson() case final value?) 'location': value,
       if (instance.categoryIds case final value?) 'category_ids': value,
       if (instance.anonymous case final value?) 'anonymous': value,
+      if (instance.media?.map((e) => e.toJson()).toList() case final value?)
+        'media': value,
     };

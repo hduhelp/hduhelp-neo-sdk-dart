@@ -35,6 +35,12 @@ UpdatePostRequestBody _$UpdatePostRequestBodyFromJson(
                   : PostLocation.fromJson(v as Map<String, dynamic>)),
           categoryIds: $checkedConvert('category_ids',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          media: $checkedConvert(
+              'media',
+              (v) => (v as List<dynamic>?)
+                  ?.map(
+                      (e) => PostMediaInput.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -54,4 +60,6 @@ Map<String, dynamic> _$UpdatePostRequestBodyToJson(
         'images': value,
       if (instance.location?.toJson() case final value?) 'location': value,
       if (instance.categoryIds case final value?) 'category_ids': value,
+      if (instance.media?.map((e) => e.toJson()).toList() case final value?)
+        'media': value,
     };
