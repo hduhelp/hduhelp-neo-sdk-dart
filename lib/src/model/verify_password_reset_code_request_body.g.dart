@@ -16,8 +16,16 @@ VerifyPasswordResetCodeRequestBody _$VerifyPasswordResetCodeRequestBodyFromJson(
           target: $checkedConvert('target', (v) => v as String?),
           code: $checkedConvert('code', (v) => v as String?),
           type: $checkedConvert('type', (v) => v as String?),
+          captchaVerifyParam:
+              $checkedConvert('captcha_verify_param', (v) => v as String?),
+          captchaSceneId:
+              $checkedConvert('captcha_scene_id', (v) => v as String?),
         );
         return val;
+      },
+      fieldKeyMap: const {
+        'captchaVerifyParam': 'captcha_verify_param',
+        'captchaSceneId': 'captcha_scene_id'
       },
     );
 
@@ -27,4 +35,7 @@ Map<String, dynamic> _$VerifyPasswordResetCodeRequestBodyToJson(
       if (instance.target case final value?) 'target': value,
       if (instance.code case final value?) 'code': value,
       if (instance.type case final value?) 'type': value,
+      if (instance.captchaVerifyParam case final value?)
+        'captcha_verify_param': value,
+      if (instance.captchaSceneId case final value?) 'captcha_scene_id': value,
     };
