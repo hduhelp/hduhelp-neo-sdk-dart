@@ -48,6 +48,7 @@ import 'package:hduhelp_neo/src/model/device_request_resp_body.dart';
 import 'package:hduhelp_neo/src/model/get_auth_config_response_body.dart';
 import 'package:hduhelp_neo/src/model/get_auth_status_response_body.dart';
 import 'package:hduhelp_neo/src/model/get_bind_status_response_body.dart';
+import 'package:hduhelp_neo/src/model/get_my_campus_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_authorized_apps_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_pat_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_pat_scopes_response_body.dart';
@@ -3147,6 +3148,85 @@ class IdentityServiceApi {
     );
   }
 
+  /// 查询我的当前校区
+  /// 返回当前用户在 App 里设置的所在校区(current)与全部可选校区(campuses)。current 为 null 表示用户从未设置，天气等按默认校区(下沙)解析。问「我在哪个校区」或回答与校区有关的问题前可先调用。
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [GetMyCampusResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<GetMyCampusResponseBody>> identityServiceGetMyCampus({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/identity/me/campus';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    GetMyCampusResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<GetMyCampusResponseBody, GetMyCampusResponseBody>(
+              rawData, 'GetMyCampusResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<GetMyCampusResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 查询服务授权状态
   /// 返回当前学号的二课、图书馆与阳光长跑授权状态、有效性及失效通知开关；绝不返回已存 token、Cookie 或加密密码。仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
   ///
@@ -5651,7 +5731,7 @@ class IdentityServiceApi {
   }
 
   /// 设置当前所在校区
-  /// 设置当前用户的当前所在校区(campuses.id)，天气据此解析坐标；campus_id 留空即清除，回落默认校区。需要用户 Bearer。
+  /// 设置当前用户的当前所在校区(campuses.id，取自 GET /identity/me/campus 的 campuses)，天气据此解析坐标；campus_id 留空即清除，回落默认校区；不存在的 campus_id 返回 40400。设置后 GET /identity/me/campus 立即反映。需要用户 Bearer。
   ///
   /// Parameters:
   /// * [setCurrentCampusRequestBody] - ---- 设置当前所在校区 ----

@@ -40,7 +40,7 @@ class ScheduleResponseBody {
   )
   final OffsetPagination pagination;
 
-  /// 按展示校区读取所选学期时间轴；混合校区优先下沙，仅绍兴时第5节为12:05-12:30、第13节为08:30-09:15占位
+  /// 按展示校区读取所选学期时间轴；同时有下沙和绍兴课程时按用户在 App 设置的当前校区(未设置为下沙)，仅绍兴时第5节为12:05-12:30、第13节为08:30-09:15占位
   @JsonKey(
     name: r'sectionTimes',
     required: false,

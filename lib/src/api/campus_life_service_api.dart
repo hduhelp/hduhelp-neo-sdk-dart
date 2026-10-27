@@ -1951,7 +1951,7 @@ class CampusLifeServiceApi {
   }
 
   /// 获取天气信息流卡片(AQI/温度/停雨)
-  ///
+  /// 不传 lat/lng 时按用户在 App 里设置的当前校区坐标查询；用户未设置当前校区(或匿名调用)时为默认校区(杭州电子科技大学下沙校区)。可用 hduhelp.identity.me.campus.get 查询用户当前校区与可选校区；问其它校区天气时传该校区坐标(见 hduhelp.campuslife.campuses)。
   ///
   /// Parameters:
   /// * [lat]
@@ -3234,7 +3234,7 @@ class CampusLifeServiceApi {
   }
 
   /// 获取天气预报(逐小时/逐天)
-  ///
+  /// 不传 lat/lng 时按用户在 App 里设置的当前校区坐标查询；用户未设置当前校区(或匿名调用)时为默认校区(杭州电子科技大学下沙校区)。可用 hduhelp.identity.me.campus.get 查询用户当前校区与可选校区；问其它校区天气时传该校区坐标(见 hduhelp.campuslife.campuses)。
   ///
   /// Parameters:
   /// * [days]
@@ -3320,7 +3320,7 @@ class CampusLifeServiceApi {
   }
 
   /// 获取实时天气(按当前校区坐标)
-  ///
+  /// 不传 lat/lng 时按用户在 App 里设置的当前校区坐标查询；用户未设置当前校区(或匿名调用)时为默认校区(杭州电子科技大学下沙校区)。可用 hduhelp.identity.me.campus.get 查询用户当前校区与可选校区；问其它校区天气时传该校区坐标(见 hduhelp.campuslife.campuses)。
   ///
   /// Parameters:
   /// * [lat]

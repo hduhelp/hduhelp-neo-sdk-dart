@@ -427,6 +427,7 @@ import 'package:hduhelp_neo/src/model/get_auth_status_response_body.dart';
 import 'package:hduhelp_neo/src/model/get_bind_status_response_body.dart';
 import 'package:hduhelp_neo/src/model/get_class_chat_group_response_body.dart';
 import 'package:hduhelp_neo/src/model/get_grade_chat_group_response_body.dart';
+import 'package:hduhelp_neo/src/model/get_my_campus_response_body.dart';
 import 'package:hduhelp_neo/src/model/global_schedule_item.dart';
 import 'package:hduhelp_neo/src/model/global_schedule_response_body.dart';
 import 'package:hduhelp_neo/src/model/global_student_grade.dart';
@@ -567,6 +568,8 @@ import 'package:hduhelp_neo/src/model/month_stat.dart';
 import 'package:hduhelp_neo/src/model/monthly_stat.dart';
 import 'package:hduhelp_neo/src/model/mutate_ok_response_body.dart';
 import 'package:hduhelp_neo/src/model/mutate_response_body.dart';
+import 'package:hduhelp_neo/src/model/my_campus_data.dart';
+import 'package:hduhelp_neo/src/model/my_campus_item.dart';
 import 'package:hduhelp_neo/src/model/my_groups_response_body.dart';
 import 'package:hduhelp_neo/src/model/my_profile.dart';
 import 'package:hduhelp_neo/src/model/my_profile_response_body.dart';
@@ -2221,6 +2224,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'GetGradeChatGroupResponseBody':
       return GetGradeChatGroupResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'GetMyCampusResponseBody':
+      return GetMyCampusResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'GlobalScheduleItem':
       return GlobalScheduleItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2618,6 +2624,10 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'MutateResponseBody':
       return MutateResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'MyCampusData':
+      return MyCampusData.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'MyCampusItem':
+      return MyCampusItem.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MyGroupsResponseBody':
       return MyGroupsResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
