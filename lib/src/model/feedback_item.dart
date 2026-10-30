@@ -32,6 +32,8 @@ class FeedbackItem {
     this.updatedAt,
     this.notifyPlatform,
     this.feedbackType,
+    this.staffName,
+    this.staffId,
   });
 
   @JsonKey(
@@ -132,6 +134,20 @@ class FeedbackItem {
   )
   final FeedbackItemFeedbackTypeEnum? feedbackType;
 
+  @JsonKey(
+    name: r'staffName',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? staffName;
+
+  @JsonKey(
+    name: r'staffId',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? staffId;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -149,7 +165,9 @@ class FeedbackItem {
           other.createdAt == createdAt &&
           other.updatedAt == updatedAt &&
           other.notifyPlatform == notifyPlatform &&
-          other.feedbackType == feedbackType;
+          other.feedbackType == feedbackType &&
+          other.staffName == staffName &&
+          other.staffId == staffId;
 
   @override
   int get hashCode =>
@@ -166,7 +184,9 @@ class FeedbackItem {
       createdAt.hashCode +
       updatedAt.hashCode +
       notifyPlatform.hashCode +
-      feedbackType.hashCode;
+      feedbackType.hashCode +
+      staffName.hashCode +
+      staffId.hashCode;
 
   factory FeedbackItem.fromJson(Map<String, dynamic> json) =>
       _$FeedbackItemFromJson(json);

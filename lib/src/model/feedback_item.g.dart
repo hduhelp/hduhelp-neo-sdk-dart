@@ -39,6 +39,8 @@ FeedbackItem _$FeedbackItemFromJson(Map<String, dynamic> json) =>
               'feedbackType',
               (v) => $enumDecodeNullable(
                   _$FeedbackItemFeedbackTypeEnumEnumMap, v)),
+          staffName: $checkedConvert('staffName', (v) => v as String?),
+          staffId: $checkedConvert('staffId', (v) => v as String?),
         );
         return val;
       },
@@ -63,6 +65,8 @@ Map<String, dynamic> _$FeedbackItemToJson(FeedbackItem instance) =>
       if (_$FeedbackItemFeedbackTypeEnumEnumMap[instance.feedbackType]
           case final value?)
         'feedbackType': value,
+      if (instance.staffName case final value?) 'staffName': value,
+      if (instance.staffId case final value?) 'staffId': value,
     };
 
 const _$FeedbackItemFeedbackTypeEnumEnumMap = {

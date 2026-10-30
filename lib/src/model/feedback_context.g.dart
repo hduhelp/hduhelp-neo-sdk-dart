@@ -12,7 +12,6 @@ FeedbackContext _$FeedbackContextFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = FeedbackContext(
-          route: $checkedConvert('route', (v) => v as String?),
           appVersion: $checkedConvert('appVersion', (v) => v as String?),
           platform: $checkedConvert('platform', (v) => v as String?),
         );
@@ -22,7 +21,6 @@ FeedbackContext _$FeedbackContextFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$FeedbackContextToJson(FeedbackContext instance) =>
     <String, dynamic>{
-      if (instance.route case final value?) 'route': value,
       if (instance.appVersion case final value?) 'appVersion': value,
       if (instance.platform case final value?) 'platform': value,
     };
