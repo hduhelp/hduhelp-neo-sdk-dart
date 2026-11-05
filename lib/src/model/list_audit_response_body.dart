@@ -3,7 +3,7 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/audit_entry.dart';
+import 'package:hduhelp_neo/src/model/knowledge_audit_entry.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'list_audit_response_body.g.dart';
@@ -28,7 +28,7 @@ class ListAuditResponseBody {
     required: false,
     includeIfNull: false,
   )
-  final List<AuditEntry>? data;
+  final List<KnowledgeAuditEntry>? data;
 
   @JsonKey(
     name: r'total',

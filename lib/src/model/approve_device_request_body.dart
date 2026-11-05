@@ -21,6 +21,7 @@ class ApproveDeviceRequestBody {
     this.expiryMode,
   });
 
+  /// 用户明确批准的 PAT 权限：精确 [all] 表示包含未来新增权限，或批准的具体 scope 列表；不能超出申请范围。
   @JsonKey(
     name: r'scopes',
     required: false,

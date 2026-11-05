@@ -16,7 +16,8 @@ ListAuditResponseBody _$ListAuditResponseBodyFromJson(
           data: $checkedConvert(
               'data',
               (v) => (v as List<dynamic>?)
-                  ?.map((e) => AuditEntry.fromJson(e as Map<String, dynamic>))
+                  ?.map((e) =>
+                      KnowledgeAuditEntry.fromJson(e as Map<String, dynamic>))
                   .toList()),
           total: $checkedConvert('total', (v) => (v as num?)?.toInt()),
           code: $checkedConvert('code', (v) => (v as num?)?.toInt()),

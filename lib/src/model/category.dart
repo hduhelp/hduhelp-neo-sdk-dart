@@ -18,6 +18,9 @@ class Category {
   Category({
     this.id,
     this.name,
+    this.description,
+    this.sortOrder,
+    this.postCount,
   });
 
   @JsonKey(
@@ -25,7 +28,7 @@ class Category {
     required: false,
     includeIfNull: false,
   )
-  final int? id;
+  final String? id;
 
   @JsonKey(
     name: r'name',
@@ -34,13 +37,44 @@ class Category {
   )
   final String? name;
 
+  @JsonKey(
+    name: r'description',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? description;
+
+  @JsonKey(
+    name: r'sort_order',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? sortOrder;
+
+  @JsonKey(
+    name: r'post_count',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? postCount;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Category && other.id == id && other.name == name;
+      other is Category &&
+          other.id == id &&
+          other.name == name &&
+          other.description == description &&
+          other.sortOrder == sortOrder &&
+          other.postCount == postCount;
 
   @override
-  int get hashCode => id.hashCode + name.hashCode;
+  int get hashCode =>
+      id.hashCode +
+      name.hashCode +
+      description.hashCode +
+      sortOrder.hashCode +
+      postCount.hashCode;
 
   factory Category.fromJson(Map<String, dynamic> json) =>
       _$CategoryFromJson(json);

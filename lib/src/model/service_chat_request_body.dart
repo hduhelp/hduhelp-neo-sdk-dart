@@ -19,7 +19,6 @@ class ServiceChatRequestBody {
     required this.query,
     this.domainKeys,
     this.officialOnly,
-    this.strategyName,
   });
 
   /// 要回答的自然语言问题。
@@ -44,29 +43,17 @@ class ServiceChatRequestBody {
   )
   final bool? officialOnly;
 
-  /// 策略(知识服务)名；空=默认
-  @JsonKey(
-    name: r'strategy_name',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? strategyName;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ServiceChatRequestBody &&
           other.query == query &&
           other.domainKeys == domainKeys &&
-          other.officialOnly == officialOnly &&
-          other.strategyName == strategyName;
+          other.officialOnly == officialOnly;
 
   @override
   int get hashCode =>
-      query.hashCode +
-      domainKeys.hashCode +
-      officialOnly.hashCode +
-      strategyName.hashCode;
+      query.hashCode + domainKeys.hashCode + officialOnly.hashCode;
 
   factory ServiceChatRequestBody.fromJson(Map<String, dynamic> json) =>
       _$ServiceChatRequestBodyFromJson(json);

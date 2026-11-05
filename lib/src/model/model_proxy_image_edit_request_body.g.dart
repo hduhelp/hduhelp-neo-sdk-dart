@@ -1,0 +1,61 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'model_proxy_image_edit_request_body.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+ModelProxyImageEditRequestBody _$ModelProxyImageEditRequestBodyFromJson(
+        Map<String, dynamic> json) =>
+    $checkedCreate(
+      'ModelProxyImageEditRequestBody',
+      json,
+      ($checkedConvert) {
+        $checkKeys(
+          json,
+          requiredKeys: const ['prompt'],
+        );
+        final val = ModelProxyImageEditRequestBody(
+          image: $checkedConvert('image',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          mask: $checkedConvert('mask', (v) => v as String?),
+          prompt: $checkedConvert('prompt', (v) => v as String),
+          model: $checkedConvert('model', (v) => v as String?),
+          n: $checkedConvert('n', (v) => (v as num?)?.toInt()),
+          size: $checkedConvert('size', (v) => v as String?),
+          quality: $checkedConvert('quality', (v) => v as String?),
+          style: $checkedConvert('style', (v) => v as String?),
+          responseFormat:
+              $checkedConvert('response_format', (v) => v as String?),
+          background: $checkedConvert('background', (v) => v as String?),
+          outputFormat: $checkedConvert('output_format', (v) => v as String?),
+          outputCompression: $checkedConvert(
+              'output_compression', (v) => (v as num?)?.toInt()),
+        );
+        return val;
+      },
+      fieldKeyMap: const {
+        'responseFormat': 'response_format',
+        'outputFormat': 'output_format',
+        'outputCompression': 'output_compression'
+      },
+    );
+
+Map<String, dynamic> _$ModelProxyImageEditRequestBodyToJson(
+        ModelProxyImageEditRequestBody instance) =>
+    <String, dynamic>{
+      if (instance.image case final value?) 'image': value,
+      if (instance.mask case final value?) 'mask': value,
+      'prompt': instance.prompt,
+      if (instance.model case final value?) 'model': value,
+      if (instance.n case final value?) 'n': value,
+      if (instance.size case final value?) 'size': value,
+      if (instance.quality case final value?) 'quality': value,
+      if (instance.style case final value?) 'style': value,
+      if (instance.responseFormat case final value?) 'response_format': value,
+      if (instance.background case final value?) 'background': value,
+      if (instance.outputFormat case final value?) 'output_format': value,
+      if (instance.outputCompression case final value?)
+        'output_compression': value,
+    };

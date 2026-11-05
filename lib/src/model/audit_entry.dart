@@ -17,15 +17,12 @@ class AuditEntry {
   /// Returns a new [AuditEntry] instance.
   AuditEntry({
     this.id,
-    this.actorId,
-    this.actorType,
+    this.operatorId,
     this.action,
-    this.targetType,
+    this.targetKind,
     this.targetId,
-    this.note,
+    this.detail,
     this.createdAt,
-    this.beforeJson,
-    this.afterJson,
   });
 
   @JsonKey(
@@ -36,19 +33,11 @@ class AuditEntry {
   final String? id;
 
   @JsonKey(
-    name: r'actorId',
+    name: r'operator_id',
     required: false,
     includeIfNull: false,
   )
-  final String? actorId;
-
-  /// human | crawler | system
-  @JsonKey(
-    name: r'actorType',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? actorType;
+  final String? operatorId;
 
   @JsonKey(
     name: r'action',
@@ -58,76 +47,54 @@ class AuditEntry {
   final String? action;
 
   @JsonKey(
-    name: r'targetType',
+    name: r'target_kind',
     required: false,
     includeIfNull: false,
   )
-  final String? targetType;
+  final String? targetKind;
 
   @JsonKey(
-    name: r'targetId',
+    name: r'target_id',
     required: false,
     includeIfNull: false,
   )
   final String? targetId;
 
   @JsonKey(
-    name: r'note',
+    name: r'detail',
     required: false,
     includeIfNull: false,
   )
-  final String? note;
+  final String? detail;
 
   @JsonKey(
-    name: r'createdAt',
+    name: r'created_at',
     required: false,
     includeIfNull: false,
   )
   final int? createdAt;
-
-  /// 变更前(JSON字符串)
-  @JsonKey(
-    name: r'beforeJson',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? beforeJson;
-
-  /// 变更后(JSON字符串)
-  @JsonKey(
-    name: r'afterJson',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? afterJson;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is AuditEntry &&
           other.id == id &&
-          other.actorId == actorId &&
-          other.actorType == actorType &&
+          other.operatorId == operatorId &&
           other.action == action &&
-          other.targetType == targetType &&
+          other.targetKind == targetKind &&
           other.targetId == targetId &&
-          other.note == note &&
-          other.createdAt == createdAt &&
-          other.beforeJson == beforeJson &&
-          other.afterJson == afterJson;
+          other.detail == detail &&
+          other.createdAt == createdAt;
 
   @override
   int get hashCode =>
       id.hashCode +
-      actorId.hashCode +
-      actorType.hashCode +
+      operatorId.hashCode +
       action.hashCode +
-      targetType.hashCode +
+      targetKind.hashCode +
       targetId.hashCode +
-      note.hashCode +
-      createdAt.hashCode +
-      beforeJson.hashCode +
-      afterJson.hashCode;
+      detail.hashCode +
+      createdAt.hashCode;
 
   factory AuditEntry.fromJson(Map<String, dynamic> json) =>
       _$AuditEntryFromJson(json);

@@ -20,13 +20,12 @@ class KnowledgeSearchRequestBody {
     this.domainKeys,
     this.officialOnly,
     this.limit,
-    this.denseWeight,
-    this.rewrite,
-    this.rerank,
-    this.rerankModel,
-    this.retrieveCount,
-    this.chunkGroup,
     this.scoreThreshold,
+    this.disableDense,
+    this.disableSentence,
+    this.disableKeyword,
+    this.disableRerank,
+    this.tags,
   });
 
   /// 要检索的自然语言问题或关键词。
@@ -63,61 +62,53 @@ class KnowledgeSearchRequestBody {
   )
   final int? limit;
 
-  /// 稠密(向量)权重
-  @JsonKey(
-    name: r'dense_weight',
-    required: false,
-    includeIfNull: false,
-  )
-  final double? denseWeight;
-
-  /// 问题改写
-  @JsonKey(
-    name: r'rewrite',
-    required: false,
-    includeIfNull: false,
-  )
-  final bool? rewrite;
-
-  /// 重排开关
-  @JsonKey(
-    name: r'rerank',
-    required: false,
-    includeIfNull: false,
-  )
-  final bool? rerank;
-
-  /// 重排模型
-  @JsonKey(
-    name: r'rerank_model',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? rerankModel;
-
-  /// 进入重排数量
-  @JsonKey(
-    name: r'retrieve_count',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? retrieveCount;
-
-  /// 文档聚合排序
-  @JsonKey(
-    name: r'chunk_group',
-    required: false,
-    includeIfNull: false,
-  )
-  final bool? chunkGroup;
-
-  /// 阈值过滤(0=不过滤)
+  /// 重排分阈值；不传用配置值
   @JsonKey(
     name: r'score_threshold',
     required: false,
     includeIfNull: false,
   )
   final double? scoreThreshold;
+
+  /// 关闭稠密向量召回
+  @JsonKey(
+    name: r'disable_dense',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? disableDense;
+
+  /// 关闭句子级/问法召回
+  @JsonKey(
+    name: r'disable_sentence',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? disableSentence;
+
+  /// 关闭关键词召回
+  @JsonKey(
+    name: r'disable_keyword',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? disableKeyword;
+
+  /// 关闭重排(按融合分排序)
+  @JsonKey(
+    name: r'disable_rerank',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? disableRerank;
+
+  /// 标签过滤(命中任一)
+  @JsonKey(
+    name: r'tags',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? tags;
 
   @override
   bool operator ==(Object other) =>
@@ -127,13 +118,12 @@ class KnowledgeSearchRequestBody {
           other.domainKeys == domainKeys &&
           other.officialOnly == officialOnly &&
           other.limit == limit &&
-          other.denseWeight == denseWeight &&
-          other.rewrite == rewrite &&
-          other.rerank == rerank &&
-          other.rerankModel == rerankModel &&
-          other.retrieveCount == retrieveCount &&
-          other.chunkGroup == chunkGroup &&
-          other.scoreThreshold == scoreThreshold;
+          other.scoreThreshold == scoreThreshold &&
+          other.disableDense == disableDense &&
+          other.disableSentence == disableSentence &&
+          other.disableKeyword == disableKeyword &&
+          other.disableRerank == disableRerank &&
+          other.tags == tags;
 
   @override
   int get hashCode =>
@@ -141,13 +131,12 @@ class KnowledgeSearchRequestBody {
       domainKeys.hashCode +
       officialOnly.hashCode +
       limit.hashCode +
-      denseWeight.hashCode +
-      rewrite.hashCode +
-      rerank.hashCode +
-      rerankModel.hashCode +
-      retrieveCount.hashCode +
-      chunkGroup.hashCode +
-      scoreThreshold.hashCode;
+      scoreThreshold.hashCode +
+      disableDense.hashCode +
+      disableSentence.hashCode +
+      disableKeyword.hashCode +
+      disableRerank.hashCode +
+      tags.hashCode;
 
   factory KnowledgeSearchRequestBody.fromJson(Map<String, dynamic> json) =>
       _$KnowledgeSearchRequestBodyFromJson(json);

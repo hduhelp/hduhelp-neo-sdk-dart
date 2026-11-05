@@ -2625,7 +2625,7 @@ class IdentityServiceApi {
   ///
   /// Parameters:
   /// * [clientId]
-  /// * [scope] - RFC 6749 space-delimited
+  /// * [scope] - PAT 权限：精确 all 表示动态全部用户权限（包含未来新增权限）；否则为具体 scope 列表，空格或逗号分隔。all 不可混合、重复或带空白。
   /// * [deviceName]
   /// * [deviceId]
   /// * [expiresAt] - requested PAT expiry, unix millis
@@ -5138,7 +5138,7 @@ class IdentityServiceApi {
   }
 
   /// 吊销当前个人访问令牌
-  /// 仅允许有效 PAT 通过自身 Bearer 凭据吊销自己。不接受令牌 ID，也不要求额外 scope。
+  /// 通过 PAT 自身 Bearer 凭据幂等吊销自己；已吊销或不存在时返回成功，过期令牌仍可吊销，存储故障返回 5xx。不接受令牌 ID，也不要求额外 scope。
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation

@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/o_auth_scope_item.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'authorized_app_item.g.dart';
@@ -20,6 +21,7 @@ class AuthorizedAppItem {
     this.name,
     this.description,
     this.scopes,
+    this.scopeDetails,
   });
 
   @JsonKey(
@@ -50,6 +52,14 @@ class AuthorizedAppItem {
   )
   final List<String>? scopes;
 
+  /// 每个 scope 的中文名与敏感标记，供客户端直接展示，省得各端自维护一张表。
+  @JsonKey(
+    name: r'scopeDetails',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<OAuthScopeItem>? scopeDetails;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -57,14 +67,16 @@ class AuthorizedAppItem {
           other.clientId == clientId &&
           other.name == name &&
           other.description == description &&
-          other.scopes == scopes;
+          other.scopes == scopes &&
+          other.scopeDetails == scopeDetails;
 
   @override
   int get hashCode =>
       clientId.hashCode +
       name.hashCode +
       description.hashCode +
-      scopes.hashCode;
+      scopes.hashCode +
+      scopeDetails.hashCode;
 
   factory AuthorizedAppItem.fromJson(Map<String, dynamic> json) =>
       _$AuthorizedAppItemFromJson(json);

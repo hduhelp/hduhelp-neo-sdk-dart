@@ -30,9 +30,12 @@ class KnowledgeCarrier {
     this.versions,
     this.syncStatus,
     this.syncError,
-    this.arkDocId,
     this.syncedAt,
     this.seq,
+    this.indexStage,
+    this.unitCount,
+    this.docRevisionId,
+    this.docReviewNeeded,
   });
 
   @JsonKey(
@@ -73,7 +76,7 @@ class KnowledgeCarrier {
   )
   final String? carrierType;
 
-  /// 交给方舟 fetch 的资源URL(file/md/爬取页)
+  /// 外部资源URL(采集附件等)
   @JsonKey(
     name: r'ingestRef',
     required: false,
@@ -135,13 +138,6 @@ class KnowledgeCarrier {
   final String? syncError;
 
   @JsonKey(
-    name: r'arkDocId',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? arkDocId;
-
-  @JsonKey(
     name: r'syncedAt',
     required: false,
     includeIfNull: false,
@@ -155,6 +151,38 @@ class KnowledgeCarrier {
     includeIfNull: false,
   )
   final int? seq;
+
+  /// queued | parsing | annotating | indexing | ready | failed
+  @JsonKey(
+    name: r'indexStage',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? indexStage;
+
+  /// 当前生效的检索单元数
+  @JsonKey(
+    name: r'unitCount',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? unitCount;
+
+  /// file: 生效的解析正文版本
+  @JsonKey(
+    name: r'docRevisionId',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? docRevisionId;
+
+  /// file: 来源文件已更新而正文是人工校订版，待复核
+  @JsonKey(
+    name: r'docReviewNeeded',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? docReviewNeeded;
 
   @override
   bool operator ==(Object other) =>
@@ -173,9 +201,12 @@ class KnowledgeCarrier {
           other.versions == versions &&
           other.syncStatus == syncStatus &&
           other.syncError == syncError &&
-          other.arkDocId == arkDocId &&
           other.syncedAt == syncedAt &&
-          other.seq == seq;
+          other.seq == seq &&
+          other.indexStage == indexStage &&
+          other.unitCount == unitCount &&
+          other.docRevisionId == docRevisionId &&
+          other.docReviewNeeded == docReviewNeeded;
 
   @override
   int get hashCode =>
@@ -192,9 +223,12 @@ class KnowledgeCarrier {
       versions.hashCode +
       syncStatus.hashCode +
       syncError.hashCode +
-      arkDocId.hashCode +
       syncedAt.hashCode +
-      seq.hashCode;
+      seq.hashCode +
+      indexStage.hashCode +
+      unitCount.hashCode +
+      docRevisionId.hashCode +
+      docReviewNeeded.hashCode;
 
   factory KnowledgeCarrier.fromJson(Map<String, dynamic> json) =>
       _$KnowledgeCarrierFromJson(json);

@@ -15,10 +15,18 @@ IssueUserSessionRequestBody _$IssueUserSessionRequestBodyFromJson(
         final val = IssueUserSessionRequestBody(
           userId: $checkedConvert('user_id', (v) => v as String?),
           reason: $checkedConvert('reason', (v) => v as String?),
+          operatorStaffName:
+              $checkedConvert('operator_staff_name', (v) => v as String?),
+          operatorStaffId:
+              $checkedConvert('operator_staff_id', (v) => v as String?),
         );
         return val;
       },
-      fieldKeyMap: const {'userId': 'user_id'},
+      fieldKeyMap: const {
+        'userId': 'user_id',
+        'operatorStaffName': 'operator_staff_name',
+        'operatorStaffId': 'operator_staff_id'
+      },
     );
 
 Map<String, dynamic> _$IssueUserSessionRequestBodyToJson(
@@ -26,4 +34,8 @@ Map<String, dynamic> _$IssueUserSessionRequestBodyToJson(
     <String, dynamic>{
       if (instance.userId case final value?) 'user_id': value,
       if (instance.reason case final value?) 'reason': value,
+      if (instance.operatorStaffName case final value?)
+        'operator_staff_name': value,
+      if (instance.operatorStaffId case final value?)
+        'operator_staff_id': value,
     };

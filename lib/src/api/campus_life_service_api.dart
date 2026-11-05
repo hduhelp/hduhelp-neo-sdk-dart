@@ -19,7 +19,6 @@ import 'package:hduhelp_neo/src/model/bind_room_request_body.dart';
 import 'package:hduhelp_neo/src/model/card_balance_response_body.dart';
 import 'package:hduhelp_neo/src/model/card_consume_response_body.dart';
 import 'package:hduhelp_neo/src/model/card_info_response_body.dart';
-import 'package:hduhelp_neo/src/model/category_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_volunteer_activity_request_body.dart';
 import 'package:hduhelp_neo/src/model/electric_balance_response_body.dart';
 import 'package:hduhelp_neo/src/model/electric_binding_response_body.dart';
@@ -28,6 +27,8 @@ import 'package:hduhelp_neo/src/model/electric_floor_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/electric_history_response_body.dart';
 import 'package:hduhelp_neo/src/model/electric_room_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/info_stream_response_body.dart';
+import 'package:hduhelp_neo/src/model/lost_found_category_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/lost_found_search_response_body.dart';
 import 'package:hduhelp_neo/src/model/mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/news_response_body.dart';
 import 'package:hduhelp_neo/src/model/popular_response_body.dart';
@@ -36,12 +37,12 @@ import 'package:hduhelp_neo/src/model/public_campus_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/real_time_response_body.dart';
 import 'package:hduhelp_neo/src/model/recruitment_response_body.dart';
 import 'package:hduhelp_neo/src/model/scene_list_response_body.dart';
-import 'package:hduhelp_neo/src/model/search_response_body.dart';
 import 'package:hduhelp_neo/src/model/simple_response_body.dart';
 import 'package:hduhelp_neo/src/model/sponsor_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_activity_request_body.dart';
 import 'package:hduhelp_neo/src/model/venue_availability_response_body.dart';
 import 'package:hduhelp_neo/src/model/venue_dates_response_body.dart';
+import 'package:hduhelp_neo/src/model/volunteer_activity_detail_response_body.dart';
 
 class CampusLifeServiceApi {
   final Dio _dio;
@@ -60,9 +61,9 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [VolunteerActivityDetailResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ActivityDetailResponseBody>>
+  Future<Response<VolunteerActivityDetailResponseBody>>
       campusLifeServiceAdminCancelVolunteerUrgent({
     required String id,
     CancelToken? cancelToken,
@@ -100,14 +101,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ActivityDetailResponseBody? _responseData;
+    VolunteerActivityDetailResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
-              rawData, 'ActivityDetailResponseBody',
+          : deserialize<VolunteerActivityDetailResponseBody,
+                  VolunteerActivityDetailResponseBody>(
+              rawData, 'VolunteerActivityDetailResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -119,7 +121,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<ActivityDetailResponseBody>(
+    return Response<VolunteerActivityDetailResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -143,9 +145,9 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [VolunteerActivityDetailResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ActivityDetailResponseBody>>
+  Future<Response<VolunteerActivityDetailResponseBody>>
       campusLifeServiceAdminCreateVolunteerActivity({
     CreateVolunteerActivityRequestBody? createVolunteerActivityRequestBody,
     CancelToken? cancelToken,
@@ -200,14 +202,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ActivityDetailResponseBody? _responseData;
+    VolunteerActivityDetailResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
-              rawData, 'ActivityDetailResponseBody',
+          : deserialize<VolunteerActivityDetailResponseBody,
+                  VolunteerActivityDetailResponseBody>(
+              rawData, 'VolunteerActivityDetailResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -219,7 +222,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<ActivityDetailResponseBody>(
+    return Response<VolunteerActivityDetailResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -243,9 +246,9 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [VolunteerActivityDetailResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ActivityDetailResponseBody>>
+  Future<Response<VolunteerActivityDetailResponseBody>>
       campusLifeServiceAdminEndVolunteerActivity({
     required String id,
     CancelToken? cancelToken,
@@ -283,14 +286,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ActivityDetailResponseBody? _responseData;
+    VolunteerActivityDetailResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
-              rawData, 'ActivityDetailResponseBody',
+          : deserialize<VolunteerActivityDetailResponseBody,
+                  VolunteerActivityDetailResponseBody>(
+              rawData, 'VolunteerActivityDetailResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -302,7 +306,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<ActivityDetailResponseBody>(
+    return Response<VolunteerActivityDetailResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -326,9 +330,9 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [VolunteerActivityDetailResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ActivityDetailResponseBody>>
+  Future<Response<VolunteerActivityDetailResponseBody>>
       campusLifeServiceAdminGetVolunteerActivity({
     required String id,
     CancelToken? cancelToken,
@@ -366,14 +370,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ActivityDetailResponseBody? _responseData;
+    VolunteerActivityDetailResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
-              rawData, 'ActivityDetailResponseBody',
+          : deserialize<VolunteerActivityDetailResponseBody,
+                  VolunteerActivityDetailResponseBody>(
+              rawData, 'VolunteerActivityDetailResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -385,7 +390,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<ActivityDetailResponseBody>(
+    return Response<VolunteerActivityDetailResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -597,9 +602,9 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [VolunteerActivityDetailResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ActivityDetailResponseBody>>
+  Future<Response<VolunteerActivityDetailResponseBody>>
       campusLifeServiceAdminSetVolunteerUrgent({
     required String id,
     CancelToken? cancelToken,
@@ -637,14 +642,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ActivityDetailResponseBody? _responseData;
+    VolunteerActivityDetailResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
-              rawData, 'ActivityDetailResponseBody',
+          : deserialize<VolunteerActivityDetailResponseBody,
+                  VolunteerActivityDetailResponseBody>(
+              rawData, 'VolunteerActivityDetailResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -656,7 +662,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<ActivityDetailResponseBody>(
+    return Response<VolunteerActivityDetailResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -681,9 +687,9 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [VolunteerActivityDetailResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ActivityDetailResponseBody>>
+  Future<Response<VolunteerActivityDetailResponseBody>>
       campusLifeServiceAdminUpdateVolunteerActivity({
     required String id,
     UpdateActivityRequestBody? updateActivityRequestBody,
@@ -740,14 +746,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ActivityDetailResponseBody? _responseData;
+    VolunteerActivityDetailResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
-              rawData, 'ActivityDetailResponseBody',
+          : deserialize<VolunteerActivityDetailResponseBody,
+                  VolunteerActivityDetailResponseBody>(
+              rawData, 'VolunteerActivityDetailResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -759,7 +766,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<ActivityDetailResponseBody>(
+    return Response<VolunteerActivityDetailResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1885,9 +1892,9 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ActivityDetailResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [VolunteerActivityDetailResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ActivityDetailResponseBody>>
+  Future<Response<VolunteerActivityDetailResponseBody>>
       campusLifeServiceGetVolunteerActivity({
     required String id,
     CancelToken? cancelToken,
@@ -1919,14 +1926,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ActivityDetailResponseBody? _responseData;
+    VolunteerActivityDetailResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<ActivityDetailResponseBody, ActivityDetailResponseBody>(
-              rawData, 'ActivityDetailResponseBody',
+          : deserialize<VolunteerActivityDetailResponseBody,
+                  VolunteerActivityDetailResponseBody>(
+              rawData, 'VolunteerActivityDetailResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1938,7 +1946,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<ActivityDetailResponseBody>(
+    return Response<VolunteerActivityDetailResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2567,9 +2575,9 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [CategoryListResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [LostFoundCategoryListResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CategoryListResponseBody>>
+  Future<Response<LostFoundCategoryListResponseBody>>
       campusLifeServiceListLostFoundCategories({
     String? xStaffId,
     CancelToken? cancelToken,
@@ -2607,14 +2615,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    CategoryListResponseBody? _responseData;
+    LostFoundCategoryListResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<CategoryListResponseBody, CategoryListResponseBody>(
-              rawData, 'CategoryListResponseBody',
+          : deserialize<LostFoundCategoryListResponseBody,
+                  LostFoundCategoryListResponseBody>(
+              rawData, 'LostFoundCategoryListResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -2626,7 +2635,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<CategoryListResponseBody>(
+    return Response<LostFoundCategoryListResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -3418,9 +3427,10 @@ class CampusLifeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [SearchResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [LostFoundSearchResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<SearchResponseBody>> campusLifeServiceSearchLostItems({
+  Future<Response<LostFoundSearchResponseBody>>
+      campusLifeServiceSearchLostItems({
     int? page,
     String? keyword,
     String? category,
@@ -3469,14 +3479,15 @@ class CampusLifeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    SearchResponseBody? _responseData;
+    LostFoundSearchResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<SearchResponseBody, SearchResponseBody>(
-              rawData, 'SearchResponseBody',
+          : deserialize<LostFoundSearchResponseBody,
+                  LostFoundSearchResponseBody>(
+              rawData, 'LostFoundSearchResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -3488,7 +3499,7 @@ class CampusLifeServiceApi {
       );
     }
 
-    return Response<SearchResponseBody>(
+    return Response<LostFoundSearchResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

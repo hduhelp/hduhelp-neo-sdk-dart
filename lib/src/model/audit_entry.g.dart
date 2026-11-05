@@ -12,30 +12,30 @@ AuditEntry _$AuditEntryFromJson(Map<String, dynamic> json) => $checkedCreate(
       ($checkedConvert) {
         final val = AuditEntry(
           id: $checkedConvert('id', (v) => v as String?),
-          actorId: $checkedConvert('actorId', (v) => v as String?),
-          actorType: $checkedConvert('actorType', (v) => v as String?),
+          operatorId: $checkedConvert('operator_id', (v) => v as String?),
           action: $checkedConvert('action', (v) => v as String?),
-          targetType: $checkedConvert('targetType', (v) => v as String?),
-          targetId: $checkedConvert('targetId', (v) => v as String?),
-          note: $checkedConvert('note', (v) => v as String?),
-          createdAt: $checkedConvert('createdAt', (v) => (v as num?)?.toInt()),
-          beforeJson: $checkedConvert('beforeJson', (v) => v as String?),
-          afterJson: $checkedConvert('afterJson', (v) => v as String?),
+          targetKind: $checkedConvert('target_kind', (v) => v as String?),
+          targetId: $checkedConvert('target_id', (v) => v as String?),
+          detail: $checkedConvert('detail', (v) => v as String?),
+          createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
         );
         return val;
+      },
+      fieldKeyMap: const {
+        'operatorId': 'operator_id',
+        'targetKind': 'target_kind',
+        'targetId': 'target_id',
+        'createdAt': 'created_at'
       },
     );
 
 Map<String, dynamic> _$AuditEntryToJson(AuditEntry instance) =>
     <String, dynamic>{
       if (instance.id case final value?) 'id': value,
-      if (instance.actorId case final value?) 'actorId': value,
-      if (instance.actorType case final value?) 'actorType': value,
+      if (instance.operatorId case final value?) 'operator_id': value,
       if (instance.action case final value?) 'action': value,
-      if (instance.targetType case final value?) 'targetType': value,
-      if (instance.targetId case final value?) 'targetId': value,
-      if (instance.note case final value?) 'note': value,
-      if (instance.createdAt case final value?) 'createdAt': value,
-      if (instance.beforeJson case final value?) 'beforeJson': value,
-      if (instance.afterJson case final value?) 'afterJson': value,
+      if (instance.targetKind case final value?) 'target_kind': value,
+      if (instance.targetId case final value?) 'target_id': value,
+      if (instance.detail case final value?) 'detail': value,
+      if (instance.createdAt case final value?) 'created_at': value,
     };

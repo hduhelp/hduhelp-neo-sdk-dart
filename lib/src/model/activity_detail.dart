@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/activity.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'activity_detail.g.dart';
@@ -16,125 +17,23 @@ part 'activity_detail.g.dart';
 class ActivityDetail {
   /// Returns a new [ActivityDetail] instance.
   ActivityDetail({
-    this.id,
-    this.title,
-    this.startAt,
-    this.endAt,
-    this.description,
-    this.status,
-    this.isUrgent,
-    this.urgentAt,
-    this.publishedAt,
-    this.createdAt,
-    this.updatedAt,
+    this.activity,
   });
 
   @JsonKey(
-    name: r'id',
+    name: r'activity',
     required: false,
     includeIfNull: false,
   )
-  final String? id;
-
-  @JsonKey(
-    name: r'title',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? title;
-
-  @JsonKey(
-    name: r'startAt',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? startAt;
-
-  @JsonKey(
-    name: r'endAt',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? endAt;
-
-  @JsonKey(
-    name: r'description',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? description;
-
-  @JsonKey(
-    name: r'status',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? status;
-
-  @JsonKey(
-    name: r'isUrgent',
-    required: false,
-    includeIfNull: false,
-  )
-  final bool? isUrgent;
-
-  @JsonKey(
-    name: r'urgentAt',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? urgentAt;
-
-  @JsonKey(
-    name: r'publishedAt',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? publishedAt;
-
-  @JsonKey(
-    name: r'createdAt',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? createdAt;
-
-  @JsonKey(
-    name: r'updatedAt',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? updatedAt;
+  final Activity? activity;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ActivityDetail &&
-          other.id == id &&
-          other.title == title &&
-          other.startAt == startAt &&
-          other.endAt == endAt &&
-          other.description == description &&
-          other.status == status &&
-          other.isUrgent == isUrgent &&
-          other.urgentAt == urgentAt &&
-          other.publishedAt == publishedAt &&
-          other.createdAt == createdAt &&
-          other.updatedAt == updatedAt;
+      other is ActivityDetail && other.activity == activity;
 
   @override
-  int get hashCode =>
-      id.hashCode +
-      title.hashCode +
-      startAt.hashCode +
-      endAt.hashCode +
-      description.hashCode +
-      status.hashCode +
-      isUrgent.hashCode +
-      urgentAt.hashCode +
-      publishedAt.hashCode +
-      createdAt.hashCode +
-      updatedAt.hashCode;
+  int get hashCode => activity.hashCode;
 
   factory ActivityDetail.fromJson(Map<String, dynamic> json) =>
       _$ActivityDetailFromJson(json);

@@ -15,7 +15,8 @@ InboxListData _$InboxListDataFromJson(Map<String, dynamic> json) =>
           list: $checkedConvert(
               'list',
               (v) => (v as List<dynamic>?)
-                  ?.map((e) => InboxEntry.fromJson(e as Map<String, dynamic>))
+                  ?.map((e) =>
+                      MomentsInboxEntry.fromJson(e as Map<String, dynamic>))
                   .toList()),
           nextCursor: $checkedConvert('next_cursor', (v) => v as String?),
           hasMore: $checkedConvert('has_more', (v) => v as bool?),

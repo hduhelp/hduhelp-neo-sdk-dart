@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'package:hduhelp_neo/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
+import 'package:hduhelp_neo/src/model/admin_change_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_login_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_login_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_logout_response_body.dart';
@@ -22,10 +23,10 @@ import 'package:hduhelp_neo/src/model/authorization_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/caiyun_config_response_body.dart';
 import 'package:hduhelp_neo/src/model/campus_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/campus_mutate_response_body.dart';
-import 'package:hduhelp_neo/src/model/change_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/change_password_response_body.dart';
 import 'package:hduhelp_neo/src/model/config_get_response_body.dart';
 import 'package:hduhelp_neo/src/model/config_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/confirm_impersonation_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_app_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_campus_request_body.dart';
@@ -49,12 +50,16 @@ import 'package:hduhelp_neo/src/model/delete_user_campus_identity_response_body.
 import 'package:hduhelp_neo/src/model/delete_user_social_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/electricity_meter_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/electricity_meter_mutate_response_body.dart';
+import 'package:hduhelp_neo/src/model/impersonation_result_response_body.dart';
 import 'package:hduhelp_neo/src/model/issue_user_session_request_body.dart';
 import 'package:hduhelp_neo/src/model/issue_user_session_response_body.dart';
+import 'package:hduhelp_neo/src/model/list_impersonation_logs_response_body.dart';
 import 'package:hduhelp_neo/src/model/login_client_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/login_method_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/mcp_tools_response_body.dart';
 import 'package:hduhelp_neo/src/model/operator_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/permission_catalog_response_body.dart';
+import 'package:hduhelp_neo/src/model/report_impersonation_request_body.dart';
 import 'package:hduhelp_neo/src/model/reset_operator_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/reset_operator_password_response_body.dart';
 import 'package:hduhelp_neo/src/model/revoke_authorization_response_body.dart';
@@ -111,7 +116,7 @@ class AdminServiceApi {
   /// 当前运营者校验旧口令后设置新口令，成功后清除首登强制改密标志
   ///
   /// Parameters:
-  /// * [changePasswordRequestBody] - 运营者自助：修改自己的登录口令
+  /// * [adminChangePasswordRequestBody] - 运营者自助：修改自己的登录口令
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -122,7 +127,7 @@ class AdminServiceApi {
   /// Returns a [Future] containing a [Response] with a [ChangePasswordResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
   Future<Response<ChangePasswordResponseBody>> adminServiceAdminChangePassword({
-    ChangePasswordRequestBody? changePasswordRequestBody,
+    AdminChangePasswordRequestBody? adminChangePasswordRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -153,7 +158,7 @@ class AdminServiceApi {
     dynamic _bodyData;
 
     try {
-      _bodyData = jsonEncode(changePasswordRequestBody);
+      _bodyData = jsonEncode(adminChangePasswordRequestBody);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _options.compose(
@@ -648,6 +653,101 @@ class AdminServiceApi {
     }
 
     return Response<AssignOperatorRoleResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 确认代登录成功
+  /// 目标前端建立会话后提交本次确认凭据；仅接受与审计记录绑定的原生用户会话，幂等记录成功。
+  ///
+  /// Parameters:
+  /// * [confirmImpersonationRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ImpersonationResultResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ImpersonationResultResponseBody>>
+      adminServiceConfirmImpersonation({
+    ConfirmImpersonationRequestBody? confirmImpersonationRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/identity/auth/impersonation/confirm';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(confirmImpersonationRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ImpersonationResultResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ImpersonationResultResponseBody,
+                  ImpersonationResultResponseBody>(
+              rawData, 'ImpersonationResultResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ImpersonationResultResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2216,8 +2316,87 @@ class AdminServiceApi {
     );
   }
 
+  /// MCP工具启停目录
+  /// 返回全部生成的MCP工具（含停用工具）及当前启停策略，经系统配置接口保存；不改变REST和CLI权限
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [MCPToolsResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<MCPToolsResponseBody>> adminServiceGetMCPTools({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/configs/mcp';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    MCPToolsResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<MCPToolsResponseBody, MCPToolsResponseBody>(
+              rawData, 'MCPToolsResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<MCPToolsResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 管理员代登录用户
-  /// 仅具备独立代登录权限的管理员可填写原因后签发短时普通用户会话；记录操作者、目标用户和会话 ID。该会话的业务操作按目标用户身份执行。
+  /// 仅具备独立代登录权限的管理员可填写本人姓名、学号/工号和原因后签发短时普通用户会话；记录操作者、目标用户和会话 ID。该会话的业务操作按目标用户身份执行。
   ///
   /// Parameters:
   /// * [issueUserSessionRequestBody]
@@ -2840,6 +3019,118 @@ class AdminServiceApi {
     );
   }
 
+  /// 查询代登录审计记录
+  /// 独立只读权限，按操作者、目标用户、时间和结果分页查询；已签发不代表用户页面已打开。
+  ///
+  /// Parameters:
+  /// * [result]
+  /// * [keyword] - 代登录人或被代登录人的姓名、学号/工号
+  /// * [operatorId]
+  /// * [targetUserId]
+  /// * [status]
+  /// * [from] - Unix 毫秒
+  /// * [to] - Unix 毫秒
+  /// * [page]
+  /// * [size]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ListImpersonationLogsResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ListImpersonationLogsResponseBody>>
+      adminServiceListImpersonationLogs({
+    String? result,
+    String? keyword,
+    String? operatorId,
+    String? targetUserId,
+    String? status,
+    int? from,
+    int? to,
+    int? page,
+    int? size,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/impersonation-logs';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (result != null) r'result': result,
+      if (keyword != null) r'keyword': keyword,
+      if (operatorId != null) r'operator_id': operatorId,
+      if (targetUserId != null) r'target_user_id': targetUserId,
+      if (status != null) r'status': status,
+      if (from != null) r'from': from,
+      if (to != null) r'to': to,
+      if (page != null) r'page': page,
+      if (size != null) r'size': size,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ListImpersonationLogsResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ListImpersonationLogsResponseBody,
+                  ListImpersonationLogsResponseBody>(
+              rawData, 'ListImpersonationLogsResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ListImpersonationLogsResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 登录客户端列表
   /// 列出可接收CAS/三方登录会话handoff的第一方客户端；带 id 时仅返回该客户端（单元素列表），含精确回调白名单
   ///
@@ -3393,6 +3684,107 @@ class AdminServiceApi {
     }
 
     return Response<TenantListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 查询或报告本次代登录结果
+  /// 仅发起人可查询或报告明确的前端流程失败；超时和窗口关闭不覆盖成功。
+  ///
+  /// Parameters:
+  /// * [reportImpersonationRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ImpersonationResultResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ImpersonationResultResponseBody>>
+      adminServiceReportImpersonation({
+    ReportImpersonationRequestBody? reportImpersonationRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/impersonation-logs/result';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(reportImpersonationRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ImpersonationResultResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ImpersonationResultResponseBody,
+                  ImpersonationResultResponseBody>(
+              rawData, 'ImpersonationResultResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ImpersonationResultResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

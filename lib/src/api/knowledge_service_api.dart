@@ -11,12 +11,14 @@ import 'package:dio/dio.dart';
 
 import 'package:hduhelp_neo/src/model/add_chunk_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_domain_tree_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_search_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_source_tree_response_body.dart';
+import 'package:hduhelp_neo/src/model/adopt_revision_request_body.dart';
+import 'package:hduhelp_neo/src/model/asset_id_request_body.dart';
 import 'package:hduhelp_neo/src/model/attach_file_request_body.dart';
 import 'package:hduhelp_neo/src/model/carrier_download_url_response_body.dart';
 import 'package:hduhelp_neo/src/model/carrier_response_body.dart';
 import 'package:hduhelp_neo/src/model/check_update_response_body.dart';
-import 'package:hduhelp_neo/src/model/chunk_delete_response_body.dart';
 import 'package:hduhelp_neo/src/model/chunk_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/collector_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_domain_request_body.dart';
@@ -29,13 +31,19 @@ import 'package:hduhelp_neo/src/model/faq_import_request_body.dart';
 import 'package:hduhelp_neo/src/model/faq_import_response_body.dart';
 import 'package:hduhelp_neo/src/model/gap_action_request_body.dart';
 import 'package:hduhelp_neo/src/model/gap_action_response_body.dart';
+import 'package:hduhelp_neo/src/model/hide_chunk_request_body.dart';
 import 'package:hduhelp_neo/src/model/item_detail_response_body.dart';
 import 'package:hduhelp_neo/src/model/item_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/item_state_request_body.dart';
 import 'package:hduhelp_neo/src/model/item_state_response_body.dart';
+import 'package:hduhelp_neo/src/model/knowledge_asset_response_body.dart';
+import 'package:hduhelp_neo/src/model/knowledge_doc_revision_response_body.dart';
+import 'package:hduhelp_neo/src/model/knowledge_document_response_body.dart';
+import 'package:hduhelp_neo/src/model/knowledge_index_status_response_body.dart';
 import 'package:hduhelp_neo/src/model/knowledge_search_request_body.dart';
 import 'package:hduhelp_neo/src/model/knowledge_search_response_body.dart';
 import 'package:hduhelp_neo/src/model/knowledge_tags_response_body.dart';
+import 'package:hduhelp_neo/src/model/list_assets_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_audit_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_chunks_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_collectors_response_body.dart';
@@ -45,22 +53,22 @@ import 'package:hduhelp_neo/src/model/list_items_response_body.dart';
 import 'package:hduhelp_neo/src/model/mutate_ok_response_body.dart';
 import 'package:hduhelp_neo/src/model/overview_response_body.dart';
 import 'package:hduhelp_neo/src/model/preview_tagging_prompt_response_body.dart';
-import 'package:hduhelp_neo/src/model/qa_strategies_response_body.dart';
+import 'package:hduhelp_neo/src/model/rebuild_index_response_body.dart';
+import 'package:hduhelp_neo/src/model/reparse_request_body.dart';
 import 'package:hduhelp_neo/src/model/report_gap_request_body.dart';
 import 'package:hduhelp_neo/src/model/report_gap_response_body.dart';
 import 'package:hduhelp_neo/src/model/restore_version_request_body.dart';
 import 'package:hduhelp_neo/src/model/retrieve_request_body.dart';
 import 'package:hduhelp_neo/src/model/run_collector_response_body.dart';
+import 'package:hduhelp_neo/src/model/save_document_request_body.dart';
 import 'package:hduhelp_neo/src/model/save_draft_request_body.dart';
 import 'package:hduhelp_neo/src/model/service_chat_request_body.dart';
 import 'package:hduhelp_neo/src/model/service_chat_response_body.dart';
-import 'package:hduhelp_neo/src/model/set_qa_strategies_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_tagging_prompt_request_body.dart';
-import 'package:hduhelp_neo/src/model/set_tagging_target_request_body.dart';
 import 'package:hduhelp_neo/src/model/source_delete_response_body.dart';
 import 'package:hduhelp_neo/src/model/source_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/tagging_prompt_response_body.dart';
-import 'package:hduhelp_neo/src/model/tagging_target_response_body.dart';
+import 'package:hduhelp_neo/src/model/update_asset_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_chunk_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_collector_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_domain_request_body.dart';
@@ -73,7 +81,7 @@ class KnowledgeServiceApi {
   const KnowledgeServiceApi(this._dio);
 
   /// 新增补充切片
-  /// 在文件文档上补充一条文本切片(标题+内容)
+  /// 为载体补充一条文本切片(标题+内容)，每次重建都会带上；提交后自动重建该载体
   ///
   /// Parameters:
   /// * [addChunkRequestBody]
@@ -160,6 +168,105 @@ class KnowledgeServiceApi {
     }
 
     return Response<ChunkMutateResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 采用正文版本
+  /// 把某个历史版本(含 AI 解析版)设为生效并重建索引，用于回退或复核后采用新解析
+  ///
+  /// Parameters:
+  /// * [adoptRevisionRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [MutateOkResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<MutateOkResponseBody>> knowledgeServiceAdminAdoptDocRevision({
+    AdoptRevisionRequestBody? adoptRevisionRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/knowledge/carriers/document/adopt';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(adoptRevisionRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    MutateOkResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<MutateOkResponseBody, MutateOkResponseBody>(
+              rawData, 'MutateOkResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<MutateOkResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -258,11 +365,11 @@ class KnowledgeServiceApi {
   }
 
   /// 给条目挂附件
-  /// 把已上传的文件作为 file 形态子条目挂到条目下（问答/文章/爬取页面皆可），独立方舟收录
+  /// 把已上传的文件作为 file 形态子条目挂到条目下（问答/文章/爬取页面皆可），独立解析与收录
   ///
   /// Parameters:
   /// * [id]
-  /// * [attachFileRequestBody] - 给已有条目挂一个已上传的文件作为附件（file 形态子条目，独立方舟 doc）
+  /// * [attachFileRequestBody] - 给已有条目挂一个已上传的文件作为附件（file 形态子条目，独立建索引）
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -638,7 +745,7 @@ class KnowledgeServiceApi {
   }
 
   /// 新建知识条目
-  /// 人工录入文章或单条 FAQ；落库为草稿态，发布后同步方舟
+  /// 人工录入文章或单条 FAQ；落库为草稿态，发布后进入检索索引
   ///
   /// Parameters:
   /// * [createItemRequestBody]
@@ -835,12 +942,12 @@ class KnowledgeServiceApi {
     );
   }
 
-  /// 删除切片
-  /// 删除一条我方补充切片
+  /// 删除补充切片或取消屏蔽
+  /// 按操作 id 删除补充切片，或取消对自动切片的屏蔽；提交后自动重建该载体
   ///
   /// Parameters:
   /// * [carrierId]
-  /// * [pointId]
+  /// * [overrideId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -848,11 +955,11 @@ class KnowledgeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [ChunkDeleteResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [ChunkMutateResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<ChunkDeleteResponseBody>> knowledgeServiceAdminDeleteChunk({
+  Future<Response<ChunkMutateResponseBody>> knowledgeServiceAdminDeleteChunk({
     String? carrierId,
-    String? pointId,
+    String? overrideId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -881,7 +988,7 @@ class KnowledgeServiceApi {
 
     final _queryParameters = <String, dynamic>{
       if (carrierId != null) r'carrier_id': carrierId,
-      if (pointId != null) r'point_id': pointId,
+      if (overrideId != null) r'override_id': overrideId,
     };
 
     final _response = await _dio.request<Object>(
@@ -893,14 +1000,14 @@ class KnowledgeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    ChunkDeleteResponseBody? _responseData;
+    ChunkMutateResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<ChunkDeleteResponseBody, ChunkDeleteResponseBody>(
-              rawData, 'ChunkDeleteResponseBody',
+          : deserialize<ChunkMutateResponseBody, ChunkMutateResponseBody>(
+              rawData, 'ChunkMutateResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -912,7 +1019,7 @@ class KnowledgeServiceApi {
       );
     }
 
-    return Response<ChunkDeleteResponseBody>(
+    return Response<ChunkMutateResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1298,10 +1405,12 @@ class KnowledgeServiceApi {
     );
   }
 
-  /// 快速问答策略
-  /// 返回可配置的快速问答策略(知识服务)数组与默认项
+  /// 解析正文版本
+  /// 返回一个版本的完整正文
   ///
   /// Parameters:
+  /// * [carrierId]
+  /// * [revisionId]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1309,10 +1418,12 @@ class KnowledgeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [QAStrategiesResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [KnowledgeDocRevisionResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<QAStrategiesResponseBody>>
-      knowledgeServiceAdminGetQAStrategies({
+  Future<Response<KnowledgeDocRevisionResponseBody>>
+      knowledgeServiceAdminGetDocRevision({
+    String? carrierId,
+    String? revisionId,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -1320,7 +1431,7 @@ class KnowledgeServiceApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/hduhelp-neo/admin/knowledge/qa-strategies';
+    final _path = r'/hduhelp-neo/admin/knowledge/carriers/document/revision';
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -1339,22 +1450,29 @@ class KnowledgeServiceApi {
       validateStatus: validateStatus,
     );
 
+    final _queryParameters = <String, dynamic>{
+      if (carrierId != null) r'carrier_id': carrierId,
+      if (revisionId != null) r'revision_id': revisionId,
+    };
+
     final _response = await _dio.request<Object>(
       _path,
       options: _options,
+      queryParameters: _queryParameters,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );
 
-    QAStrategiesResponseBody? _responseData;
+    KnowledgeDocRevisionResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<QAStrategiesResponseBody, QAStrategiesResponseBody>(
-              rawData, 'QAStrategiesResponseBody',
+          : deserialize<KnowledgeDocRevisionResponseBody,
+                  KnowledgeDocRevisionResponseBody>(
+              rawData, 'KnowledgeDocRevisionResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1366,7 +1484,95 @@ class KnowledgeServiceApi {
       );
     }
 
-    return Response<QAStrategiesResponseBody>(
+    return Response<KnowledgeDocRevisionResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 解析正文
+  /// 文件载体的生效正文、最新 AI 解析版、版本历史、解析信息与原文件地址
+  ///
+  /// Parameters:
+  /// * [carrierId]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [KnowledgeDocumentResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<KnowledgeDocumentResponseBody>>
+      knowledgeServiceAdminGetDocument({
+    String? carrierId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/knowledge/carriers/document';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (carrierId != null) r'carrier_id': carrierId,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    KnowledgeDocumentResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<KnowledgeDocumentResponseBody,
+                  KnowledgeDocumentResponseBody>(
+              rawData, 'KnowledgeDocumentResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<KnowledgeDocumentResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1458,10 +1664,11 @@ class KnowledgeServiceApi {
     );
   }
 
-  /// 打标接入点
-  /// 返回 AI 打标模型接入点(Base URL / API Key / Model)
+  /// 屏蔽切片
+  /// 让一条自动切片不再参与检索；按切片内容定位，重新切片后仍然有效
   ///
   /// Parameters:
+  /// * [hideChunkRequestBody]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1469,10 +1676,10 @@ class KnowledgeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [TaggingTargetResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [ChunkMutateResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<TaggingTargetResponseBody>>
-      knowledgeServiceAdminGetTaggingTarget({
+  Future<Response<ChunkMutateResponseBody>> knowledgeServiceAdminHideChunk({
+    HideChunkRequestBody? hideChunkRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -1480,9 +1687,9 @@ class KnowledgeServiceApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/hduhelp-neo/admin/knowledge/tagging-target';
+    final _path = r'/hduhelp-neo/admin/knowledge/chunks/hide';
     final _options = Options(
-      method: r'GET',
+      method: r'POST',
       headers: <String, dynamic>{
         ...?headers,
       },
@@ -1496,25 +1703,43 @@ class KnowledgeServiceApi {
         ],
         ...?extra,
       },
+      contentType: 'application/json',
       validateStatus: validateStatus,
     );
 
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(hideChunkRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
     final _response = await _dio.request<Object>(
       _path,
+      data: _bodyData,
       options: _options,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,
       onReceiveProgress: onReceiveProgress,
     );
 
-    TaggingTargetResponseBody? _responseData;
+    ChunkMutateResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<TaggingTargetResponseBody, TaggingTargetResponseBody>(
-              rawData, 'TaggingTargetResponseBody',
+          : deserialize<ChunkMutateResponseBody, ChunkMutateResponseBody>(
+              rawData, 'ChunkMutateResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1526,7 +1751,7 @@ class KnowledgeServiceApi {
       );
     }
 
-    return Response<TaggingTargetResponseBody>(
+    return Response<ChunkMutateResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1637,8 +1862,89 @@ class KnowledgeServiceApi {
     );
   }
 
+  /// 索引状态
+  /// 各处理阶段的载体数、向量检索是否可用、各云服务是否已配置
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [KnowledgeIndexStatusResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<KnowledgeIndexStatusResponseBody>>
+      knowledgeServiceAdminIndexStatus({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/knowledge/index/status';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    KnowledgeIndexStatusResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<KnowledgeIndexStatusResponseBody,
+                  KnowledgeIndexStatusResponseBody>(
+              rawData, 'KnowledgeIndexStatusResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<KnowledgeIndexStatusResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 知识条目详情
-  /// 返回条目元信息、内容载体(live/draft 版本与方舟收录态)与所属域
+  /// 返回条目元信息、内容载体(live/draft 版本与收录态)与所属域
   ///
   /// Parameters:
   /// * [id]
@@ -1724,7 +2030,7 @@ class KnowledgeServiceApi {
   }
 
   /// 条目状态流转
-  /// 提交/审核通过/发布/归档/过滤/恢复/删除/接管/释放接管；发布与删除会驱动方舟同步任务
+  /// 提交/审核通过/发布/归档/过滤/恢复/删除/接管/释放接管；发布与删除会驱动索引同步任务
   ///
   /// Parameters:
   /// * [id]
@@ -1831,7 +2137,7 @@ class KnowledgeServiceApi {
   }
 
   /// 知识检索（后台试搜）
-  /// 在方舟知识库上做混合检索；支持按域子树、是否官方过滤、rerank 等调参；命中带回溯源信息与最初来源 URL
+  /// 混合检索调试：可按域子树、官方、标签过滤，可单独关闭任一路召回或重排、覆盖重排阈值；返回命中与每个融合候选在各路的名次、融合分、重排分及未入选原因
   ///
   /// Parameters:
   /// * [knowledgeSearchRequestBody]
@@ -1842,9 +2148,9 @@ class KnowledgeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [KnowledgeSearchResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [AdminSearchResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<KnowledgeSearchResponseBody>>
+  Future<Response<AdminSearchResponseBody>>
       knowledgeServiceAdminKnowledgeSearch({
     KnowledgeSearchRequestBody? knowledgeSearchRequestBody,
     CancelToken? cancelToken,
@@ -1899,15 +2205,14 @@ class KnowledgeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    KnowledgeSearchResponseBody? _responseData;
+    AdminSearchResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<KnowledgeSearchResponseBody,
-                  KnowledgeSearchResponseBody>(
-              rawData, 'KnowledgeSearchResponseBody',
+          : deserialize<AdminSearchResponseBody, AdminSearchResponseBody>(
+              rawData, 'AdminSearchResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1919,7 +2224,7 @@ class KnowledgeServiceApi {
       );
     }
 
-    return Response<KnowledgeSearchResponseBody>(
+    return Response<AdminSearchResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1932,10 +2237,10 @@ class KnowledgeServiceApi {
   }
 
   /// 快速问答（后台试搜）
-  /// 走方舟知识服务的检索/问答：内置 rerank、query 改写与可选 LLM 回答；可选 strategy_name 选策略(知识服务), 空&#x3D;默认；返回回答与溯源切片
+  /// 以运营视角(含校内内容)试跑快速问答：一轮检索 + 依据命中切片作答，返回回答与溯源切片
   ///
   /// Parameters:
-  /// * [serviceChatRequestBody] - 快速问答(service_chat): 走方舟知识服务(内置 rerank/改写/可选 LLM 回答)
+  /// * [serviceChatRequestBody] - 快速问答(service_chat): 一轮检索 + 生成，回答只依据命中切片并标注出处
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -2020,6 +2325,110 @@ class KnowledgeServiceApi {
     }
 
     return Response<ServiceChatResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 图片列表
+  /// 入库图片(按内容去重)及其 AI 标注、人工修订与引用数；可按载体、分类、是否入索引、来源过滤
+  ///
+  /// Parameters:
+  /// * [carrierId]
+  /// * [kind]
+  /// * [keep] - true | false
+  /// * [origin] - ai | human
+  /// * [aiStatus]
+  /// * [page]
+  /// * [size]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ListAssetsResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ListAssetsResponseBody>> knowledgeServiceAdminListAssets({
+    String? carrierId,
+    String? kind,
+    String? keep,
+    String? origin,
+    String? aiStatus,
+    int? page,
+    int? size,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/knowledge/assets';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (carrierId != null) r'carrier_id': carrierId,
+      if (kind != null) r'kind': kind,
+      if (keep != null) r'keep': keep,
+      if (origin != null) r'origin': origin,
+      if (aiStatus != null) r'ai_status': aiStatus,
+      if (page != null) r'page': page,
+      if (size != null) r'size': size,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ListAssetsResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ListAssetsResponseBody, ListAssetsResponseBody>(
+              rawData, 'ListAssetsResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ListAssetsResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2130,7 +2539,7 @@ class KnowledgeServiceApi {
   }
 
   /// 切片列表
-  /// 列出文件文档的全部切片：方舟自动解析(只读)与我方补充(可编辑)
+  /// 列出载体当前生效的全部检索单元(含已屏蔽与补充切片)，以及重建后已对不上的屏蔽操作
   ///
   /// Parameters:
   /// * [carrierId]
@@ -2939,7 +3348,7 @@ class KnowledgeServiceApi {
   }
 
   /// 发布草稿
-  /// 把草稿提升为线上版本并入队同步方舟切片
+  /// 把草稿提升为线上版本并入队重建检索索引
   ///
   /// Parameters:
   /// * [carrierId]
@@ -3013,6 +3422,283 @@ class KnowledgeServiceApi {
     }
 
     return Response<CarrierResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 重新标注图片
+  /// 让模型重新判断并描述该图片(人工修订不受影响)，随后重建引用它的载体
+  ///
+  /// Parameters:
+  /// * [assetIdRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [MutateOkResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<MutateOkResponseBody>> knowledgeServiceAdminReannotateAsset({
+    AssetIdRequestBody? assetIdRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/knowledge/assets/reannotate';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(assetIdRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    MutateOkResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<MutateOkResponseBody, MutateOkResponseBody>(
+              rawData, 'MutateOkResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<MutateOkResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 全量重建索引
+  /// 强制所有已收录载体重新走一遍解析、切片、向量化；重建期间旧索引继续服务
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [RebuildIndexResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<RebuildIndexResponseBody>> knowledgeServiceAdminRebuildIndex({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/knowledge/index/rebuild';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    RebuildIndexResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<RebuildIndexResponseBody, RebuildIndexResponseBody>(
+              rawData, 'RebuildIndexResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<RebuildIndexResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 重新解析
+  /// 用配置的(或指定的)解析服务重新解析文件；当前正文在新解析完成前继续生效
+  ///
+  /// Parameters:
+  /// * [reparseRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [MutateOkResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<MutateOkResponseBody>> knowledgeServiceAdminReparseCarrier({
+    ReparseRequestBody? reparseRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/knowledge/carriers/reparse';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(reparseRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    MutateOkResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<MutateOkResponseBody, MutateOkResponseBody>(
+              rawData, 'MutateOkResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<MutateOkResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -3303,6 +3989,107 @@ class KnowledgeServiceApi {
     );
   }
 
+  /// 保存校订
+  /// 把人工校订的正文存为生效版本并重建索引；之后来源文件更新不会覆盖它，只会标记待复核
+  ///
+  /// Parameters:
+  /// * [saveDocumentRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [KnowledgeDocRevisionResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<KnowledgeDocRevisionResponseBody>>
+      knowledgeServiceAdminSaveDocument({
+    SaveDocumentRequestBody? saveDocumentRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/knowledge/carriers/document';
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(saveDocumentRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    KnowledgeDocRevisionResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<KnowledgeDocRevisionResponseBody,
+                  KnowledgeDocRevisionResponseBody>(
+              rawData, 'KnowledgeDocRevisionResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<KnowledgeDocRevisionResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 保存草稿
   /// 对内容载体保存编辑草稿；不影响线上版本，可撤销回到最初来源版本
   ///
@@ -3399,105 +4186,6 @@ class KnowledgeServiceApi {
     }
 
     return Response<CarrierResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// 保存快速问答策略
-  /// 保存策略(知识服务)数组与默认策略名
-  ///
-  /// Parameters:
-  /// * [setQAStrategiesRequestBody]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [MutateOkResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<MutateOkResponseBody>> knowledgeServiceAdminSetQAStrategies({
-    SetQAStrategiesRequestBody? setQAStrategiesRequestBody,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/hduhelp-neo/admin/knowledge/qa-strategies';
-    final _options = Options(
-      method: r'PUT',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      contentType: 'application/json',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      _bodyData = jsonEncode(setQAStrategiesRequestBody);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    MutateOkResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<MutateOkResponseBody, MutateOkResponseBody>(
-              rawData, 'MutateOkResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<MutateOkResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -3609,11 +4297,11 @@ class KnowledgeServiceApi {
     );
   }
 
-  /// 保存打标接入点
-  /// 保存 AI 打标模型接入点(仅保存，不做连通性测试)
+  /// 修订图片
+  /// 人工修订是否入索引、分类与描述，或清除修订回到 AI 结论；自动重建所有引用该图片的载体
   ///
   /// Parameters:
-  /// * [setTaggingTargetRequestBody]
+  /// * [updateAssetRequestBody]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -3621,10 +4309,11 @@ class KnowledgeServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [MutateOkResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [KnowledgeAssetResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<MutateOkResponseBody>> knowledgeServiceAdminSetTaggingTarget({
-    SetTaggingTargetRequestBody? setTaggingTargetRequestBody,
+  Future<Response<KnowledgeAssetResponseBody>>
+      knowledgeServiceAdminUpdateAsset({
+    UpdateAssetRequestBody? updateAssetRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -3632,7 +4321,7 @@ class KnowledgeServiceApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/hduhelp-neo/admin/knowledge/tagging-target';
+    final _path = r'/hduhelp-neo/admin/knowledge/assets';
     final _options = Options(
       method: r'PUT',
       headers: <String, dynamic>{
@@ -3655,7 +4344,7 @@ class KnowledgeServiceApi {
     dynamic _bodyData;
 
     try {
-      _bodyData = jsonEncode(setTaggingTargetRequestBody);
+      _bodyData = jsonEncode(updateAssetRequestBody);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _options.compose(
@@ -3677,14 +4366,14 @@ class KnowledgeServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    MutateOkResponseBody? _responseData;
+    KnowledgeAssetResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<MutateOkResponseBody, MutateOkResponseBody>(
-              rawData, 'MutateOkResponseBody',
+          : deserialize<KnowledgeAssetResponseBody, KnowledgeAssetResponseBody>(
+              rawData, 'KnowledgeAssetResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -3696,7 +4385,7 @@ class KnowledgeServiceApi {
       );
     }
 
-    return Response<MutateOkResponseBody>(
+    return Response<KnowledgeAssetResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -3708,8 +4397,8 @@ class KnowledgeServiceApi {
     );
   }
 
-  /// 编辑切片
-  /// 修改一条我方补充切片的标题与内容
+  /// 编辑补充切片
+  /// 修改一条补充切片的标题与内容；提交后自动重建该载体
   ///
   /// Parameters:
   /// * [carrierId]
@@ -4424,7 +5113,7 @@ class KnowledgeServiceApi {
   }
 
   /// 知识检索
-  /// 只读知识检索：支持标签过滤与返回数量，命中带溯源信息。一方登录用户直接可用；第三方 token 需携带 knowledge:search:read；租户凭据仅可检索公开知识。不会写入或修改知识库。
+  /// 只读知识检索：向量、句子级与关键词三路召回融合后重排，按相关度阈值截断；支持标签过滤与返回数量，命中带标题路径、附带图片与原文件地址等溯源信息。一方登录用户直接可用；第三方 token 需携带 knowledge:search:read；租户凭据仅可检索公开知识。不会写入或修改知识库。
   ///
   /// Parameters:
   /// * [retrieveRequestBody] - 对外检索:仅暴露标签过滤 + 返回数量
@@ -4525,10 +5214,10 @@ class KnowledgeServiceApi {
   }
 
   /// 快速问答
-  /// 只读知识问答：走方舟知识服务，内置 rerank、query 改写与可选 LLM 回答；可选 strategy_name 选策略，空&#x3D;默认；返回回答与溯源切片。一方登录用户直接可用；第三方 token 需携带 knowledge:search:read；租户凭据仅可检索公开知识。不会写入或修改知识库。
+  /// 只读知识问答：一轮混合检索(向量+句子级+关键词，重排后按阈值截断)后由模型只依据命中切片作答，并用 &lt;reference data-ref&#x3D;\\\&quot;pointId\\\&quot;&gt; 标注出处；知识库里没有答案时如实说没有。返回回答与溯源切片。一方登录用户直接可用；第三方 token 需携带 knowledge:search:read；租户凭据仅可检索公开知识。不会写入或修改知识库。
   ///
   /// Parameters:
-  /// * [serviceChatRequestBody] - 快速问答(service_chat): 走方舟知识服务(内置 rerank/改写/可选 LLM 回答)
+  /// * [serviceChatRequestBody] - 快速问答(service_chat): 一轮检索 + 生成，回答只依据命中切片并标注出处
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request

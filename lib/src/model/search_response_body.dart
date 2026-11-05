@@ -3,7 +3,7 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/search_page.dart';
+import 'package:hduhelp_neo/src/model/search_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'search_response_body.g.dart';
@@ -27,7 +27,7 @@ class SearchResponseBody {
     required: false,
     includeIfNull: false,
   )
-  final SearchPage? data;
+  final SearchData? data;
 
   @JsonKey(
     name: r'code',

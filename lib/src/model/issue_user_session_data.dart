@@ -16,11 +16,27 @@ part 'issue_user_session_data.g.dart';
 class IssueUserSessionData {
   /// Returns a new [IssueUserSessionData] instance.
   IssueUserSessionData({
+    this.auditId,
+    this.confirmationToken,
     this.accessToken,
     this.refreshToken,
     this.accessTokenExpireAt,
     this.refreshTokenExpireAt,
   });
+
+  @JsonKey(
+    name: r'auditId',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? auditId;
+
+  @JsonKey(
+    name: r'confirmationToken',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? confirmationToken;
 
   @JsonKey(
     name: r'accessToken',
@@ -54,6 +70,8 @@ class IssueUserSessionData {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is IssueUserSessionData &&
+          other.auditId == auditId &&
+          other.confirmationToken == confirmationToken &&
           other.accessToken == accessToken &&
           other.refreshToken == refreshToken &&
           other.accessTokenExpireAt == accessTokenExpireAt &&
@@ -61,6 +79,8 @@ class IssueUserSessionData {
 
   @override
   int get hashCode =>
+      auditId.hashCode +
+      confirmationToken.hashCode +
       accessToken.hashCode +
       refreshToken.hashCode +
       accessTokenExpireAt.hashCode +

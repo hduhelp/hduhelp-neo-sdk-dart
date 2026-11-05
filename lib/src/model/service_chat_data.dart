@@ -18,25 +18,16 @@ class ServiceChatData {
   /// Returns a new [ServiceChatData] instance.
   ServiceChatData({
     this.answer,
-    this.rewriteQuery,
     this.hits,
   });
 
-  /// 生成式回答(问答类型服务才有)
+  /// 生成式回答，用 <reference data-ref=\"pointId\"> 标注出处
   @JsonKey(
     name: r'answer',
     required: false,
     includeIfNull: false,
   )
   final String? answer;
-
-  /// query 改写结果
-  @JsonKey(
-    name: r'rewriteQuery',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? rewriteQuery;
 
   /// 溯源切片
   @JsonKey(
@@ -49,13 +40,10 @@ class ServiceChatData {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ServiceChatData &&
-          other.answer == answer &&
-          other.rewriteQuery == rewriteQuery &&
-          other.hits == hits;
+      other is ServiceChatData && other.answer == answer && other.hits == hits;
 
   @override
-  int get hashCode => answer.hashCode + rewriteQuery.hashCode + hits.hashCode;
+  int get hashCode => answer.hashCode + hits.hashCode;
 
   factory ServiceChatData.fromJson(Map<String, dynamic> json) =>
       _$ServiceChatDataFromJson(json);

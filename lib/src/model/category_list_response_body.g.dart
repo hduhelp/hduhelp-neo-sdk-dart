@@ -15,9 +15,9 @@ CategoryListResponseBody _$CategoryListResponseBodyFromJson(
         final val = CategoryListResponseBody(
           data: $checkedConvert(
               'data',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) => Category.fromJson(e as Map<String, dynamic>))
-                  .toList()),
+              (v) => v == null
+                  ? null
+                  : CategoryListData.fromJson(v as Map<String, dynamic>)),
           code: $checkedConvert('code', (v) => (v as num?)?.toInt()),
           msg: $checkedConvert('msg', (v) => v as String?),
         );
@@ -28,8 +28,7 @@ CategoryListResponseBody _$CategoryListResponseBodyFromJson(
 Map<String, dynamic> _$CategoryListResponseBodyToJson(
         CategoryListResponseBody instance) =>
     <String, dynamic>{
-      if (instance.data?.map((e) => e.toJson()).toList() case final value?)
-        'data': value,
+      if (instance.data?.toJson() case final value?) 'data': value,
       if (instance.code case final value?) 'code': value,
       if (instance.msg case final value?) 'msg': value,
     };

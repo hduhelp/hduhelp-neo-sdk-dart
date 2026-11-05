@@ -3,8 +3,8 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/lost_found_category.dart';
 import 'package:hduhelp_neo/src/model/scene.dart';
-import 'package:hduhelp_neo/src/model/category.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'lost_item.g.dart';
@@ -49,7 +49,7 @@ class LostItem {
     required: false,
     includeIfNull: false,
   )
-  final Category? category;
+  final LostFoundCategory? category;
 
   @JsonKey(
     name: r'scene',

@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/search_hit_image.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'search_hit.g.dart';
@@ -31,8 +32,14 @@ class SearchHit {
     this.domainKeys,
     this.restricted,
     this.publishedAt,
+    this.headingPath,
+    this.kind,
+    this.matched,
+    this.images,
+    this.fileUrl,
   });
 
+  /// 检索单元 id(cu_<载体>_g<代>-<序号>)
   @JsonKey(
     name: r'pointId',
     required: false,
@@ -40,6 +47,7 @@ class SearchHit {
   )
   final String? pointId;
 
+  /// 载体本代索引 id(cu_<载体>_g<代>)
   @JsonKey(
     name: r'docId',
     required: false,
@@ -54,6 +62,7 @@ class SearchHit {
   )
   final String? content;
 
+  /// FAQ 命中时的问题
   @JsonKey(
     name: r'question',
     required: false,
@@ -61,7 +70,7 @@ class SearchHit {
   )
   final String? question;
 
-  /// 向量语义得分
+  /// 排序得分：重排分(重排时)或融合分
   @JsonKey(
     name: r'score',
     required: false,
@@ -144,6 +153,46 @@ class SearchHit {
   )
   final int? publishedAt;
 
+  /// 切片所在的标题路径(文件 › 章 › 节)
+  @JsonKey(
+    name: r'headingPath',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? headingPath;
+
+  /// chunk | faq | table | image | manual
+  @JsonKey(
+    name: r'kind',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? kind;
+
+  /// 经句子/问法召回时，命中的那句
+  @JsonKey(
+    name: r'matched',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? matched;
+
+  /// 切片附带的有内容图片
+  @JsonKey(
+    name: r'images',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<SearchHitImage>? images;
+
+  /// 原文件可读地址(签名直链或外部链接)
+  @JsonKey(
+    name: r'fileUrl',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? fileUrl;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -162,7 +211,12 @@ class SearchHit {
           other.originUrl == originUrl &&
           other.domainKeys == domainKeys &&
           other.restricted == restricted &&
-          other.publishedAt == publishedAt;
+          other.publishedAt == publishedAt &&
+          other.headingPath == headingPath &&
+          other.kind == kind &&
+          other.matched == matched &&
+          other.images == images &&
+          other.fileUrl == fileUrl;
 
   @override
   int get hashCode =>
@@ -180,7 +234,12 @@ class SearchHit {
       originUrl.hashCode +
       domainKeys.hashCode +
       restricted.hashCode +
-      publishedAt.hashCode;
+      publishedAt.hashCode +
+      headingPath.hashCode +
+      kind.hashCode +
+      matched.hashCode +
+      images.hashCode +
+      fileUrl.hashCode;
 
   factory SearchHit.fromJson(Map<String, dynamic> json) =>
       _$SearchHitFromJson(json);

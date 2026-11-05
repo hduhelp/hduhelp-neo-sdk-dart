@@ -23,6 +23,10 @@ import 'package:hduhelp_neo/src/api/inbox_service_api.dart';
 import 'package:hduhelp_neo/src/api/knowledge_service_api.dart';
 import 'package:hduhelp_neo/src/api/library_booking_service_api.dart';
 import 'package:hduhelp_neo/src/api/messaging_service_api.dart';
+import 'package:hduhelp_neo/src/api/model_gateway_observability_service_api.dart';
+import 'package:hduhelp_neo/src/api/model_gateway_service_api.dart';
+import 'package:hduhelp_neo/src/api/model_gateway_trace_browser_service_api.dart';
+import 'package:hduhelp_neo/src/api/model_proxy_service_api.dart';
 import 'package:hduhelp_neo/src/api/moments_service_api.dart';
 import 'package:hduhelp_neo/src/api/notification_service_api.dart';
 import 'package:hduhelp_neo/src/api/site_announcement_service_api.dart';
@@ -184,6 +188,30 @@ class HduhelpNeo {
   /// by doing that all interceptors will not be executed
   MessagingServiceApi getMessagingServiceApi() {
     return MessagingServiceApi(dio);
+  }
+
+  /// Get ModelGatewayObservabilityServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  ModelGatewayObservabilityServiceApi getModelGatewayObservabilityServiceApi() {
+    return ModelGatewayObservabilityServiceApi(dio);
+  }
+
+  /// Get ModelGatewayServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  ModelGatewayServiceApi getModelGatewayServiceApi() {
+    return ModelGatewayServiceApi(dio);
+  }
+
+  /// Get ModelGatewayTraceBrowserServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  ModelGatewayTraceBrowserServiceApi getModelGatewayTraceBrowserServiceApi() {
+    return ModelGatewayTraceBrowserServiceApi(dio);
+  }
+
+  /// Get ModelProxyServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  ModelProxyServiceApi getModelProxyServiceApi() {
+    return ModelProxyServiceApi(dio);
   }
 
   /// Get MomentsServiceApi instance, base route and serializer can be overridden by a given but be careful,

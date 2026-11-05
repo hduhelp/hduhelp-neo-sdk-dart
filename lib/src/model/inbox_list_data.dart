@@ -3,7 +3,7 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/inbox_entry.dart';
+import 'package:hduhelp_neo/src/model/moments_inbox_entry.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'inbox_list_data.g.dart';
@@ -27,7 +27,7 @@ class InboxListData {
     required: false,
     includeIfNull: false,
   )
-  final List<InboxEntry>? list;
+  final List<MomentsInboxEntry>? list;
 
   @JsonKey(
     name: r'next_cursor',

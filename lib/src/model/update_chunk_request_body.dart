@@ -16,17 +16,17 @@ part 'update_chunk_request_body.g.dart';
 class UpdateChunkRequestBody {
   /// Returns a new [UpdateChunkRequestBody] instance.
   UpdateChunkRequestBody({
-    this.pointId,
+    this.overrideId,
     this.title,
     this.content,
   });
 
   @JsonKey(
-    name: r'point_id',
+    name: r'override_id',
     required: false,
     includeIfNull: false,
   )
-  final String? pointId;
+  final String? overrideId;
 
   @JsonKey(
     name: r'title',
@@ -46,12 +46,12 @@ class UpdateChunkRequestBody {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is UpdateChunkRequestBody &&
-          other.pointId == pointId &&
+          other.overrideId == overrideId &&
           other.title == title &&
           other.content == content;
 
   @override
-  int get hashCode => pointId.hashCode + title.hashCode + content.hashCode;
+  int get hashCode => overrideId.hashCode + title.hashCode + content.hashCode;
 
   factory UpdateChunkRequestBody.fromJson(Map<String, dynamic> json) =>
       _$UpdateChunkRequestBodyFromJson(json);

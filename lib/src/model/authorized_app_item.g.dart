@@ -17,6 +17,12 @@ AuthorizedAppItem _$AuthorizedAppItemFromJson(Map<String, dynamic> json) =>
           description: $checkedConvert('description', (v) => v as String?),
           scopes: $checkedConvert('scopes',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          scopeDetails: $checkedConvert(
+              'scopeDetails',
+              (v) => (v as List<dynamic>?)
+                  ?.map(
+                      (e) => OAuthScopeItem.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -28,4 +34,7 @@ Map<String, dynamic> _$AuthorizedAppItemToJson(AuthorizedAppItem instance) =>
       if (instance.name case final value?) 'name': value,
       if (instance.description case final value?) 'description': value,
       if (instance.scopes case final value?) 'scopes': value,
+      if (instance.scopeDetails?.map((e) => e.toJson()).toList()
+          case final value?)
+        'scopeDetails': value,
     };

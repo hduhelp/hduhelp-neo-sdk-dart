@@ -13,6 +13,9 @@ IssueUserSessionData _$IssueUserSessionDataFromJson(
       json,
       ($checkedConvert) {
         final val = IssueUserSessionData(
+          auditId: $checkedConvert('auditId', (v) => v as String?),
+          confirmationToken:
+              $checkedConvert('confirmationToken', (v) => v as String?),
           accessToken: $checkedConvert('accessToken', (v) => v as String?),
           refreshToken: $checkedConvert('refreshToken', (v) => v as String?),
           accessTokenExpireAt: $checkedConvert(
@@ -27,6 +30,9 @@ IssueUserSessionData _$IssueUserSessionDataFromJson(
 Map<String, dynamic> _$IssueUserSessionDataToJson(
         IssueUserSessionData instance) =>
     <String, dynamic>{
+      if (instance.auditId case final value?) 'auditId': value,
+      if (instance.confirmationToken case final value?)
+        'confirmationToken': value,
       if (instance.accessToken case final value?) 'accessToken': value,
       if (instance.refreshToken case final value?) 'refreshToken': value,
       if (instance.accessTokenExpireAt case final value?)

@@ -25,10 +25,13 @@ import 'package:hduhelp_neo/src/model/admin_audit_list_data.dart';
 import 'package:hduhelp_neo/src/model/admin_audit_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_authorization_info.dart';
 import 'package:hduhelp_neo/src/model/admin_campus_info.dart';
+import 'package:hduhelp_neo/src/model/admin_change_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_comment_list_data.dart';
 import 'package:hduhelp_neo/src/model/admin_comment_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_domain_tree_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_electricity_meter.dart';
+import 'package:hduhelp_neo/src/model/admin_impersonation_log.dart';
+import 'package:hduhelp_neo/src/model/admin_impersonation_logs_data.dart';
 import 'package:hduhelp_neo/src/model/admin_login_client_info.dart';
 import 'package:hduhelp_neo/src/model/admin_login_data.dart';
 import 'package:hduhelp_neo/src/model/admin_login_request_body.dart';
@@ -61,6 +64,8 @@ import 'package:hduhelp_neo/src/model/admin_report_list_data.dart';
 import 'package:hduhelp_neo/src/model/admin_report_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_role_info.dart';
 import 'package:hduhelp_neo/src/model/admin_scope_def.dart';
+import 'package:hduhelp_neo/src/model/admin_search_data.dart';
+import 'package:hduhelp_neo/src/model/admin_search_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_source_tree_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_tenant_info.dart';
 import 'package:hduhelp_neo/src/model/admin_user_detail.dart';
@@ -73,6 +78,7 @@ import 'package:hduhelp_neo/src/model/admin_wish_review_page.dart';
 import 'package:hduhelp_neo/src/model/admin_wish_review_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_wish_review_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_wish_review_response_body.dart';
+import 'package:hduhelp_neo/src/model/adopt_revision_request_body.dart';
 import 'package:hduhelp_neo/src/model/all_person_info_response_body.dart';
 import 'package:hduhelp_neo/src/model/analytics_config_data.dart';
 import 'package:hduhelp_neo/src/model/analytics_config_response_body.dart';
@@ -91,6 +97,7 @@ import 'package:hduhelp_neo/src/model/appeal.dart';
 import 'package:hduhelp_neo/src/model/appeal_response_body.dart';
 import 'package:hduhelp_neo/src/model/approve_device_request_body.dart';
 import 'package:hduhelp_neo/src/model/approve_device_resp_body.dart';
+import 'package:hduhelp_neo/src/model/asset_id_request_body.dart';
 import 'package:hduhelp_neo/src/model/assign_operator_role_request_body.dart';
 import 'package:hduhelp_neo/src/model/assign_operator_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/attach_file_request_body.dart';
@@ -198,7 +205,7 @@ import 'package:hduhelp_neo/src/model/change_phone_request_body.dart';
 import 'package:hduhelp_neo/src/model/chat_group.dart';
 import 'package:hduhelp_neo/src/model/check_update_data.dart';
 import 'package:hduhelp_neo/src/model/check_update_response_body.dart';
-import 'package:hduhelp_neo/src/model/chunk_delete_response_body.dart';
+import 'package:hduhelp_neo/src/model/chunk_list_data.dart';
 import 'package:hduhelp_neo/src/model/chunk_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/class_info.dart';
 import 'package:hduhelp_neo/src/model/class_query_fav_get_response_body.dart';
@@ -232,6 +239,7 @@ import 'package:hduhelp_neo/src/model/complete_upload_request_body.dart';
 import 'package:hduhelp_neo/src/model/config_get_response_body.dart';
 import 'package:hduhelp_neo/src/model/config_item.dart';
 import 'package:hduhelp_neo/src/model/config_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/confirm_impersonation_request_body.dart';
 import 'package:hduhelp_neo/src/model/course.dart';
 import 'package:hduhelp_neo/src/model/course_group_item.dart';
 import 'package:hduhelp_neo/src/model/course_groups_response_body.dart';
@@ -337,6 +345,7 @@ import 'package:hduhelp_neo/src/model/ding_talk_pigeon_card_data.dart';
 import 'package:hduhelp_neo/src/model/ding_talk_pigeon_card_params.dart';
 import 'package:hduhelp_neo/src/model/ding_talk_review_callback_request_body.dart';
 import 'package:hduhelp_neo/src/model/ding_talk_review_callback_response_body.dart';
+import 'package:hduhelp_neo/src/model/dingtalk_schedule_response_body.dart';
 import 'package:hduhelp_neo/src/model/domain_delete_response_body.dart';
 import 'package:hduhelp_neo/src/model/domain_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/domain_tree_response_body.dart';
@@ -449,8 +458,12 @@ import 'package:hduhelp_neo/src/model/hashtag_list_data.dart';
 import 'package:hduhelp_neo/src/model/hashtag_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/hashtag_response_body.dart';
 import 'package:hduhelp_neo/src/model/health_response_body.dart';
+import 'package:hduhelp_neo/src/model/hide_chunk_request_body.dart';
 import 'package:hduhelp_neo/src/model/ics_link_data.dart';
 import 'package:hduhelp_neo/src/model/ics_link_response_body.dart';
+import 'package:hduhelp_neo/src/model/image_search_request_body.dart';
+import 'package:hduhelp_neo/src/model/impersonation_result_data.dart';
+import 'package:hduhelp_neo/src/model/impersonation_result_response_body.dart';
 import 'package:hduhelp_neo/src/model/inbox_action.dart';
 import 'package:hduhelp_neo/src/model/inbox_counters.dart';
 import 'package:hduhelp_neo/src/model/inbox_counters_response_body.dart';
@@ -484,13 +497,25 @@ import 'package:hduhelp_neo/src/model/item_state_request_body.dart';
 import 'package:hduhelp_neo/src/model/item_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/join_request_body.dart';
 import 'package:hduhelp_neo/src/model/join_response_body.dart';
+import 'package:hduhelp_neo/src/model/knowledge_asset.dart';
+import 'package:hduhelp_neo/src/model/knowledge_asset_page.dart';
+import 'package:hduhelp_neo/src/model/knowledge_asset_response_body.dart';
+import 'package:hduhelp_neo/src/model/knowledge_audit_entry.dart';
 import 'package:hduhelp_neo/src/model/knowledge_carrier.dart';
 import 'package:hduhelp_neo/src/model/knowledge_chunk.dart';
+import 'package:hduhelp_neo/src/model/knowledge_chunk_override.dart';
 import 'package:hduhelp_neo/src/model/knowledge_content_version.dart';
+import 'package:hduhelp_neo/src/model/knowledge_doc_revision.dart';
+import 'package:hduhelp_neo/src/model/knowledge_doc_revision_response_body.dart';
+import 'package:hduhelp_neo/src/model/knowledge_document_data.dart';
+import 'package:hduhelp_neo/src/model/knowledge_document_response_body.dart';
 import 'package:hduhelp_neo/src/model/knowledge_domain_node.dart';
 import 'package:hduhelp_neo/src/model/knowledge_gap_info.dart';
+import 'package:hduhelp_neo/src/model/knowledge_index_status_data.dart';
+import 'package:hduhelp_neo/src/model/knowledge_index_status_response_body.dart';
 import 'package:hduhelp_neo/src/model/knowledge_item_detail.dart';
 import 'package:hduhelp_neo/src/model/knowledge_item_summary.dart';
+import 'package:hduhelp_neo/src/model/knowledge_parse_info.dart';
 import 'package:hduhelp_neo/src/model/knowledge_search_request_body.dart';
 import 'package:hduhelp_neo/src/model/knowledge_search_response_body.dart';
 import 'package:hduhelp_neo/src/model/knowledge_source_node.dart';
@@ -504,6 +529,7 @@ import 'package:hduhelp_neo/src/model/library_booking_category_list_data.dart';
 import 'package:hduhelp_neo/src/model/library_booking_category_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/library_reading_data.dart';
 import 'package:hduhelp_neo/src/model/library_reading_response_body.dart';
+import 'package:hduhelp_neo/src/model/list_assets_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_audit_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_authorized_apps_data.dart';
 import 'package:hduhelp_neo/src/model/list_authorized_apps_response_body.dart';
@@ -511,6 +537,7 @@ import 'package:hduhelp_neo/src/model/list_chunks_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_collectors_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_crawl_runs_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_gaps_response_body.dart';
+import 'package:hduhelp_neo/src/model/list_impersonation_logs_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_items_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_pat_data.dart';
 import 'package:hduhelp_neo/src/model/list_pat_response_body.dart';
@@ -541,7 +568,12 @@ import 'package:hduhelp_neo/src/model/logout_request_body.dart';
 import 'package:hduhelp_neo/src/model/logout_response_body.dart';
 import 'package:hduhelp_neo/src/model/look_up_share_data.dart';
 import 'package:hduhelp_neo/src/model/look_up_share_response_body.dart';
+import 'package:hduhelp_neo/src/model/lost_found_category.dart';
+import 'package:hduhelp_neo/src/model/lost_found_category_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/lost_found_search_response_body.dart';
 import 'package:hduhelp_neo/src/model/lost_item.dart';
+import 'package:hduhelp_neo/src/model/mcp_tool_info.dart';
+import 'package:hduhelp_neo/src/model/mcp_tools_response_body.dart';
 import 'package:hduhelp_neo/src/model/max_month.dart';
 import 'package:hduhelp_neo/src/model/me_response_body.dart';
 import 'package:hduhelp_neo/src/model/member_info.dart';
@@ -564,6 +596,315 @@ import 'package:hduhelp_neo/src/model/merge_start_response_body.dart';
 import 'package:hduhelp_neo/src/model/message_item.dart';
 import 'package:hduhelp_neo/src/model/message_page_data.dart';
 import 'package:hduhelp_neo/src/model/message_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/mg_ok_data.dart';
+import 'package:hduhelp_neo/src/model/mg_ok_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_access_audit_page.dart';
+import 'package:hduhelp_neo/src/model/model_access_audit_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_allowlist.dart';
+import 'package:hduhelp_neo/src/model/model_applied_rates.dart';
+import 'package:hduhelp_neo/src/model/model_attempt_bucket.dart';
+import 'package:hduhelp_neo/src/model/model_attempt_item.dart';
+import 'package:hduhelp_neo/src/model/model_audit_entry.dart';
+import 'package:hduhelp_neo/src/model/model_audit_page.dart';
+import 'package:hduhelp_neo/src/model/model_audit_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_audit_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_batch_add_item.dart';
+import 'package:hduhelp_neo/src/model/model_batch_add_result.dart';
+import 'package:hduhelp_neo/src/model/model_batch_item_result.dart';
+import 'package:hduhelp_neo/src/model/model_batch_key.dart';
+import 'package:hduhelp_neo/src/model/model_batch_result.dart';
+import 'package:hduhelp_neo/src/model/model_batch_result_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_cache_domain_group.dart';
+import 'package:hduhelp_neo/src/model/model_cache_domain_list.dart';
+import 'package:hduhelp_neo/src/model/model_cache_domain_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_cache_hints.dart';
+import 'package:hduhelp_neo/src/model/model_capabilities_view.dart';
+import 'package:hduhelp_neo/src/model/model_capability_info.dart';
+import 'package:hduhelp_neo/src/model/model_catalog_default.dart';
+import 'package:hduhelp_neo/src/model/model_catalog_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector.dart';
+import 'package:hduhelp_neo/src/model/model_connector_batch_add_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_batch_add_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_batch_delete_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_batch_schedulable_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_batch_test_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_batch_update_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_duplicate_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_export.dart';
+import 'package:hduhelp_neo/src/model/model_connector_export_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_filters.dart';
+import 'package:hduhelp_neo/src/model/model_connector_form.dart';
+import 'package:hduhelp_neo/src/model/model_connector_form_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_health.dart';
+import 'package:hduhelp_neo/src/model/model_connector_health_clear_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_health_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_health_statistics.dart';
+import 'package:hduhelp_neo/src/model/model_connector_health_statistics_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_ids.dart';
+import 'package:hduhelp_neo/src/model/model_connector_ids_body_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_ids_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_impact.dart';
+import 'package:hduhelp_neo/src/model/model_connector_impact_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_import_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_import_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_models.dart';
+import 'package:hduhelp_neo/src/model/model_connector_models_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_override.dart';
+import 'package:hduhelp_neo/src/model/model_connector_page.dart';
+import 'package:hduhelp_neo/src/model/model_connector_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_pool_ref.dart';
+import 'package:hduhelp_neo/src/model/model_connector_probe_page.dart';
+import 'package:hduhelp_neo/src/model/model_connector_probe_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_probe_record.dart';
+import 'package:hduhelp_neo/src/model/model_connector_probe_settings_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_recover_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_runtime.dart';
+import 'package:hduhelp_neo/src/model/model_connector_runtime_entry.dart';
+import 'package:hduhelp_neo/src/model/model_connector_runtime_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_schedulable_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_connector_test_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_conversation_stats.dart';
+import 'package:hduhelp_neo/src/model/model_cooldown_entry.dart';
+import 'package:hduhelp_neo/src/model/model_cooldown_item.dart';
+import 'package:hduhelp_neo/src/model/model_cooldown_page.dart';
+import 'package:hduhelp_neo/src/model/model_cooldown_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_cost_breakdown.dart';
+import 'package:hduhelp_neo/src/model/model_coverage_gap.dart';
+import 'package:hduhelp_neo/src/model/model_curl_result.dart';
+import 'package:hduhelp_neo/src/model/model_curl_result_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_dashboard_snapshot.dart';
+import 'package:hduhelp_neo/src/model/model_dashboard_snapshot_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_dashboard_sources.dart';
+import 'package:hduhelp_neo/src/model/model_discovered_model.dart';
+import 'package:hduhelp_neo/src/model/model_effective_cache_hints.dart';
+import 'package:hduhelp_neo/src/model/model_effective_price_field.dart';
+import 'package:hduhelp_neo/src/model/model_effective_tier.dart';
+import 'package:hduhelp_neo/src/model/model_entity_event_stats.dart';
+import 'package:hduhelp_neo/src/model/model_entity_usage_stats.dart';
+import 'package:hduhelp_neo/src/model/model_entity_usage_stats_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_error_rule_overrides.dart';
+import 'package:hduhelp_neo/src/model/model_error_rule_overrides_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_error_rules_test.dart';
+import 'package:hduhelp_neo/src/model/model_error_rules_test_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_error_rules_test_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_estimate_draft_price.dart';
+import 'package:hduhelp_neo/src/model/model_estimate_rates.dart';
+import 'package:hduhelp_neo/src/model/model_estimate_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_estimate_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_estimate_result.dart';
+import 'package:hduhelp_neo/src/model/model_estimate_usage.dart';
+import 'package:hduhelp_neo/src/model/model_evidence.dart';
+import 'package:hduhelp_neo/src/model/model_gateway_service_model_delete_connector_request.dart';
+import 'package:hduhelp_neo/src/model/model_health_score.dart';
+import 'package:hduhelp_neo/src/model/model_images_today.dart';
+import 'package:hduhelp_neo/src/model/model_import_item.dart';
+import 'package:hduhelp_neo/src/model/model_import_result.dart';
+import 'package:hduhelp_neo/src/model/model_last_test.dart';
+import 'package:hduhelp_neo/src/model/model_listed_model.dart';
+import 'package:hduhelp_neo/src/model/model_mapping_resolution.dart';
+import 'package:hduhelp_neo/src/model/model_mapping_resolve_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_mapping_resolve_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_mapping_resolve_result.dart';
+import 'package:hduhelp_neo/src/model/model_member_input.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_capabilities_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_detail.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_detail_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_entry.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_form.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_form_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_import_body_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_import_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_import_result.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_list.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_params_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_reasoning_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_metadata_suggestion_view.dart';
+import 'package:hduhelp_neo/src/model/model_model_option.dart';
+import 'package:hduhelp_neo/src/model/model_model_sync_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_model_sync_result.dart';
+import 'package:hduhelp_neo/src/model/model_observation_curl_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_observation_model_options.dart';
+import 'package:hduhelp_neo/src/model/model_observation_model_options_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_observation_point.dart';
+import 'package:hduhelp_neo/src/model/model_observation_series.dart';
+import 'package:hduhelp_neo/src/model/model_operational_state.dart';
+import 'package:hduhelp_neo/src/model/model_operational_state_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_our_model.dart';
+import 'package:hduhelp_neo/src/model/model_our_model_list.dart';
+import 'package:hduhelp_neo/src/model/model_our_model_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_platform_preset.dart';
+import 'package:hduhelp_neo/src/model/model_platform_presets.dart';
+import 'package:hduhelp_neo/src/model/model_platform_presets_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool.dart';
+import 'package:hduhelp_neo/src/model/model_pool_capacity.dart';
+import 'package:hduhelp_neo/src/model/model_pool_capacity_list.dart';
+import 'package:hduhelp_neo/src/model/model_pool_capacity_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_form_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_impact.dart';
+import 'package:hduhelp_neo/src/model/model_pool_member.dart';
+import 'package:hduhelp_neo/src/model/model_pool_members.dart';
+import 'package:hduhelp_neo/src/model/model_pool_members_replace_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_members_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_membership_input.dart';
+import 'package:hduhelp_neo/src/model/model_pool_option.dart';
+import 'package:hduhelp_neo/src/model/model_pool_options.dart';
+import 'package:hduhelp_neo/src/model/model_pool_options_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_page.dart';
+import 'package:hduhelp_neo/src/model/model_pool_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_route.dart';
+import 'package:hduhelp_neo/src/model/model_pool_sort_item.dart';
+import 'package:hduhelp_neo/src/model/model_pool_sort_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_usage_page.dart';
+import 'package:hduhelp_neo/src/model/model_pool_usage_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_pool_usage_summary.dart';
+import 'package:hduhelp_neo/src/model/model_preset_model.dart';
+import 'package:hduhelp_neo/src/model/model_price_chain_step.dart';
+import 'package:hduhelp_neo/src/model/model_price_entry.dart';
+import 'package:hduhelp_neo/src/model/model_price_form_body.dart';
+import 'package:hduhelp_neo/src/model/model_price_list.dart';
+import 'package:hduhelp_neo/src/model/model_price_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_price_page.dart';
+import 'package:hduhelp_neo/src/model/model_price_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_price_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_price_row.dart';
+import 'package:hduhelp_neo/src/model/model_price_tier.dart';
+import 'package:hduhelp_neo/src/model/model_price_use.dart';
+import 'package:hduhelp_neo/src/model/model_probe_member.dart';
+import 'package:hduhelp_neo/src/model/model_probe_page.dart';
+import 'package:hduhelp_neo/src/model/model_probe_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_probe_result.dart';
+import 'package:hduhelp_neo/src/model/model_probe_result_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_anthropic_capability.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_anthropic_model.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_anthropic_model_list_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_error_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_image.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_image_edit_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_image_generation_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_images_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_open_ai_model.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_open_ai_model_list_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_test_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_test_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_test_result.dart';
+import 'package:hduhelp_neo/src/model/model_purpose.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_limits.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_list.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_params.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_probe.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_quota.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_revision.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_revision_page.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_revision_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_settings.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_settings_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_statistics.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_statistics_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_target.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_target_view.dart';
+import 'package:hduhelp_neo/src/model/model_purpose_targets_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_quota_windows.dart';
+import 'package:hduhelp_neo/src/model/model_reasoning_effort_view.dart';
+import 'package:hduhelp_neo/src/model/model_reasoning_mapping.dart';
+import 'package:hduhelp_neo/src/model/model_recover_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_recover_result.dart';
+import 'package:hduhelp_neo/src/model/model_replica_image_gate.dart';
+import 'package:hduhelp_neo/src/model/model_request_cursor.dart';
+import 'package:hduhelp_neo/src/model/model_request_detail.dart';
+import 'package:hduhelp_neo/src/model/model_request_detail_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_request_image_metadata.dart';
+import 'package:hduhelp_neo/src/model/model_request_item.dart';
+import 'package:hduhelp_neo/src/model/model_request_page.dart';
+import 'package:hduhelp_neo/src/model/model_request_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_request_scoped_errors_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_request_scoped_rule.dart';
+import 'package:hduhelp_neo/src/model/model_request_summary.dart';
+import 'package:hduhelp_neo/src/model/model_request_summary_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_resolve_preview.dart';
+import 'package:hduhelp_neo/src/model/model_resolve_preview_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_resolve_preview_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_resolve_step.dart';
+import 'package:hduhelp_neo/src/model/model_rollback_draft.dart';
+import 'package:hduhelp_neo/src/model/model_rollback_draft_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_rollback_draft_target.dart';
+import 'package:hduhelp_neo/src/model/model_routing_candidate.dart';
+import 'package:hduhelp_neo/src/model/model_routing_preview.dart';
+import 'package:hduhelp_neo/src/model/model_routing_preview_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_routing_preview_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_schedulable_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_schedulable_result.dart';
+import 'package:hduhelp_neo/src/model/model_selection_item.dart';
+import 'package:hduhelp_neo/src/model/model_setting_diff.dart';
+import 'package:hduhelp_neo/src/model/model_setting_error.dart';
+import 'package:hduhelp_neo/src/model/model_setting_group.dart';
+import 'package:hduhelp_neo/src/model/model_setting_item.dart';
+import 'package:hduhelp_neo/src/model/model_setting_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_settings.dart';
+import 'package:hduhelp_neo/src/model/model_settings_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_settings_update_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_settings_validate_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_settings_validation.dart';
+import 'package:hduhelp_neo/src/model/model_settings_validation_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_startup_item.dart';
+import 'package:hduhelp_neo/src/model/model_startup_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_startup_view.dart';
+import 'package:hduhelp_neo/src/model/model_string_list.dart';
+import 'package:hduhelp_neo/src/model/model_string_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_sync_diff_entry.dart';
+import 'package:hduhelp_neo/src/model/model_sync_diff_page.dart';
+import 'package:hduhelp_neo/src/model/model_sync_diff_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_sync_hash_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_sync_pending.dart';
+import 'package:hduhelp_neo/src/model/model_sync_state.dart';
+import 'package:hduhelp_neo/src/model/model_sync_status.dart';
+import 'package:hduhelp_neo/src/model/model_sync_status_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_target_probe_request_body.dart';
+import 'package:hduhelp_neo/src/model/model_target_reference.dart';
+import 'package:hduhelp_neo/src/model/model_target_snapshot.dart';
+import 'package:hduhelp_neo/src/model/model_temp_unsched_rule.dart';
+import 'package:hduhelp_neo/src/model/model_temp_unsched_state.dart';
+import 'package:hduhelp_neo/src/model/model_test_event_body.dart';
+import 'package:hduhelp_neo/src/model/model_tier_preview_segment.dart';
+import 'package:hduhelp_neo/src/model/model_trace_attempt.dart';
+import 'package:hduhelp_neo/src/model/model_trace_body_part.dart';
+import 'package:hduhelp_neo/src/model/model_trace_body_query_body.dart';
+import 'package:hduhelp_neo/src/model/model_trace_body_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_trace_image.dart';
+import 'package:hduhelp_neo/src/model/model_trace_index.dart';
+import 'package:hduhelp_neo/src/model/model_trace_index_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_trace_media_item.dart';
+import 'package:hduhelp_neo/src/model/model_trace_media_link.dart';
+import 'package:hduhelp_neo/src/model/model_trace_media_links.dart';
+import 'package:hduhelp_neo/src/model/model_trace_media_links_query_body.dart';
+import 'package:hduhelp_neo/src/model/model_trace_media_links_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_trace_part_item.dart';
+import 'package:hduhelp_neo/src/model/model_trace_query_body.dart';
+import 'package:hduhelp_neo/src/model/model_trace_replay.dart';
+import 'package:hduhelp_neo/src/model/model_trace_replay_query_body.dart';
+import 'package:hduhelp_neo/src/model/model_trace_replay_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_trace_summary.dart';
+import 'package:hduhelp_neo/src/model/model_trace_window.dart';
+import 'package:hduhelp_neo/src/model/model_transport_counts.dart';
+import 'package:hduhelp_neo/src/model/model_unsaved_connection.dart';
+import 'package:hduhelp_neo/src/model/model_unsaved_connection_body.dart';
+import 'package:hduhelp_neo/src/model/model_upstream_model_entry.dart';
+import 'package:hduhelp_neo/src/model/model_usage_billing_part.dart';
+import 'package:hduhelp_neo/src/model/model_usage_breakdown_result.dart';
+import 'package:hduhelp_neo/src/model/model_usage_breakdown_result_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_usage_bucket.dart';
+import 'package:hduhelp_neo/src/model/model_usage_item.dart';
+import 'package:hduhelp_neo/src/model/model_usage_item_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_usage_page.dart';
+import 'package:hduhelp_neo/src/model/model_usage_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_usage_summary.dart';
+import 'package:hduhelp_neo/src/model/model_usage_summary_response_body.dart';
+import 'package:hduhelp_neo/src/model/moments_inbox_entry.dart';
 import 'package:hduhelp_neo/src/model/month_stat.dart';
 import 'package:hduhelp_neo/src/model/monthly_stat.dart';
 import 'package:hduhelp_neo/src/model/mutate_ok_response_body.dart';
@@ -657,9 +998,6 @@ import 'package:hduhelp_neo/src/model/publish_post_response_body.dart';
 import 'package:hduhelp_neo/src/model/purge_post_data.dart';
 import 'package:hduhelp_neo/src/model/purge_post_request_body.dart';
 import 'package:hduhelp_neo/src/model/purge_post_response_body.dart';
-import 'package:hduhelp_neo/src/model/qa_strategies_data.dart';
-import 'package:hduhelp_neo/src/model/qa_strategies_response_body.dart';
-import 'package:hduhelp_neo/src/model/qa_strategy_item.dart';
 import 'package:hduhelp_neo/src/model/react_request_body.dart';
 import 'package:hduhelp_neo/src/model/reacted_comment.dart';
 import 'package:hduhelp_neo/src/model/reaction_bucket.dart';
@@ -669,6 +1007,8 @@ import 'package:hduhelp_neo/src/model/reaction_summary.dart';
 import 'package:hduhelp_neo/src/model/reading_summary.dart';
 import 'package:hduhelp_neo/src/model/real_time_data.dart';
 import 'package:hduhelp_neo/src/model/real_time_response_body.dart';
+import 'package:hduhelp_neo/src/model/rebuild_index_data.dart';
+import 'package:hduhelp_neo/src/model/rebuild_index_response_body.dart';
 import 'package:hduhelp_neo/src/model/recruitment_item.dart';
 import 'package:hduhelp_neo/src/model/recruitment_page.dart';
 import 'package:hduhelp_neo/src/model/recruitment_response_body.dart';
@@ -678,6 +1018,7 @@ import 'package:hduhelp_neo/src/model/relation_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/relation_user.dart';
 import 'package:hduhelp_neo/src/model/rename_policy_profile_request_body.dart';
 import 'package:hduhelp_neo/src/model/rename_schedule_share_request_body.dart';
+import 'package:hduhelp_neo/src/model/reparse_request_body.dart';
 import 'package:hduhelp_neo/src/model/replace_course_simulation_request_body.dart';
 import 'package:hduhelp_neo/src/model/replay_task_data.dart';
 import 'package:hduhelp_neo/src/model/replay_task_request_body.dart';
@@ -686,6 +1027,7 @@ import 'package:hduhelp_neo/src/model/reply_feedback_request_body.dart';
 import 'package:hduhelp_neo/src/model/report.dart';
 import 'package:hduhelp_neo/src/model/report_gap_request_body.dart';
 import 'package:hduhelp_neo/src/model/report_gap_response_body.dart';
+import 'package:hduhelp_neo/src/model/report_impersonation_request_body.dart';
 import 'package:hduhelp_neo/src/model/report_reason.dart';
 import 'package:hduhelp_neo/src/model/report_reason_list_data.dart';
 import 'package:hduhelp_neo/src/model/report_reason_list_response_body.dart';
@@ -722,6 +1064,7 @@ import 'package:hduhelp_neo/src/model/run_cron_task_response_body.dart';
 import 'package:hduhelp_neo/src/model/runtime_component_status.dart';
 import 'package:hduhelp_neo/src/model/runtime_status.dart';
 import 'package:hduhelp_neo/src/model/runtime_status_response_body.dart';
+import 'package:hduhelp_neo/src/model/save_document_request_body.dart';
 import 'package:hduhelp_neo/src/model/save_draft_request_body.dart';
 import 'package:hduhelp_neo/src/model/save_notification_topic_configuration_request_body.dart';
 import 'package:hduhelp_neo/src/model/scene.dart';
@@ -756,8 +1099,10 @@ import 'package:hduhelp_neo/src/model/school_time_response_body.dart';
 import 'package:hduhelp_neo/src/model/scope_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/score_response_body.dart';
 import 'package:hduhelp_neo/src/model/scores_card.dart';
+import 'package:hduhelp_neo/src/model/search_candidate.dart';
 import 'package:hduhelp_neo/src/model/search_data.dart';
 import 'package:hduhelp_neo/src/model/search_hit.dart';
+import 'package:hduhelp_neo/src/model/search_hit_image.dart';
 import 'package:hduhelp_neo/src/model/search_page.dart';
 import 'package:hduhelp_neo/src/model/search_response_body.dart';
 import 'package:hduhelp_neo/src/model/search_users_response_body.dart';
@@ -809,12 +1154,10 @@ import 'package:hduhelp_neo/src/model/set_login_methods_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_login_methods_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_operator_enabled_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_operator_enabled_response_body.dart';
-import 'package:hduhelp_neo/src/model/set_qa_strategies_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_rank_boost_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_role_permissions_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_role_permissions_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_tagging_prompt_request_body.dart';
-import 'package:hduhelp_neo/src/model/set_tagging_target_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_tenant_enabled_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_tenant_enabled_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_user_default_identity_request_body.dart';
@@ -888,8 +1231,6 @@ import 'package:hduhelp_neo/src/model/sync_class_chat_group_request_body.dart';
 import 'package:hduhelp_neo/src/model/sync_grade_chat_group_request_body.dart';
 import 'package:hduhelp_neo/src/model/tagging_prompt_data.dart';
 import 'package:hduhelp_neo/src/model/tagging_prompt_response_body.dart';
-import 'package:hduhelp_neo/src/model/tagging_target_data.dart';
-import 'package:hduhelp_neo/src/model/tagging_target_response_body.dart';
 import 'package:hduhelp_neo/src/model/tagging_variable_item.dart';
 import 'package:hduhelp_neo/src/model/takedown_request_body.dart';
 import 'package:hduhelp_neo/src/model/task_page.dart';
@@ -917,6 +1258,7 @@ import 'package:hduhelp_neo/src/model/update_activity_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_admin_notice_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_app_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_app_response_body.dart';
+import 'package:hduhelp_neo/src/model/update_asset_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_campus_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_category_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_chunk_request_body.dart';
@@ -967,6 +1309,8 @@ import 'package:hduhelp_neo/src/model/venue_availability_slot.dart';
 import 'package:hduhelp_neo/src/model/venue_dates_data.dart';
 import 'package:hduhelp_neo/src/model/venue_dates_response_body.dart';
 import 'package:hduhelp_neo/src/model/verify_password_reset_code_request_body.dart';
+import 'package:hduhelp_neo/src/model/volunteer_activity_detail.dart';
+import 'package:hduhelp_neo/src/model/volunteer_activity_detail_response_body.dart';
 import 'package:hduhelp_neo/src/model/weather_card.dart';
 import 'package:hduhelp_neo/src/model/wish_cancellation_summary.dart';
 
@@ -1067,6 +1411,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AdminCampusInfo':
       return AdminCampusInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AdminChangePasswordRequestBody':
+      return AdminChangePasswordRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AdminCommentListData':
       return AdminCommentListData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -1078,6 +1425,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AdminElectricityMeter':
       return AdminElectricityMeter.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminImpersonationLog':
+      return AdminImpersonationLog.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminImpersonationLogsData':
+      return AdminImpersonationLogsData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AdminLoginClientInfo':
       return AdminLoginClientInfo.fromJson(value as Map<String, dynamic>)
@@ -1174,6 +1527,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AdminScopeDef':
       return AdminScopeDef.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AdminSearchData':
+      return AdminSearchData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminSearchResponseBody':
+      return AdminSearchResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AdminSourceTreeResponseBody':
       return AdminSourceTreeResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -1209,6 +1568,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AdminWishReviewResponseBody':
       return AdminWishReviewResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdoptRevisionRequestBody':
+      return AdoptRevisionRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AllPersonInfoResponseBody':
       return AllPersonInfoResponseBody.fromJson(value as Map<String, dynamic>)
@@ -1262,6 +1624,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ApproveDeviceRespBody':
       return ApproveDeviceRespBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AssetIdRequestBody':
+      return AssetIdRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AssignOperatorRoleRequestBody':
       return AssignOperatorRoleRequestBody.fromJson(
@@ -1571,8 +1936,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CheckUpdateResponseBody':
       return CheckUpdateResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'ChunkDeleteResponseBody':
-      return ChunkDeleteResponseBody.fromJson(value as Map<String, dynamic>)
+    case 'ChunkListData':
+      return ChunkListData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'ChunkMutateResponseBody':
       return ChunkMutateResponseBody.fromJson(value as Map<String, dynamic>)
@@ -1670,6 +2035,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ConfigListResponseBody':
       return ConfigListResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ConfirmImpersonationRequestBody':
+      return ConfirmImpersonationRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'Course':
       return Course.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'CourseGroupItem':
@@ -1980,6 +2348,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'DingTalkReviewCallbackResponseBody':
       return DingTalkReviewCallbackResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'DingtalkScheduleResponseBody':
+      return DingtalkScheduleResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'DomainDeleteResponseBody':
       return DomainDeleteResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2285,11 +2656,23 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'HealthResponseBody':
       return HealthResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'HideChunkRequestBody':
+      return HideChunkRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'IcsLinkData':
       return IcsLinkData.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'IcsLinkResponseBody':
       return IcsLinkResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ImageSearchRequestBody':
+      return ImageSearchRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ImpersonationResultData':
+      return ImpersonationResultData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ImpersonationResultResponseBody':
+      return ImpersonationResultResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'InboxAction':
       return InboxAction.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'InboxCounters':
@@ -2382,26 +2765,62 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'JoinResponseBody':
       return JoinResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'KnowledgeAsset':
+      return KnowledgeAsset.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'KnowledgeAssetPage':
+      return KnowledgeAssetPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'KnowledgeAssetResponseBody':
+      return KnowledgeAssetResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'KnowledgeAuditEntry':
+      return KnowledgeAuditEntry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'KnowledgeCarrier':
       return KnowledgeCarrier.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'KnowledgeChunk':
       return KnowledgeChunk.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'KnowledgeChunkOverride':
+      return KnowledgeChunkOverride.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'KnowledgeContentVersion':
       return KnowledgeContentVersion.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'KnowledgeDocRevision':
+      return KnowledgeDocRevision.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'KnowledgeDocRevisionResponseBody':
+      return KnowledgeDocRevisionResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'KnowledgeDocumentData':
+      return KnowledgeDocumentData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'KnowledgeDocumentResponseBody':
+      return KnowledgeDocumentResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'KnowledgeDomainNode':
       return KnowledgeDomainNode.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'KnowledgeGapInfo':
       return KnowledgeGapInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'KnowledgeIndexStatusData':
+      return KnowledgeIndexStatusData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'KnowledgeIndexStatusResponseBody':
+      return KnowledgeIndexStatusResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'KnowledgeItemDetail':
       return KnowledgeItemDetail.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'KnowledgeItemSummary':
       return KnowledgeItemSummary.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'KnowledgeParseInfo':
+      return KnowledgeParseInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'KnowledgeSearchRequestBody':
       return KnowledgeSearchRequestBody.fromJson(value as Map<String, dynamic>)
@@ -2442,6 +2861,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'LibraryReadingResponseBody':
       return LibraryReadingResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ListAssetsResponseBody':
+      return ListAssetsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ListAuditResponseBody':
       return ListAuditResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2463,6 +2885,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ListGapsResponseBody':
       return ListGapsResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ListImpersonationLogsResponseBody':
+      return ListImpersonationLogsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'ListItemsResponseBody':
       return ListItemsResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2549,8 +2974,22 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'LookUpShareResponseBody':
       return LookUpShareResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'LostFoundCategory':
+      return LostFoundCategory.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'LostFoundCategoryListResponseBody':
+      return LostFoundCategoryListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'LostFoundSearchResponseBody':
+      return LostFoundSearchResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'LostItem':
       return LostItem.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'MCPToolInfo':
+      return MCPToolInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'MCPToolsResponseBody':
+      return MCPToolsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'MaxMonth':
       return MaxMonth.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MeResponseBody':
@@ -2613,6 +3052,930 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'MessagePageResponseBody':
       return MessagePageResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'MgOkData':
+      return MgOkData.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'MgOkResponseBody':
+      return MgOkResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAccessAuditPage':
+      return ModelAccessAuditPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAccessAuditPageResponseBody':
+      return ModelAccessAuditPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelAllowlist':
+      return ModelAllowlist.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAppliedRates':
+      return ModelAppliedRates.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAttemptBucket':
+      return ModelAttemptBucket.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAttemptItem':
+      return ModelAttemptItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAuditEntry':
+      return ModelAuditEntry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAuditPage':
+      return ModelAuditPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAuditPageResponseBody':
+      return ModelAuditPageResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelAuditResponseBody':
+      return ModelAuditResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelBatchAddItem':
+      return ModelBatchAddItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelBatchAddResult':
+      return ModelBatchAddResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelBatchItemResult':
+      return ModelBatchItemResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelBatchKey':
+      return ModelBatchKey.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelBatchResult':
+      return ModelBatchResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelBatchResultResponseBody':
+      return ModelBatchResultResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelCacheDomainGroup':
+      return ModelCacheDomainGroup.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCacheDomainList':
+      return ModelCacheDomainList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCacheDomainListResponseBody':
+      return ModelCacheDomainListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelCacheHints':
+      return ModelCacheHints.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCapabilitiesView':
+      return ModelCapabilitiesView.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCapabilityInfo':
+      return ModelCapabilityInfo.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCatalogDefault':
+      return ModelCatalogDefault.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCatalogResponseBody':
+      return ModelCatalogResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnector':
+      return ModelConnector.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorBatchAddRequestBody':
+      return ModelConnectorBatchAddRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorBatchAddResponseBody':
+      return ModelConnectorBatchAddResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorBatchDeleteRequestBody':
+      return ModelConnectorBatchDeleteRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorBatchSchedulableRequestBody':
+      return ModelConnectorBatchSchedulableRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorBatchTestRequestBody':
+      return ModelConnectorBatchTestRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorBatchUpdateRequestBody':
+      return ModelConnectorBatchUpdateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorDuplicateRequestBody':
+      return ModelConnectorDuplicateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorExport':
+      return ModelConnectorExport.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorExportResponseBody':
+      return ModelConnectorExportResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorFilters':
+      return ModelConnectorFilters.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorForm':
+      return ModelConnectorForm.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorFormBody':
+      return ModelConnectorFormBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorHealth':
+      return ModelConnectorHealth.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorHealthClearRequestBody':
+      return ModelConnectorHealthClearRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorHealthResponseBody':
+      return ModelConnectorHealthResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorHealthStatistics':
+      return ModelConnectorHealthStatistics.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorHealthStatisticsResponseBody':
+      return ModelConnectorHealthStatisticsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorIds':
+      return ModelConnectorIds.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorIdsBodyBody':
+      return ModelConnectorIdsBodyBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorIdsResponseBody':
+      return ModelConnectorIdsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorImpact':
+      return ModelConnectorImpact.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorImpactResponseBody':
+      return ModelConnectorImpactResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorImportRequestBody':
+      return ModelConnectorImportRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorImportResponseBody':
+      return ModelConnectorImportResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorModels':
+      return ModelConnectorModels.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorModelsResponseBody':
+      return ModelConnectorModelsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorOverride':
+      return ModelConnectorOverride.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorPage':
+      return ModelConnectorPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorPageResponseBody':
+      return ModelConnectorPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorPoolRef':
+      return ModelConnectorPoolRef.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorProbePage':
+      return ModelConnectorProbePage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorProbePageResponseBody':
+      return ModelConnectorProbePageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorProbeRecord':
+      return ModelConnectorProbeRecord.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorProbeSettingsRequestBody':
+      return ModelConnectorProbeSettingsRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorRecoverRequestBody':
+      return ModelConnectorRecoverRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorResponseBody':
+      return ModelConnectorResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorRuntime':
+      return ModelConnectorRuntime.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorRuntimeEntry':
+      return ModelConnectorRuntimeEntry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelConnectorRuntimeResponseBody':
+      return ModelConnectorRuntimeResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorSchedulableRequestBody':
+      return ModelConnectorSchedulableRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConnectorTestRequestBody':
+      return ModelConnectorTestRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelConversationStats':
+      return ModelConversationStats.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCooldownEntry':
+      return ModelCooldownEntry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCooldownItem':
+      return ModelCooldownItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCooldownPage':
+      return ModelCooldownPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCooldownPageResponseBody':
+      return ModelCooldownPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelCostBreakdown':
+      return ModelCostBreakdown.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCoverageGap':
+      return ModelCoverageGap.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCurlResult':
+      return ModelCurlResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelCurlResultResponseBody':
+      return ModelCurlResultResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelDashboardSnapshot':
+      return ModelDashboardSnapshot.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelDashboardSnapshotResponseBody':
+      return ModelDashboardSnapshotResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelDashboardSources':
+      return ModelDashboardSources.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelDiscoveredModel':
+      return ModelDiscoveredModel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEffectiveCacheHints':
+      return ModelEffectiveCacheHints.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEffectivePriceField':
+      return ModelEffectivePriceField.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEffectiveTier':
+      return ModelEffectiveTier.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEntityEventStats':
+      return ModelEntityEventStats.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEntityUsageStats':
+      return ModelEntityUsageStats.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEntityUsageStatsResponseBody':
+      return ModelEntityUsageStatsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelErrorRuleOverrides':
+      return ModelErrorRuleOverrides.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelErrorRuleOverridesResponseBody':
+      return ModelErrorRuleOverridesResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelErrorRulesTest':
+      return ModelErrorRulesTest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelErrorRulesTestRequestBody':
+      return ModelErrorRulesTestRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelErrorRulesTestResponseBody':
+      return ModelErrorRulesTestResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelEstimateDraftPrice':
+      return ModelEstimateDraftPrice.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEstimateRates':
+      return ModelEstimateRates.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEstimateRequestBody':
+      return ModelEstimateRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEstimateResponseBody':
+      return ModelEstimateResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEstimateResult':
+      return ModelEstimateResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEstimateUsage':
+      return ModelEstimateUsage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelEvidence':
+      return ModelEvidence.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelGatewayServiceModelDeleteConnectorRequest':
+      return ModelGatewayServiceModelDeleteConnectorRequest.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelHealthScore':
+      return ModelHealthScore.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelImagesToday':
+      return ModelImagesToday.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelImportItem':
+      return ModelImportItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelImportResult':
+      return ModelImportResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelLastTest':
+      return ModelLastTest.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelListedModel':
+      return ModelListedModel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMappingResolution':
+      return ModelMappingResolution.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMappingResolveRequestBody':
+      return ModelMappingResolveRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelMappingResolveResponseBody':
+      return ModelMappingResolveResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelMappingResolveResult':
+      return ModelMappingResolveResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMemberInput':
+      return ModelMemberInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataCapabilitiesBody':
+      return ModelMetadataCapabilitiesBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelMetadataDetail':
+      return ModelMetadataDetail.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataDetailResponseBody':
+      return ModelMetadataDetailResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelMetadataEntry':
+      return ModelMetadataEntry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataForm':
+      return ModelMetadataForm.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataFormBody':
+      return ModelMetadataFormBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataImportBodyBody':
+      return ModelMetadataImportBodyBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataImportResponseBody':
+      return ModelMetadataImportResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelMetadataImportResult':
+      return ModelMetadataImportResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataList':
+      return ModelMetadataList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataListResponseBody':
+      return ModelMetadataListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelMetadataParamsBody':
+      return ModelMetadataParamsBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataReasoningBody':
+      return ModelMetadataReasoningBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataResponseBody':
+      return ModelMetadataResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelMetadataSuggestionView':
+      return ModelMetadataSuggestionView.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelModelOption':
+      return ModelModelOption.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelModelSyncResponseBody':
+      return ModelModelSyncResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelModelSyncResult':
+      return ModelModelSyncResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelObservationCurlRequestBody':
+      return ModelObservationCurlRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelObservationModelOptions':
+      return ModelObservationModelOptions.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelObservationModelOptionsResponseBody':
+      return ModelObservationModelOptionsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelObservationPoint':
+      return ModelObservationPoint.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelObservationSeries':
+      return ModelObservationSeries.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelOperationalState':
+      return ModelOperationalState.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelOperationalStateResponseBody':
+      return ModelOperationalStateResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelOurModel':
+      return ModelOurModel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelOurModelList':
+      return ModelOurModelList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelOurModelListResponseBody':
+      return ModelOurModelListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPlatformPreset':
+      return ModelPlatformPreset.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPlatformPresets':
+      return ModelPlatformPresets.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPlatformPresetsResponseBody':
+      return ModelPlatformPresetsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPool':
+      return ModelPool.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPoolCapacity':
+      return ModelPoolCapacity.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolCapacityList':
+      return ModelPoolCapacityList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolCapacityResponseBody':
+      return ModelPoolCapacityResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPoolFormBody':
+      return ModelPoolFormBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolImpact':
+      return ModelPoolImpact.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolMember':
+      return ModelPoolMember.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolMembers':
+      return ModelPoolMembers.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolMembersReplaceRequestBody':
+      return ModelPoolMembersReplaceRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPoolMembersResponseBody':
+      return ModelPoolMembersResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPoolMembershipInput':
+      return ModelPoolMembershipInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolOption':
+      return ModelPoolOption.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolOptions':
+      return ModelPoolOptions.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolOptionsResponseBody':
+      return ModelPoolOptionsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPoolPage':
+      return ModelPoolPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolPageResponseBody':
+      return ModelPoolPageResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolResponseBody':
+      return ModelPoolResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolRoute':
+      return ModelPoolRoute.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolSortItem':
+      return ModelPoolSortItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolSortRequestBody':
+      return ModelPoolSortRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolUsagePage':
+      return ModelPoolUsagePage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPoolUsagePageResponseBody':
+      return ModelPoolUsagePageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPoolUsageSummary':
+      return ModelPoolUsageSummary.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPresetModel':
+      return ModelPresetModel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceChainStep':
+      return ModelPriceChainStep.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceEntry':
+      return ModelPriceEntry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceFormBody':
+      return ModelPriceFormBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceList':
+      return ModelPriceList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceListResponseBody':
+      return ModelPriceListResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPricePage':
+      return ModelPricePage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPricePageResponseBody':
+      return ModelPricePageResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceResponseBody':
+      return ModelPriceResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceRow':
+      return ModelPriceRow.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceTier':
+      return ModelPriceTier.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPriceUse':
+      return ModelPriceUse.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProbeMember':
+      return ModelProbeMember.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProbePage':
+      return ModelProbePage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProbePageResponseBody':
+      return ModelProbePageResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProbeResult':
+      return ModelProbeResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProbeResultResponseBody':
+      return ModelProbeResultResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelProxyAnthropicCapability':
+      return ModelProxyAnthropicCapability.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelProxyAnthropicModel':
+      return ModelProxyAnthropicModel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProxyAnthropicModelListBody':
+      return ModelProxyAnthropicModelListBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelProxyErrorBody':
+      return ModelProxyErrorBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProxyImage':
+      return ModelProxyImage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProxyImageEditRequestBody':
+      return ModelProxyImageEditRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelProxyImageGenerationRequestBody':
+      return ModelProxyImageGenerationRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelProxyImagesResponseBody':
+      return ModelProxyImagesResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelProxyOpenAIModel':
+      return ModelProxyOpenAIModel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProxyOpenAIModelListBody':
+      return ModelProxyOpenAIModelListBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelProxyTestRequestBody':
+      return ModelProxyTestRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProxyTestResponseBody':
+      return ModelProxyTestResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProxyTestResult':
+      return ModelProxyTestResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurpose':
+      return ModelPurpose.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPurposeLimits':
+      return ModelPurposeLimits.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeList':
+      return ModelPurposeList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeListResponseBody':
+      return ModelPurposeListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPurposeParams':
+      return ModelPurposeParams.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeProbe':
+      return ModelPurposeProbe.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeQuota':
+      return ModelPurposeQuota.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeResponseBody':
+      return ModelPurposeResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeRevision':
+      return ModelPurposeRevision.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeRevisionPage':
+      return ModelPurposeRevisionPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeRevisionPageResponseBody':
+      return ModelPurposeRevisionPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPurposeSettings':
+      return ModelPurposeSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeSettingsRequestBody':
+      return ModelPurposeSettingsRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPurposeStatistics':
+      return ModelPurposeStatistics.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeStatisticsResponseBody':
+      return ModelPurposeStatisticsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelPurposeTarget':
+      return ModelPurposeTarget.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeTargetView':
+      return ModelPurposeTargetView.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelPurposeTargetsRequestBody':
+      return ModelPurposeTargetsRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelQuotaWindows':
+      return ModelQuotaWindows.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelReasoningEffortView':
+      return ModelReasoningEffortView.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelReasoningMapping':
+      return ModelReasoningMapping.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRecoverResponseBody':
+      return ModelRecoverResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRecoverResult':
+      return ModelRecoverResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelReplicaImageGate':
+      return ModelReplicaImageGate.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRequestCursor':
+      return ModelRequestCursor.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRequestDetail':
+      return ModelRequestDetail.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRequestDetailResponseBody':
+      return ModelRequestDetailResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelRequestImageMetadata':
+      return ModelRequestImageMetadata.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRequestItem':
+      return ModelRequestItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRequestPage':
+      return ModelRequestPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRequestPageResponseBody':
+      return ModelRequestPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelRequestScopedErrorsRequestBody':
+      return ModelRequestScopedErrorsRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelRequestScopedRule':
+      return ModelRequestScopedRule.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRequestSummary':
+      return ModelRequestSummary.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRequestSummaryResponseBody':
+      return ModelRequestSummaryResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelResolvePreview':
+      return ModelResolvePreview.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelResolvePreviewRequestBody':
+      return ModelResolvePreviewRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelResolvePreviewResponseBody':
+      return ModelResolvePreviewResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelResolveStep':
+      return ModelResolveStep.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRollbackDraft':
+      return ModelRollbackDraft.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRollbackDraftResponseBody':
+      return ModelRollbackDraftResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelRollbackDraftTarget':
+      return ModelRollbackDraftTarget.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRoutingCandidate':
+      return ModelRoutingCandidate.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRoutingPreview':
+      return ModelRoutingPreview.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelRoutingPreviewRequestBody':
+      return ModelRoutingPreviewRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelRoutingPreviewResponseBody':
+      return ModelRoutingPreviewResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelSchedulableResponseBody':
+      return ModelSchedulableResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelSchedulableResult':
+      return ModelSchedulableResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSelectionItem':
+      return ModelSelectionItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettingDiff':
+      return ModelSettingDiff.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettingError':
+      return ModelSettingError.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettingGroup':
+      return ModelSettingGroup.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettingItem':
+      return ModelSettingItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettingResponseBody':
+      return ModelSettingResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettings':
+      return ModelSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettingsResponseBody':
+      return ModelSettingsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettingsUpdateRequestBody':
+      return ModelSettingsUpdateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelSettingsValidateRequestBody':
+      return ModelSettingsValidateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelSettingsValidation':
+      return ModelSettingsValidation.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSettingsValidationResponseBody':
+      return ModelSettingsValidationResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelStartupItem':
+      return ModelStartupItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelStartupResponseBody':
+      return ModelStartupResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelStartupView':
+      return ModelStartupView.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelStringList':
+      return ModelStringList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelStringListResponseBody':
+      return ModelStringListResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSyncDiffEntry':
+      return ModelSyncDiffEntry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSyncDiffPage':
+      return ModelSyncDiffPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSyncDiffPageResponseBody':
+      return ModelSyncDiffPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelSyncHashRequestBody':
+      return ModelSyncHashRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSyncPending':
+      return ModelSyncPending.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSyncState':
+      return ModelSyncState.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSyncStatus':
+      return ModelSyncStatus.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelSyncStatusResponseBody':
+      return ModelSyncStatusResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTargetProbeRequestBody':
+      return ModelTargetProbeRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTargetReference':
+      return ModelTargetReference.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTargetSnapshot':
+      return ModelTargetSnapshot.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTempUnschedRule':
+      return ModelTempUnschedRule.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTempUnschedState':
+      return ModelTempUnschedState.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTestEventBody':
+      return ModelTestEventBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTierPreviewSegment':
+      return ModelTierPreviewSegment.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceAttempt':
+      return ModelTraceAttempt.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceBodyPart':
+      return ModelTraceBodyPart.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceBodyQueryBody':
+      return ModelTraceBodyQueryBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceBodyResponseBody':
+      return ModelTraceBodyResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceImage':
+      return ModelTraceImage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceIndex':
+      return ModelTraceIndex.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceIndexResponseBody':
+      return ModelTraceIndexResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceMediaItem':
+      return ModelTraceMediaItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceMediaLink':
+      return ModelTraceMediaLink.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceMediaLinks':
+      return ModelTraceMediaLinks.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceMediaLinksQueryBody':
+      return ModelTraceMediaLinksQueryBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelTraceMediaLinksResponseBody':
+      return ModelTraceMediaLinksResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelTracePartItem':
+      return ModelTracePartItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceQueryBody':
+      return ModelTraceQueryBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceReplay':
+      return ModelTraceReplay.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceReplayQueryBody':
+      return ModelTraceReplayQueryBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceReplayResponseBody':
+      return ModelTraceReplayResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelTraceSummary':
+      return ModelTraceSummary.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTraceWindow':
+      return ModelTraceWindow.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelTransportCounts':
+      return ModelTransportCounts.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUnsavedConnection':
+      return ModelUnsavedConnection.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUnsavedConnectionBody':
+      return ModelUnsavedConnectionBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUpstreamModelEntry':
+      return ModelUpstreamModelEntry.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsageBillingPart':
+      return ModelUsageBillingPart.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsageBreakdownResult':
+      return ModelUsageBreakdownResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsageBreakdownResultResponseBody':
+      return ModelUsageBreakdownResultResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ModelUsageBucket':
+      return ModelUsageBucket.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsageItem':
+      return ModelUsageItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsageItemResponseBody':
+      return ModelUsageItemResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsagePage':
+      return ModelUsagePage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsagePageResponseBody':
+      return ModelUsagePageResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsageSummary':
+      return ModelUsageSummary.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelUsageSummaryResponseBody':
+      return ModelUsageSummaryResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'MomentsInboxEntry':
+      return MomentsInboxEntry.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'MonthStat':
       return MonthStat.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -2869,15 +4232,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'PurgePostResponseBody':
       return PurgePostResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'QAStrategiesData':
-      return QAStrategiesData.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'QAStrategiesResponseBody':
-      return QAStrategiesResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'QAStrategyItem':
-      return QAStrategyItem.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'ReactRequestBody':
       return ReactRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2903,6 +4257,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return RealTimeData.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'RealTimeResponseBody':
       return RealTimeResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'RebuildIndexData':
+      return RebuildIndexData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'RebuildIndexResponseBody':
+      return RebuildIndexResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'RecruitmentItem':
       return RecruitmentItem.fromJson(value as Map<String, dynamic>)
@@ -2930,6 +4290,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RenameScheduleShareRequestBody':
       return RenameScheduleShareRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'ReparseRequestBody':
+      return ReparseRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ReplaceCourseSimulationRequestBody':
       return ReplaceCourseSimulationRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -2953,6 +4316,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ReportGapResponseBody':
       return ReportGapResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ReportImpersonationRequestBody':
+      return ReportImpersonationRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'ReportReason':
       return ReportReason.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ReportReasonListData':
@@ -3057,6 +4423,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RuntimeStatusResponseBody':
       return RuntimeStatusResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SaveDocumentRequestBody':
+      return SaveDocumentRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SaveDraftRequestBody':
       return SaveDraftRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -3153,10 +4522,16 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'ScoresCard':
       return ScoresCard.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'SearchCandidate':
+      return SearchCandidate.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SearchData':
       return SearchData.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchHit':
       return SearchHit.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'SearchHitImage':
+      return SearchHitImage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SearchPage':
       return SearchPage.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SearchResponseBody':
@@ -3302,9 +4677,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SetOperatorEnabledResponseBody':
       return SetOperatorEnabledResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'SetQAStrategiesRequestBody':
-      return SetQAStrategiesRequestBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'SetRankBoostRequestBody':
       return SetRankBoostRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -3316,9 +4688,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'SetTaggingPromptRequestBody':
       return SetTaggingPromptRequestBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'SetTaggingTargetRequestBody':
-      return SetTaggingTargetRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'SetTenantEnabledRequestBody':
       return SetTenantEnabledRequestBody.fromJson(value as Map<String, dynamic>)
@@ -3528,12 +4897,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'TaggingPromptResponseBody':
       return TaggingPromptResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'TaggingTargetData':
-      return TaggingTargetData.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'TaggingTargetResponseBody':
-      return TaggingTargetResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'TaggingVariableItem':
       return TaggingVariableItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -3611,6 +4974,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'UpdateAppResponseBody':
       return UpdateAppResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'UpdateAssetRequestBody':
+      return UpdateAssetRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'UpdateCampusRequestBody':
       return UpdateCampusRequestBody.fromJson(value as Map<String, dynamic>)
@@ -3758,6 +5124,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'VerifyPasswordResetCodeRequestBody':
       return VerifyPasswordResetCodeRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'VolunteerActivityDetail':
+      return VolunteerActivityDetail.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'VolunteerActivityDetailResponseBody':
+      return VolunteerActivityDetailResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'WeatherCard':
       return WeatherCard.fromJson(value as Map<String, dynamic>) as ReturnType;

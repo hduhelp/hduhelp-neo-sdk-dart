@@ -3,7 +3,7 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/knowledge_chunk.dart';
+import 'package:hduhelp_neo/src/model/chunk_list_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'list_chunks_response_body.g.dart';
@@ -27,7 +27,7 @@ class ListChunksResponseBody {
     required: false,
     includeIfNull: false,
   )
-  final List<KnowledgeChunk>? data;
+  final ChunkListData? data;
 
   @JsonKey(
     name: r'code',

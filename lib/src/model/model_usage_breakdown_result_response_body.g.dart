@@ -1,0 +1,40 @@
+// GENERATED CODE - DO NOT MODIFY BY HAND
+
+part of 'model_usage_breakdown_result_response_body.dart';
+
+// **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+ModelUsageBreakdownResultResponseBody
+    _$ModelUsageBreakdownResultResponseBodyFromJson(
+            Map<String, dynamic> json) =>
+        $checkedCreate(
+          'ModelUsageBreakdownResultResponseBody',
+          json,
+          ($checkedConvert) {
+            $checkKeys(
+              json,
+              requiredKeys: const ['code', 'msg'],
+            );
+            final val = ModelUsageBreakdownResultResponseBody(
+              data: $checkedConvert(
+                  'data',
+                  (v) => v == null
+                      ? null
+                      : ModelUsageBreakdownResult.fromJson(
+                          v as Map<String, dynamic>)),
+              code: $checkedConvert('code', (v) => (v as num).toInt()),
+              msg: $checkedConvert('msg', (v) => v as String),
+            );
+            return val;
+          },
+        );
+
+Map<String, dynamic> _$ModelUsageBreakdownResultResponseBodyToJson(
+        ModelUsageBreakdownResultResponseBody instance) =>
+    <String, dynamic>{
+      if (instance.data?.toJson() case final value?) 'data': value,
+      'code': instance.code,
+      'msg': instance.msg,
+    };

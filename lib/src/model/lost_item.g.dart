@@ -17,7 +17,7 @@ LostItem _$LostItemFromJson(Map<String, dynamic> json) => $checkedCreate(
               'category',
               (v) => v == null
                   ? null
-                  : Category.fromJson(v as Map<String, dynamic>)),
+                  : LostFoundCategory.fromJson(v as Map<String, dynamic>)),
           scene: $checkedConvert(
               'scene',
               (v) =>

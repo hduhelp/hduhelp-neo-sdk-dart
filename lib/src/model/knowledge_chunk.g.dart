@@ -18,6 +18,10 @@ KnowledgeChunk _$KnowledgeChunkFromJson(Map<String, dynamic> json) =>
           content: $checkedConvert('content', (v) => v as String?),
           attachment: $checkedConvert('attachment', (v) => v as String?),
           mine: $checkedConvert('mine', (v) => v as bool?),
+          hidden: $checkedConvert('hidden', (v) => v as bool?),
+          overrideId: $checkedConvert('overrideId', (v) => v as String?),
+          seq: $checkedConvert('seq', (v) => (v as num?)?.toInt()),
+          parentId: $checkedConvert('parentId', (v) => v as String?),
         );
         return val;
       },
@@ -31,4 +35,8 @@ Map<String, dynamic> _$KnowledgeChunkToJson(KnowledgeChunk instance) =>
       if (instance.content case final value?) 'content': value,
       if (instance.attachment case final value?) 'attachment': value,
       if (instance.mine case final value?) 'mine': value,
+      if (instance.hidden case final value?) 'hidden': value,
+      if (instance.overrideId case final value?) 'overrideId': value,
+      if (instance.seq case final value?) 'seq': value,
+      if (instance.parentId case final value?) 'parentId': value,
     };

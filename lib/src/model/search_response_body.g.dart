@@ -16,7 +16,7 @@ SearchResponseBody _$SearchResponseBodyFromJson(Map<String, dynamic> json) =>
               'data',
               (v) => v == null
                   ? null
-                  : SearchPage.fromJson(v as Map<String, dynamic>)),
+                  : SearchData.fromJson(v as Map<String, dynamic>)),
           code: $checkedConvert('code', (v) => (v as num?)?.toInt()),
           msg: $checkedConvert('msg', (v) => v as String?),
         );

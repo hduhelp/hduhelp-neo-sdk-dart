@@ -29,6 +29,17 @@ SearchHit _$SearchHitFromJson(Map<String, dynamic> json) => $checkedCreate(
           restricted: $checkedConvert('restricted', (v) => v as bool?),
           publishedAt:
               $checkedConvert('publishedAt', (v) => (v as num?)?.toInt()),
+          headingPath: $checkedConvert('headingPath',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          kind: $checkedConvert('kind', (v) => v as String?),
+          matched: $checkedConvert('matched', (v) => v as String?),
+          images: $checkedConvert(
+              'images',
+              (v) => (v as List<dynamic>?)
+                  ?.map(
+                      (e) => SearchHitImage.fromJson(e as Map<String, dynamic>))
+                  .toList()),
+          fileUrl: $checkedConvert('fileUrl', (v) => v as String?),
         );
         return val;
       },
@@ -51,4 +62,10 @@ Map<String, dynamic> _$SearchHitToJson(SearchHit instance) => <String, dynamic>{
       if (instance.domainKeys case final value?) 'domainKeys': value,
       if (instance.restricted case final value?) 'restricted': value,
       if (instance.publishedAt case final value?) 'publishedAt': value,
+      if (instance.headingPath case final value?) 'headingPath': value,
+      if (instance.kind case final value?) 'kind': value,
+      if (instance.matched case final value?) 'matched': value,
+      if (instance.images?.map((e) => e.toJson()).toList() case final value?)
+        'images': value,
+      if (instance.fileUrl case final value?) 'fileUrl': value,
     };

@@ -28,6 +28,7 @@ class CreatePATRequestBody {
   )
   final String? name;
 
+  /// PAT 权限：精确 [all] 表示动态全部用户权限（包含未来新增权限），或具体 scope 列表。all 不可混合、重复、改变大小写或带空白。
   @JsonKey(
     name: r'scopes',
     required: false,

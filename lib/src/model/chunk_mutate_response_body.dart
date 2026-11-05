@@ -3,7 +3,6 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/knowledge_chunk.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'chunk_mutate_response_body.g.dart';
@@ -17,17 +16,9 @@ part 'chunk_mutate_response_body.g.dart';
 class ChunkMutateResponseBody {
   /// Returns a new [ChunkMutateResponseBody] instance.
   ChunkMutateResponseBody({
-    this.data,
     this.code,
     this.msg,
   });
-
-  @JsonKey(
-    name: r'data',
-    required: false,
-    includeIfNull: false,
-  )
-  final KnowledgeChunk? data;
 
   @JsonKey(
     name: r'code',
@@ -47,12 +38,11 @@ class ChunkMutateResponseBody {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ChunkMutateResponseBody &&
-          other.data == data &&
           other.code == code &&
           other.msg == msg;
 
   @override
-  int get hashCode => data.hashCode + code.hashCode + msg.hashCode;
+  int get hashCode => code.hashCode + msg.hashCode;
 
   factory ChunkMutateResponseBody.fromJson(Map<String, dynamic> json) =>
       _$ChunkMutateResponseBodyFromJson(json);

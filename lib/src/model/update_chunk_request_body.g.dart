@@ -13,19 +13,19 @@ UpdateChunkRequestBody _$UpdateChunkRequestBodyFromJson(
       json,
       ($checkedConvert) {
         final val = UpdateChunkRequestBody(
-          pointId: $checkedConvert('point_id', (v) => v as String?),
+          overrideId: $checkedConvert('override_id', (v) => v as String?),
           title: $checkedConvert('title', (v) => v as String?),
           content: $checkedConvert('content', (v) => v as String?),
         );
         return val;
       },
-      fieldKeyMap: const {'pointId': 'point_id'},
+      fieldKeyMap: const {'overrideId': 'override_id'},
     );
 
 Map<String, dynamic> _$UpdateChunkRequestBodyToJson(
         UpdateChunkRequestBody instance) =>
     <String, dynamic>{
-      if (instance.pointId case final value?) 'point_id': value,
+      if (instance.overrideId case final value?) 'override_id': value,
       if (instance.title case final value?) 'title': value,
       if (instance.content case final value?) 'content': value,
     };

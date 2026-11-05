@@ -3,7 +3,7 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/category.dart';
+import 'package:hduhelp_neo/src/model/category_list_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'category_list_response_body.g.dart';
@@ -27,7 +27,7 @@ class CategoryListResponseBody {
     required: false,
     includeIfNull: false,
   )
-  final List<Category>? data;
+  final CategoryListData? data;
 
   @JsonKey(
     name: r'code',

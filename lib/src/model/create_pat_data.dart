@@ -38,6 +38,7 @@ class CreatePATData {
   )
   final String? name;
 
+  /// 保存的 PAT 权限选择器：精确 [all] 或具体 scope 列表；all 不在此展开。
   @JsonKey(
     name: r'scopes',
     required: false,

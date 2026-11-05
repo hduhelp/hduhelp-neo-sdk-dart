@@ -41,9 +41,13 @@ KnowledgeCarrier _$KnowledgeCarrierFromJson(Map<String, dynamic> json) =>
                   .toList()),
           syncStatus: $checkedConvert('syncStatus', (v) => v as String?),
           syncError: $checkedConvert('syncError', (v) => v as String?),
-          arkDocId: $checkedConvert('arkDocId', (v) => v as String?),
           syncedAt: $checkedConvert('syncedAt', (v) => (v as num?)?.toInt()),
           seq: $checkedConvert('seq', (v) => (v as num?)?.toInt()),
+          indexStage: $checkedConvert('indexStage', (v) => v as String?),
+          unitCount: $checkedConvert('unitCount', (v) => (v as num?)?.toInt()),
+          docRevisionId: $checkedConvert('docRevisionId', (v) => v as String?),
+          docReviewNeeded:
+              $checkedConvert('docReviewNeeded', (v) => v as bool?),
         );
         return val;
       },
@@ -65,7 +69,10 @@ Map<String, dynamic> _$KnowledgeCarrierToJson(KnowledgeCarrier instance) =>
         'versions': value,
       if (instance.syncStatus case final value?) 'syncStatus': value,
       if (instance.syncError case final value?) 'syncError': value,
-      if (instance.arkDocId case final value?) 'arkDocId': value,
       if (instance.syncedAt case final value?) 'syncedAt': value,
       if (instance.seq case final value?) 'seq': value,
+      if (instance.indexStage case final value?) 'indexStage': value,
+      if (instance.unitCount case final value?) 'unitCount': value,
+      if (instance.docRevisionId case final value?) 'docRevisionId': value,
+      if (instance.docReviewNeeded case final value?) 'docReviewNeeded': value,
     };
