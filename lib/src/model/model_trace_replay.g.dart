@@ -86,9 +86,12 @@ ModelTraceReplay _$ModelTraceReplayFromJson(Map<String, dynamic> json) =>
                   .map((e) =>
                       ModelTraceBodyPart.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          final_: $checkedConvert('final', (v) => v as String?),
+          requestView: $checkedConvert('requestView', (v) => v as String?),
         );
         return val;
       },
+      fieldKeyMap: const {'final_': 'final'},
     );
 
 Map<String, dynamic> _$ModelTraceReplayToJson(ModelTraceReplay instance) =>
@@ -118,4 +121,6 @@ Map<String, dynamic> _$ModelTraceReplayToJson(ModelTraceReplay instance) =>
       if (instance.purposeName case final value?) 'purposeName': value,
       'media': instance.media.map((e) => e.toJson()).toList(),
       'parts': instance.parts.map((e) => e.toJson()).toList(),
+      if (instance.final_ case final value?) 'final': value,
+      if (instance.requestView case final value?) 'requestView': value,
     };

@@ -27,6 +27,7 @@ class ModelProxyImageGenerationRequestBody {
     this.outputFormat,
     this.outputCompression,
     this.image,
+    this.promptCacheKey,
   });
 
   /// 公开名或别名；不填用这个用途的默认模型
@@ -109,6 +110,14 @@ class ModelProxyImageGenerationRequestBody {
   )
   final List<String>? image;
 
+  /// 所属对话的编号，与这段对话的 Responses 请求传同一个值，生图就进同一条会话轨迹。只用于关联，不发给上游
+  @JsonKey(
+    name: r'prompt_cache_key',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? promptCacheKey;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -123,7 +132,8 @@ class ModelProxyImageGenerationRequestBody {
           other.background == background &&
           other.outputFormat == outputFormat &&
           other.outputCompression == outputCompression &&
-          other.image == image;
+          other.image == image &&
+          other.promptCacheKey == promptCacheKey;
 
   @override
   int get hashCode =>
@@ -137,7 +147,8 @@ class ModelProxyImageGenerationRequestBody {
       background.hashCode +
       outputFormat.hashCode +
       outputCompression.hashCode +
-      image.hashCode;
+      image.hashCode +
+      promptCacheKey.hashCode;
 
   factory ModelProxyImageGenerationRequestBody.fromJson(
           Map<String, dynamic> json) =>

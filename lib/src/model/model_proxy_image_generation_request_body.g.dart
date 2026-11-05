@@ -34,13 +34,16 @@ ModelProxyImageGenerationRequestBody
                   'image',
                   (v) =>
                       (v as List<dynamic>?)?.map((e) => e as String).toList()),
+              promptCacheKey:
+                  $checkedConvert('prompt_cache_key', (v) => v as String?),
             );
             return val;
           },
           fieldKeyMap: const {
             'responseFormat': 'response_format',
             'outputFormat': 'output_format',
-            'outputCompression': 'output_compression'
+            'outputCompression': 'output_compression',
+            'promptCacheKey': 'prompt_cache_key'
           },
         );
 
@@ -59,4 +62,5 @@ Map<String, dynamic> _$ModelProxyImageGenerationRequestBodyToJson(
       if (instance.outputCompression case final value?)
         'output_compression': value,
       if (instance.image case final value?) 'image': value,
+      if (instance.promptCacheKey case final value?) 'prompt_cache_key': value,
     };

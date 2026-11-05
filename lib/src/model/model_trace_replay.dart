@@ -46,6 +46,8 @@ class ModelTraceReplay {
     this.purposeName,
     required this.media,
     required this.parts,
+    this.final_,
+    this.requestView,
   });
 
   @JsonKey(
@@ -223,6 +225,22 @@ class ModelTraceReplay {
   )
   final List<ModelTraceBodyPart> parts;
 
+  /// neo.final.v1: the delivered answer rebuilt without the stream's echoes. Absent when too large to inline.
+  @JsonKey(
+    name: r'final',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? final_;
+
+  /// An image edit's multipart request as JSON (prompt, fields, input images as media references).
+  @JsonKey(
+    name: r'requestView',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? requestView;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -251,7 +269,9 @@ class ModelTraceReplay {
           other.user == user &&
           other.purposeName == purposeName &&
           other.media == media &&
-          other.parts == parts;
+          other.parts == parts &&
+          other.final_ == final_ &&
+          other.requestView == requestView;
 
   @override
   int get hashCode =>
@@ -279,7 +299,9 @@ class ModelTraceReplay {
       user.hashCode +
       purposeName.hashCode +
       media.hashCode +
-      parts.hashCode;
+      parts.hashCode +
+      final_.hashCode +
+      requestView.hashCode;
 
   factory ModelTraceReplay.fromJson(Map<String, dynamic> json) =>
       _$ModelTraceReplayFromJson(json);

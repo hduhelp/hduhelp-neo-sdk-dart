@@ -28,6 +28,7 @@ class ModelProxyImageEditRequestBody {
     this.background,
     this.outputFormat,
     this.outputCompression,
+    this.promptCacheKey,
   });
 
   /// 要编辑的图片，可多张；字段名写 image 或 image[] 都行
@@ -118,6 +119,14 @@ class ModelProxyImageEditRequestBody {
   )
   final int? outputCompression;
 
+  /// 所属对话的编号，含义同生图。只用于关联，不发给上游
+  @JsonKey(
+    name: r'prompt_cache_key',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? promptCacheKey;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -133,7 +142,8 @@ class ModelProxyImageEditRequestBody {
           other.responseFormat == responseFormat &&
           other.background == background &&
           other.outputFormat == outputFormat &&
-          other.outputCompression == outputCompression;
+          other.outputCompression == outputCompression &&
+          other.promptCacheKey == promptCacheKey;
 
   @override
   int get hashCode =>
@@ -148,7 +158,8 @@ class ModelProxyImageEditRequestBody {
       responseFormat.hashCode +
       background.hashCode +
       outputFormat.hashCode +
-      outputCompression.hashCode;
+      outputCompression.hashCode +
+      promptCacheKey.hashCode;
 
   factory ModelProxyImageEditRequestBody.fromJson(Map<String, dynamic> json) =>
       _$ModelProxyImageEditRequestBodyFromJson(json);

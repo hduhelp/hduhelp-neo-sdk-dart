@@ -32,13 +32,16 @@ ModelProxyImageEditRequestBody _$ModelProxyImageEditRequestBodyFromJson(
           outputFormat: $checkedConvert('output_format', (v) => v as String?),
           outputCompression: $checkedConvert(
               'output_compression', (v) => (v as num?)?.toInt()),
+          promptCacheKey:
+              $checkedConvert('prompt_cache_key', (v) => v as String?),
         );
         return val;
       },
       fieldKeyMap: const {
         'responseFormat': 'response_format',
         'outputFormat': 'output_format',
-        'outputCompression': 'output_compression'
+        'outputCompression': 'output_compression',
+        'promptCacheKey': 'prompt_cache_key'
       },
     );
 
@@ -58,4 +61,5 @@ Map<String, dynamic> _$ModelProxyImageEditRequestBodyToJson(
       if (instance.outputFormat case final value?) 'output_format': value,
       if (instance.outputCompression case final value?)
         'output_compression': value,
+      if (instance.promptCacheKey case final value?) 'prompt_cache_key': value,
     };
