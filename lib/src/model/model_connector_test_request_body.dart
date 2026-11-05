@@ -27,6 +27,7 @@ class ModelConnectorTestRequestBody {
     this.recoverOnSuccess,
     this.chatFallback,
     this.connection,
+    this.generateImage,
   });
 
   @JsonKey(
@@ -99,6 +100,13 @@ class ModelConnectorTestRequestBody {
   )
   final ModelUnsavedConnection? connection;
 
+  @JsonKey(
+    name: r'generate_image',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? generateImage;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -112,7 +120,8 @@ class ModelConnectorTestRequestBody {
           other.stream == stream &&
           other.recoverOnSuccess == recoverOnSuccess &&
           other.chatFallback == chatFallback &&
-          other.connection == connection;
+          other.connection == connection &&
+          other.generateImage == generateImage;
 
   @override
   int get hashCode =>
@@ -125,7 +134,8 @@ class ModelConnectorTestRequestBody {
       stream.hashCode +
       recoverOnSuccess.hashCode +
       chatFallback.hashCode +
-      connection.hashCode;
+      connection.hashCode +
+      generateImage.hashCode;
 
   factory ModelConnectorTestRequestBody.fromJson(Map<String, dynamic> json) =>
       _$ModelConnectorTestRequestBodyFromJson(json);

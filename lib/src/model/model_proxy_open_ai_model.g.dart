@@ -38,6 +38,8 @@ ModelProxyOpenAIModel _$ModelProxyOpenAIModelFromJson(
               (v) => (v as Map<String, dynamic>?)?.map(
                     (k, e) => MapEntry(k, e as bool),
                   )),
+          contextWindow:
+              $checkedConvert('context_window', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -45,7 +47,8 @@ ModelProxyOpenAIModel _$ModelProxyOpenAIModelFromJson(
         'ownedBy': 'owned_by',
         'displayName': 'display_name',
         'supportedReasoningLevels': 'supported_reasoning_levels',
-        'defaultReasoningLevel': 'default_reasoning_level'
+        'defaultReasoningLevel': 'default_reasoning_level',
+        'contextWindow': 'context_window'
       },
     );
 
@@ -62,4 +65,5 @@ Map<String, dynamic> _$ModelProxyOpenAIModelToJson(
       if (instance.defaultReasoningLevel case final value?)
         'default_reasoning_level': value,
       if (instance.capabilities case final value?) 'capabilities': value,
+      if (instance.contextWindow case final value?) 'context_window': value,
     };

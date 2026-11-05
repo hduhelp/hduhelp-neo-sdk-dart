@@ -24,6 +24,7 @@ class ModelProxyOpenAIModel {
     this.supportedReasoningLevels,
     this.defaultReasoningLevel,
     this.capabilities,
+    this.contextWindow,
   });
 
   @JsonKey(
@@ -84,6 +85,14 @@ class ModelProxyOpenAIModel {
   )
   final Map<String, bool>? capabilities;
 
+  /// 上下文窗口（token）。同名多个目标取最小值；未知不返回。
+  @JsonKey(
+    name: r'context_window',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? contextWindow;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -95,7 +104,8 @@ class ModelProxyOpenAIModel {
           other.displayName == displayName &&
           other.supportedReasoningLevels == supportedReasoningLevels &&
           other.defaultReasoningLevel == defaultReasoningLevel &&
-          other.capabilities == capabilities;
+          other.capabilities == capabilities &&
+          other.contextWindow == contextWindow;
 
   @override
   int get hashCode =>
@@ -106,7 +116,8 @@ class ModelProxyOpenAIModel {
       displayName.hashCode +
       supportedReasoningLevels.hashCode +
       defaultReasoningLevel.hashCode +
-      capabilities.hashCode;
+      capabilities.hashCode +
+      contextWindow.hashCode;
 
   factory ModelProxyOpenAIModel.fromJson(Map<String, dynamic> json) =>
       _$ModelProxyOpenAIModelFromJson(json);

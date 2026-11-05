@@ -29,13 +29,15 @@ ModelConnectorTestRequestBody _$ModelConnectorTestRequestBodyFromJson(
               (v) => v == null
                   ? null
                   : ModelUnsavedConnection.fromJson(v as Map<String, dynamic>)),
+          generateImage: $checkedConvert('generate_image', (v) => v as bool?),
         );
         return val;
       },
       fieldKeyMap: const {
         'imageUrl': 'image_url',
         'recoverOnSuccess': 'recover_on_success',
-        'chatFallback': 'chat_fallback'
+        'chatFallback': 'chat_fallback',
+        'generateImage': 'generate_image'
       },
     );
 
@@ -53,4 +55,5 @@ Map<String, dynamic> _$ModelConnectorTestRequestBodyToJson(
         'recover_on_success': value,
       if (instance.chatFallback case final value?) 'chat_fallback': value,
       if (instance.connection?.toJson() case final value?) 'connection': value,
+      if (instance.generateImage case final value?) 'generate_image': value,
     };

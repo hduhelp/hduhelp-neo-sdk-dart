@@ -34,6 +34,8 @@ ModelProxyAnthropicModel _$ModelProxyAnthropicModelFromJson(
                         ModelProxyAnthropicCapability.fromJson(
                             e as Map<String, dynamic>)),
                   )),
+          maxInputTokens:
+              $checkedConvert('max_input_tokens', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -41,7 +43,8 @@ ModelProxyAnthropicModel _$ModelProxyAnthropicModelFromJson(
         'displayName': 'display_name',
         'createdAt': 'created_at',
         'supportedReasoningLevels': 'supported_reasoning_levels',
-        'defaultReasoningLevel': 'default_reasoning_level'
+        'defaultReasoningLevel': 'default_reasoning_level',
+        'maxInputTokens': 'max_input_tokens'
       },
     );
 
@@ -59,4 +62,5 @@ Map<String, dynamic> _$ModelProxyAnthropicModelToJson(
       if (instance.capabilities?.map((k, e) => MapEntry(k, e.toJson()))
           case final value?)
         'capabilities': value,
+      if (instance.maxInputTokens case final value?) 'max_input_tokens': value,
     };

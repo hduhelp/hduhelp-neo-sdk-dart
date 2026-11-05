@@ -24,6 +24,7 @@ class ModelProxyAnthropicModel {
     this.supportedReasoningLevels,
     this.defaultReasoningLevel,
     this.capabilities,
+    this.maxInputTokens,
   });
 
   @JsonKey(
@@ -76,6 +77,14 @@ class ModelProxyAnthropicModel {
   )
   final Map<String, ModelProxyAnthropicCapability>? capabilities;
 
+  /// 上下文窗口（token），字段名同 Anthropic List Models。同名多个目标取最小值；未知不返回。
+  @JsonKey(
+    name: r'max_input_tokens',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? maxInputTokens;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -86,7 +95,8 @@ class ModelProxyAnthropicModel {
           other.createdAt == createdAt &&
           other.supportedReasoningLevels == supportedReasoningLevels &&
           other.defaultReasoningLevel == defaultReasoningLevel &&
-          other.capabilities == capabilities;
+          other.capabilities == capabilities &&
+          other.maxInputTokens == maxInputTokens;
 
   @override
   int get hashCode =>
@@ -96,7 +106,8 @@ class ModelProxyAnthropicModel {
       createdAt.hashCode +
       supportedReasoningLevels.hashCode +
       defaultReasoningLevel.hashCode +
-      capabilities.hashCode;
+      capabilities.hashCode +
+      maxInputTokens.hashCode;
 
   factory ModelProxyAnthropicModel.fromJson(Map<String, dynamic> json) =>
       _$ModelProxyAnthropicModelFromJson(json);
