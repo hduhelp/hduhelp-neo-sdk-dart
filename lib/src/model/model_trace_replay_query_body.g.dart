@@ -18,6 +18,7 @@ ModelTraceReplayQueryBody _$ModelTraceReplayQueryBodyFromJson(
         );
         final val = ModelTraceReplayQueryBody(
           reason: $checkedConvert('reason', (v) => v as String),
+          grant: $checkedConvert('grant', (v) => v as String?),
         );
         return val;
       },
@@ -27,4 +28,5 @@ Map<String, dynamic> _$ModelTraceReplayQueryBodyToJson(
         ModelTraceReplayQueryBody instance) =>
     <String, dynamic>{
       'reason': instance.reason,
+      if (instance.grant case final value?) 'grant': value,
     };

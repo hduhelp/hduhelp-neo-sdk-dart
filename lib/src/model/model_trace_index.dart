@@ -22,6 +22,8 @@ class ModelTraceIndex {
     required this.items,
     this.nextCursor,
     required this.window,
+    this.sessionGrant,
+    this.sessionGrantExpiresAt,
   });
 
   @JsonKey(
@@ -52,6 +54,21 @@ class ModelTraceIndex {
   )
   final ModelTraceWindow window;
 
+  /// Signed, short lived, renewed by every index call. Absent when the request has no session.
+  @JsonKey(
+    name: r'sessionGrant',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? sessionGrant;
+
+  @JsonKey(
+    name: r'sessionGrantExpiresAt',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? sessionGrantExpiresAt;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -59,14 +76,18 @@ class ModelTraceIndex {
           other.sessionId == sessionId &&
           other.items == items &&
           other.nextCursor == nextCursor &&
-          other.window == window;
+          other.window == window &&
+          other.sessionGrant == sessionGrant &&
+          other.sessionGrantExpiresAt == sessionGrantExpiresAt;
 
   @override
   int get hashCode =>
       sessionId.hashCode +
       items.hashCode +
       nextCursor.hashCode +
-      window.hashCode;
+      window.hashCode +
+      sessionGrant.hashCode +
+      sessionGrantExpiresAt.hashCode;
 
   factory ModelTraceIndex.fromJson(Map<String, dynamic> json) =>
       _$ModelTraceIndexFromJson(json);

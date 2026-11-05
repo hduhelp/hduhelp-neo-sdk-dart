@@ -44,6 +44,13 @@ ModelTraceSummary _$ModelTraceSummaryFromJson(Map<String, dynamic> json) =>
           purpose: $checkedConvert('purpose', (v) => v as String),
           protocol: $checkedConvert('protocol', (v) => v as String),
           purposeName: $checkedConvert('purposeName', (v) => v as String?),
+          errorCategory: $checkedConvert('errorCategory', (v) => v as String?),
+          errorMessage: $checkedConvert('errorMessage', (v) => v as String?),
+          providerErrorCode:
+              $checkedConvert('providerErrorCode', (v) => v as String?),
+          providerErrorType:
+              $checkedConvert('providerErrorType', (v) => v as String?),
+          traceCapture: $checkedConvert('traceCapture', (v) => v as String?),
         );
         return val;
       },
@@ -64,4 +71,11 @@ Map<String, dynamic> _$ModelTraceSummaryToJson(ModelTraceSummary instance) =>
       'purpose': instance.purpose,
       'protocol': instance.protocol,
       if (instance.purposeName case final value?) 'purposeName': value,
+      if (instance.errorCategory case final value?) 'errorCategory': value,
+      if (instance.errorMessage case final value?) 'errorMessage': value,
+      if (instance.providerErrorCode case final value?)
+        'providerErrorCode': value,
+      if (instance.providerErrorType case final value?)
+        'providerErrorType': value,
+      if (instance.traceCapture case final value?) 'traceCapture': value,
     };

@@ -29,6 +29,11 @@ class ModelTraceSummary {
     required this.purpose,
     required this.protocol,
     this.purposeName,
+    this.errorCategory,
+    this.errorMessage,
+    this.providerErrorCode,
+    this.providerErrorType,
+    this.traceCapture,
   });
 
   @JsonKey(
@@ -122,6 +127,42 @@ class ModelTraceSummary {
   )
   final String? purposeName;
 
+  @JsonKey(
+    name: r'errorCategory',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? errorCategory;
+
+  @JsonKey(
+    name: r'errorMessage',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? errorMessage;
+
+  @JsonKey(
+    name: r'providerErrorCode',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? providerErrorCode;
+
+  @JsonKey(
+    name: r'providerErrorType',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? providerErrorType;
+
+  /// Why a row may have no stored body: queued, disabled, too large and the like.
+  @JsonKey(
+    name: r'traceCapture',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? traceCapture;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -138,7 +179,12 @@ class ModelTraceSummary {
           other.traceCaptured == traceCaptured &&
           other.purpose == purpose &&
           other.protocol == protocol &&
-          other.purposeName == purposeName;
+          other.purposeName == purposeName &&
+          other.errorCategory == errorCategory &&
+          other.errorMessage == errorMessage &&
+          other.providerErrorCode == providerErrorCode &&
+          other.providerErrorType == providerErrorType &&
+          other.traceCapture == traceCapture;
 
   @override
   int get hashCode =>
@@ -154,7 +200,12 @@ class ModelTraceSummary {
       traceCaptured.hashCode +
       purpose.hashCode +
       protocol.hashCode +
-      purposeName.hashCode;
+      purposeName.hashCode +
+      errorCategory.hashCode +
+      errorMessage.hashCode +
+      providerErrorCode.hashCode +
+      providerErrorType.hashCode +
+      traceCapture.hashCode;
 
   factory ModelTraceSummary.fromJson(Map<String, dynamic> json) =>
       _$ModelTraceSummaryFromJson(json);

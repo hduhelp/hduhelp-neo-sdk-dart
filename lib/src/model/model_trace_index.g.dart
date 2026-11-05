@@ -26,6 +26,9 @@ ModelTraceIndex _$ModelTraceIndexFromJson(Map<String, dynamic> json) =>
           nextCursor: $checkedConvert('nextCursor', (v) => v as String?),
           window: $checkedConvert('window',
               (v) => ModelTraceWindow.fromJson(v as Map<String, dynamic>)),
+          sessionGrant: $checkedConvert('sessionGrant', (v) => v as String?),
+          sessionGrantExpiresAt: $checkedConvert(
+              'sessionGrantExpiresAt', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -37,4 +40,7 @@ Map<String, dynamic> _$ModelTraceIndexToJson(ModelTraceIndex instance) =>
       'items': instance.items.map((e) => e.toJson()).toList(),
       if (instance.nextCursor case final value?) 'nextCursor': value,
       'window': instance.window.toJson(),
+      if (instance.sessionGrant case final value?) 'sessionGrant': value,
+      if (instance.sessionGrantExpiresAt case final value?)
+        'sessionGrantExpiresAt': value,
     };
