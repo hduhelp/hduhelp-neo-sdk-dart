@@ -60,6 +60,7 @@ class ModelConnector {
     required this.modelCooldowns,
     required this.modelMapping,
     required this.excludedModels,
+    this.modelInputLimits,
     required this.payloadRules,
     required this.headerOverrideEnabled,
     required this.headerOverrides,
@@ -349,6 +350,14 @@ class ModelConnector {
     includeIfNull: false,
   )
   final List<String> excludedModels;
+
+  /// 上游模型真实名 → 它不接受的输入（image / pdf）；带这些输入的请求跳过它。
+  @JsonKey(
+    name: r'modelInputLimits',
+    required: false,
+    includeIfNull: false,
+  )
+  final Map<String, List<String>>? modelInputLimits;
 
   @JsonKey(
     name: r'payloadRules',
@@ -644,6 +653,7 @@ class ModelConnector {
           other.modelCooldowns == modelCooldowns &&
           other.modelMapping == modelMapping &&
           other.excludedModels == excludedModels &&
+          other.modelInputLimits == modelInputLimits &&
           other.payloadRules == payloadRules &&
           other.headerOverrideEnabled == headerOverrideEnabled &&
           other.headerOverrides == headerOverrides &&
@@ -719,6 +729,7 @@ class ModelConnector {
       modelCooldowns.hashCode +
       modelMapping.hashCode +
       excludedModels.hashCode +
+      modelInputLimits.hashCode +
       payloadRules.hashCode +
       headerOverrideEnabled.hashCode +
       headerOverrides.hashCode +

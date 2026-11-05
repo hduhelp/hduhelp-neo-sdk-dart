@@ -46,6 +46,12 @@ ModelConnectorFormBody _$ModelConnectorFormBodyFromJson(
                   )),
           excludedModels: $checkedConvert('excluded_models',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          modelInputLimits: $checkedConvert(
+              'model_input_limits',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k,
+                        (e as List<dynamic>).map((e) => e as String).toList()),
+                  )),
           payloadRules: $checkedConvert('payload_rules', (v) => v as String?),
           options: $checkedConvert('options', (v) => v as String?),
           connectionPool:
@@ -135,6 +141,7 @@ ModelConnectorFormBody _$ModelConnectorFormBodyFromJson(
         'supportPromptCacheKey': 'support_prompt_cache_key',
         'modelMapping': 'model_mapping',
         'excludedModels': 'excluded_models',
+        'modelInputLimits': 'model_input_limits',
         'payloadRules': 'payload_rules',
         'connectionPool': 'connection_pool',
         'loadFactor': 'load_factor',
@@ -187,6 +194,8 @@ Map<String, dynamic> _$ModelConnectorFormBodyToJson(
         'support_prompt_cache_key': value,
       if (instance.modelMapping case final value?) 'model_mapping': value,
       if (instance.excludedModels case final value?) 'excluded_models': value,
+      if (instance.modelInputLimits case final value?)
+        'model_input_limits': value,
       if (instance.payloadRules case final value?) 'payload_rules': value,
       if (instance.options case final value?) 'options': value,
       if (instance.connectionPool case final value?) 'connection_pool': value,

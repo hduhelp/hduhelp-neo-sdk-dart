@@ -38,6 +38,7 @@ class ModelConnectorFormBody {
     this.supportPromptCacheKey,
     this.modelMapping,
     this.excludedModels,
+    this.modelInputLimits,
     this.payloadRules,
     this.options,
     this.connectionPool,
@@ -194,6 +195,13 @@ class ModelConnectorFormBody {
     includeIfNull: false,
   )
   final List<String>? excludedModels;
+
+  @JsonKey(
+    name: r'model_input_limits',
+    required: false,
+    includeIfNull: false,
+  )
+  final Map<String, List<String>>? modelInputLimits;
 
   @JsonKey(
     name: r'payload_rules',
@@ -420,6 +428,7 @@ class ModelConnectorFormBody {
           other.supportPromptCacheKey == supportPromptCacheKey &&
           other.modelMapping == modelMapping &&
           other.excludedModels == excludedModels &&
+          other.modelInputLimits == modelInputLimits &&
           other.payloadRules == payloadRules &&
           other.options == options &&
           other.connectionPool == connectionPool &&
@@ -470,6 +479,7 @@ class ModelConnectorFormBody {
       supportPromptCacheKey.hashCode +
       modelMapping.hashCode +
       excludedModels.hashCode +
+      modelInputLimits.hashCode +
       payloadRules.hashCode +
       options.hashCode +
       connectionPool.hashCode +

@@ -126,6 +126,12 @@ ModelConnector _$ModelConnectorFromJson(Map<String, dynamic> json) =>
               'modelMapping', (v) => Map<String, String>.from(v as Map)),
           excludedModels: $checkedConvert('excludedModels',
               (v) => (v as List<dynamic>).map((e) => e as String).toList()),
+          modelInputLimits: $checkedConvert(
+              'modelInputLimits',
+              (v) => (v as Map<String, dynamic>?)?.map(
+                    (k, e) => MapEntry(k,
+                        (e as List<dynamic>).map((e) => e as String).toList()),
+                  )),
           payloadRules: $checkedConvert('payloadRules', (v) => v as String),
           headerOverrideEnabled:
               $checkedConvert('headerOverrideEnabled', (v) => v as bool),
@@ -257,6 +263,8 @@ Map<String, dynamic> _$ModelConnectorToJson(ModelConnector instance) =>
       'modelCooldowns': instance.modelCooldowns.map((e) => e.toJson()).toList(),
       'modelMapping': instance.modelMapping,
       'excludedModels': instance.excludedModels,
+      if (instance.modelInputLimits case final value?)
+        'modelInputLimits': value,
       'payloadRules': instance.payloadRules,
       'headerOverrideEnabled': instance.headerOverrideEnabled,
       'headerOverrides': instance.headerOverrides,
