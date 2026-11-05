@@ -20,7 +20,7 @@ class ModelConnectorDuplicateRequestBody {
     this.apiKey,
   });
 
-  /// A copy must bring a new api_key or a different base_url (the (base_url, key) pair is unique among live connectors); other settings are copied.
+  /// Empty keeps the source's address and API key; other settings are copied.
   @JsonKey(
     name: r'base_url',
     required: false,
