@@ -223,10 +223,6 @@ paths:
         schema:
           maximum: 3.0
           minimum: 1.0
-          enum:
-          - 1
-          - 2
-          - 3
           type: integer
           format: int32
       - name: limit
@@ -901,10 +897,6 @@ paths:
         schema:
           maximum: 3.0
           minimum: 1.0
-          enum:
-          - 1
-          - 2
-          - 3
           type: integer
           format: int32
       - name: week
