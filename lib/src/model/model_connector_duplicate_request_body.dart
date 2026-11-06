@@ -18,6 +18,8 @@ class ModelConnectorDuplicateRequestBody {
   ModelConnectorDuplicateRequestBody({
     this.baseUrl,
     this.apiKey,
+    this.platform,
+    this.capabilities,
   });
 
   /// Empty keeps the source's address and API key; other settings are copied.
@@ -35,15 +37,36 @@ class ModelConnectorDuplicateRequestBody {
   )
   final String? apiKey;
 
+  /// 换协议族：必须同时给能力；副本清空预设，不加入源连接器所在的池。
+  @JsonKey(
+    name: r'platform',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? platform;
+
+  @JsonKey(
+    name: r'capabilities',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? capabilities;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ModelConnectorDuplicateRequestBody &&
           other.baseUrl == baseUrl &&
-          other.apiKey == apiKey;
+          other.apiKey == apiKey &&
+          other.platform == platform &&
+          other.capabilities == capabilities;
 
   @override
-  int get hashCode => baseUrl.hashCode + apiKey.hashCode;
+  int get hashCode =>
+      baseUrl.hashCode +
+      apiKey.hashCode +
+      platform.hashCode +
+      capabilities.hashCode;
 
   factory ModelConnectorDuplicateRequestBody.fromJson(
           Map<String, dynamic> json) =>

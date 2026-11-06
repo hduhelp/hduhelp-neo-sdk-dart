@@ -15,6 +15,9 @@ ModelConnectorDuplicateRequestBody _$ModelConnectorDuplicateRequestBodyFromJson(
         final val = ModelConnectorDuplicateRequestBody(
           baseUrl: $checkedConvert('base_url', (v) => v as String?),
           apiKey: $checkedConvert('api_key', (v) => v as String?),
+          platform: $checkedConvert('platform', (v) => v as String?),
+          capabilities: $checkedConvert('capabilities',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
         );
         return val;
       },
@@ -26,4 +29,6 @@ Map<String, dynamic> _$ModelConnectorDuplicateRequestBodyToJson(
     <String, dynamic>{
       if (instance.baseUrl case final value?) 'base_url': value,
       if (instance.apiKey case final value?) 'api_key': value,
+      if (instance.platform case final value?) 'platform': value,
+      if (instance.capabilities case final value?) 'capabilities': value,
     };
