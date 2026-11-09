@@ -27,6 +27,13 @@ AgentSettingsUpdateRequestBody _$AgentSettingsUpdateRequestBodyFromJson(
           expectedVersion:
               $checkedConvert('expected_version', (v) => (v as num).toInt()),
           reason: $checkedConvert('reason', (v) => v as String?),
+          lifecycle: $checkedConvert(
+              'lifecycle',
+              (v) => v == null
+                  ? null
+                  : AgentLifecycleInput.fromJson(v as Map<String, dynamic>)),
+          dingtalkCliEnabled:
+              $checkedConvert('dingtalk_cli_enabled', (v) => v as bool?),
         );
         return val;
       },
@@ -35,7 +42,8 @@ AgentSettingsUpdateRequestBody _$AgentSettingsUpdateRequestBodyFromJson(
         'githubToken': 'github_token',
         'clearGithubToken': 'clear_github_token',
         'skillSyncEnabled': 'skill_sync_enabled',
-        'expectedVersion': 'expected_version'
+        'expectedVersion': 'expected_version',
+        'dingtalkCliEnabled': 'dingtalk_cli_enabled'
       },
     );
 
@@ -49,4 +57,7 @@ Map<String, dynamic> _$AgentSettingsUpdateRequestBodyToJson(
       'skill_sync_enabled': instance.skillSyncEnabled,
       'expected_version': instance.expectedVersion,
       if (instance.reason case final value?) 'reason': value,
+      if (instance.lifecycle?.toJson() case final value?) 'lifecycle': value,
+      if (instance.dingtalkCliEnabled case final value?)
+        'dingtalk_cli_enabled': value,
     };

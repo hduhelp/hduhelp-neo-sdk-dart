@@ -17,7 +17,11 @@ AgentSettings _$AgentSettingsFromJson(Map<String, dynamic> json) =>
             'defaultProxyId',
             'githubTokenSet',
             'skillSyncEnabled',
-            'version'
+            'version',
+            'lifecycle',
+            'sandboxEnabled',
+            'currentTemplate',
+            'dingtalkCliEnabled'
           ],
         );
         final val = AgentSettings(
@@ -26,6 +30,15 @@ AgentSettings _$AgentSettingsFromJson(Map<String, dynamic> json) =>
           skillSyncEnabled:
               $checkedConvert('skillSyncEnabled', (v) => v as bool),
           version: $checkedConvert('version', (v) => (v as num).toInt()),
+          lifecycle: $checkedConvert(
+              'lifecycle',
+              (v) =>
+                  AgentLifecycleSettings.fromJson(v as Map<String, dynamic>)),
+          sandboxEnabled: $checkedConvert('sandboxEnabled', (v) => v as bool),
+          currentTemplate:
+              $checkedConvert('currentTemplate', (v) => v as String),
+          dingtalkCliEnabled:
+              $checkedConvert('dingtalkCliEnabled', (v) => v as bool),
         );
         return val;
       },
@@ -37,4 +50,8 @@ Map<String, dynamic> _$AgentSettingsToJson(AgentSettings instance) =>
       'githubTokenSet': instance.githubTokenSet,
       'skillSyncEnabled': instance.skillSyncEnabled,
       'version': instance.version,
+      'lifecycle': instance.lifecycle.toJson(),
+      'sandboxEnabled': instance.sandboxEnabled,
+      'currentTemplate': instance.currentTemplate,
+      'dingtalkCliEnabled': instance.dingtalkCliEnabled,
     };

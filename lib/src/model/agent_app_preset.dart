@@ -23,6 +23,8 @@ class AgentAppPreset {
     required this.defaultModel,
     required this.allowPreview,
     required this.isDefault,
+    required this.theme,
+    required this.slug,
   });
 
   @JsonKey(
@@ -74,6 +76,21 @@ class AgentAppPreset {
   )
   final bool isDefault;
 
+  @JsonKey(
+    name: r'theme',
+    required: true,
+    includeIfNull: false,
+  )
+  final String theme;
+
+  /// 预设的稳定标识，可能为空；App 用于给工作回合的分析事件打标签
+  @JsonKey(
+    name: r'slug',
+    required: true,
+    includeIfNull: false,
+  )
+  final String slug;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -84,7 +101,9 @@ class AgentAppPreset {
           other.icon == icon &&
           other.defaultModel == defaultModel &&
           other.allowPreview == allowPreview &&
-          other.isDefault == isDefault;
+          other.isDefault == isDefault &&
+          other.theme == theme &&
+          other.slug == slug;
 
   @override
   int get hashCode =>
@@ -94,7 +113,9 @@ class AgentAppPreset {
       icon.hashCode +
       defaultModel.hashCode +
       allowPreview.hashCode +
-      isDefault.hashCode;
+      isDefault.hashCode +
+      theme.hashCode +
+      slug.hashCode;
 
   factory AgentAppPreset.fromJson(Map<String, dynamic> json) =>
       _$AgentAppPresetFromJson(json);

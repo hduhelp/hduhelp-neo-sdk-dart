@@ -1711,6 +1711,203 @@ paths:
                 $ref: '#/components/schemas/AgentMcpServerResponseBody'
       x-hduhelp-http:
         auth: operator
+  /hduhelp-neo/admin/agent/partners:
+    get:
+      tags:
+      - AgentService
+      summary: 合作方实例列表（含连接数、近 7 天回合与健康）
+      operationId: AgentService_AgentListPartnersAdmin
+      security:
+      - OperatorBearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerAdminListResponseBody'
+      x-hduhelp-http:
+        auth: operator
+    post:
+      tags:
+      - AgentService
+      summary: 新建合作方实例（草稿）
+      operationId: AgentService_AgentCreatePartner
+      security:
+      - OperatorBearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentPartnerCreateRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerAdminResponseBody'
+      x-hduhelp-http:
+        auth: operator
+        request_body_required: true
+  /hduhelp-neo/admin/agent/partners/adapters:
+    get:
+      tags:
+      - AgentService
+      summary: 合作方适配器与配置表单
+      operationId: AgentService_AgentListPartnerAdapters
+      security:
+      - OperatorBearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerAdapterListResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/agent/partners/{id}:
+    get:
+      tags:
+      - AgentService
+      summary: 合作方实例详情
+      operationId: AgentService_AgentGetPartnerAdmin
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerAdminResponseBody'
+      x-hduhelp-http:
+        auth: operator
+    put:
+      tags:
+      - AgentService
+      summary: 修改合作方实例
+      operationId: AgentService_AgentUpdatePartner
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentPartnerUpdateRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerAdminResponseBody'
+      x-hduhelp-http:
+        auth: operator
+        request_body_required: true
+  /hduhelp-neo/admin/agent/partners/{id}/stats:
+    get:
+      tags:
+      - AgentService
+      summary: 合作方按日监控（来自回合、接入点与审计）
+      operationId: AgentService_AgentPartnerStats
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: days
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerStatsResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/agent/partners/{id}/status:
+    post:
+      tags:
+      - AgentService
+      summary: 切换合作方状态（须写原因）
+      operationId: AgentService_AgentSetPartnerStatus
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentPartnerStatusRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerAdminResponseBody'
+      x-hduhelp-http:
+        auth: operator
+        request_body_required: true
+  /hduhelp-neo/admin/agent/partners/{id}/test:
+    post:
+      tags:
+      - AgentService
+      summary: 合作方测试：拉模型目录、健康检查、生成连接第一步
+      operationId: AgentService_AgentTestPartner
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentPartnerTestRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerTestResponseBody'
+      x-hduhelp-http:
+        auth: operator
+        request_body_required: true
   /hduhelp-neo/admin/agent/presets:
     get:
       tags:
@@ -2166,6 +2363,299 @@ paths:
                 $ref: '#/components/schemas/AgentProxyTestResponseBody'
       x-hduhelp-http:
         auth: operator
+  /hduhelp-neo/admin/agent/runs:
+    get:
+      tags:
+      - AgentOpsService
+      summary: 工作模式回合列表
+      operationId: AgentOpsService_AgentListRuns
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: user_id
+        in: query
+        schema:
+          type: string
+      - name: session_id
+        in: query
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          enum:
+          - queued
+          - dispatched
+          - running
+          - waiting
+          - completed
+          - failed
+          - cancelled
+          type: string
+      - name: failure_kind
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentRunPageResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/agent/runs/{id}:
+    get:
+      tags:
+      - AgentOpsService
+      summary: 回合详情与本轮条目（查看会话记录，记审计）
+      operationId: AgentOpsService_AgentGetRun
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentRunDetailResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/agent/sandboxes:
+    get:
+      tags:
+      - AgentService
+      summary: 沙箱列表（每人一行，含今日时长与估算费用）
+      operationId: AgentService_AgentListSandboxes
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: status
+        in: query
+        schema:
+          enum:
+          - none
+          - provisioning
+          - running
+          - paused
+          - archiving
+          - destroyed
+          - failed
+          type: string
+      - name: user_id
+        in: query
+        schema:
+          type: string
+      - name: page
+        in: query
+        schema:
+          type: integer
+          format: int32
+      - name: page_size
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSandboxPageResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/agent/sandboxes/{user_id}:
+    get:
+      tags:
+      - AgentService
+      summary: 某个用户的沙箱
+      operationId: AgentService_AgentGetSandbox
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSandboxResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/agent/sandboxes/{user_id}/archive:
+    post:
+      tags:
+      - AgentOpsService
+      summary: 立即归档沙箱（打包工作区后销毁）
+      operationId: AgentOpsService_AgentArchiveSandbox
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSandboxActionRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSandboxResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/agent/sandboxes/{user_id}/destroy:
+    post:
+      tags:
+      - AgentService
+      summary: 销毁沙箱（有工作会话时需确认）
+      operationId: AgentService_AgentDestroySandbox
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: 用户还有工作会话时须 with_sessions=true（会丢掉未归档的工作区）。
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSandboxDestroyRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSandboxResponseBody'
+      x-hduhelp-http:
+        auth: operator
+        request_body_required: true
+  /hduhelp-neo/admin/agent/sandboxes/{user_id}/pause:
+    post:
+      tags:
+      - AgentService
+      summary: 立即暂停沙箱
+      operationId: AgentService_AgentPauseSandbox
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSandboxActionRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSandboxResponseBody'
+      x-hduhelp-http:
+        auth: operator
+        request_body_required: true
+  /hduhelp-neo/admin/agent/sandboxes/{user_id}/spec:
+    put:
+      tags:
+      - AgentService
+      summary: 设置用户的沙箱规格（下一次重建生效）
+      operationId: AgentService_AgentSetSandboxSpec
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: 规格在下一次归档重建时生效；设置后立即开始构建派生模板。
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSandboxSpecRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSandboxResponseBody'
+      x-hduhelp-http:
+        auth: operator
+        request_body_required: true
+    delete:
+      tags:
+      - AgentService
+      summary: 恢复默认沙箱规格
+      operationId: AgentService_AgentClearSandboxSpec
+      security:
+      - OperatorBearerAuth: []
+      parameters:
+      - name: user_id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: expected_version
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: reason
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentSandboxResponseBody'
+      x-hduhelp-http:
+        auth: operator
   /hduhelp-neo/admin/agent/settings:
     get:
       tags:
@@ -2427,7 +2917,7 @@ paths:
       tags:
       - AnalyticsService
       summary: Neo产品运营分析
-      description: 需要 analytics.dashboard:view；days 仅允许 7 或 30。北京时间自然日，访客并非学生人数。未配置或上游不可用时不返回零值统计。
+      description: 需要 analytics.dashboard:view；days 仅允许 7 或 30，source 为 web（默认）或 app。北京时间自然日，访客并非学生人数；activeUsers 为窗口内有页面访问的化名登录用户数，与访客不可相加。未配置或上游不可用时不返回零值统计。
       operationId: AnalyticsService_GetAnalytics
       security:
       - OperatorBearerAuth: []
@@ -2437,6 +2927,10 @@ paths:
         schema:
           type: integer
           format: int32
+      - name: source
+        in: query
+        schema:
+          type: string
       responses:
         '200':
           description: Successful response
@@ -2449,7 +2943,7 @@ paths:
       tags:
       - AnalyticsService
       summary: Neo单功能链路分析
-      description: 需要 analytics.dashboard:view。匿名访客进入到获得结果的有序漏斗，相邻步骤窗口30分钟；附带失败原因、结果、入口和终端分布。
+      description: 需要 analytics.dashboard:view。source 为 web（默认）或 app，分别对应网页与 Poplar App 站点。Umami 访客进入到获得结果的有序漏斗，相邻步骤窗口30分钟；附带失败原因、结果、入口和终端分布。
       operationId: AnalyticsService_GetAnalyticsFeature
       security:
       - OperatorBearerAuth: []
@@ -2460,6 +2954,10 @@ paths:
           type: integer
           format: int32
       - name: feature
+        in: query
+        schema:
+          type: string
+      - name: source
         in: query
         schema:
           type: string
@@ -4182,6 +4680,11 @@ paths:
       - name: visibility
         in: query
         description: '检索范围过滤: public | internal'
+        schema:
+          type: string
+      - name: sort
+        in: query
+        description: 'created_asc/created_desc: 创建时间升/降序；缺省按更新时间降序'
         schema:
           type: string
       responses:
@@ -11921,6 +12424,535 @@ paths:
                 $ref: '#/components/schemas/VolunteerActivityDetailResponseBody'
       x-hduhelp-http:
         auth: operator
+  /hduhelp-neo/agent/assets/{id}/link:
+    get:
+      tags:
+      - AgentService
+      summary: 打开工作资产：预览站给一次性链接，产出文件给 10 分钟下载地址
+      operationId: AgentService_AgentGetAssetLink
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAssetLinkResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/assets/{id}/renew:
+    post:
+      tags:
+      - AgentService
+      summary: 产出文件续期（从现在起 30 天）
+      operationId: AgentService_AgentRenewAsset
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkAssetResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/credentials:
+    get:
+      tags:
+      - AgentOpsService
+      summary: 已连接的账号（工作模式 CLI 凭据）
+      operationId: AgentOpsService_AgentListCredentials
+      security:
+      - NativeSessionAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentCredentialListResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/credentials/{kind}:
+    delete:
+      tags:
+      - AgentOpsService
+      summary: 断开账号：删除保管的凭据并让工作环境丢掉登录
+      operationId: AgentOpsService_AgentDeleteCredential
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: kind
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentCredentialDeleteResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/credentials/{kind}/device:
+    post:
+      tags:
+      - AgentOpsService
+      summary: 开始设备码登录（目前只有 kind=dingtalk：在工作环境里运行 dws auth login --device）
+      operationId: AgentOpsService_AgentStartCredentialLogin
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: kind
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentCredentialLoginResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/endpoints:
+    get:
+      tags:
+      - AgentService
+      summary: 自配模型接入点列表（key 只显示尾号）
+      operationId: AgentService_AgentListEndpoints
+      security:
+      - NativeSessionAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentEndpointListResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+    post:
+      tags:
+      - AgentService
+      summary: 新增自配模型接入点
+      operationId: AgentService_AgentCreateEndpoint
+      security:
+      - NativeSessionAuth: []
+      requestBody:
+        required: true
+        description: api_key 只写：保存后只返回尾号。base_url 是 https 公网地址（即 ANTHROPIC_BASE_URL），每人最多 5 个，同一域名只能配一个。
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentEndpointCreateRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentEndpointResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/endpoints/{id}:
+    delete:
+      tags:
+      - AgentService
+      summary: 删除自配模型接入点（用到它的会话下一回合提示换一个）
+      operationId: AgentService_AgentDeleteEndpoint
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '工作模式配置管理：代理库、模块设置、Skill、MCP 服务器、预设，以及 App 读预设。
+
+            写操作带 expected_version（乐观锁）与 reason（进 agent_audits）。被引用的对象
+
+            删除或停用时返回 409，data.references 列出引用方。'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMutationResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/memories:
+    get:
+      tags:
+      - AgentOpsService
+      summary: 列出本人的长期记忆
+      description: 返回 HDU Mate 工作模式为本人保存的长期记忆（偏好、学业背景、长期事实），最新的在前；带 q 时只返回包含全部关键词的记忆。所有工作会话共享这些记忆。
+      operationId: AgentOpsService_AgentListMemories
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: q
+        in: query
+        description: 只返回包含全部关键词（空格分隔，不区分大小写）的记忆
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: 最多返回几条，默认与上限 200
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMemoryListResponseBody'
+      x-hduhelp-http:
+        requires_user: true
+        auth: bearer
+    post:
+      tags:
+      - AgentOpsService
+      summary: 新增一条长期记忆
+      description: 记下用户明确希望记住、或以后长期有用的一个事实或偏好（最长 1000 字，每人最多 200 条）。与已有记忆完全相同时不会重复保存。不要记录密码、验证码等敏感信息。
+      operationId: AgentOpsService_AgentAddMemory
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentMemoryCreateRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMemoryResponseBody'
+      x-hduhelp-http:
+        requires_user: true
+        auth: bearer
+        request_body_required: true
+  /hduhelp-neo/agent/memories/search:
+    get:
+      tags:
+      - AgentOpsService
+      summary: 搜索本人的长期记忆
+      description: 按关键词搜索本人的长期记忆，包含任一关键词即命中，命中越多越靠前。开始一项任务前可以先搜一下相关的偏好或背景。
+      operationId: AgentOpsService_AgentSearchMemories
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: q
+        in: query
+        description: 关键词，空格分隔；包含任一关键词即命中，命中越多越靠前
+        schema:
+          type: string
+      - name: limit
+        in: query
+        description: 最多返回几条，默认 20，上限 50
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMemoryListResponseBody'
+      x-hduhelp-http:
+        requires_user: true
+        auth: bearer
+  /hduhelp-neo/agent/memories/{id}:
+    delete:
+      tags:
+      - AgentOpsService
+      summary: 删除一条长期记忆
+      description: 删除一条不再正确或用户要求忘掉的记忆；已删除的再删也算成功。
+      operationId: AgentOpsService_AgentDeleteMemory
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMemoryDeleteResponseBody'
+      x-hduhelp-http:
+        requires_user: true
+        auth: bearer
+    patch:
+      tags:
+      - AgentOpsService
+      summary: 修改一条长期记忆
+      description: 用新内容替换一条记忆，例如用户纠正了之前记下的事实。
+      operationId: AgentOpsService_AgentUpdateMemory
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentMemoryUpdateRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMemoryResponseBody'
+      x-hduhelp-http:
+        requires_user: true
+        auth: bearer
+        request_body_required: true
+  /hduhelp-neo/agent/models:
+    get:
+      tags:
+      - AgentService
+      summary: 工作模式可选模型（agent.work 公开模型与自配接入点）
+      operationId: AgentService_AgentAppModels
+      security:
+      - NativeSessionAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAppModelsResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/partners:
+    get:
+      tags:
+      - AgentService
+      summary: 合作方列表（当前用户可见的，含余额）
+      operationId: AgentService_AgentListPartners
+      security:
+      - NativeSessionAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerListResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/partners/{slug}:
+    delete:
+      tags:
+      - AgentService
+      summary: 断开合作方（删除接入点与密文）
+      operationId: AgentService_AgentDisconnectPartner
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '工作模式配置管理：代理库、模块设置、Skill、MCP 服务器、预设，以及 App 读预设。
+
+            写操作带 expected_version（乐观锁）与 reason（进 agent_audits）。被引用的对象
+
+            删除或停用时返回 409，data.references 列出引用方。'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMutationResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/partners/{slug}/connect:
+    post:
+      tags:
+      - AgentService
+      summary: 连接合作方：返回下一步（browser / form / done）
+      operationId: AgentService_AgentConnectPartner
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentPartnerConnectRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentConnectStepResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/partners/{slug}/connect/complete:
+    post:
+      tags:
+      - AgentService
+      summary: 完成浏览器式连接：用回跳带回的票据保存凭据（只认发起连接的账号，他人 403）
+      operationId: AgentService_AgentCompletePartnerConnect
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentPartnerCompleteRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentConnectSubmittedResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/partners/{slug}/connect/submit:
+    post:
+      tags:
+      - AgentService
+      summary: 提交表单式连接
+      operationId: AgentService_AgentSubmitPartnerConnect
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentPartnerSubmitRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentConnectSubmittedResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/partners/{slug}/topup:
+    post:
+      tags:
+      - AgentService
+      summary: 合作方充值：建支付会话
+      operationId: AgentService_AgentTopupPartner
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentPartnerTopupRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerTopupResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/partners/{slug}/topup/{session_id}:
+    get:
+      tags:
+      - AgentService
+      summary: 合作方充值状态
+      operationId: AgentService_AgentPartnerTopupState
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: slug
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: session_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentPartnerTopupStatusResponseBody'
+      x-hduhelp-http:
+        auth: native_session
   /hduhelp-neo/agent/presets:
     get:
       tags:
@@ -11936,6 +12968,643 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AgentAppPresetListResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/sessions:
+    get:
+      tags:
+      - AgentService
+      summary: 工作会话列表增量（含删除墓碑）
+      operationId: AgentService_AgentListWorkSessions
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: since
+        in: query
+        description: 上次拿到的 change_seq；不传从头
+        schema:
+          type: integer
+          format: int64
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkSessionPageResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+    post:
+      tags:
+      - AgentService
+      summary: 新建工作会话（id 由客户端生成，重放返回原会话）
+      operationId: AgentService_AgentCreateWorkSession
+      security:
+      - NativeSessionAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentWorkSessionCreateRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkSessionResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/sessions/{id}:
+    get:
+      tags:
+      - AgentService
+      summary: 工作会话详情（含待回答的卡片与当前资产）
+      operationId: AgentService_AgentGetWorkSession
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkSessionDetailResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+    delete:
+      tags:
+      - AgentService
+      summary: 删除工作会话及其条目、会话记录、工作区归档与资产
+      operationId: AgentService_AgentDeleteWorkSession
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: version
+        in: query
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: '工作模式配置管理：代理库、模块设置、Skill、MCP 服务器、预设，以及 App 读预设。
+
+            写操作带 expected_version（乐观锁）与 reason（进 agent_audits）。被引用的对象
+
+            删除或停用时返回 409，data.references 列出引用方。'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMutationResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+    patch:
+      tags:
+      - AgentService
+      summary: 修改工作会话：标题、归档、模型、权限模式
+      operationId: AgentService_AgentPatchWorkSession
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: 只改传了的字段；换模型或接入点在下一回合生效。version 落后返回 409。
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentWorkSessionPatchRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkSessionResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/sessions/{id}/btw:
+    post:
+      tags:
+      - AgentService
+      summary: 旁支提问：分出隐藏会话并发出问题
+      operationId: AgentService_AgentBtwWorkSession
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: '旁支提问：在最后一个完成的回合分出隐藏会话（side=true，不进会话列表、不占会话上限，每人最多 20 个，满了删最早的闲置旁支）
+
+          并把 text 作为第一条消息发出；只复制对话、不复制工作区（按上下文回答）。24 小时没有活动且未提升的旁支自动删除；
+
+          旁支里的卡片 30 分钟没回答这一轮自动停止。用普通的会话流看回答。来源有回合在跑或排队返回 409 730000026，
+
+          还没有任何完成的回答返回 409 730000027。同一 new_id 重放返回第一次的回合，不会再发一次。'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentWorkBtwRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkBtwResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/sessions/{id}/cancel:
+    post:
+      tags:
+      - AgentService
+      summary: 取消进行中的回合或撤下排队的消息
+      operationId: AgentService_AgentCancelWorkTurn
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentWorkCancelRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkTurnResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/sessions/{id}/fork:
+    post:
+      tags:
+      - AgentService
+      summary: 从某个回合分出新会话（条目、工作区与 Claude 会话一起分支）
+      operationId: AgentService_AgentForkWorkSession
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: '分支：复制到 upto_item_id 所在回合为止的条目（新 id，body.forked_from 记来源），工作区按分支时的样子在同一沙箱里复制
+
+          （不含 .git 下的 *.lock）、Claude 会话从该回合末分出。不传 upto_item_id 分到最后一个已结束的回合。
+
+          来源有回合在进行返回 409 730000026（工作区要在没人改的时候复制），没有已结束的回合返回 409 730000027。
+
+          来源的工作环境已销毁时只复制条目，新会话 context_lost=true。'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentWorkForkRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkSessionResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/sessions/{id}/items:
+    get:
+      tags:
+      - AgentService
+      summary: 工作会话条目倒序翻页
+      operationId: AgentService_AgentListWorkItems
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: before
+        in: query
+        description: 只要 seq 小于它的条目；不传为最后一页
+        schema:
+          type: integer
+          format: int64
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkItemPageResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/sessions/{id}/promote:
+    post:
+      tags:
+      - AgentService
+      summary: 把旁支会话变成普通会话（进入会话列表）
+      operationId: AgentService_AgentPromoteWorkSession
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkSessionResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/sessions/{id}/prompts/{prompt_id}:
+    post:
+      tags:
+      - AgentService
+      summary: 回答权限、计划或提问卡片
+      operationId: AgentService_AgentAnswerWorkPrompt
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: prompt_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: 'choice：权限卡 allow | allow_session | deny | dismiss；计划卡 approve_plan | keep_planning | dismiss；
+
+          提问卡 submit | stop | dismiss。已被回答返回 409，data 是已生效的卡片。'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentWorkPromptAnswerRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkPromptResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/sessions/{id}/stream-token:
+    post:
+      tags:
+      - AgentService
+      summary: 签工作会话的 SSE 连接令牌（5 分钟，绑定用户与会话）
+      description: 用返回的 streamPath 连 GET /hduhelp-neo/agent-rt/stream（实时网关）。
+      operationId: AgentService_AgentCreateStreamToken
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentStreamTokenResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/sessions/{id}/turns:
+    post:
+      tags:
+      - AgentService
+      summary: 发送一条消息（排队或立即发送）
+      operationId: AgentService_AgentSendWorkTurn
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: 'expected_head 落后于最近一次被接受的消息（别的设备发过）返回 409，data 带 head_seq、turn_seq。
+
+          mode=interrupt 即「立即发送」（照 Orca 的 Steer）：回合正在跑时把这条消息送进正在跑的回合（status=steered），
+
+          回合在等卡片回答或没有回合时排到队首；对已排队的 turn_id 重发 interrupt 也是立即发送它。'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentWorkTurnRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkTurnResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/shares:
+    get:
+      tags:
+      - AgentService
+      summary: 我的分享（未撤销的，按创建倒序）
+      operationId: AgentService_AgentListShares
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: kind
+        in: query
+        schema:
+          type: string
+      - name: target_id
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentShareListResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+    post:
+      tags:
+      - AgentService
+      summary: 新建分享（同一目标未过期的复用）
+      operationId: AgentService_AgentCreateShare
+      security:
+      - NativeSessionAuth: []
+      requestBody:
+        required: true
+        description: 同一目标已有未过期、未撤销的分享时返回它（到期时间取较晚者）。预览须未关闭；会话分享截止到当前 head_seq。
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentShareCreateRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentShareResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/shares/{id}:
+    get:
+      tags:
+      - AgentService
+      summary: 访客：分享信息（失效 404）
+      operationId: AgentService_AgentGetShare
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentShareViewResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+    delete:
+      tags:
+      - AgentService
+      summary: 撤销分享
+      operationId: AgentService_AgentRevokeShare
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: '工作模式配置管理：代理库、模块设置、Skill、MCP 服务器、预设，以及 App 读预设。
+
+            写操作带 expected_version（乐观锁）与 reason（进 agent_audits）。被引用的对象
+
+            删除或停用时返回 409，data.references 列出引用方。'
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentMutationResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+    patch:
+      tags:
+      - AgentService
+      summary: 同步会话分享到最新、续期
+      operationId: AgentService_AgentPatchShare
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        description: sync=true 把会话分享的截止点挪到当前 head；expires_in_days 从现在起重算到期时间（已过期的也能续）。
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AgentSharePatchRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentShareResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+        request_body_required: true
+  /hduhelp-neo/agent/shares/{id}/assets/{asset_id}/link:
+    get:
+      tags:
+      - AgentService
+      summary: 访客：打开会话分享里的资产
+      operationId: AgentService_AgentGetShareAssetLink
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentAssetLinkResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/shares/{id}/enter:
+    post:
+      tags:
+      - AgentService
+      summary: 访客：进入网页预览分享（唤醒沙箱后签一次性进入地址）
+      operationId: AgentService_AgentEnterShare
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentShareEnterResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/shares/{id}/items:
+    get:
+      tags:
+      - AgentService
+      summary: 访客：会话分享的条目（截止到 upto_seq）与资产
+      operationId: AgentService_AgentListShareItems
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: after_seq
+        in: query
+        schema:
+          type: integer
+          format: int64
+      - name: before
+        in: query
+        description: 只要 seq 小于它的条目（倒序翻页，与会话条目接口相同）
+        schema:
+          type: integer
+          format: int64
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentShareItemPageResponseBody'
+      x-hduhelp-http:
+        auth: native_session
+  /hduhelp-neo/agent/shares/{id}/previews/{asset_id}/enter:
+    post:
+      tags:
+      - AgentService
+      summary: 访客：进入会话分享里的预览卡片
+      operationId: AgentService_AgentEnterSharePreview
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: asset_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentShareEnterResponseBody'
       x-hduhelp-http:
         auth: native_session
   /hduhelp-neo/ai/v1/purposes/{purpose}/anthropic/v1/models:
@@ -19647,6 +21316,92 @@ components:
           type: string
         revision_id:
           type: string
+    AgentAppEndpoint:
+      required:
+      - id
+      - name
+      - base_url
+      - key_tail
+      - partner
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        base_url:
+          type: string
+        key_tail:
+          type: string
+        partner:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentAppModel'
+        default_model:
+          type: string
+      description: 'partner：空 = 用户手填的接入点；否则是创建它的合作方 slug（每个合作方每人至多一个）。
+
+        models / default_model 只在 GET /agent/models 里给：合作方接入点列出它的模型目录（过白名单），
+
+        用它建会话或改模型时同时带 endpoint_id 与 model（不带 model 用 default_model）；手填接入点 models 为空，不能带 model。'
+    AgentAppModel:
+      required:
+      - id
+      - name
+      - reasoning_levels
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        image_input:
+          type: boolean
+          description: 模型能否看图；未知时不返回（按支持处理）
+        reasoning_levels:
+          type: array
+          items:
+            type: string
+        context_window:
+          type: integer
+          format: int32
+      description: '---- 工作会话（App）----
+
+        应答字段一律 snake_case，与 SSE 条目同形。写接口以客户端 ULID 为幂等键（会话 id、turn_id、op_id），
+
+        或以 version 做乐观锁。时间均为毫秒时间戳。'
+    AgentAppModels:
+      required:
+      - models
+      - default_model
+      - endpoints
+      type: object
+      properties:
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentAppModel'
+        default_model:
+          type: string
+        endpoints:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentAppEndpoint'
+    AgentAppModelsResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentAppModels'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
     AgentAppPreset:
       required:
       - id
@@ -19656,6 +21411,8 @@ components:
       - defaultModel
       - allowPreview
       - isDefault
+      - theme
+      - slug
       type: object
       properties:
         id:
@@ -19672,6 +21429,11 @@ components:
           type: boolean
         isDefault:
           type: boolean
+        theme:
+          type: string
+        slug:
+          type: string
+          description: 预设的稳定标识，可能为空；App 用于给工作回合的分析事件打标签
     AgentAppPresetListResponseBody:
       required:
       - code
@@ -19697,6 +21459,275 @@ components:
           type: string
         path:
           type: string
+    AgentAssetLink:
+      required:
+      - asset_id
+      - kind
+      - url
+      - expires_at
+      type: object
+      properties:
+        asset_id:
+          type: string
+        kind:
+          enum:
+          - preview
+          - file
+          type: string
+        url:
+          type: string
+        expires_at:
+          type: integer
+          format: int64
+      description: '预览站：url 是带一次性票据的地址（2 分钟内打开一次，浏览器随后凭只对该子域有效的 Cookie 访问）；
+
+        产出文件：url 是 10 分钟有效的下载地址。已失效返回 410。'
+    AgentAssetLinkResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentAssetLink'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentConnectField:
+      required:
+      - name
+      - label
+      - type
+      type: object
+      properties:
+        name:
+          type: string
+        label:
+          type: string
+        type:
+          enum:
+          - text
+          - secret
+          type: string
+        placeholder:
+          type: string
+        help:
+          type: string
+    AgentConnectStep:
+      required:
+      - kind
+      type: object
+      properties:
+        kind:
+          enum:
+          - browser
+          - form
+          - done
+          type: string
+        url:
+          type: string
+        callback_scheme:
+          type: string
+        expires_at:
+          type: integer
+          format: int64
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentConnectField'
+      description: 'browser：用认证浏览器打开 url，回跳 return_to 并追加 partner=<slug>&status=pending&ticket=<票据>，
+
+        或 status=cancelled|error[&reason=中文短句]（callback_scheme 是 return_to 的 scheme，state 10 分钟有效、一次性）。
+
+        pending 时 2 分钟内用登录会话调 connect/complete 才算连上（回调没有会话，防止别人的授权落到自己账号上）；
+
+        网页版 return_to 同样要带会话调 complete。form：按 fields 画表单提交到 connect/submit；done：服务端已连好。'
+    AgentConnectStepResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentConnectStep'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentConnectSubmitted:
+      required:
+      - status
+      type: object
+      properties:
+        status:
+          enum:
+          - connected
+          type: string
+    AgentConnectSubmittedResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentConnectSubmitted'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentCredential:
+      required:
+      - kind
+      - name
+      - connected
+      type: object
+      properties:
+        kind:
+          type: string
+        name:
+          type: string
+        connected:
+          type: boolean
+        updated_at:
+          type: integer
+          format: int64
+        login:
+          $ref: '#/components/schemas/AgentCredentialLogin'
+    AgentCredentialDeleteResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentCredentialList:
+      required:
+      - items
+      - dingtalk_enabled
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentCredential'
+        dingtalk_enabled:
+          type: boolean
+          description: 学校钉钉组织已开通 CLI 访问；关闭时不显示钉钉
+    AgentCredentialListResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentCredentialList'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentCredentialLogin:
+      required:
+      - request_id
+      - kind
+      - status
+      - updated_at
+      type: object
+      properties:
+        request_id:
+          type: string
+        kind:
+          type: string
+        status:
+          enum:
+          - starting
+          - pending
+          - connected
+          - failed
+          type: string
+        user_code:
+          type: string
+          description: 设备码，用户在钉钉授权页输入
+        verification_uri:
+          type: string
+        verification_uri_complete:
+          type: string
+          description: 已带设备码的授权链接，App 直接打开
+        expires_at:
+          type: integer
+          description: 设备码过期时间（毫秒）
+          format: int64
+        error:
+          type: string
+        updated_at:
+          type: integer
+          format: int64
+      description: '---- 已连接的账号（CLI 凭据） ----'
+    AgentCredentialLoginResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentCredentialLogin'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentEndpointCreateRequestBody:
+      required:
+      - name
+      - base_url
+      - api_key
+      type: object
+      properties:
+        id:
+          type: string
+          description: 可选：客户端生成的 ULID，作幂等键
+        name:
+          type: string
+        base_url:
+          type: string
+        api_key:
+          type: string
+    AgentEndpointListResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentAppEndpoint'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentEndpointResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentAppEndpoint'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
     AgentGitHubSource:
       required:
       - repo
@@ -19710,6 +21741,87 @@ components:
           type: string
         path:
           type: string
+    AgentLifecycleInput:
+      required:
+      - idle_pause_seconds
+      - preview_keepalive_seconds
+      - archive_after_paused_seconds
+      - warm_min_interval_seconds
+      - daily_active_minutes
+      - price_vcpu_hour
+      - price_memory_gib_hour
+      - price_disk_gib_hour
+      - price_paused_gib_hour
+      type: object
+      properties:
+        idle_pause_seconds:
+          type: integer
+          format: int32
+        preview_keepalive_seconds:
+          type: integer
+          format: int32
+        archive_after_paused_seconds:
+          type: integer
+          format: int32
+        warm_min_interval_seconds:
+          type: integer
+          format: int32
+        daily_active_minutes:
+          type: integer
+          format: int32
+        price_vcpu_hour:
+          type: number
+          format: double
+        price_memory_gib_hour:
+          type: number
+          format: double
+        price_disk_gib_hour:
+          type: number
+          format: double
+        price_paused_gib_hour:
+          type: number
+          format: double
+    AgentLifecycleSettings:
+      required:
+      - idlePauseSeconds
+      - previewKeepaliveSeconds
+      - archiveAfterPausedSeconds
+      - warmMinIntervalSeconds
+      - dailyActiveMinutes
+      - priceVcpuHour
+      - priceMemoryGibHour
+      - priceDiskGibHour
+      - pricePausedGibHour
+      type: object
+      properties:
+        idlePauseSeconds:
+          type: integer
+          format: int32
+        previewKeepaliveSeconds:
+          type: integer
+          format: int32
+        archiveAfterPausedSeconds:
+          type: integer
+          format: int32
+        warmMinIntervalSeconds:
+          type: integer
+          format: int32
+        dailyActiveMinutes:
+          type: integer
+          format: int32
+        priceVcpuHour:
+          type: number
+          format: double
+        priceMemoryGibHour:
+          type: number
+          format: double
+        priceDiskGibHour:
+          type: number
+          format: double
+        pricePausedGibHour:
+          type: number
+          format: double
+      description: 沙箱生命周期参数与 Std 计划单价（元）。
     AgentMcpServer:
       required:
       - id
@@ -19934,6 +22046,97 @@ components:
           type: string
         readOnly:
           type: boolean
+    AgentMemory:
+      required:
+      - id
+      - content
+      - source_session_id
+      - created_at
+      - updated_at
+      type: object
+      properties:
+        id:
+          type: string
+        content:
+          type: string
+        source_session_id:
+          type: string
+          description: 记下它的工作会话；App 里手动添加的为空
+        created_at:
+          type: integer
+          format: int64
+        updated_at:
+          type: integer
+          format: int64
+      description: '---- 用户记忆 ----'
+    AgentMemoryCreateRequestBody:
+      required:
+      - content
+      type: object
+      properties:
+        content:
+          type: string
+          description: 一条记忆，最长 1000 字：一个事实或偏好，不要整段文档
+        source_session_id:
+          type: string
+          description: 记下它的工作会话 id（工作会话里的 CLAUDE.md 给出）
+    AgentMemoryDeleteResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentMemoryList:
+      required:
+      - items
+      - total
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentMemory'
+        total:
+          type: integer
+          format: int32
+    AgentMemoryListResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentMemoryList'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentMemoryResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentMemory'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentMemoryUpdateRequestBody:
+      required:
+      - content
+      type: object
+      properties:
+        content:
+          type: string
     AgentModelOptionsResponseBody:
       required:
       - code
@@ -19960,6 +22163,607 @@ components:
           format: int64
         msg:
           type: string
+    AgentPartner:
+      required:
+      - id
+      - slug
+      - adapter
+      - adapterLabel
+      - name
+      - iconUrl
+      - description
+      - badge
+      - status
+      - rolloutUserIds
+      - config
+      - secretTails
+      - defaultModel
+      - modelAllowlist
+      - shareNote
+      - callbackUrl
+      - health
+      - connectedUsers
+      - turns7d
+      - failedTurns7d
+      - version
+      - createdAt
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+        slug:
+          type: string
+        adapter:
+          type: string
+        adapterLabel:
+          type: string
+        name:
+          type: string
+        iconUrl:
+          type: string
+        description:
+          type: string
+        badge:
+          type: string
+        status:
+          enum:
+          - draft
+          - active
+          - paused
+          - disabled
+          type: string
+        rolloutUserIds:
+          type: array
+          items:
+            type: string
+        config:
+          type: object
+          additionalProperties:
+            type: string
+        secretTails:
+          type: object
+          additionalProperties:
+            type: string
+        defaultModel:
+          type: string
+        modelAllowlist:
+          type: array
+          items:
+            type: string
+        shareNote:
+          type: string
+        callbackUrl:
+          type: string
+        health:
+          $ref: '#/components/schemas/AgentPartnerHealth'
+        connectedUsers:
+          type: integer
+          format: int64
+        turns7d:
+          type: integer
+          format: int64
+        failedTurns7d:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: int64
+        createdAt:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+      description: config 只含非密钥字段；secretTails 是已设置的密钥字段的尾号。
+    AgentPartnerAdapter:
+      required:
+      - kind
+      - label
+      - configSchema
+      type: object
+      properties:
+        kind:
+          type: string
+        label:
+          type: string
+        configSchema:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentPartnerConfigField'
+    AgentPartnerAdapterListResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentPartnerAdapter'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentPartnerAdminListResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentPartner'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentPartnerAdminResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentPartner'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentPartnerCapabilities:
+      required:
+      - balance
+      - topup
+      type: object
+      properties:
+        balance:
+          type: boolean
+        topup:
+          type: boolean
+      description: '---- 合作方（App）----
+
+        只列当前用户可见的合作方（draft 只给灰度名单，disabled 不列）。金额单位元，时间为毫秒时间戳。'
+    AgentPartnerCard:
+      required:
+      - slug
+      - name
+      - icon_url
+      - description
+      - badge
+      - status
+      - connected
+      - capabilities
+      type: object
+      properties:
+        slug:
+          type: string
+        name:
+          type: string
+        icon_url:
+          type: string
+        description:
+          type: string
+        badge:
+          type: string
+        status:
+          enum:
+          - draft
+          - active
+          - paused
+          type: string
+          description: paused = 暂停新连接，已有的照常可用
+        connected:
+          type: boolean
+        endpoint_id:
+          type: string
+        capabilities:
+          $ref: '#/components/schemas/AgentPartnerCapabilities'
+        balance_yuan:
+          type: number
+          format: double
+        balance_at:
+          type: integer
+          format: int64
+        key_state:
+          enum:
+          - ok
+          - reauthorize
+          - quota
+          type: string
+        topup_amounts:
+          type: array
+          items:
+            type: integer
+            format: int64
+      description: balance_yuan / balance_at / key_state 只在已连接、有余额能力且查询成功时给（缓存 60 秒）。
+    AgentPartnerCompleteRequestBody:
+      required:
+      - ticket
+      type: object
+      properties:
+        ticket:
+          type: string
+          description: 回跳 status=pending 时带回的一次性票据（2 分钟）
+    AgentPartnerConfigField:
+      required:
+      - name
+      - label
+      - type
+      - group
+      - required
+      type: object
+      properties:
+        name:
+          type: string
+        label:
+          type: string
+        type:
+          enum:
+          - text
+          - url
+          - number
+          - json
+          - secret
+          type: string
+        group:
+          type: string
+        required:
+          type: boolean
+        default:
+          type: string
+        help:
+          type: string
+      description: '---- 合作方（管理台）----'
+    AgentPartnerConnectRequestBody:
+      required:
+      - return_to
+      type: object
+      properties:
+        return_to:
+          type: string
+          description: 连接结束的回跳地址：poplar://partner/<slug>、poplarbeta://partner/<slug> 或 https://*.hduhelp.com/…
+    AgentPartnerCreateRequestBody:
+      required:
+      - partner
+      type: object
+      properties:
+        partner:
+          $ref: '#/components/schemas/AgentPartnerInput'
+        reason:
+          type: string
+    AgentPartnerDay:
+      required:
+      - date
+      - connects
+      - connectFailures
+      - disconnects
+      - turns
+      - failedTurns
+      - recoveries
+      - topups
+      - topupYuan
+      - paid
+      - paidYuan
+      type: object
+      properties:
+        date:
+          type: string
+        connects:
+          type: integer
+          format: int64
+        connectFailures:
+          type: integer
+          format: int64
+        disconnects:
+          type: integer
+          format: int64
+        turns:
+          type: integer
+          format: int64
+        failedTurns:
+          type: integer
+          format: int64
+        recoveries:
+          type: object
+          additionalProperties:
+            type: integer
+            format: int64
+        topups:
+          type: integer
+          format: int64
+        topupYuan:
+          type: integer
+          format: int64
+        paid:
+          type: integer
+          format: int64
+        paidYuan:
+          type: integer
+          format: int64
+    AgentPartnerHealth:
+      required:
+      - status
+      - error
+      - failures
+      type: object
+      properties:
+        status:
+          type: string
+        error:
+          type: string
+        failures:
+          type: integer
+          format: int32
+        checkedAt:
+          type: integer
+          format: int64
+    AgentPartnerInput:
+      required:
+      - name
+      type: object
+      properties:
+        slug:
+          type: string
+        adapter:
+          type: string
+        name:
+          type: string
+        icon_url:
+          type: string
+        description:
+          type: string
+        badge:
+          type: string
+        rollout_user_ids:
+          type: array
+          items:
+            type: string
+        config:
+          type: object
+          additionalProperties:
+            type: string
+        clear_secrets:
+          type: array
+          items:
+            type: string
+        default_model:
+          type: string
+        model_allowlist:
+          type: array
+          items:
+            type: string
+        share_note:
+          type: string
+      description: 密钥字段留空 = 不改，clear_secrets 列出要清除的。slug 与 adapter 只在新建时生效。
+    AgentPartnerList:
+      required:
+      - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentPartnerCard'
+    AgentPartnerListResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentPartnerList'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentPartnerModelShare:
+      required:
+      - model
+      - turns
+      type: object
+      properties:
+        model:
+          type: string
+        turns:
+          type: integer
+          format: int64
+    AgentPartnerStats:
+      required:
+      - connectedUsers
+      - days
+      - models
+      type: object
+      properties:
+        connectedUsers:
+          type: integer
+          format: int64
+        days:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentPartnerDay'
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentPartnerModelShare'
+    AgentPartnerStatsResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentPartnerStats'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentPartnerStatusRequestBody:
+      required:
+      - status
+      - expected_version
+      - reason
+      type: object
+      properties:
+        status:
+          enum:
+          - draft
+          - active
+          - paused
+          - disabled
+          type: string
+        expected_version:
+          type: integer
+          format: int64
+        reason:
+          type: string
+    AgentPartnerSubmitRequestBody:
+      required:
+      - fields
+      type: object
+      properties:
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+    AgentPartnerTestRequestBody:
+      required:
+      - action
+      type: object
+      properties:
+        action:
+          enum:
+          - models
+          - health
+          - connect
+          type: string
+    AgentPartnerTestResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentPartnerTestResult'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentPartnerTestResult:
+      required:
+      - ok
+      - message
+      - callbackUrl
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentAppModel'
+        step:
+          $ref: '#/components/schemas/AgentConnectStep'
+        callbackUrl:
+          type: string
+    AgentPartnerTopup:
+      required:
+      - session_id
+      - amount
+      - status
+      - expired_at
+      type: object
+      properties:
+        session_id:
+          type: string
+        amount:
+          type: integer
+          format: int64
+        status:
+          type: string
+        pay_url:
+          type: string
+        pay_kind:
+          enum:
+          - alipay_app
+          - web
+          type: string
+        expired_at:
+          type: integer
+          format: int64
+      description: 'pay_kind=alipay_app：用户点按钮才外部打开 pay_url；web：应用内浏览器打开。没有 pay_url 时提示改用电脑充值。
+
+        唤起或从支付页返回都不算成功，轮询到 paid 才算。'
+    AgentPartnerTopupRequestBody:
+      required:
+      - amount
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: 充值金额（整数元，1–100000）
+          format: int64
+    AgentPartnerTopupResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentPartnerTopup'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentPartnerTopupStatus:
+      required:
+      - session_id
+      - status
+      type: object
+      properties:
+        session_id:
+          type: string
+        status:
+          type: string
+        paid_at:
+          type: integer
+          format: int64
+      description: status：pending、paid、failed、closed、refunded；建议 3 秒查一次，过了 expired_at 停。
+    AgentPartnerTopupStatusResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentPartnerTopupStatus'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentPartnerUpdateRequestBody:
+      required:
+      - partner
+      - expected_version
+      type: object
+      properties:
+        partner:
+          $ref: '#/components/schemas/AgentPartnerInput'
+        expected_version:
+          type: integer
+          format: int64
+        reason:
+          type: string
     AgentPreset:
       required:
       - id
@@ -19967,6 +22771,7 @@ components:
       - name
       - description
       - icon
+      - theme
       - status
       - isDefault
       - sortOrder
@@ -20032,6 +22837,8 @@ components:
         updatedAt:
           type: integer
           format: int64
+        theme:
+          type: string
     AgentPresetCreateRequestBody:
       required:
       - preset
@@ -20084,6 +22891,9 @@ components:
             $ref: '#/components/schemas/AgentPresetMcpMount'
         allow_preview:
           type: boolean
+        theme:
+          type: string
+          description: App 对话页外观：空串为默认，science 理工科，humanities 文科。
     AgentPresetListResponseBody:
       required:
       - code
@@ -20396,12 +23206,427 @@ components:
           type: string
         name:
           type: string
+    AgentRun:
+      required:
+      - id
+      - sessionId
+      - sessionTitle
+      - userId
+      - sandboxGeneration
+      - status
+      - attempt
+      - parentRunId
+      - failureKind
+      - error
+      - model
+      - inputTokens
+      - outputTokens
+      - cacheReadTokens
+      - cacheWriteTokens
+      - cost
+      - turnId
+      - textPreview
+      - queuedAt
+      - stages
+      - upstream
+      type: object
+      properties:
+        id:
+          type: string
+        sessionId:
+          type: string
+        sessionTitle:
+          type: string
+        userId:
+          type: string
+        sandboxGeneration:
+          type: integer
+          format: int32
+        status:
+          type: string
+        attempt:
+          type: integer
+          format: int32
+        parentRunId:
+          type: string
+        failureKind:
+          type: string
+        error:
+          type: string
+        model:
+          type: string
+        inputTokens:
+          type: integer
+          format: int64
+        outputTokens:
+          type: integer
+          format: int64
+        cacheReadTokens:
+          type: integer
+          format: int64
+        cacheWriteTokens:
+          type: integer
+          format: int64
+        cost:
+          type: number
+          format: double
+        turnId:
+          type: string
+        textPreview:
+          type: string
+        queuedAt:
+          type: integer
+          format: int64
+        dispatchedAt:
+          type: integer
+          format: int64
+        writtenAt:
+          type: integer
+          format: int64
+        firstOutputAt:
+          type: integer
+          format: int64
+        firstTokenAt:
+          type: integer
+          format: int64
+        completedAt:
+          type: integer
+          format: int64
+        stages:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentRunStage'
+        upstream:
+          enum:
+          - hdumate
+          - partner
+          - own
+          type: string
+          description: 模型调用走的上游：hdumate = agent.work（我们计费）；partner = 合作方；own = 用户自配接入点。后两种由对方计费，cost 为 0
+        partnerName:
+          type: string
+          description: upstream=partner 时的合作方名称
+      description: 时间均为毫秒时间戳。
+    AgentRunDetail:
+      required:
+      - run
+      - items
+      - itemsTruncated
+      type: object
+      properties:
+        run:
+          $ref: '#/components/schemas/AgentRun'
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentRunItem'
+        itemsTruncated:
+          type: boolean
+    AgentRunDetailResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentRunDetail'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentRunItem:
+      required:
+      - seq
+      - kind
+      - state
+      - body
+      - observedAt
+      type: object
+      properties:
+        seq:
+          type: integer
+          format: int64
+        kind:
+          type: string
+        state:
+          type: string
+        body:
+          type: object
+        observedAt:
+          type: integer
+          format: int64
+      description: 回合所属轮次的条目（会话记录查看器）；body 原样。
+    AgentRunPage:
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentRun'
+        total:
+          type: integer
+          format: int64
+        page:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    AgentRunPageResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentRunPage'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentRunStage:
+      required:
+      - stage
+      - ms
+      type: object
+      properties:
+        stage:
+          type: string
+          description: dispatched / written / first_output / first_token / completed
+        ms:
+          type: integer
+          description: 距消息入队的毫秒数
+          format: int64
+      description: '工作模式第四阶段：管理台的回合与手动归档；用户记忆（App 与 Neo MCP 共用）；
+
+        App「已连接的账号」（CLI 凭据）。
+
+        ---- 管理台：回合 ----'
+    AgentSandbox:
+      required:
+      - id
+      - userId
+      - provider
+      - externalId
+      - generation
+      - status
+      - template
+      - executorVersion
+      - spec
+      - failCount
+      - lastError
+      - stateSince
+      - todayRunningSeconds
+      - todayPausedSeconds
+      - todayCost
+      - hasSessions
+      - version
+      - updatedAt
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: string
+        provider:
+          type: string
+        externalId:
+          type: string
+        generation:
+          type: integer
+          format: int32
+        status:
+          type: string
+        template:
+          type: string
+        executorVersion:
+          type: string
+        spec:
+          $ref: '#/components/schemas/AgentSandboxSpec'
+        specOverride:
+          $ref: '#/components/schemas/AgentSandboxSpec'
+        failCount:
+          type: integer
+          format: int32
+        lastError:
+          type: string
+        stateSince:
+          type: integer
+          format: int64
+        lastActiveAt:
+          type: integer
+          format: int64
+        lastViewedAt:
+          type: integer
+          format: int64
+        lastPreviewAt:
+          type: integer
+          format: int64
+        lastWarmAt:
+          type: integer
+          format: int64
+        idlePauseAt:
+          type: integer
+          format: int64
+        archiveAt:
+          type: integer
+          format: int64
+        maxRunAt:
+          type: integer
+          format: int64
+        todayRunningSeconds:
+          type: integer
+          format: int64
+        todayPausedSeconds:
+          type: integer
+          format: int64
+        todayCost:
+          type: number
+          format: double
+        hasSessions:
+          type: boolean
+        version:
+          type: integer
+          format: int64
+        updatedAt:
+          type: integer
+          format: int64
+      description: '时间均为毫秒时间戳。idlePauseAt / archiveAt / maxRunAt 是按当前状态推算的下一次暂停、归档、20 小时上限。
+
+        today* 是北京时间当天（含尚未入账的部分）。'
+    AgentSandboxActionRequestBody:
+      required:
+      - expected_version
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          format: int64
+        reason:
+          type: string
+    AgentSandboxDestroyRequestBody:
+      required:
+      - expected_version
+      type: object
+      properties:
+        expected_version:
+          type: integer
+          format: int64
+        reason:
+          type: string
+        with_sessions:
+          type: boolean
+    AgentSandboxPage:
+      required:
+      - items
+      - total
+      - page
+      - pageSize
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentSandbox'
+        total:
+          type: integer
+          format: int64
+        page:
+          type: integer
+          format: int32
+        pageSize:
+          type: integer
+          format: int32
+    AgentSandboxPageResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentSandboxPage'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentSandboxResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentSandbox'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentSandboxSpec:
+      required:
+      - cpu
+      - memoryMib
+      - diskMib
+      type: object
+      properties:
+        cpu:
+          type: integer
+          format: int32
+        memoryMib:
+          type: integer
+          format: int32
+        diskMib:
+          type: integer
+          format: int32
+      description: '---- 沙箱控制台 ----'
+    AgentSandboxSpecInput:
+      required:
+      - cpu
+      - memory_mib
+      - disk_mib
+      type: object
+      properties:
+        cpu:
+          type: integer
+          format: int32
+        memory_mib:
+          type: integer
+          format: int32
+        disk_mib:
+          type: integer
+          format: int32
+      description: 整数核；内存为整数 GiB 且与 CPU 之比 1–4；磁盘 512 MB 或 10 GiB 的整数倍；上限 16 核。
+    AgentSandboxSpecRequestBody:
+      required:
+      - spec
+      - expected_version
+      type: object
+      properties:
+        spec:
+          $ref: '#/components/schemas/AgentSandboxSpecInput'
+        expected_version:
+          type: integer
+          format: int64
+        reason:
+          type: string
     AgentSettings:
       required:
       - defaultProxyId
       - githubTokenSet
       - skillSyncEnabled
       - version
+      - lifecycle
+      - sandboxEnabled
+      - currentTemplate
+      - dingtalkCliEnabled
       type: object
       properties:
         defaultProxyId:
@@ -20413,6 +23638,16 @@ components:
         version:
           type: integer
           format: int64
+        lifecycle:
+          $ref: '#/components/schemas/AgentLifecycleSettings'
+        sandboxEnabled:
+          type: boolean
+        currentTemplate:
+          type: string
+        dingtalkCliEnabled:
+          type: boolean
+          description: 学校钉钉组织已开通 CLI 访问；关闭时不提供钉钉登录、不挂载钉钉凭据
+      description: sandboxEnabled 与 currentTemplate 来自部署（配置与 AGENT_EXECUTOR_TEMPLATE），只读。
     AgentSettingsResponseBody:
       required:
       - code
@@ -20444,6 +23679,276 @@ components:
           type: integer
           format: int64
         reason:
+          type: string
+        lifecycle:
+          $ref: '#/components/schemas/AgentLifecycleInput'
+        dingtalk_cli_enabled:
+          type: boolean
+    AgentShare:
+      required:
+      - id
+      - kind
+      - target_id
+      - title
+      - url
+      - upto_seq
+      - expires_at
+      - open_count
+      - created_at
+      type: object
+      properties:
+        id:
+          type: string
+        kind:
+          enum:
+          - preview
+          - session
+          type: string
+        target_id:
+          type: string
+          description: 预览：资产 id；会话：会话 id
+        title:
+          type: string
+        url:
+          type: string
+          description: 分享链接
+        upto_seq:
+          type: integer
+          description: 会话分享的截止条目序号；预览分享为 0
+          format: int64
+        expires_at:
+          type: integer
+          format: int64
+        revoked_at:
+          type: integer
+          format: int64
+        open_count:
+          type: integer
+          format: int64
+        last_open_at:
+          type: integer
+          format: int64
+        created_at:
+          type: integer
+          format: int64
+        stale:
+          type: boolean
+          description: 重复创建会话分享时：会话已有截止点之后的回合，可提示「同步到最新」
+      description: '---- 分享（App 与学生端）----
+
+        链接 https://neo.hduhelp.com/agent-share/<id>，id 是 22 位 base62 随机串。主人接口只管自己的分享；
+
+        访客接口任何状态正常的登录用户都能调（含主人本人）。分享不存在、已撤销、已过期统一 404 + 730000021，msg 写原因。'
+    AgentShareCreateRequestBody:
+      required:
+      - kind
+      - target_id
+      - expires_in_days
+      type: object
+      properties:
+        kind:
+          enum:
+          - preview
+          - session
+          type: string
+        target_id:
+          type: string
+        expires_in_days:
+          type: integer
+          description: 1、7 或 30
+          format: int32
+    AgentShareEnter:
+      required:
+      - url
+      - expires_at
+      type: object
+      properties:
+        url:
+          type: string
+        expires_at:
+          type: integer
+          format: int64
+      description: 'url 是预览站上的一次性进入地址（2 分钟、只能用一次），浏览器打开后凭只对该子域有效的访客 Cookie 访问。
+
+        沙箱 25 秒内没唤醒完返回 503 + 730000025（唤醒在后台继续），客户端稍后再调同一接口。'
+    AgentShareEnterResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentShareEnter'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentShareItemPage:
+      required:
+      - items
+      - head_seq
+      - has_more
+      - assets
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentWorkItem'
+        head_seq:
+          type: integer
+          description: 分享可见条目里最大的 seq
+          format: int64
+        has_more:
+          type: boolean
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentWorkAsset'
+          description: 分享（或上次同步）时已有的会话资产
+    AgentShareItemPageResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentShareItemPage'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentShareList:
+      required:
+      - items
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentShare'
+    AgentShareListResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentShareList'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentShareOwner:
+      required:
+      - nickname
+      type: object
+      properties:
+        nickname:
+          type: string
+        avatar:
+          type: string
+    AgentSharePatchRequestBody:
+      type: object
+      properties:
+        sync:
+          type: boolean
+        expires_in_days:
+          type: integer
+          description: 1、7 或 30
+          format: int32
+    AgentSharePreviewState:
+      required:
+      - asset_id
+      - status
+      type: object
+      properties:
+        asset_id:
+          type: string
+        status:
+          enum:
+          - ready
+          - sleeping
+          - closed
+          - limit
+          type: string
+          description: ready 运行中；sleeping 休眠，进入时唤醒；closed 网页已关闭；limit 作者今天的工作时长已用完
+    AgentShareResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentShare'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentShareSessionMeta:
+      required:
+      - title
+      - preset_name
+      - model
+      - upto_seq
+      - created_at
+      type: object
+      properties:
+        title:
+          type: string
+        preset_name:
+          type: string
+        model:
+          type: string
+        upto_seq:
+          type: integer
+          format: int64
+        created_at:
+          type: integer
+          format: int64
+    AgentShareView:
+      required:
+      - id
+      - kind
+      - title
+      - owner
+      - expires_at
+      type: object
+      properties:
+        id:
+          type: string
+        kind:
+          enum:
+          - preview
+          - session
+          type: string
+        title:
+          type: string
+        owner:
+          $ref: '#/components/schemas/AgentShareOwner'
+        expires_at:
+          type: integer
+          format: int64
+        preview:
+          $ref: '#/components/schemas/AgentSharePreviewState'
+        session:
+          $ref: '#/components/schemas/AgentShareSessionMeta'
+    AgentShareViewResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentShareView'
+        code:
+          type: integer
+          format: int64
+        msg:
           type: string
     AgentSkill:
       required:
@@ -20833,6 +24338,613 @@ components:
           format: int64
         reason:
           type: string
+    AgentStreamToken:
+      required:
+      - token
+      - expiresAt
+      - streamPath
+      type: object
+      properties:
+        token:
+          type: string
+        expiresAt:
+          type: integer
+          format: int64
+        streamPath:
+          type: string
+    AgentStreamTokenResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentStreamToken'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentWorkAsset:
+      required:
+      - id
+      - kind
+      - name
+      - created_at
+      - state
+      type: object
+      properties:
+        id:
+          type: string
+        kind:
+          enum:
+          - preview
+          - file
+          type: string
+        name:
+          type: string
+        path:
+          type: string
+        size:
+          type: integer
+          format: int64
+        mime:
+          type: string
+        port:
+          type: integer
+          format: int32
+        expires_at:
+          type: integer
+          format: int64
+        created_at:
+          type: integer
+          format: int64
+        state:
+          enum:
+          - open
+          - expired
+          - ready
+          - uploading
+          type: string
+        url:
+          type: string
+          description: 预览站的地址（只有本人用一次性链接打开后才能访问）
+      description: '预览站：state 为 open 或 expired（沙箱已归档，「已失效，发消息让 Agent 重新运行」），不显示倒计时；url 是预览域名，
+
+        要用 GET /assets/:id/link 拿一次性链接打开。产出文件：state 为 ready、uploading 或 expired，expires_at 是到期时间（可续期）。'
+    AgentWorkAssetResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkAsset'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentWorkAttachmentInput:
+      required:
+      - key
+      - name
+      type: object
+      properties:
+        key:
+          type: string
+          description: 签名直传（用途 agent_input）完成后的 key
+        name:
+          type: string
+        mime:
+          type: string
+        size:
+          type: integer
+          format: int64
+    AgentWorkBtw:
+      required:
+      - session
+      - turn
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/AgentWorkSession'
+        turn:
+          $ref: '#/components/schemas/AgentWorkTurn'
+    AgentWorkBtwRequestBody:
+      required:
+      - text
+      type: object
+      properties:
+        text:
+          type: string
+        new_id:
+          type: string
+          description: 旁支会话 id（ULID，幂等键）
+        turn_id:
+          type: string
+          description: 旁支第一条消息的 turn_id（ULID）；不传由服务端生成
+    AgentWorkBtwResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkBtw'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentWorkCancelRequestBody:
+      type: object
+      properties:
+        turn_id:
+          type: string
+          description: 排队中的消息从队列撤下；不传取消进行中的回合
+    AgentWorkForkRequestBody:
+      type: object
+      properties:
+        new_id:
+          type: string
+          description: 新会话 id（客户端生成的 ULID，幂等键）；不传由服务端生成
+        upto_item_id:
+          type: string
+        title:
+          type: string
+    AgentWorkForkSource:
+      required:
+      - session_id
+      - title
+      type: object
+      properties:
+        session_id:
+          type: string
+        title:
+          type: string
+          description: 来源会话现在的标题；来源已删除时为空
+        item_id:
+          type: string
+          description: 从哪个条目所在的回合之后分出（不传 upto_item_id 时为空）
+    AgentWorkItem:
+      required:
+      - id
+      - rev
+      - seq
+      - turn_id
+      - kind
+      - state
+      - body
+      - observed_at
+      type: object
+      properties:
+        id:
+          type: string
+        rev:
+          type: integer
+          format: int32
+        seq:
+          type: integer
+          format: int64
+        turn_id:
+          type: string
+        agent_id:
+          type: string
+        parent_agent_id:
+          type: string
+        call_id:
+          type: string
+        kind:
+          enum:
+          - user
+          - message
+          - reasoning
+          - tool_call
+          - tool_result
+          - diff
+          - image
+          - file
+          - prompt
+          - status
+          - turn
+          - subagent
+          - background_task
+          - preview
+          type: string
+        state:
+          enum:
+          - null
+          - running
+          - completed
+          - failed
+          - interrupted
+          - waiting
+          - expired
+          type: string
+        body:
+          type: object
+          description: 各 kind 自己的字段，见工作模式条目模型
+        observed_at:
+          type: integer
+          format: int64
+    AgentWorkItemPage:
+      required:
+      - items
+      - head_seq
+      - has_more
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentWorkItem'
+        head_seq:
+          type: integer
+          format: int64
+        has_more:
+          type: boolean
+    AgentWorkItemPageResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkItemPage'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentWorkPrompt:
+      required:
+      - prompt_id
+      - session_id
+      - run_id
+      - tool_use_id
+      - kind
+      - tool_name
+      - input
+      - options
+      - status
+      - created_at
+      type: object
+      properties:
+        prompt_id:
+          type: string
+        session_id:
+          type: string
+        run_id:
+          type: string
+        tool_use_id:
+          type: string
+        kind:
+          enum:
+          - permission
+          - plan
+          - question
+          type: string
+        tool_name:
+          type: string
+        input:
+          type: object
+          description: 工具入参原样（超过 64 KB 截断）
+        options:
+          type: object
+          description: title、display_name、description、decision_reason、decision_reason_type、blocked_path、suggestions、requires_user_interaction、suppress_always_allow_rule、default_to_no、mcp_server、request_id
+        status:
+          enum:
+          - waiting
+          - answered
+          - cancelled
+          - expired
+          type: string
+        choice:
+          type: string
+        answers:
+          type: object
+          description: 提问卡片的回答：键是问题原文，单选为字符串，多选为字符串数组
+        answered_at:
+          type: integer
+          format: int64
+        created_at:
+          type: integer
+          format: int64
+    AgentWorkPromptAnswerRequestBody:
+      required:
+      - op_id
+      - choice
+      type: object
+      properties:
+        op_id:
+          type: string
+        choice:
+          type: string
+        answers:
+          type: object
+          description: submit 时必填：键是问题原文，单选为选项 label（「其他」的文字优先），多选为数组（「其他」的文字追加）
+    AgentWorkPromptResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkPrompt'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentWorkSession:
+      required:
+      - id
+      - change_seq
+      type: object
+      properties:
+        id:
+          type: string
+        deleted:
+          type: boolean
+        preset_id:
+          type: string
+        model:
+          type: string
+        endpoint_id:
+          type: string
+        title:
+          type: string
+        archived:
+          type: boolean
+        head_seq:
+          type: integer
+          format: int64
+        change_seq:
+          type: integer
+          format: int64
+        version:
+          type: integer
+          format: int64
+        context_lost:
+          type: boolean
+          description: 之前的上下文无法恢复，下一回合从新的 Claude 会话开始
+        last_turn_at:
+          type: integer
+          format: int64
+        created_at:
+          type: integer
+          format: int64
+        updated_at:
+          type: integer
+          format: int64
+        permission_mode:
+          enum:
+          - auto
+          - ask
+          type: string
+          description: auto：自动审查（默认）；ask：每次写操作前问。用自配接入点（非合作方）的会话恒为 ask
+        forked_from:
+          $ref: '#/components/schemas/AgentWorkForkSource'
+        side:
+          type: boolean
+          description: /btw 旁支：不在会话列表里，提升后变成普通会话
+      description: deleted=true 是墓碑：只有 id、deleted、change_seq 有意义。
+    AgentWorkSessionCreateRequestBody:
+      required:
+      - id
+      - preset_id
+      type: object
+      properties:
+        id:
+          type: string
+          description: 客户端生成的 ULID，也是幂等键
+        preset_id:
+          type: string
+        model:
+          type: string
+        endpoint_id:
+          type: string
+        title:
+          type: string
+    AgentWorkSessionDetail:
+      required:
+      - session
+      - state
+      - prompts
+      - assets
+      type: object
+      properties:
+        session:
+          $ref: '#/components/schemas/AgentWorkSession'
+        state:
+          $ref: '#/components/schemas/AgentWorkSessionState'
+        prompts:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentWorkPrompt'
+        assets:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentWorkAsset'
+    AgentWorkSessionDetailResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkSessionDetail'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentWorkSessionPage:
+      required:
+      - sessions
+      - change_seq
+      - has_more
+      type: object
+      properties:
+        sessions:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentWorkSession'
+        change_seq:
+          type: integer
+          format: int64
+        has_more:
+          type: boolean
+    AgentWorkSessionPageResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkSessionPage'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentWorkSessionPatchRequestBody:
+      required:
+      - version
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int64
+        title:
+          type: string
+        archived:
+          type: boolean
+        model:
+          type: string
+        endpoint_id:
+          type: string
+        permission_mode:
+          enum:
+          - auto
+          - ask
+          type: string
+          description: 自配接入点（非合作方）的会话设 auto 返回 400 730000028
+    AgentWorkSessionResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkSession'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AgentWorkSessionState:
+      required:
+      - session_id
+      - status
+      - sandbox
+      - queued
+      - head_seq
+      type: object
+      properties:
+        session_id:
+          type: string
+        status:
+          enum:
+          - idle
+          - queued
+          - running
+          - waiting
+          type: string
+        sandbox:
+          enum:
+          - ready
+          - starting
+          - paused
+          type: string
+        queued:
+          type: integer
+          format: int32
+        head_seq:
+          type: integer
+          format: int64
+        context_lost:
+          type: boolean
+    AgentWorkTurn:
+      required:
+      - turn_id
+      - status
+      - head_seq
+      - queued
+      type: object
+      properties:
+        turn_id:
+          type: string
+        status:
+          enum:
+          - queued
+          - dispatched
+          - running
+          - waiting
+          - completed
+          - failed
+          - cancelled
+          - steered
+          - idle
+          type: string
+        head_seq:
+          type: integer
+          format: int64
+        queued:
+          type: integer
+          format: int32
+    AgentWorkTurnRequestBody:
+      required:
+      - turn_id
+      - expected_head
+      type: object
+      properties:
+        turn_id:
+          type: string
+        text:
+          type: string
+        attachments:
+          type: array
+          items:
+            $ref: '#/components/schemas/AgentWorkAttachmentInput'
+        expected_head:
+          type: integer
+          format: int64
+        mode:
+          enum:
+          - queue
+          - interrupt
+          type: string
+        interaction_mode:
+          enum:
+          - build
+          - plan
+          type: string
+          description: plan：进计划模式并记在会话上，之后不带模式的回合（含自动续接、重启后）都保持计划模式，直到批准计划卡或发 build；build：回到会话的权限模式；不传保持当前。进不了计划模式时这一轮以错误结束、消息不发出。立即发送进正在跑的回合时忽略
+    AgentWorkTurnResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkTurn'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
     AgentWriteRequestBody:
       required:
       - expected_version
@@ -20864,6 +24976,9 @@ components:
           type: string
         endpoint:
           type: string
+        distinctId:
+          type: string
+          description: Pseudonymous, per-user Umami distinct id. Present only for a valid native session.
     AnalyticsConfigResponseBody:
       type: object
       properties:
@@ -20986,6 +25101,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/AnalyticsMetric'
+        activeUsers:
+          type: integer
+          format: int64
     AppAccessTokenData:
       type: object
       properties:
@@ -42192,6 +46310,7 @@ tags:
 - name: AcademicService
 - name: AdminNoticeService
 - name: AdminService
+- name: AgentOpsService
 - name: AgentService
 - name: AnalyticsService
 - name: CampusLifeService

@@ -18,10 +18,11 @@ class AnalyticsServiceApi {
   const AnalyticsServiceApi(this._dio);
 
   /// Neo产品运营分析
-  /// 需要 analytics.dashboard:view；days 仅允许 7 或 30。北京时间自然日，访客并非学生人数。未配置或上游不可用时不返回零值统计。
+  /// 需要 analytics.dashboard:view；days 仅允许 7 或 30，source 为 web（默认）或 app。北京时间自然日，访客并非学生人数；activeUsers 为窗口内有页面访问的化名登录用户数，与访客不可相加。未配置或上游不可用时不返回零值统计。
   ///
   /// Parameters:
   /// * [days]
+  /// * [source_]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -33,6 +34,7 @@ class AnalyticsServiceApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<AnalyticsResponseBody>> analyticsServiceGetAnalytics({
     int? days,
+    String? source_,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -61,6 +63,7 @@ class AnalyticsServiceApi {
 
     final _queryParameters = <String, dynamic>{
       if (days != null) r'days': days,
+      if (source_ != null) r'source': source_,
     };
 
     final _response = await _dio.request<Object>(
@@ -104,11 +107,12 @@ class AnalyticsServiceApi {
   }
 
   /// Neo单功能链路分析
-  /// 需要 analytics.dashboard:view。匿名访客进入到获得结果的有序漏斗，相邻步骤窗口30分钟；附带失败原因、结果、入口和终端分布。
+  /// 需要 analytics.dashboard:view。source 为 web（默认）或 app，分别对应网页与 Poplar App 站点。Umami 访客进入到获得结果的有序漏斗，相邻步骤窗口30分钟；附带失败原因、结果、入口和终端分布。
   ///
   /// Parameters:
   /// * [days]
   /// * [feature]
+  /// * [source_]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -122,6 +126,7 @@ class AnalyticsServiceApi {
       analyticsServiceGetAnalyticsFeature({
     int? days,
     String? feature,
+    String? source_,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -151,6 +156,7 @@ class AnalyticsServiceApi {
     final _queryParameters = <String, dynamic>{
       if (days != null) r'days': days,
       if (feature != null) r'feature': feature,
+      if (source_ != null) r'source': source_,
     };
 
     final _response = await _dio.request<Object>(

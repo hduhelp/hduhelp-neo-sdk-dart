@@ -32,7 +32,8 @@ AgentPreset _$AgentPresetFromJson(Map<String, dynamic> json) => $checkedCreate(
             'updatedBy',
             'version',
             'createdAt',
-            'updatedAt'
+            'updatedAt',
+            'theme'
           ],
         );
         final val = AgentPreset(
@@ -62,6 +63,7 @@ AgentPreset _$AgentPresetFromJson(Map<String, dynamic> json) => $checkedCreate(
           version: $checkedConvert('version', (v) => (v as num).toInt()),
           createdAt: $checkedConvert('createdAt', (v) => (v as num).toInt()),
           updatedAt: $checkedConvert('updatedAt', (v) => (v as num).toInt()),
+          theme: $checkedConvert('theme', (v) => v as String),
         );
         return val;
       },
@@ -89,4 +91,5 @@ Map<String, dynamic> _$AgentPresetToJson(AgentPreset instance) =>
       'version': instance.version,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
+      'theme': instance.theme,
     };

@@ -26,6 +26,7 @@ class AnalyticsSnapshot {
     this.visitorTrend,
     this.events,
     this.devices,
+    this.activeUsers,
   });
 
   @JsonKey(
@@ -91,6 +92,13 @@ class AnalyticsSnapshot {
   )
   final List<AnalyticsMetric>? devices;
 
+  @JsonKey(
+    name: r'activeUsers',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? activeUsers;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -103,7 +111,8 @@ class AnalyticsSnapshot {
           other.pageviewTrend == pageviewTrend &&
           other.visitorTrend == visitorTrend &&
           other.events == events &&
-          other.devices == devices;
+          other.devices == devices &&
+          other.activeUsers == activeUsers;
 
   @override
   int get hashCode =>
@@ -115,7 +124,8 @@ class AnalyticsSnapshot {
       pageviewTrend.hashCode +
       visitorTrend.hashCode +
       events.hashCode +
-      devices.hashCode;
+      devices.hashCode +
+      activeUsers.hashCode;
 
   factory AnalyticsSnapshot.fromJson(Map<String, dynamic> json) =>
       _$AnalyticsSnapshotFromJson(json);

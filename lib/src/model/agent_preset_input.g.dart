@@ -42,6 +42,7 @@ AgentPresetInput _$AgentPresetInputFromJson(Map<String, dynamic> json) =>
                       AgentPresetMcpMount.fromJson(e as Map<String, dynamic>))
                   .toList()),
           allowPreview: $checkedConvert('allow_preview', (v) => v as bool),
+          theme: $checkedConvert('theme', (v) => v as String?),
         );
         return val;
       },
@@ -68,6 +69,7 @@ Map<String, dynamic> _$AgentPresetInputToJson(AgentPresetInput instance) =>
       'skills': instance.skills,
       'mcp_servers': instance.mcpServers.map((e) => e.toJson()).toList(),
       'allow_preview': instance.allowPreview,
+      if (instance.theme case final value?) 'theme': value,
     };
 
 const _$AgentPresetInputReasoningEnumEnumMap = {

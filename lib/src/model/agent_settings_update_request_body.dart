@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/agent_lifecycle_input.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'agent_settings_update_request_body.g.dart';
@@ -22,6 +23,8 @@ class AgentSettingsUpdateRequestBody {
     required this.skillSyncEnabled,
     required this.expectedVersion,
     this.reason,
+    this.lifecycle,
+    this.dingtalkCliEnabled,
   });
 
   @JsonKey(
@@ -66,6 +69,20 @@ class AgentSettingsUpdateRequestBody {
   )
   final String? reason;
 
+  @JsonKey(
+    name: r'lifecycle',
+    required: false,
+    includeIfNull: false,
+  )
+  final AgentLifecycleInput? lifecycle;
+
+  @JsonKey(
+    name: r'dingtalk_cli_enabled',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? dingtalkCliEnabled;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -75,7 +92,9 @@ class AgentSettingsUpdateRequestBody {
           other.clearGithubToken == clearGithubToken &&
           other.skillSyncEnabled == skillSyncEnabled &&
           other.expectedVersion == expectedVersion &&
-          other.reason == reason;
+          other.reason == reason &&
+          other.lifecycle == lifecycle &&
+          other.dingtalkCliEnabled == dingtalkCliEnabled;
 
   @override
   int get hashCode =>
@@ -84,7 +103,9 @@ class AgentSettingsUpdateRequestBody {
       clearGithubToken.hashCode +
       skillSyncEnabled.hashCode +
       expectedVersion.hashCode +
-      reason.hashCode;
+      reason.hashCode +
+      lifecycle.hashCode +
+      dingtalkCliEnabled.hashCode;
 
   factory AgentSettingsUpdateRequestBody.fromJson(Map<String, dynamic> json) =>
       _$AgentSettingsUpdateRequestBodyFromJson(json);

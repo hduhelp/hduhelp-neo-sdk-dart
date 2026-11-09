@@ -20,7 +20,9 @@ AgentAppPreset _$AgentAppPresetFromJson(Map<String, dynamic> json) =>
             'icon',
             'defaultModel',
             'allowPreview',
-            'isDefault'
+            'isDefault',
+            'theme',
+            'slug'
           ],
         );
         final val = AgentAppPreset(
@@ -31,6 +33,8 @@ AgentAppPreset _$AgentAppPresetFromJson(Map<String, dynamic> json) =>
           defaultModel: $checkedConvert('defaultModel', (v) => v as String),
           allowPreview: $checkedConvert('allowPreview', (v) => v as bool),
           isDefault: $checkedConvert('isDefault', (v) => v as bool),
+          theme: $checkedConvert('theme', (v) => v as String),
+          slug: $checkedConvert('slug', (v) => v as String),
         );
         return val;
       },
@@ -45,4 +49,6 @@ Map<String, dynamic> _$AgentAppPresetToJson(AgentAppPreset instance) =>
       'defaultModel': instance.defaultModel,
       'allowPreview': instance.allowPreview,
       'isDefault': instance.isDefault,
+      'theme': instance.theme,
+      'slug': instance.slug,
     };

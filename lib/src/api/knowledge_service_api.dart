@@ -2985,6 +2985,7 @@ class KnowledgeServiceApi {
   /// * [deleted] - 回收站：仅软删条目
   /// * [syncStatus] - 收录态过滤: synced | pending | failed
   /// * [visibility] - 检索范围过滤: public | internal
+  /// * [sort] - created_asc/created_desc: 创建时间升/降序；缺省按更新时间降序
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -3006,6 +3007,7 @@ class KnowledgeServiceApi {
     bool? deleted,
     String? syncStatus,
     String? visibility,
+    String? sort,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -3044,6 +3046,7 @@ class KnowledgeServiceApi {
       if (deleted != null) r'deleted': deleted,
       if (syncStatus != null) r'sync_status': syncStatus,
       if (visibility != null) r'visibility': visibility,
+      if (sort != null) r'sort': sort,
     };
 
     final _response = await _dio.request<Object>(

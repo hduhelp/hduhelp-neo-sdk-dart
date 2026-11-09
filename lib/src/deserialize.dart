@@ -79,10 +79,32 @@ import 'package:hduhelp_neo/src/model/admin_wish_review_page_response_body.dart'
 import 'package:hduhelp_neo/src/model/admin_wish_review_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_wish_review_response_body.dart';
 import 'package:hduhelp_neo/src/model/adopt_revision_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_app_endpoint.dart';
+import 'package:hduhelp_neo/src/model/agent_app_model.dart';
+import 'package:hduhelp_neo/src/model/agent_app_models.dart';
+import 'package:hduhelp_neo/src/model/agent_app_models_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_app_preset.dart';
 import 'package:hduhelp_neo/src/model/agent_app_preset_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_archive_source.dart';
+import 'package:hduhelp_neo/src/model/agent_asset_link.dart';
+import 'package:hduhelp_neo/src/model/agent_asset_link_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_connect_field.dart';
+import 'package:hduhelp_neo/src/model/agent_connect_step.dart';
+import 'package:hduhelp_neo/src/model/agent_connect_step_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_connect_submitted.dart';
+import 'package:hduhelp_neo/src/model/agent_connect_submitted_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_credential.dart';
+import 'package:hduhelp_neo/src/model/agent_credential_delete_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_credential_list.dart';
+import 'package:hduhelp_neo/src/model/agent_credential_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_credential_login.dart';
+import 'package:hduhelp_neo/src/model/agent_credential_login_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_endpoint_create_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_endpoint_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_endpoint_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_git_hub_source.dart';
+import 'package:hduhelp_neo/src/model/agent_lifecycle_input.dart';
+import 'package:hduhelp_neo/src/model/agent_lifecycle_settings.dart';
 import 'package:hduhelp_neo/src/model/agent_mcp_server.dart';
 import 'package:hduhelp_neo/src/model/agent_mcp_server_create_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_mcp_server_input.dart';
@@ -91,8 +113,45 @@ import 'package:hduhelp_neo/src/model/agent_mcp_server_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_mcp_server_test_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_mcp_server_update_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_mcp_tool.dart';
+import 'package:hduhelp_neo/src/model/agent_memory.dart';
+import 'package:hduhelp_neo/src/model/agent_memory_create_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_memory_delete_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_memory_list.dart';
+import 'package:hduhelp_neo/src/model/agent_memory_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_memory_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_memory_update_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_model_options_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_mutation_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_adapter.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_adapter_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_admin_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_admin_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_capabilities.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_card.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_complete_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_config_field.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_connect_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_create_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_day.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_health.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_input.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_list.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_model_share.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_stats.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_stats_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_status_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_submit_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_test_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_test_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_test_result.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_topup.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_topup_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_topup_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_topup_status.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_topup_status_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_update_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_preset.dart';
 import 'package:hduhelp_neo/src/model/agent_preset_create_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_preset_input.dart';
@@ -114,9 +173,40 @@ import 'package:hduhelp_neo/src/model/agent_proxy_test_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_proxy_test_result.dart';
 import 'package:hduhelp_neo/src/model/agent_proxy_update_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_reference.dart';
+import 'package:hduhelp_neo/src/model/agent_run.dart';
+import 'package:hduhelp_neo/src/model/agent_run_detail.dart';
+import 'package:hduhelp_neo/src/model/agent_run_detail_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_run_item.dart';
+import 'package:hduhelp_neo/src/model/agent_run_page.dart';
+import 'package:hduhelp_neo/src/model/agent_run_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_run_stage.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox_action_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox_destroy_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox_page.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox_spec.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox_spec_input.dart';
+import 'package:hduhelp_neo/src/model/agent_sandbox_spec_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_settings.dart';
 import 'package:hduhelp_neo/src/model/agent_settings_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_settings_update_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_share.dart';
+import 'package:hduhelp_neo/src/model/agent_share_create_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_share_enter.dart';
+import 'package:hduhelp_neo/src/model/agent_share_enter_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_share_item_page.dart';
+import 'package:hduhelp_neo/src/model/agent_share_item_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_share_list.dart';
+import 'package:hduhelp_neo/src/model/agent_share_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_share_owner.dart';
+import 'package:hduhelp_neo/src/model/agent_share_patch_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_share_preview_state.dart';
+import 'package:hduhelp_neo/src/model/agent_share_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_share_session_meta.dart';
+import 'package:hduhelp_neo/src/model/agent_share_view.dart';
+import 'package:hduhelp_neo/src/model/agent_share_view_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_skill.dart';
 import 'package:hduhelp_neo/src/model/agent_skill_content_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_skill_content_result.dart';
@@ -136,6 +226,35 @@ import 'package:hduhelp_neo/src/model/agent_skill_scan_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_skill_scan_result.dart';
 import 'package:hduhelp_neo/src/model/agent_skill_sync_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_skill_update_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_stream_token.dart';
+import 'package:hduhelp_neo/src/model/agent_stream_token_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_asset.dart';
+import 'package:hduhelp_neo/src/model/agent_work_asset_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_attachment_input.dart';
+import 'package:hduhelp_neo/src/model/agent_work_btw.dart';
+import 'package:hduhelp_neo/src/model/agent_work_btw_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_btw_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_cancel_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_fork_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_fork_source.dart';
+import 'package:hduhelp_neo/src/model/agent_work_item.dart';
+import 'package:hduhelp_neo/src/model/agent_work_item_page.dart';
+import 'package:hduhelp_neo/src/model/agent_work_item_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_prompt.dart';
+import 'package:hduhelp_neo/src/model/agent_work_prompt_answer_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_prompt_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_create_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_detail.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_detail_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_page.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_patch_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_state.dart';
+import 'package:hduhelp_neo/src/model/agent_work_turn.dart';
+import 'package:hduhelp_neo/src/model/agent_work_turn_request_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_turn_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_write_request_body.dart';
 import 'package:hduhelp_neo/src/model/all_person_info_response_body.dart';
 import 'package:hduhelp_neo/src/model/analytics_config_data.dart';
@@ -1630,6 +1749,18 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AdoptRevisionRequestBody':
       return AdoptRevisionRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AgentAppEndpoint':
+      return AgentAppEndpoint.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentAppModel':
+      return AgentAppModel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentAppModels':
+      return AgentAppModels.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentAppModelsResponseBody':
+      return AgentAppModelsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AgentAppPreset':
       return AgentAppPreset.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -1639,8 +1770,62 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AgentArchiveSource':
       return AgentArchiveSource.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AgentAssetLink':
+      return AgentAssetLink.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentAssetLinkResponseBody':
+      return AgentAssetLinkResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentConnectField':
+      return AgentConnectField.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentConnectStep':
+      return AgentConnectStep.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentConnectStepResponseBody':
+      return AgentConnectStepResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentConnectSubmitted':
+      return AgentConnectSubmitted.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentConnectSubmittedResponseBody':
+      return AgentConnectSubmittedResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentCredential':
+      return AgentCredential.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentCredentialDeleteResponseBody':
+      return AgentCredentialDeleteResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentCredentialList':
+      return AgentCredentialList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentCredentialListResponseBody':
+      return AgentCredentialListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentCredentialLogin':
+      return AgentCredentialLogin.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentCredentialLoginResponseBody':
+      return AgentCredentialLoginResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentEndpointCreateRequestBody':
+      return AgentEndpointCreateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentEndpointListResponseBody':
+      return AgentEndpointListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentEndpointResponseBody':
+      return AgentEndpointResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AgentGitHubSource':
       return AgentGitHubSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentLifecycleInput':
+      return AgentLifecycleInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentLifecycleSettings':
+      return AgentLifecycleSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AgentMcpServer':
       return AgentMcpServer.fromJson(value as Map<String, dynamic>)
@@ -1665,12 +1850,121 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'AgentMcpTool':
       return AgentMcpTool.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentMemory':
+      return AgentMemory.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentMemoryCreateRequestBody':
+      return AgentMemoryCreateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentMemoryDeleteResponseBody':
+      return AgentMemoryDeleteResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentMemoryList':
+      return AgentMemoryList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentMemoryListResponseBody':
+      return AgentMemoryListResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentMemoryResponseBody':
+      return AgentMemoryResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentMemoryUpdateRequestBody':
+      return AgentMemoryUpdateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AgentModelOptionsResponseBody':
       return AgentModelOptionsResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'AgentMutationResponseBody':
       return AgentMutationResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AgentPartner':
+      return AgentPartner.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerAdapter':
+      return AgentPartnerAdapter.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerAdapterListResponseBody':
+      return AgentPartnerAdapterListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerAdminListResponseBody':
+      return AgentPartnerAdminListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerAdminResponseBody':
+      return AgentPartnerAdminResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerCapabilities':
+      return AgentPartnerCapabilities.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerCard':
+      return AgentPartnerCard.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerCompleteRequestBody':
+      return AgentPartnerCompleteRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerConfigField':
+      return AgentPartnerConfigField.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerConnectRequestBody':
+      return AgentPartnerConnectRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerCreateRequestBody':
+      return AgentPartnerCreateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerDay':
+      return AgentPartnerDay.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerHealth':
+      return AgentPartnerHealth.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerInput':
+      return AgentPartnerInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerList':
+      return AgentPartnerList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerListResponseBody':
+      return AgentPartnerListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerModelShare':
+      return AgentPartnerModelShare.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerStats':
+      return AgentPartnerStats.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerStatsResponseBody':
+      return AgentPartnerStatsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerStatusRequestBody':
+      return AgentPartnerStatusRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerSubmitRequestBody':
+      return AgentPartnerSubmitRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerTestRequestBody':
+      return AgentPartnerTestRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerTestResponseBody':
+      return AgentPartnerTestResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerTestResult':
+      return AgentPartnerTestResult.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerTopup':
+      return AgentPartnerTopup.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerTopupRequestBody':
+      return AgentPartnerTopupRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerTopupResponseBody':
+      return AgentPartnerTopupResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerTopupStatus':
+      return AgentPartnerTopupStatus.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerTopupStatusResponseBody':
+      return AgentPartnerTopupStatusResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentPartnerUpdateRequestBody':
+      return AgentPartnerUpdateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AgentPreset':
       return AgentPreset.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'AgentPresetCreateRequestBody':
@@ -1732,6 +2026,50 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AgentReference':
       return AgentReference.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AgentRun':
+      return AgentRun.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentRunDetail':
+      return AgentRunDetail.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentRunDetailResponseBody':
+      return AgentRunDetailResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentRunItem':
+      return AgentRunItem.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentRunPage':
+      return AgentRunPage.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentRunPageResponseBody':
+      return AgentRunPageResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentRunStage':
+      return AgentRunStage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentSandbox':
+      return AgentSandbox.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentSandboxActionRequestBody':
+      return AgentSandboxActionRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentSandboxDestroyRequestBody':
+      return AgentSandboxDestroyRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentSandboxPage':
+      return AgentSandboxPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentSandboxPageResponseBody':
+      return AgentSandboxPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentSandboxResponseBody':
+      return AgentSandboxResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentSandboxSpec':
+      return AgentSandboxSpec.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentSandboxSpecInput':
+      return AgentSandboxSpecInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentSandboxSpecRequestBody':
+      return AgentSandboxSpecRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AgentSettings':
       return AgentSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -1741,6 +2079,50 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AgentSettingsUpdateRequestBody':
       return AgentSettingsUpdateRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'AgentShare':
+      return AgentShare.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentShareCreateRequestBody':
+      return AgentShareCreateRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareEnter':
+      return AgentShareEnter.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareEnterResponseBody':
+      return AgentShareEnterResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareItemPage':
+      return AgentShareItemPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareItemPageResponseBody':
+      return AgentShareItemPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentShareList':
+      return AgentShareList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareListResponseBody':
+      return AgentShareListResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareOwner':
+      return AgentShareOwner.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentSharePatchRequestBody':
+      return AgentSharePatchRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentSharePreviewState':
+      return AgentSharePreviewState.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareResponseBody':
+      return AgentShareResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareSessionMeta':
+      return AgentShareSessionMeta.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareView':
+      return AgentShareView.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentShareViewResponseBody':
+      return AgentShareViewResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AgentSkill':
       return AgentSkill.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'AgentSkillContentResponseBody':
@@ -1796,6 +2178,92 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AgentSkillUpdateRequestBody':
       return AgentSkillUpdateRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentStreamToken':
+      return AgentStreamToken.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentStreamTokenResponseBody':
+      return AgentStreamTokenResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkAsset':
+      return AgentWorkAsset.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkAssetResponseBody':
+      return AgentWorkAssetResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkAttachmentInput':
+      return AgentWorkAttachmentInput.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkBtw':
+      return AgentWorkBtw.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkBtwRequestBody':
+      return AgentWorkBtwRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkBtwResponseBody':
+      return AgentWorkBtwResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkCancelRequestBody':
+      return AgentWorkCancelRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkForkRequestBody':
+      return AgentWorkForkRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkForkSource':
+      return AgentWorkForkSource.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkItem':
+      return AgentWorkItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkItemPage':
+      return AgentWorkItemPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkItemPageResponseBody':
+      return AgentWorkItemPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkPrompt':
+      return AgentWorkPrompt.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkPromptAnswerRequestBody':
+      return AgentWorkPromptAnswerRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkPromptResponseBody':
+      return AgentWorkPromptResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkSession':
+      return AgentWorkSession.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkSessionCreateRequestBody':
+      return AgentWorkSessionCreateRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkSessionDetail':
+      return AgentWorkSessionDetail.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkSessionDetailResponseBody':
+      return AgentWorkSessionDetailResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkSessionPage':
+      return AgentWorkSessionPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkSessionPageResponseBody':
+      return AgentWorkSessionPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkSessionPatchRequestBody':
+      return AgentWorkSessionPatchRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkSessionResponseBody':
+      return AgentWorkSessionResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AgentWorkSessionState':
+      return AgentWorkSessionState.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkTurn':
+      return AgentWorkTurn.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkTurnRequestBody':
+      return AgentWorkTurnRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentWorkTurnResponseBody':
+      return AgentWorkTurnResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AgentWriteRequestBody':
       return AgentWriteRequestBody.fromJson(value as Map<String, dynamic>)

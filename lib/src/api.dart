@@ -10,6 +10,7 @@ import 'package:hduhelp_neo/src/auth/oauth.dart';
 import 'package:hduhelp_neo/src/api/academic_service_api.dart';
 import 'package:hduhelp_neo/src/api/admin_notice_service_api.dart';
 import 'package:hduhelp_neo/src/api/admin_service_api.dart';
+import 'package:hduhelp_neo/src/api/agent_ops_service_api.dart';
 import 'package:hduhelp_neo/src/api/agent_service_api.dart';
 import 'package:hduhelp_neo/src/api/analytics_service_api.dart';
 import 'package:hduhelp_neo/src/api/campus_life_service_api.dart';
@@ -111,6 +112,12 @@ class HduhelpNeo {
   /// by doing that all interceptors will not be executed
   AdminServiceApi getAdminServiceApi() {
     return AdminServiceApi(dio);
+  }
+
+  /// Get AgentOpsServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AgentOpsServiceApi getAgentOpsServiceApi() {
+    return AgentOpsServiceApi(dio);
   }
 
   /// Get AgentServiceApi instance, base route and serializer can be overridden by a given but be careful,

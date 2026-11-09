@@ -19,6 +19,7 @@ class AnalyticsConfigData {
     this.enabled,
     this.websiteId,
     this.endpoint,
+    this.distinctId,
   });
 
   @JsonKey(
@@ -42,16 +43,29 @@ class AnalyticsConfigData {
   )
   final String? endpoint;
 
+  /// Pseudonymous, per-user Umami distinct id. Present only for a valid native session.
+  @JsonKey(
+    name: r'distinctId',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? distinctId;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is AnalyticsConfigData &&
           other.enabled == enabled &&
           other.websiteId == websiteId &&
-          other.endpoint == endpoint;
+          other.endpoint == endpoint &&
+          other.distinctId == distinctId;
 
   @override
-  int get hashCode => enabled.hashCode + websiteId.hashCode + endpoint.hashCode;
+  int get hashCode =>
+      enabled.hashCode +
+      websiteId.hashCode +
+      endpoint.hashCode +
+      distinctId.hashCode;
 
   factory AnalyticsConfigData.fromJson(Map<String, dynamic> json) =>
       _$AnalyticsConfigDataFromJson(json);

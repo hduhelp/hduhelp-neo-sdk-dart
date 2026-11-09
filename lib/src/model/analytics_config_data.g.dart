@@ -15,6 +15,7 @@ AnalyticsConfigData _$AnalyticsConfigDataFromJson(Map<String, dynamic> json) =>
           enabled: $checkedConvert('enabled', (v) => v as bool?),
           websiteId: $checkedConvert('websiteId', (v) => v as String?),
           endpoint: $checkedConvert('endpoint', (v) => v as String?),
+          distinctId: $checkedConvert('distinctId', (v) => v as String?),
         );
         return val;
       },
@@ -26,4 +27,5 @@ Map<String, dynamic> _$AnalyticsConfigDataToJson(
       if (instance.enabled case final value?) 'enabled': value,
       if (instance.websiteId case final value?) 'websiteId': value,
       if (instance.endpoint case final value?) 'endpoint': value,
+      if (instance.distinctId case final value?) 'distinctId': value,
     };

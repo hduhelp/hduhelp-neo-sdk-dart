@@ -41,6 +41,8 @@ AnalyticsSnapshot _$AnalyticsSnapshotFromJson(Map<String, dynamic> json) =>
                   ?.map((e) =>
                       AnalyticsMetric.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          activeUsers:
+              $checkedConvert('activeUsers', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -63,4 +65,5 @@ Map<String, dynamic> _$AnalyticsSnapshotToJson(AnalyticsSnapshot instance) =>
         'events': value,
       if (instance.devices?.map((e) => e.toJson()).toList() case final value?)
         'devices': value,
+      if (instance.activeUsers case final value?) 'activeUsers': value,
     };

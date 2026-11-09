@@ -28,6 +28,7 @@ class AgentPresetInput {
     required this.skills,
     required this.mcpServers,
     required this.allowPreview,
+    this.theme,
   });
 
   @JsonKey(
@@ -107,6 +108,14 @@ class AgentPresetInput {
   )
   final bool allowPreview;
 
+  /// App 对话页外观：空串为默认，science 理工科，humanities 文科。
+  @JsonKey(
+    name: r'theme',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? theme;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -121,7 +130,8 @@ class AgentPresetInput {
           other.reasoning == reasoning &&
           other.skills == skills &&
           other.mcpServers == mcpServers &&
-          other.allowPreview == allowPreview;
+          other.allowPreview == allowPreview &&
+          other.theme == theme;
 
   @override
   int get hashCode =>
@@ -135,7 +145,8 @@ class AgentPresetInput {
       reasoning.hashCode +
       skills.hashCode +
       mcpServers.hashCode +
-      allowPreview.hashCode;
+      allowPreview.hashCode +
+      theme.hashCode;
 
   factory AgentPresetInput.fromJson(Map<String, dynamic> json) =>
       _$AgentPresetInputFromJson(json);

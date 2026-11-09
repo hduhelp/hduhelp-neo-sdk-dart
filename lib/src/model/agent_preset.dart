@@ -37,6 +37,7 @@ class AgentPreset {
     required this.version,
     required this.createdAt,
     required this.updatedAt,
+    required this.theme,
   });
 
   @JsonKey(
@@ -179,6 +180,13 @@ class AgentPreset {
   )
   final int updatedAt;
 
+  @JsonKey(
+    name: r'theme',
+    required: true,
+    includeIfNull: false,
+  )
+  final String theme;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -202,7 +210,8 @@ class AgentPreset {
           other.updatedBy == updatedBy &&
           other.version == version &&
           other.createdAt == createdAt &&
-          other.updatedAt == updatedAt;
+          other.updatedAt == updatedAt &&
+          other.theme == theme;
 
   @override
   int get hashCode =>
@@ -225,7 +234,8 @@ class AgentPreset {
       updatedBy.hashCode +
       version.hashCode +
       createdAt.hashCode +
-      updatedAt.hashCode;
+      updatedAt.hashCode +
+      theme.hashCode;
 
   factory AgentPreset.fromJson(Map<String, dynamic> json) =>
       _$AgentPresetFromJson(json);
