@@ -41,6 +41,7 @@ AgentWorkSession _$AgentWorkSessionFromJson(Map<String, dynamic> json) =>
                   ? null
                   : AgentWorkForkSource.fromJson(v as Map<String, dynamic>)),
           side: $checkedConvert('side', (v) => v as bool?),
+          imageModel: $checkedConvert('image_model', (v) => v as String?),
         );
         return val;
       },
@@ -54,7 +55,8 @@ AgentWorkSession _$AgentWorkSessionFromJson(Map<String, dynamic> json) =>
         'createdAt': 'created_at',
         'updatedAt': 'updated_at',
         'permissionMode': 'permission_mode',
-        'forkedFrom': 'forked_from'
+        'forkedFrom': 'forked_from',
+        'imageModel': 'image_model'
       },
     );
 
@@ -79,6 +81,7 @@ Map<String, dynamic> _$AgentWorkSessionToJson(AgentWorkSession instance) =>
         'permission_mode': value,
       if (instance.forkedFrom?.toJson() case final value?) 'forked_from': value,
       if (instance.side case final value?) 'side': value,
+      if (instance.imageModel case final value?) 'image_model': value,
     };
 
 const _$AgentWorkSessionPermissionModeEnumEnumMap = {

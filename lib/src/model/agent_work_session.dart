@@ -34,6 +34,7 @@ class AgentWorkSession {
     this.permissionMode,
     this.forkedFrom,
     this.side,
+    this.imageModel,
   });
 
   @JsonKey(
@@ -158,6 +159,14 @@ class AgentWorkSession {
   )
   final bool? side;
 
+  /// 这段工作生图用的模型（GET /models 的 image_models 之一）；不返回时用默认
+  @JsonKey(
+    name: r'image_model',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? imageModel;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -178,7 +187,8 @@ class AgentWorkSession {
           other.updatedAt == updatedAt &&
           other.permissionMode == permissionMode &&
           other.forkedFrom == forkedFrom &&
-          other.side == side;
+          other.side == side &&
+          other.imageModel == imageModel;
 
   @override
   int get hashCode =>
@@ -198,7 +208,8 @@ class AgentWorkSession {
       updatedAt.hashCode +
       permissionMode.hashCode +
       forkedFrom.hashCode +
-      side.hashCode;
+      side.hashCode +
+      imageModel.hashCode;
 
   factory AgentWorkSession.fromJson(Map<String, dynamic> json) =>
       _$AgentWorkSessionFromJson(json);

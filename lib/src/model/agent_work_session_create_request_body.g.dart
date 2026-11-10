@@ -22,10 +22,15 @@ AgentWorkSessionCreateRequestBody _$AgentWorkSessionCreateRequestBodyFromJson(
           model: $checkedConvert('model', (v) => v as String?),
           endpointId: $checkedConvert('endpoint_id', (v) => v as String?),
           title: $checkedConvert('title', (v) => v as String?),
+          imageModel: $checkedConvert('image_model', (v) => v as String?),
         );
         return val;
       },
-      fieldKeyMap: const {'presetId': 'preset_id', 'endpointId': 'endpoint_id'},
+      fieldKeyMap: const {
+        'presetId': 'preset_id',
+        'endpointId': 'endpoint_id',
+        'imageModel': 'image_model'
+      },
     );
 
 Map<String, dynamic> _$AgentWorkSessionCreateRequestBodyToJson(
@@ -36,4 +41,5 @@ Map<String, dynamic> _$AgentWorkSessionCreateRequestBodyToJson(
       if (instance.model case final value?) 'model': value,
       if (instance.endpointId case final value?) 'endpoint_id': value,
       if (instance.title case final value?) 'title': value,
+      if (instance.imageModel case final value?) 'image_model': value,
     };

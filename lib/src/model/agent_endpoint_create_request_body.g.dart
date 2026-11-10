@@ -21,10 +21,15 @@ AgentEndpointCreateRequestBody _$AgentEndpointCreateRequestBodyFromJson(
           name: $checkedConvert('name', (v) => v as String),
           baseUrl: $checkedConvert('base_url', (v) => v as String),
           apiKey: $checkedConvert('api_key', (v) => v as String),
+          imageModel: $checkedConvert('image_model', (v) => v as String?),
         );
         return val;
       },
-      fieldKeyMap: const {'baseUrl': 'base_url', 'apiKey': 'api_key'},
+      fieldKeyMap: const {
+        'baseUrl': 'base_url',
+        'apiKey': 'api_key',
+        'imageModel': 'image_model'
+      },
     );
 
 Map<String, dynamic> _$AgentEndpointCreateRequestBodyToJson(
@@ -34,4 +39,5 @@ Map<String, dynamic> _$AgentEndpointCreateRequestBodyToJson(
       'name': instance.name,
       'base_url': instance.baseUrl,
       'api_key': instance.apiKey,
+      if (instance.imageModel case final value?) 'image_model': value,
     };

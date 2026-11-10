@@ -21,6 +21,7 @@ class AgentWorkSessionCreateRequestBody {
     this.model,
     this.endpointId,
     this.title,
+    this.imageModel,
   });
 
   /// 客户端生成的 ULID，也是幂等键
@@ -59,6 +60,14 @@ class AgentWorkSessionCreateRequestBody {
   )
   final String? title;
 
+  /// 生图模型（GET /models 的 image_models 之一）；不传用默认
+  @JsonKey(
+    name: r'image_model',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? imageModel;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -67,7 +76,8 @@ class AgentWorkSessionCreateRequestBody {
           other.presetId == presetId &&
           other.model == model &&
           other.endpointId == endpointId &&
-          other.title == title;
+          other.title == title &&
+          other.imageModel == imageModel;
 
   @override
   int get hashCode =>
@@ -75,7 +85,8 @@ class AgentWorkSessionCreateRequestBody {
       presetId.hashCode +
       model.hashCode +
       endpointId.hashCode +
-      title.hashCode;
+      title.hashCode +
+      imageModel.hashCode;
 
   factory AgentWorkSessionCreateRequestBody.fromJson(
           Map<String, dynamic> json) =>

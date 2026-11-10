@@ -28,13 +28,15 @@ AgentAppEndpoint _$AgentAppEndpointFromJson(Map<String, dynamic> json) =>
                       (e) => AgentAppModel.fromJson(e as Map<String, dynamic>))
                   .toList()),
           defaultModel: $checkedConvert('default_model', (v) => v as String?),
+          imageModel: $checkedConvert('image_model', (v) => v as String?),
         );
         return val;
       },
       fieldKeyMap: const {
         'baseUrl': 'base_url',
         'keyTail': 'key_tail',
-        'defaultModel': 'default_model'
+        'defaultModel': 'default_model',
+        'imageModel': 'image_model'
       },
     );
 
@@ -48,4 +50,5 @@ Map<String, dynamic> _$AgentAppEndpointToJson(AgentAppEndpoint instance) =>
       if (instance.models?.map((e) => e.toJson()).toList() case final value?)
         'models': value,
       if (instance.defaultModel case final value?) 'default_model': value,
+      if (instance.imageModel case final value?) 'image_model': value,
     };

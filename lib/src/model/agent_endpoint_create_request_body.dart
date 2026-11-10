@@ -20,6 +20,7 @@ class AgentEndpointCreateRequestBody {
     required this.name,
     required this.baseUrl,
     required this.apiKey,
+    this.imageModel,
   });
 
   /// 可选：客户端生成的 ULID，作幂等键
@@ -51,6 +52,14 @@ class AgentEndpointCreateRequestBody {
   )
   final String apiKey;
 
+  /// 可选：也用于 HDU Mate 生图（OpenAI Images 兼容），用这个模型名
+  @JsonKey(
+    name: r'image_model',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? imageModel;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -58,11 +67,16 @@ class AgentEndpointCreateRequestBody {
           other.id == id &&
           other.name == name &&
           other.baseUrl == baseUrl &&
-          other.apiKey == apiKey;
+          other.apiKey == apiKey &&
+          other.imageModel == imageModel;
 
   @override
   int get hashCode =>
-      id.hashCode + name.hashCode + baseUrl.hashCode + apiKey.hashCode;
+      id.hashCode +
+      name.hashCode +
+      baseUrl.hashCode +
+      apiKey.hashCode +
+      imageModel.hashCode;
 
   factory AgentEndpointCreateRequestBody.fromJson(Map<String, dynamic> json) =>
       _$AgentEndpointCreateRequestBodyFromJson(json);

@@ -27,12 +27,14 @@ AgentWorkSessionPatchRequestBody _$AgentWorkSessionPatchRequestBodyFromJson(
               (v) => $enumDecodeNullable(
                   _$AgentWorkSessionPatchRequestBodyPermissionModeEnumEnumMap,
                   v)),
+          imageModel: $checkedConvert('image_model', (v) => v as String?),
         );
         return val;
       },
       fieldKeyMap: const {
         'endpointId': 'endpoint_id',
-        'permissionMode': 'permission_mode'
+        'permissionMode': 'permission_mode',
+        'imageModel': 'image_model'
       },
     );
 
@@ -48,6 +50,7 @@ Map<String, dynamic> _$AgentWorkSessionPatchRequestBodyToJson(
               instance.permissionMode]
           case final value?)
         'permission_mode': value,
+      if (instance.imageModel case final value?) 'image_model': value,
     };
 
 const _$AgentWorkSessionPatchRequestBodyPermissionModeEnumEnumMap = {

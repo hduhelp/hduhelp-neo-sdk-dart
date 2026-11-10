@@ -24,6 +24,7 @@ class AgentAppEndpoint {
     required this.partner,
     this.models,
     this.defaultModel,
+    this.imageModel,
   });
 
   @JsonKey(
@@ -75,6 +76,14 @@ class AgentAppEndpoint {
   )
   final String? defaultModel;
 
+  /// 也用于生图时的模型名（OpenAI Images 兼容）；不用于生图时不返回
+  @JsonKey(
+    name: r'image_model',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? imageModel;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -85,7 +94,8 @@ class AgentAppEndpoint {
           other.keyTail == keyTail &&
           other.partner == partner &&
           other.models == models &&
-          other.defaultModel == defaultModel;
+          other.defaultModel == defaultModel &&
+          other.imageModel == imageModel;
 
   @override
   int get hashCode =>
@@ -95,7 +105,8 @@ class AgentAppEndpoint {
       keyTail.hashCode +
       partner.hashCode +
       models.hashCode +
-      defaultModel.hashCode;
+      defaultModel.hashCode +
+      imageModel.hashCode;
 
   factory AgentAppEndpoint.fromJson(Map<String, dynamic> json) =>
       _$AgentAppEndpointFromJson(json);

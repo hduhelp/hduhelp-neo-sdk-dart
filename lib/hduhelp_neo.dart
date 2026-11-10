@@ -119,6 +119,7 @@ export 'package:hduhelp_neo/src/model/admin_wish_review_request_body.dart';
 export 'package:hduhelp_neo/src/model/admin_wish_review_response_body.dart';
 export 'package:hduhelp_neo/src/model/adopt_revision_request_body.dart';
 export 'package:hduhelp_neo/src/model/agent_app_endpoint.dart';
+export 'package:hduhelp_neo/src/model/agent_app_image_model.dart';
 export 'package:hduhelp_neo/src/model/agent_app_model.dart';
 export 'package:hduhelp_neo/src/model/agent_app_models.dart';
 export 'package:hduhelp_neo/src/model/agent_app_models_response_body.dart';

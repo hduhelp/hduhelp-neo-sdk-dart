@@ -22,6 +22,7 @@ class AgentWorkSessionPatchRequestBody {
     this.model,
     this.endpointId,
     this.permissionMode,
+    this.imageModel,
   });
 
   @JsonKey(
@@ -67,6 +68,14 @@ class AgentWorkSessionPatchRequestBody {
   )
   final AgentWorkSessionPatchRequestBodyPermissionModeEnum? permissionMode;
 
+  /// 换生图模型，空串回到默认；下一次生图生效
+  @JsonKey(
+    name: r'image_model',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? imageModel;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -76,7 +85,8 @@ class AgentWorkSessionPatchRequestBody {
           other.archived == archived &&
           other.model == model &&
           other.endpointId == endpointId &&
-          other.permissionMode == permissionMode;
+          other.permissionMode == permissionMode &&
+          other.imageModel == imageModel;
 
   @override
   int get hashCode =>
@@ -85,7 +95,8 @@ class AgentWorkSessionPatchRequestBody {
       archived.hashCode +
       model.hashCode +
       endpointId.hashCode +
-      permissionMode.hashCode;
+      permissionMode.hashCode +
+      imageModel.hashCode;
 
   factory AgentWorkSessionPatchRequestBody.fromJson(
           Map<String, dynamic> json) =>

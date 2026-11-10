@@ -80,6 +80,7 @@ import 'package:hduhelp_neo/src/model/admin_wish_review_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_wish_review_response_body.dart';
 import 'package:hduhelp_neo/src/model/adopt_revision_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_app_endpoint.dart';
+import 'package:hduhelp_neo/src/model/agent_app_image_model.dart';
 import 'package:hduhelp_neo/src/model/agent_app_model.dart';
 import 'package:hduhelp_neo/src/model/agent_app_models.dart';
 import 'package:hduhelp_neo/src/model/agent_app_models_response_body.dart';
@@ -1794,6 +1795,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AgentAppEndpoint':
       return AgentAppEndpoint.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentAppImageModel':
+      return AgentAppImageModel.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AgentAppModel':
       return AgentAppModel.fromJson(value as Map<String, dynamic>)
