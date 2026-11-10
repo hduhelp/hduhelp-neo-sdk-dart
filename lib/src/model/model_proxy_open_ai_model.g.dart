@@ -19,7 +19,8 @@ ModelProxyOpenAIModel _$ModelProxyOpenAIModelFromJson(
             'object',
             'created',
             'owned_by',
-            'display_name'
+            'display_name',
+            'source'
           ],
         );
         final val = ModelProxyOpenAIModel(
@@ -40,6 +41,21 @@ ModelProxyOpenAIModel _$ModelProxyOpenAIModelFromJson(
                   )),
           contextWindow:
               $checkedConvert('context_window', (v) => (v as num?)?.toInt()),
+          source_: $checkedConvert('source', (v) => v as String),
+          connected: $checkedConvert('connected', (v) => v as bool?),
+          vendor: $checkedConvert(
+              'vendor',
+              (v) => v == null
+                  ? null
+                  : ModelProxyModelVendor.fromJson(v as Map<String, dynamic>)),
+          inputModalities: $checkedConvert('input_modalities',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          stats: $checkedConvert(
+              'stats',
+              (v) => v == null
+                  ? null
+                  : ModelProxyModelStats.fromJson(v as Map<String, dynamic>)),
+          description: $checkedConvert('description', (v) => v as String?),
         );
         return val;
       },
@@ -48,7 +64,9 @@ ModelProxyOpenAIModel _$ModelProxyOpenAIModelFromJson(
         'displayName': 'display_name',
         'supportedReasoningLevels': 'supported_reasoning_levels',
         'defaultReasoningLevel': 'default_reasoning_level',
-        'contextWindow': 'context_window'
+        'contextWindow': 'context_window',
+        'source_': 'source',
+        'inputModalities': 'input_modalities'
       },
     );
 
@@ -66,4 +84,10 @@ Map<String, dynamic> _$ModelProxyOpenAIModelToJson(
         'default_reasoning_level': value,
       if (instance.capabilities case final value?) 'capabilities': value,
       if (instance.contextWindow case final value?) 'context_window': value,
+      'source': instance.source_,
+      if (instance.connected case final value?) 'connected': value,
+      if (instance.vendor?.toJson() case final value?) 'vendor': value,
+      if (instance.inputModalities case final value?) 'input_modalities': value,
+      if (instance.stats?.toJson() case final value?) 'stats': value,
+      if (instance.description case final value?) 'description': value,
     };

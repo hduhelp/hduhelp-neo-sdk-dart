@@ -3,6 +3,8 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/model_proxy_model_stats.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_model_vendor.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'model_proxy_open_ai_model.g.dart';
@@ -25,6 +27,12 @@ class ModelProxyOpenAIModel {
     this.defaultReasoningLevel,
     this.capabilities,
     this.contextWindow,
+    required this.source_,
+    this.connected,
+    this.vendor,
+    this.inputModalities,
+    this.stats,
+    this.description,
   });
 
   @JsonKey(
@@ -93,6 +101,51 @@ class ModelProxyOpenAIModel {
   )
   final int? contextWindow;
 
+  /// 来源：hduhelp = Neo 自己的模型；否则是合作方 slug（用户自带凭据，模型名形如 <slug>/<model>）。
+  @JsonKey(
+    name: r'source',
+    required: true,
+    includeIfNull: false,
+  )
+  final String source_;
+
+  /// 合作方模型：用户是否已连接该合作方（没连时也列出，App 当作可连接的预览）。
+  @JsonKey(
+    name: r'connected',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? connected;
+
+  @JsonKey(
+    name: r'vendor',
+    required: false,
+    includeIfNull: false,
+  )
+  final ModelProxyModelVendor? vendor;
+
+  /// 输入模态：text / image / video / audio / file；未知不返回。
+  @JsonKey(
+    name: r'input_modalities',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? inputModalities;
+
+  @JsonKey(
+    name: r'stats',
+    required: false,
+    includeIfNull: false,
+  )
+  final ModelProxyModelStats? stats;
+
+  @JsonKey(
+    name: r'description',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? description;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -105,7 +158,13 @@ class ModelProxyOpenAIModel {
           other.supportedReasoningLevels == supportedReasoningLevels &&
           other.defaultReasoningLevel == defaultReasoningLevel &&
           other.capabilities == capabilities &&
-          other.contextWindow == contextWindow;
+          other.contextWindow == contextWindow &&
+          other.source_ == source_ &&
+          other.connected == connected &&
+          other.vendor == vendor &&
+          other.inputModalities == inputModalities &&
+          other.stats == stats &&
+          other.description == description;
 
   @override
   int get hashCode =>
@@ -117,7 +176,13 @@ class ModelProxyOpenAIModel {
       supportedReasoningLevels.hashCode +
       defaultReasoningLevel.hashCode +
       capabilities.hashCode +
-      contextWindow.hashCode;
+      contextWindow.hashCode +
+      source_.hashCode +
+      connected.hashCode +
+      vendor.hashCode +
+      inputModalities.hashCode +
+      stats.hashCode +
+      description.hashCode;
 
   factory ModelProxyOpenAIModel.fromJson(Map<String, dynamic> json) =>
       _$ModelProxyOpenAIModelFromJson(json);

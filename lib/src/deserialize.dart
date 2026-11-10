@@ -121,6 +121,8 @@ import 'package:hduhelp_neo/src/model/agent_memory_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_memory_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_memory_update_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_model_options_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_model_stats.dart';
+import 'package:hduhelp_neo/src/model/agent_model_vendor.dart';
 import 'package:hduhelp_neo/src/model/agent_mutation_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_adapter.dart';
@@ -266,6 +268,44 @@ import 'package:hduhelp_neo/src/model/analytics_feature_snapshot.dart';
 import 'package:hduhelp_neo/src/model/analytics_metric.dart';
 import 'package:hduhelp_neo/src/model/analytics_response_body.dart';
 import 'package:hduhelp_neo/src/model/analytics_snapshot.dart';
+import 'package:hduhelp_neo/src/model/apm_alloc.dart';
+import 'package:hduhelp_neo/src/model/apm_app.dart';
+import 'package:hduhelp_neo/src/model/apm_apps_data.dart';
+import 'package:hduhelp_neo/src/model/apm_apps_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_issue.dart';
+import 'package:hduhelp_neo/src/model/apm_issue_data.dart';
+import 'package:hduhelp_neo/src/model/apm_issue_detail.dart';
+import 'package:hduhelp_neo/src/model/apm_issue_list.dart';
+import 'package:hduhelp_neo/src/model/apm_issue_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_issues_data.dart';
+import 'package:hduhelp_neo/src/model/apm_issues_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_module_overview.dart';
+import 'package:hduhelp_neo/src/model/apm_overview.dart';
+import 'package:hduhelp_neo/src/model/apm_overview_data.dart';
+import 'package:hduhelp_neo/src/model/apm_overview_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_record_data.dart';
+import 'package:hduhelp_neo/src/model/apm_record_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_rows.dart';
+import 'package:hduhelp_neo/src/model/apm_rows_data.dart';
+import 'package:hduhelp_neo/src/model/apm_rows_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_sample.dart';
+import 'package:hduhelp_neo/src/model/apm_sample_data.dart';
+import 'package:hduhelp_neo/src/model/apm_sample_env.dart';
+import 'package:hduhelp_neo/src/model/apm_sample_list.dart';
+import 'package:hduhelp_neo/src/model/apm_sample_logs.dart';
+import 'package:hduhelp_neo/src/model/apm_sample_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_sample_scene.dart';
+import 'package:hduhelp_neo/src/model/apm_sample_summary.dart';
+import 'package:hduhelp_neo/src/model/apm_samples_data.dart';
+import 'package:hduhelp_neo/src/model/apm_samples_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_symbol_file.dart';
+import 'package:hduhelp_neo/src/model/apm_symbol_version.dart';
+import 'package:hduhelp_neo/src/model/apm_symbols.dart';
+import 'package:hduhelp_neo/src/model/apm_symbols_data.dart';
+import 'package:hduhelp_neo/src/model/apm_symbols_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_tlog_task_data.dart';
+import 'package:hduhelp_neo/src/model/apm_tlog_task_response_body.dart';
+import 'package:hduhelp_neo/src/model/apm_totals.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_data.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_internal_request_body.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_internal_response_body.dart';
@@ -963,6 +1003,8 @@ import 'package:hduhelp_neo/src/model/model_proxy_image.dart';
 import 'package:hduhelp_neo/src/model/model_proxy_image_edit_request_body.dart';
 import 'package:hduhelp_neo/src/model/model_proxy_image_generation_request_body.dart';
 import 'package:hduhelp_neo/src/model/model_proxy_images_response_body.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_model_stats.dart';
+import 'package:hduhelp_neo/src/model/model_proxy_model_vendor.dart';
 import 'package:hduhelp_neo/src/model/model_proxy_open_ai_model.dart';
 import 'package:hduhelp_neo/src/model/model_proxy_open_ai_model_list_body.dart';
 import 'package:hduhelp_neo/src/model/model_proxy_test_request_body.dart';
@@ -1446,6 +1488,7 @@ import 'package:hduhelp_neo/src/model/update_domain_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_electricity_meter_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_favorite_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_favorite_response_body.dart';
+import 'package:hduhelp_neo/src/model/update_feedback_type_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_item_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_login_client_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_login_client_response_body.dart';
@@ -1873,6 +1916,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AgentModelOptionsResponseBody':
       return AgentModelOptionsResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'AgentModelStats':
+      return AgentModelStats.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentModelVendor':
+      return AgentModelVendor.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AgentMutationResponseBody':
       return AgentMutationResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2298,6 +2347,107 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AnalyticsSnapshot':
       return AnalyticsSnapshot.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ApmAlloc':
+      return ApmAlloc.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmApp':
+      return ApmApp.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmAppsData':
+      return ApmAppsData.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmAppsResponseBody':
+      return ApmAppsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmIssue':
+      return ApmIssue.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmIssueData':
+      return ApmIssueData.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmIssueDetail':
+      return ApmIssueDetail.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmIssueList':
+      return ApmIssueList.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmIssueResponseBody':
+      return ApmIssueResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmIssuesData':
+      return ApmIssuesData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmIssuesResponseBody':
+      return ApmIssuesResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmModuleOverview':
+      return ApmModuleOverview.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmOverview':
+      return ApmOverview.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmOverviewData':
+      return ApmOverviewData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmOverviewResponseBody':
+      return ApmOverviewResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmRecordData':
+      return ApmRecordData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmRecordResponseBody':
+      return ApmRecordResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmRows':
+      return ApmRows.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmRowsData':
+      return ApmRowsData.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmRowsResponseBody':
+      return ApmRowsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSample':
+      return ApmSample.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmSampleData':
+      return ApmSampleData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSampleEnv':
+      return ApmSampleEnv.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmSampleList':
+      return ApmSampleList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSampleLogs':
+      return ApmSampleLogs.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSampleResponseBody':
+      return ApmSampleResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSampleScene':
+      return ApmSampleScene.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSampleSummary':
+      return ApmSampleSummary.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSamplesData':
+      return ApmSamplesData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSamplesResponseBody':
+      return ApmSamplesResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSymbolFile':
+      return ApmSymbolFile.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSymbolVersion':
+      return ApmSymbolVersion.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSymbols':
+      return ApmSymbols.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'ApmSymbolsData':
+      return ApmSymbolsData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmSymbolsResponseBody':
+      return ApmSymbolsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmTlogTaskData':
+      return ApmTlogTaskData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmTlogTaskResponseBody':
+      return ApmTlogTaskResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ApmTotals':
+      return ApmTotals.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'AppAccessTokenData':
       return AppAccessTokenData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -4317,6 +4467,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ModelProxyImagesResponseBody':
       return ModelProxyImagesResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'ModelProxyModelStats':
+      return ModelProxyModelStats.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ModelProxyModelVendor':
+      return ModelProxyModelVendor.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ModelProxyOpenAIModel':
       return ModelProxyOpenAIModel.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -5704,6 +5860,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UpdateFavoriteResponseBody':
       return UpdateFavoriteResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'UpdateFeedbackTypeRequestBody':
+      return UpdateFeedbackTypeRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'UpdateItemRequestBody':
       return UpdateItemRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;

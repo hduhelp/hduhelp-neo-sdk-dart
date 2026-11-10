@@ -14,6 +14,7 @@ import 'package:hduhelp_neo/src/model/feedback_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/feedback_response_body.dart';
 import 'package:hduhelp_neo/src/model/feedback_submission_response_body.dart';
 import 'package:hduhelp_neo/src/model/reply_feedback_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_feedback_type_request_body.dart';
 
 class FeedbackServiceApi {
   final Dio _dio;
@@ -605,6 +606,109 @@ class FeedbackServiceApi {
 
     try {
       _bodyData = jsonEncode(replyFeedbackRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    FeedbackResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<FeedbackResponseBody, FeedbackResponseBody>(
+              rawData, 'FeedbackResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<FeedbackResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 修改反馈类型
+  /// 需要同时拥有原类型和目标类型的管理权限；仅修改分类，保留处理状态和回复记录。
+  ///
+  /// Parameters:
+  /// * [id]
+  /// * [updateFeedbackTypeRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [FeedbackResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<FeedbackResponseBody>>
+      feedbackServiceUpdateAdminFeedbackType({
+    required String id,
+    UpdateFeedbackTypeRequestBody? updateFeedbackTypeRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/feedbacks/{id}/type'
+        .replaceAll('{' r'id' '}', id.toString());
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(updateFeedbackTypeRequestBody);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _options.compose(

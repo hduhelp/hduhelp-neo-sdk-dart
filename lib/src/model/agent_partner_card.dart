@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:hduhelp_neo/src/model/agent_partner_capabilities.dart';
+import 'package:hduhelp_neo/src/model/agent_app_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'agent_partner_card.g.dart';
@@ -30,6 +31,7 @@ class AgentPartnerCard {
     this.balanceAt,
     this.keyState,
     this.topupAmounts,
+    this.previewModels,
   });
 
   @JsonKey(
@@ -124,6 +126,14 @@ class AgentPartnerCard {
   )
   final List<int>? topupAmounts;
 
+  /// 连接前就能看到的模型：完整目录里工作模式能用、调用量最高的几个。
+  @JsonKey(
+    name: r'preview_models',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<AgentAppModel>? previewModels;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -140,7 +150,8 @@ class AgentPartnerCard {
           other.balanceYuan == balanceYuan &&
           other.balanceAt == balanceAt &&
           other.keyState == keyState &&
-          other.topupAmounts == topupAmounts;
+          other.topupAmounts == topupAmounts &&
+          other.previewModels == previewModels;
 
   @override
   int get hashCode =>
@@ -156,7 +167,8 @@ class AgentPartnerCard {
       balanceYuan.hashCode +
       balanceAt.hashCode +
       keyState.hashCode +
-      topupAmounts.hashCode;
+      topupAmounts.hashCode +
+      previewModels.hashCode;
 
   factory AgentPartnerCard.fromJson(Map<String, dynamic> json) =>
       _$AgentPartnerCardFromJson(json);

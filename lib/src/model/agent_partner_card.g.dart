@@ -50,6 +50,12 @@ AgentPartnerCard _$AgentPartnerCardFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)
                   ?.map((e) => (e as num).toInt())
                   .toList()),
+          previewModels: $checkedConvert(
+              'preview_models',
+              (v) => (v as List<dynamic>?)
+                  ?.map(
+                      (e) => AgentAppModel.fromJson(e as Map<String, dynamic>))
+                  .toList()),
         );
         return val;
       },
@@ -59,7 +65,8 @@ AgentPartnerCard _$AgentPartnerCardFromJson(Map<String, dynamic> json) =>
         'balanceYuan': 'balance_yuan',
         'balanceAt': 'balance_at',
         'keyState': 'key_state',
-        'topupAmounts': 'topup_amounts'
+        'topupAmounts': 'topup_amounts',
+        'previewModels': 'preview_models'
       },
     );
 
@@ -80,6 +87,9 @@ Map<String, dynamic> _$AgentPartnerCardToJson(AgentPartnerCard instance) =>
           case final value?)
         'key_state': value,
       if (instance.topupAmounts case final value?) 'topup_amounts': value,
+      if (instance.previewModels?.map((e) => e.toJson()).toList()
+          case final value?)
+        'preview_models': value,
     };
 
 const _$AgentPartnerCardStatusEnumEnumMap = {
