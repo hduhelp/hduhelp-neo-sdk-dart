@@ -31,6 +31,7 @@ import 'package:hduhelp_neo/src/model/agent_partner_complete_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_connect_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_create_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_probes_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_stats_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_status_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_submit_request_body.dart';
@@ -5064,6 +5065,90 @@ class AgentServiceApi {
     }
 
     return Response<AgentWorkSessionPageResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 合作方聊天模型的上架实测记录
+  ///
+  ///
+  /// Parameters:
+  /// * [id]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AgentPartnerProbesResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AgentPartnerProbesResponseBody>>
+      agentServiceAgentPartnerProbes({
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/agent/partners/{id}/probes'
+        .replaceAll('{' r'id' '}', id.toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AgentPartnerProbesResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AgentPartnerProbesResponseBody,
+                  AgentPartnerProbesResponseBody>(
+              rawData, 'AgentPartnerProbesResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AgentPartnerProbesResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

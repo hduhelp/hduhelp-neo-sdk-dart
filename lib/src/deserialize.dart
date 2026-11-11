@@ -142,6 +142,9 @@ import 'package:hduhelp_neo/src/model/agent_partner_input.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_list.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_model_share.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_probe.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_probes.dart';
+import 'package:hduhelp_neo/src/model/agent_partner_probes_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_stats.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_stats_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_partner_status_request_body.dart';
@@ -1979,6 +1982,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AgentPartnerModelShare':
       return AgentPartnerModelShare.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AgentPartnerProbe':
+      return AgentPartnerProbe.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerProbes':
+      return AgentPartnerProbes.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AgentPartnerProbesResponseBody':
+      return AgentPartnerProbesResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AgentPartnerStats':
       return AgentPartnerStats.fromJson(value as Map<String, dynamic>)
           as ReturnType;

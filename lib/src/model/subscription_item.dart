@@ -31,6 +31,7 @@ class SubscriptionItem {
     this.optionSchema,
     this.canSubscribe,
     this.canCancel,
+    this.deliveryStatus,
   });
 
   @JsonKey(
@@ -151,6 +152,14 @@ class SubscriptionItem {
   )
   final bool? canCancel;
 
+  /// 已启用订阅的接收前置条件状态；不代表消息投递成功
+  @JsonKey(
+    name: r'deliveryStatus',
+    required: false,
+    includeIfNull: false,
+  )
+  final SubscriptionItemDeliveryStatusEnum? deliveryStatus;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -169,7 +178,8 @@ class SubscriptionItem {
           other.previewImages == previewImages &&
           other.optionSchema == optionSchema &&
           other.canSubscribe == canSubscribe &&
-          other.canCancel == canCancel;
+          other.canCancel == canCancel &&
+          other.deliveryStatus == deliveryStatus;
 
   @override
   int get hashCode =>
@@ -187,7 +197,8 @@ class SubscriptionItem {
       previewImages.hashCode +
       optionSchema.hashCode +
       canSubscribe.hashCode +
-      canCancel.hashCode;
+      canCancel.hashCode +
+      deliveryStatus.hashCode;
 
   factory SubscriptionItem.fromJson(Map<String, dynamic> json) =>
       _$SubscriptionItemFromJson(json);
@@ -198,4 +209,30 @@ class SubscriptionItem {
   String toString() {
     return toJson().toString();
   }
+}
+
+/// 已启用订阅的接收前置条件状态；不代表消息投递成功
+enum SubscriptionItemDeliveryStatusEnum {
+  /// 已启用订阅的接收前置条件状态；不代表消息投递成功
+  @JsonValue(r'ready')
+  ready(r'ready'),
+
+  /// 已启用订阅的接收前置条件状态；不代表消息投递成功
+  @JsonValue(r'wechat_binding_required')
+  wechatBindingRequired(r'wechat_binding_required'),
+
+  /// 已启用订阅的接收前置条件状态；不代表消息投递成功
+  @JsonValue(r'wechat_follow_required')
+  wechatFollowRequired(r'wechat_follow_required'),
+
+  /// 已启用订阅的接收前置条件状态；不代表消息投递成功
+  @JsonValue(r'check_failed')
+  checkFailed(r'check_failed');
+
+  const SubscriptionItemDeliveryStatusEnum(this.value);
+
+  final String value;
+
+  @override
+  String toString() => value;
 }

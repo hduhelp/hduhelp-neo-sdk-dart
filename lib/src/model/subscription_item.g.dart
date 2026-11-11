@@ -33,6 +33,10 @@ SubscriptionItem _$SubscriptionItemFromJson(Map<String, dynamic> json) =>
           optionSchema: $checkedConvert('optionSchema', (v) => v as String?),
           canSubscribe: $checkedConvert('canSubscribe', (v) => v as bool?),
           canCancel: $checkedConvert('canCancel', (v) => v as bool?),
+          deliveryStatus: $checkedConvert(
+              'deliveryStatus',
+              (v) => $enumDecodeNullable(
+                  _$SubscriptionItemDeliveryStatusEnumEnumMap, v)),
         );
         return val;
       },
@@ -55,4 +59,16 @@ Map<String, dynamic> _$SubscriptionItemToJson(SubscriptionItem instance) =>
       if (instance.optionSchema case final value?) 'optionSchema': value,
       if (instance.canSubscribe case final value?) 'canSubscribe': value,
       if (instance.canCancel case final value?) 'canCancel': value,
+      if (_$SubscriptionItemDeliveryStatusEnumEnumMap[instance.deliveryStatus]
+          case final value?)
+        'deliveryStatus': value,
     };
+
+const _$SubscriptionItemDeliveryStatusEnumEnumMap = {
+  SubscriptionItemDeliveryStatusEnum.ready: 'ready',
+  SubscriptionItemDeliveryStatusEnum.wechatBindingRequired:
+      'wechat_binding_required',
+  SubscriptionItemDeliveryStatusEnum.wechatFollowRequired:
+      'wechat_follow_required',
+  SubscriptionItemDeliveryStatusEnum.checkFailed: 'check_failed',
+};
