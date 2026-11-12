@@ -3,10 +3,10 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/upload_data.dart';
+import 'package:hduhelp_neo/src/model/upload_urls_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'upload_response_body.g.dart';
+part 'upload_urls_response_body.g.dart';
 
 @JsonSerializable(
   checked: true,
@@ -14,9 +14,9 @@ part 'upload_response_body.g.dart';
   disallowUnrecognizedKeys: false,
   explicitToJson: true,
 )
-class UploadResponseBody {
-  /// Returns a new [UploadResponseBody] instance.
-  UploadResponseBody({
+class UploadURLsResponseBody {
+  /// Returns a new [UploadURLsResponseBody] instance.
+  UploadURLsResponseBody({
     this.data,
     this.code,
     this.msg,
@@ -27,7 +27,7 @@ class UploadResponseBody {
     required: false,
     includeIfNull: false,
   )
-  final UploadData? data;
+  final UploadURLsData? data;
 
   @JsonKey(
     name: r'code',
@@ -46,7 +46,7 @@ class UploadResponseBody {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is UploadResponseBody &&
+      other is UploadURLsResponseBody &&
           other.data == data &&
           other.code == code &&
           other.msg == msg;
@@ -54,10 +54,10 @@ class UploadResponseBody {
   @override
   int get hashCode => data.hashCode + code.hashCode + msg.hashCode;
 
-  factory UploadResponseBody.fromJson(Map<String, dynamic> json) =>
-      _$UploadResponseBodyFromJson(json);
+  factory UploadURLsResponseBody.fromJson(Map<String, dynamic> json) =>
+      _$UploadURLsResponseBodyFromJson(json);
 
-  Map<String, dynamic> toJson() => _$UploadResponseBodyToJson(this);
+  Map<String, dynamic> toJson() => _$UploadURLsResponseBodyToJson(this);
 
   @override
   String toString() {

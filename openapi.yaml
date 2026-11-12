@@ -12471,15 +12471,12 @@ paths:
     post:
       tags:
       - UploadService
-      summary: 签发直传地址(运营)
-      description: operator 版签发直传地址，语义同 /upload/sign。
+      summary: 签发直传表单(运营)
+      description: operator 版签发直传表单，语义同 /upload/sign。
       operationId: UploadService_AdminSignUpload
       security:
       - OperatorBearerAuth: []
       requestBody:
-        description: '头像签名直传会预登记 pending 元数据行；新客户端 PUT 后调用 complete，
-
-          业务首次引用也会为旧客户端执行同一确认。其它 usage 保持原有直传语义。'
         content:
           application/json:
             schema:
@@ -12491,6 +12488,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SignUploadResponseBody'
+      x-hduhelp-http:
+        auth: operator
+  /hduhelp-neo/admin/upload/urls:
+    post:
+      tags:
+      - UploadService
+      summary: 续签文件地址(运营)
+      description: operator 版续签，不限上传者。
+      operationId: UploadService_AdminRenewUploadURLs
+      security:
+      - OperatorBearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadURLsRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadURLsResponseBody'
       x-hduhelp-http:
         auth: operator
   /hduhelp-neo/admin/users:
@@ -20195,43 +20215,16 @@ paths:
       x-hduhelp-http:
         requires_user: true
         auth: bearer
-  /hduhelp-neo/upload/complete:
-    post:
-      tags:
-      - UploadService
-      summary: 确认头像直传完成
-      description: 校验头像对象已写入存储且大小、内容类型与签名元数据一致，将 pending 上传幂等标记为 ready。第三方用户令牌需携带 upload:file:write。
-      operationId: UploadService_CompleteUpload
-      security:
-      - BearerAuth: []
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CompleteUploadRequestBody'
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/UploadResponseBody'
-      x-hduhelp-http:
-        requires_user: true
-        auth: bearer
   /hduhelp-neo/upload/sign:
     post:
       tags:
       - UploadService
-      summary: 签发直传地址
-      description: 校验 filename/size/content_type 后生成对象 key 与短期 PUT URL。usage=avatar 时预登记 pending 元数据，PUT 后调用 /upload/complete；业务首次引用会为旧客户端执行同一确认。usage=moments_video 只接受 video/mp4、video/quicktime，单文件上限 200MB，不受全局类型白名单约束。第三方用户令牌需携带 upload:file:write。
+      summary: 签发直传表单
+      description: 校验 filename/size/content_type 后生成对象 key 与 5 分钟有效的表单直传目标；对象存储只接受声明的大小与类型。文件被业务引用时才校验并生效，24 小时没被引用就删除。usage=moments_video 只接受 video/mp4、video/quicktime，单文件上限 200MB。第三方用户令牌需携带 upload:file:write。
       operationId: UploadService_SignUpload
       security:
       - BearerAuth: []
       requestBody:
-        description: '头像签名直传会预登记 pending 元数据行；新客户端 PUT 后调用 complete，
-
-          业务首次引用也会为旧客户端执行同一确认。其它 usage 保持原有直传语义。'
         content:
           application/json:
             schema:
@@ -20243,6 +20236,30 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/SignUploadResponseBody'
+      x-hduhelp-http:
+        requires_user: true
+        auth: bearer
+  /hduhelp-neo/upload/urls:
+    post:
+      tags:
+      - UploadService
+      summary: 续签文件地址
+      description: 按 key 批量换新的文件地址（有效 30 分钟）。头像、社区、知识库文件登录即可续签，其余只有上传者本人可以。一次最多 100 个。第三方用户令牌需携带 upload:file:write。
+      operationId: UploadService_RenewUploadURLs
+      security:
+      - BearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UploadURLsRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UploadURLsResponseBody'
       x-hduhelp-http:
         requires_user: true
         auth: bearer
@@ -24411,6 +24428,7 @@ components:
       - head_seq
       - has_more
       - assets
+      - uploads
       type: object
       properties:
         items:
@@ -24428,6 +24446,11 @@ components:
           items:
             $ref: '#/components/schemas/AgentWorkAsset'
           description: 分享（或上次同步）时已有的会话资产
+        uploads:
+          type: object
+          additionalProperties:
+            type: string
+          description: 本页消息附件的地址（key → 30 分钟有效的地址）
     AgentShareItemPageResponseBody:
       required:
       - code
@@ -26963,14 +26986,6 @@ components:
             $ref: '#/components/schemas/OAuthScopeItem'
           description: 每个 scope 的中文名与敏感标记，供客户端直接展示，省得各端自维护一张表。
       description: 当前用户已授权的应用列表 / 撤销对某应用的授权（用户自助的"已连接应用"管理）。
-    AvatarUploadRequestBody:
-      required:
-      - file
-      type: object
-      properties:
-        file:
-          type: string
-          description: Avatar image bytes uploaded as multipart field file.
     BanStateData:
       type: object
       properties:
@@ -28287,11 +28302,6 @@ components:
         code_challenge:
           type: string
         code_challenge_method:
-          type: string
-    CompleteUploadRequestBody:
-      type: object
-      properties:
-        key:
           type: string
     ConfigGetResponseBody:
       type: object
@@ -29904,14 +29914,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/KnowledgeDomainNode'
-        code:
-          type: integer
-          format: int64
-        msg:
-          type: string
-    DownloadResponseBody:
-      type: object
-      properties:
         code:
           type: integer
           format: int64
@@ -42824,9 +42826,9 @@ components:
           format: int32
       description: 'PostMedia 是笔记媒体列表的一项。笔记的媒体是图片与视频混排的有序列表，第一项是封面。
 
-        url 是公开读取地址：图片可加 &w=<宽度> 取缩略图；视频 302 到支持 Range 的签名地址。
+        url 是 30 分钟有效的 CDN 签名地址（视频支持 Range）：图片可加 x-oss-process=style/w<档位> 取缩略图，
 
-        coverUrl 只在视频项上出现，是同一地址加 w=720 的第 1 秒截帧。地址都稳定，可按地址缓存。'
+        过期后按 key 调 POST /upload/urls 续签。coverUrl 只在视频项上出现，是同一地址加第 1 秒截帧参数。'
     PostMediaInput:
       type: object
       properties:
@@ -45814,10 +45816,10 @@ components:
     SignUploadData:
       type: object
       properties:
-        upload_url:
-          type: string
         key:
           type: string
+        upload:
+          $ref: '#/components/schemas/UploadTarget'
         expires_at:
           type: integer
           format: int64
@@ -45833,7 +45835,7 @@ components:
           type: string
         usage:
           type: string
-          description: 业务分组，决定文件能被哪里引用。可选值：moments、moments_video、avatar、feedback；不属于任何业务时省略。其他值返回 40029
+          description: 业务分组，决定文件能被哪里引用：avatar、moments、moments_video、feedback、agent_input。缺省或其他值返回 40029
     SignUploadResponseBody:
       type: object
       properties:
@@ -47209,24 +47211,37 @@ components:
           format: int64
         contentType:
           type: string
-      description: 'UploadData mirrors the legacy lemon_api_gateway image-upload response
-
-        ({URL, Size}) extended with the server-generated object key and sniffed
-
-        content type.'
-    UploadRequestBody:
-      required:
-      - file
+      description: UploadData 是业务响应里的一个已上传文件：url 是 30 分钟有效的地址，过期后用 key 续签。
+    UploadTarget:
       type: object
       properties:
-        file:
+        url:
           type: string
-          description: File bytes uploaded as multipart field file.
-    UploadResponseBody:
+        fields:
+          type: object
+          additionalProperties:
+            type: string
+      description: UploadTarget 是一次表单直传：multipart POST 到 url，fields 原样放在前面，文件放在最后、字段名 file。
+    UploadURLsData:
+      type: object
+      properties:
+        urls:
+          type: object
+          additionalProperties:
+            type: string
+          description: urls 只含调用方能看到的 key；看不到或不存在的 key 不出现。
+    UploadURLsRequestBody:
+      type: object
+      properties:
+        keys:
+          type: array
+          items:
+            type: string
+    UploadURLsResponseBody:
       type: object
       properties:
         data:
-          $ref: '#/components/schemas/UploadData'
+          $ref: '#/components/schemas/UploadURLsData'
         code:
           type: integer
           format: int64

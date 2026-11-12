@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/upload_target.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'sign_upload_data.g.dart';
@@ -16,17 +17,10 @@ part 'sign_upload_data.g.dart';
 class SignUploadData {
   /// Returns a new [SignUploadData] instance.
   SignUploadData({
-    this.uploadUrl,
     this.key,
+    this.upload,
     this.expiresAt,
   });
-
-  @JsonKey(
-    name: r'upload_url',
-    required: false,
-    includeIfNull: false,
-  )
-  final String? uploadUrl;
 
   @JsonKey(
     name: r'key',
@@ -34,6 +28,13 @@ class SignUploadData {
     includeIfNull: false,
   )
   final String? key;
+
+  @JsonKey(
+    name: r'upload',
+    required: false,
+    includeIfNull: false,
+  )
+  final UploadTarget? upload;
 
   @JsonKey(
     name: r'expires_at',
@@ -46,12 +47,12 @@ class SignUploadData {
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is SignUploadData &&
-          other.uploadUrl == uploadUrl &&
           other.key == key &&
+          other.upload == upload &&
           other.expiresAt == expiresAt;
 
   @override
-  int get hashCode => uploadUrl.hashCode + key.hashCode + expiresAt.hashCode;
+  int get hashCode => key.hashCode + upload.hashCode + expiresAt.hashCode;
 
   factory SignUploadData.fromJson(Map<String, dynamic> json) =>
       _$SignUploadDataFromJson(json);

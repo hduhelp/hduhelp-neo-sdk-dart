@@ -22,6 +22,7 @@ class AgentShareItemPage {
     required this.headSeq,
     required this.hasMore,
     required this.assets,
+    required this.uploads,
   });
 
   @JsonKey(
@@ -54,6 +55,14 @@ class AgentShareItemPage {
   )
   final List<AgentWorkAsset> assets;
 
+  /// 本页消息附件的地址（key → 30 分钟有效的地址）
+  @JsonKey(
+    name: r'uploads',
+    required: true,
+    includeIfNull: false,
+  )
+  final Map<String, String> uploads;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -61,11 +70,16 @@ class AgentShareItemPage {
           other.items == items &&
           other.headSeq == headSeq &&
           other.hasMore == hasMore &&
-          other.assets == assets;
+          other.assets == assets &&
+          other.uploads == uploads;
 
   @override
   int get hashCode =>
-      items.hashCode + headSeq.hashCode + hasMore.hashCode + assets.hashCode;
+      items.hashCode +
+      headSeq.hashCode +
+      hasMore.hashCode +
+      assets.hashCode +
+      uploads.hashCode;
 
   factory AgentShareItemPage.fromJson(Map<String, dynamic> json) =>
       _$AgentShareItemPageFromJson(json);

@@ -43,7 +43,7 @@ class SignUploadRequestBody {
   )
   final String? contentType;
 
-  /// 业务分组，决定文件能被哪里引用。可选值：moments、moments_video、avatar、feedback；不属于任何业务时省略。其他值返回 40029
+  /// 业务分组，决定文件能被哪里引用：avatar、moments、moments_video、feedback、agent_input。缺省或其他值返回 40029
   @JsonKey(
     name: r'usage',
     required: false,

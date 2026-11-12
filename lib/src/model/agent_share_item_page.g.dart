@@ -13,7 +13,13 @@ AgentShareItemPage _$AgentShareItemPageFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         $checkKeys(
           json,
-          requiredKeys: const ['items', 'head_seq', 'has_more', 'assets'],
+          requiredKeys: const [
+            'items',
+            'head_seq',
+            'has_more',
+            'assets',
+            'uploads'
+          ],
         );
         final val = AgentShareItemPage(
           items: $checkedConvert(
@@ -29,6 +35,8 @@ AgentShareItemPage _$AgentShareItemPageFromJson(Map<String, dynamic> json) =>
                   .map(
                       (e) => AgentWorkAsset.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          uploads: $checkedConvert(
+              'uploads', (v) => Map<String, String>.from(v as Map)),
         );
         return val;
       },
@@ -41,4 +49,5 @@ Map<String, dynamic> _$AgentShareItemPageToJson(AgentShareItemPage instance) =>
       'head_seq': instance.headSeq,
       'has_more': instance.hasMore,
       'assets': instance.assets.map((e) => e.toJson()).toList(),
+      'uploads': instance.uploads,
     };

@@ -1,22 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'upload_response_body.dart';
+part of 'upload_urls_response_body.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-UploadResponseBody _$UploadResponseBodyFromJson(Map<String, dynamic> json) =>
+UploadURLsResponseBody _$UploadURLsResponseBodyFromJson(
+        Map<String, dynamic> json) =>
     $checkedCreate(
-      'UploadResponseBody',
+      'UploadURLsResponseBody',
       json,
       ($checkedConvert) {
-        final val = UploadResponseBody(
+        final val = UploadURLsResponseBody(
           data: $checkedConvert(
               'data',
               (v) => v == null
                   ? null
-                  : UploadData.fromJson(v as Map<String, dynamic>)),
+                  : UploadURLsData.fromJson(v as Map<String, dynamic>)),
           code: $checkedConvert('code', (v) => (v as num?)?.toInt()),
           msg: $checkedConvert('msg', (v) => v as String?),
         );
@@ -24,7 +25,8 @@ UploadResponseBody _$UploadResponseBodyFromJson(Map<String, dynamic> json) =>
       },
     );
 
-Map<String, dynamic> _$UploadResponseBodyToJson(UploadResponseBody instance) =>
+Map<String, dynamic> _$UploadURLsResponseBodyToJson(
+        UploadURLsResponseBody instance) =>
     <String, dynamic>{
       if (instance.data?.toJson() case final value?) 'data': value,
       if (instance.code case final value?) 'code': value,

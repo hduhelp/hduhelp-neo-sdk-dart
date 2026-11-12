@@ -347,7 +347,6 @@ import 'package:hduhelp_neo/src/model/authorization_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/authorize_all_services_request_body.dart';
 import 'package:hduhelp_neo/src/model/authorize_service_request_body.dart';
 import 'package:hduhelp_neo/src/model/authorized_app_item.dart';
-import 'package:hduhelp_neo/src/model/avatar_upload_request_body.dart';
 import 'package:hduhelp_neo/src/model/ban_state_data.dart';
 import 'package:hduhelp_neo/src/model/ban_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/ban_user_request_body.dart';
@@ -456,7 +455,6 @@ import 'package:hduhelp_neo/src/model/comment_withdraw_data.dart';
 import 'package:hduhelp_neo/src/model/comment_withdraw_response_body.dart';
 import 'package:hduhelp_neo/src/model/common_response_body.dart';
 import 'package:hduhelp_neo/src/model/complete_login_intent_request_body.dart';
-import 'package:hduhelp_neo/src/model/complete_upload_request_body.dart';
 import 'package:hduhelp_neo/src/model/config_get_response_body.dart';
 import 'package:hduhelp_neo/src/model/config_item.dart';
 import 'package:hduhelp_neo/src/model/config_list_response_body.dart';
@@ -570,7 +568,6 @@ import 'package:hduhelp_neo/src/model/dingtalk_schedule_response_body.dart';
 import 'package:hduhelp_neo/src/model/domain_delete_response_body.dart';
 import 'package:hduhelp_neo/src/model/domain_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/domain_tree_response_body.dart';
-import 'package:hduhelp_neo/src/model/download_response_body.dart';
 import 'package:hduhelp_neo/src/model/editable_notice.dart';
 import 'package:hduhelp_neo/src/model/editable_site_announcement.dart';
 import 'package:hduhelp_neo/src/model/electric.dart';
@@ -1507,8 +1504,10 @@ import 'package:hduhelp_neo/src/model/update_site_announcement_request_body.dart
 import 'package:hduhelp_neo/src/model/update_source_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_subscription_request_body.dart';
 import 'package:hduhelp_neo/src/model/upload_data.dart';
-import 'package:hduhelp_neo/src/model/upload_request_body.dart';
-import 'package:hduhelp_neo/src/model/upload_response_body.dart';
+import 'package:hduhelp_neo/src/model/upload_target.dart';
+import 'package:hduhelp_neo/src/model/upload_urls_data.dart';
+import 'package:hduhelp_neo/src/model/upload_urls_request_body.dart';
+import 'package:hduhelp_neo/src/model/upload_urls_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_social_identity_request_body.dart';
@@ -2571,9 +2570,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AuthorizedAppItem':
       return AuthorizedAppItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'AvatarUploadRequestBody':
-      return AvatarUploadRequestBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'BanStateData':
       return BanStateData.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'BanStateResponseBody':
@@ -2886,9 +2882,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CompleteLoginIntentRequestBody':
       return CompleteLoginIntentRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'CompleteUploadRequestBody':
-      return CompleteUploadRequestBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'ConfigGetResponseBody':
       return ConfigGetResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -3221,9 +3214,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'DomainTreeResponseBody':
       return DomainTreeResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'DownloadResponseBody':
-      return DownloadResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'EditableNotice':
       return EditableNotice.fromJson(value as Map<String, dynamic>)
@@ -5920,11 +5910,16 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'UploadData':
       return UploadData.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'UploadRequestBody':
-      return UploadRequestBody.fromJson(value as Map<String, dynamic>)
+    case 'UploadTarget':
+      return UploadTarget.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'UploadURLsData':
+      return UploadURLsData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'UploadResponseBody':
-      return UploadResponseBody.fromJson(value as Map<String, dynamic>)
+    case 'UploadURLsRequestBody':
+      return UploadURLsRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'UploadURLsResponseBody':
+      return UploadURLsResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'UpsertUserCampusIdentityRequestBody':
       return UpsertUserCampusIdentityRequestBody.fromJson(
