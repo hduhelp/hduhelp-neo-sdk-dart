@@ -20,7 +20,7 @@ class ResolveReportRequestBody {
     this.note,
   });
 
-  /// takedown | dismiss | ban
+  /// takedown | dismiss | ban | suspend_official（暂停官方号，只对官方号发布的内容；ban 只对用户内容）
   @JsonKey(
     name: r'resolution',
     required: false,

@@ -9,9 +9,15 @@ import 'dart:convert';
 import 'package:hduhelp_neo/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
+import 'package:hduhelp_neo/src/model/add_official_member_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_appeal_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_audit_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_ban_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_comment_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_official_account_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_official_account_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_official_application_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_official_application_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_post_detail_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_post_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_post_summary_response_body.dart';
@@ -21,6 +27,7 @@ import 'package:hduhelp_neo/src/model/admin_user_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/appeal_response_body.dart';
 import 'package:hduhelp_neo/src/model/ban_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/ban_user_request_body.dart';
+import 'package:hduhelp_neo/src/model/blocked_hashtag_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/category_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/category_response_body.dart';
 import 'package:hduhelp_neo/src/model/collect_state_response_body.dart';
@@ -45,6 +52,9 @@ import 'package:hduhelp_neo/src/model/inbox_mark_read_response_body.dart';
 import 'package:hduhelp_neo/src/model/inbox_unread_response_body.dart';
 import 'package:hduhelp_neo/src/model/my_profile_response_body.dart';
 import 'package:hduhelp_neo/src/model/official_account_response_body.dart';
+import 'package:hduhelp_neo/src/model/official_member_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/official_mutation_response_body.dart';
+import 'package:hduhelp_neo/src/model/official_state_request_body.dart';
 import 'package:hduhelp_neo/src/model/post_counters_response_body.dart';
 import 'package:hduhelp_neo/src/model/post_detail_response_body.dart';
 import 'package:hduhelp_neo/src/model/post_version_list_response_body.dart';
@@ -63,10 +73,12 @@ import 'package:hduhelp_neo/src/model/report_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/resolve_appeal_request_body.dart';
 import 'package:hduhelp_neo/src/model/resolve_report_request_body.dart';
 import 'package:hduhelp_neo/src/model/resolve_report_response_body.dart';
+import 'package:hduhelp_neo/src/model/review_official_application_request_body.dart';
 import 'package:hduhelp_neo/src/model/search_response_body.dart';
 import 'package:hduhelp_neo/src/model/sensitive_word_deleted_response_body.dart';
 import 'package:hduhelp_neo/src/model/sensitive_word_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/sensitive_word_response_body.dart';
+import 'package:hduhelp_neo/src/model/set_official_member_role_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_rank_boost_request_body.dart';
 import 'package:hduhelp_neo/src/model/submit_appeal_request_body.dart';
 import 'package:hduhelp_neo/src/model/submit_report_request_body.dart';
@@ -79,6 +91,111 @@ class MomentsServiceApi {
   final Dio _dio;
 
   const MomentsServiceApi(this._dio);
+
+  /// 添加官方号成员（运营）
+  ///
+  ///
+  /// Parameters:
+  /// * [appId]
+  /// * [addOfficialMemberRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OfficialMutationResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OfficialMutationResponseBody>>
+      momentsServiceAdminAddOfficialMember({
+    required String appId,
+    AddOfficialMemberRequestBody? addOfficialMemberRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path =
+        r'/hduhelp-neo/admin/moments-admin/official-accounts/{app_id}/members'
+            .replaceAll('{' r'app_id' '}', appId.toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(addOfficialMemberRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OfficialMutationResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OfficialMutationResponseBody,
+                  OfficialMutationResponseBody>(
+              rawData, 'OfficialMutationResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OfficialMutationResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
 
   /// 禁言用户
   /// until 缺省为永久；返回变更后的禁言状态
@@ -711,6 +828,90 @@ class MomentsServiceApi {
     );
   }
 
+  /// 官方号详情（运营）
+  /// 处置态与原因、成员数、帖子数与最近发帖时间；被取消的号也能取到
+  ///
+  /// Parameters:
+  /// * [appId]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AdminOfficialAccountResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AdminOfficialAccountResponseBody>>
+      momentsServiceAdminGetOfficialAccount({
+    required String appId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/moments-admin/official-accounts/{app_id}'
+        .replaceAll('{' r'app_id' '}', appId.toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AdminOfficialAccountResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AdminOfficialAccountResponseBody,
+                  AdminOfficialAccountResponseBody>(
+              rawData, 'AdminOfficialAccountResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AdminOfficialAccountResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 帖子管理详情
   /// 额外返回官方号帖的操作运营与处置理由
   ///
@@ -1067,6 +1268,176 @@ class MomentsServiceApi {
     );
   }
 
+  /// 在禁用户
+  /// 此刻仍在禁言期内的用户，最近处置的在前
+  ///
+  /// Parameters:
+  /// * [page]
+  /// * [pageSize]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AdminBanListResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AdminBanListResponseBody>> momentsServiceAdminListBans({
+    int? page,
+    int? pageSize,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/moments-admin/bans';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (page != null) r'page': page,
+      if (pageSize != null) r'page_size': pageSize,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AdminBanListResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AdminBanListResponseBody, AdminBanListResponseBody>(
+              rawData, 'AdminBanListResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AdminBanListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 已关停话题
+  ///
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [BlockedHashtagListResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<BlockedHashtagListResponseBody>>
+      momentsServiceAdminListBlockedHashtags({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/moments-admin/hashtags/blocked';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    BlockedHashtagListResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<BlockedHashtagListResponseBody,
+                  BlockedHashtagListResponseBody>(
+              rawData, 'BlockedHashtagListResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<BlockedHashtagListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 板块管理列表
   /// ----- 管理面：板块 -----
   ///
@@ -1238,6 +1609,276 @@ class MomentsServiceApi {
     }
 
     return Response<AdminCommentListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 官方号列表
+  /// 名称、头像、处置态、成员数、帖子数与最近发帖时间；revoked 只在按它筛选时出现
+  ///
+  /// Parameters:
+  /// * [status] - active | suspended | revoked
+  /// * [keyword]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AdminOfficialAccountListResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AdminOfficialAccountListResponseBody>>
+      momentsServiceAdminListOfficialAccounts({
+    String? status,
+    String? keyword,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/moments-admin/official-accounts';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (status != null) r'status': status,
+      if (keyword != null) r'keyword': keyword,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AdminOfficialAccountListResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AdminOfficialAccountListResponseBody,
+                  AdminOfficialAccountListResponseBody>(
+              rawData, 'AdminOfficialAccountListResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AdminOfficialAccountListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 官方号申请队列
+  /// 条目带申请人与此刻是否重名
+  ///
+  /// Parameters:
+  /// * [status]
+  /// * [page]
+  /// * [pageSize]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AdminOfficialApplicationListResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AdminOfficialApplicationListResponseBody>>
+      momentsServiceAdminListOfficialApplications({
+    String? status,
+    int? page,
+    int? pageSize,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/moments-admin/official-applications';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (status != null) r'status': status,
+      if (page != null) r'page': page,
+      if (pageSize != null) r'page_size': pageSize,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AdminOfficialApplicationListResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AdminOfficialApplicationListResponseBody,
+                  AdminOfficialApplicationListResponseBody>(
+              rawData, 'AdminOfficialApplicationListResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AdminOfficialApplicationListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 官方号成员（运营）
+  ///
+  ///
+  /// Parameters:
+  /// * [appId]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OfficialMemberListResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OfficialMemberListResponseBody>>
+      momentsServiceAdminListOfficialMembers({
+    required String appId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path =
+        r'/hduhelp-neo/admin/moments-admin/official-accounts/{app_id}/members'
+            .replaceAll('{' r'app_id' '}', appId.toString());
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OfficialMemberListResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OfficialMemberListResponseBody,
+                  OfficialMemberListResponseBody>(
+              rawData, 'OfficialMemberListResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OfficialMemberListResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1919,6 +2560,94 @@ class MomentsServiceApi {
     );
   }
 
+  /// 移除官方号成员（运营）
+  ///
+  ///
+  /// Parameters:
+  /// * [appId]
+  /// * [userId]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OfficialMutationResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OfficialMutationResponseBody>>
+      momentsServiceAdminRemoveOfficialMember({
+    required String appId,
+    required String userId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path =
+        r'/hduhelp-neo/admin/moments-admin/official-accounts/{app_id}/members/{user_id}'
+            .replaceAll('{' r'app_id' '}', appId.toString())
+            .replaceAll('{' r'user_id' '}', userId.toString());
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OfficialMutationResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OfficialMutationResponseBody,
+                  OfficialMutationResponseBody>(
+              rawData, 'OfficialMutationResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OfficialMutationResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 处置申诉
   /// 受理或驳回。受理不自动恢复内容，恢复走各自的恢复接口，两者分开留痕
   ///
@@ -2290,6 +3019,429 @@ class MomentsServiceApi {
     );
   }
 
+  /// 恢复官方号
+  ///
+  ///
+  /// Parameters:
+  /// * [appId]
+  /// * [officialStateRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OfficialMutationResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OfficialMutationResponseBody>>
+      momentsServiceAdminResumeOfficialAccount({
+    required String appId,
+    OfficialStateRequestBody? officialStateRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path =
+        r'/hduhelp-neo/admin/moments-admin/official-accounts/{app_id}/resume'
+            .replaceAll('{' r'app_id' '}', appId.toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(officialStateRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OfficialMutationResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OfficialMutationResponseBody,
+                  OfficialMutationResponseBody>(
+              rawData, 'OfficialMutationResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OfficialMutationResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 审核官方号申请
+  /// approve 建出只授予 moments:post:publish 的应用并让申请人成为管理员；reject 必须写原因。已被处理时返回 728000035
+  ///
+  /// Parameters:
+  /// * [id]
+  /// * [reviewOfficialApplicationRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AdminOfficialApplicationResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AdminOfficialApplicationResponseBody>>
+      momentsServiceAdminReviewOfficialApplication({
+    required String id,
+    ReviewOfficialApplicationRequestBody? reviewOfficialApplicationRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path =
+        r'/hduhelp-neo/admin/moments-admin/official-applications/{id}/review'
+            .replaceAll('{' r'id' '}', id.toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(reviewOfficialApplicationRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AdminOfficialApplicationResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AdminOfficialApplicationResponseBody,
+                  AdminOfficialApplicationResponseBody>(
+              rawData, 'AdminOfficialApplicationResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AdminOfficialApplicationResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 取消官方号
+  /// 撤掉发布权限、删除全部成员关系；已发帖子保留但不再带认证
+  ///
+  /// Parameters:
+  /// * [appId]
+  /// * [officialStateRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OfficialMutationResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OfficialMutationResponseBody>>
+      momentsServiceAdminRevokeOfficialAccount({
+    required String appId,
+    OfficialStateRequestBody? officialStateRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path =
+        r'/hduhelp-neo/admin/moments-admin/official-accounts/{app_id}/revoke'
+            .replaceAll('{' r'app_id' '}', appId.toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(officialStateRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OfficialMutationResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OfficialMutationResponseBody,
+                  OfficialMutationResponseBody>(
+              rawData, 'OfficialMutationResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OfficialMutationResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 修改官方号成员角色（运营）
+  /// 管理员被封禁时由运营任命新管理员
+  ///
+  /// Parameters:
+  /// * [appId]
+  /// * [userId]
+  /// * [setOfficialMemberRoleRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OfficialMutationResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OfficialMutationResponseBody>>
+      momentsServiceAdminSetOfficialMemberRole({
+    required String appId,
+    required String userId,
+    SetOfficialMemberRoleRequestBody? setOfficialMemberRoleRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path =
+        r'/hduhelp-neo/admin/moments-admin/official-accounts/{app_id}/members/{user_id}'
+            .replaceAll('{' r'app_id' '}', appId.toString())
+            .replaceAll('{' r'user_id' '}', userId.toString());
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(setOfficialMemberRoleRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OfficialMutationResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OfficialMutationResponseBody,
+                  OfficialMutationResponseBody>(
+              rawData, 'OfficialMutationResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OfficialMutationResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 设置人工权重
   /// 打分的乘性权重。1 为不干预，小于 1 降权，大于 1 加权
   ///
@@ -2381,6 +3533,111 @@ class MomentsServiceApi {
     }
 
     return Response<CurationResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 暂停官方号
+  /// 暂停期间不能以它的身份发帖、评论、改帖；全体成员收到通知
+  ///
+  /// Parameters:
+  /// * [appId]
+  /// * [officialStateRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OfficialMutationResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OfficialMutationResponseBody>>
+      momentsServiceAdminSuspendOfficialAccount({
+    required String appId,
+    OfficialStateRequestBody? officialStateRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path =
+        r'/hduhelp-neo/admin/moments-admin/official-accounts/{app_id}/suspend'
+            .replaceAll('{' r'app_id' '}', appId.toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(officialStateRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OfficialMutationResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OfficialMutationResponseBody,
+                  OfficialMutationResponseBody>(
+              rawData, 'OfficialMutationResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OfficialMutationResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

@@ -20,6 +20,7 @@ import 'package:hduhelp_neo/src/model/app_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/assign_operator_role_request_body.dart';
 import 'package:hduhelp_neo/src/model/assign_operator_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/authorization_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/bind_operator_user_request_body.dart';
 import 'package:hduhelp_neo/src/model/caiyun_config_response_body.dart';
 import 'package:hduhelp_neo/src/model/campus_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/campus_mutate_response_body.dart';
@@ -57,7 +58,10 @@ import 'package:hduhelp_neo/src/model/list_impersonation_logs_response_body.dart
 import 'package:hduhelp_neo/src/model/login_client_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/login_method_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/mcp_tools_response_body.dart';
+import 'package:hduhelp_neo/src/model/operator_info_response_body.dart';
 import 'package:hduhelp_neo/src/model/operator_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/ops_push_response_body.dart';
+import 'package:hduhelp_neo/src/model/ops_todo_response_body.dart';
 import 'package:hduhelp_neo/src/model/permission_catalog_response_body.dart';
 import 'package:hduhelp_neo/src/model/report_impersonation_request_body.dart';
 import 'package:hduhelp_neo/src/model/reset_operator_password_request_body.dart';
@@ -81,6 +85,7 @@ import 'package:hduhelp_neo/src/model/set_login_methods_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_login_methods_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_operator_enabled_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_operator_enabled_response_body.dart';
+import 'package:hduhelp_neo/src/model/set_ops_push_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_role_permissions_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_role_permissions_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_tenant_enabled_request_body.dart';
@@ -653,6 +658,108 @@ class AdminServiceApi {
     }
 
     return Response<AssignOperatorRoleResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 绑定运营账号的平台用户
+  /// 一个用户只能绑定一个运营账号，已被其他运营绑定返回 720000015；管理员账号只有超级管理员能改
+  ///
+  /// Parameters:
+  /// * [id]
+  /// * [bindOperatorUserRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OperatorInfoResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OperatorInfoResponseBody>> adminServiceBindOperatorUser({
+    required String id,
+    BindOperatorUserRequestBody? bindOperatorUserRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/operators/{id}/user'
+        .replaceAll('{' r'id' '}', id.toString());
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(bindOperatorUserRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OperatorInfoResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OperatorInfoResponseBody, OperatorInfoResponseBody>(
+              rawData, 'OperatorInfoResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OperatorInfoResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2384,6 +2491,85 @@ class AdminServiceApi {
     }
 
     return Response<MCPToolsResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 运营待办汇总
+  /// 举报、申诉、官方号申请、反馈、祝福审核、知识盲区与待审知识的待处理数，只含当前运营有查看权限的项
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OpsTodoResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OpsTodoResponseBody>> adminServiceGetOpsTodo({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/ops/todo';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OpsTodoResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OpsTodoResponseBody, OpsTodoResponseBody>(
+              rawData, 'OpsTodoResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OpsTodoResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -4913,6 +5099,105 @@ class AdminServiceApi {
     );
   }
 
+  /// 待办推送开关
+  /// 是否把新待办推送到绑定用户的手机，只改本人
+  ///
+  /// Parameters:
+  /// * [setOpsPushRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OpsPushResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OpsPushResponseBody>> adminServiceSetOpsPush({
+    SetOpsPushRequestBody? setOpsPushRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/ops/push';
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(setOpsPushRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OpsPushResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OpsPushResponseBody, OpsPushResponseBody>(
+              rawData, 'OpsPushResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OpsPushResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 替换角色权限
   /// 全量替换自定义角色权限；非 view 操作会自动补充对应资源的 view
   ///
@@ -5426,6 +5711,88 @@ class AdminServiceApi {
     }
 
     return Response<TestConnectionResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 解除运营账号的平台用户绑定
+  /// 该用户的会话从下一次请求起不再是运营
+  ///
+  /// Parameters:
+  /// * [id]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [OperatorInfoResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<OperatorInfoResponseBody>> adminServiceUnbindOperatorUser({
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/operators/{id}/user'
+        .replaceAll('{' r'id' '}', id.toString());
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    OperatorInfoResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<OperatorInfoResponseBody, OperatorInfoResponseBody>(
+              rawData, 'OperatorInfoResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<OperatorInfoResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

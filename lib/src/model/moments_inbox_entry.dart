@@ -28,6 +28,9 @@ class MomentsInboxEntry {
     this.read,
     this.createdAt,
     this.mentionedMe,
+    this.asAppId,
+    this.asAppName,
+    this.asAppAvatarUrl,
   });
 
   @JsonKey(
@@ -103,6 +106,28 @@ class MomentsInboxEntry {
   )
   final bool? mentionedMe;
 
+  /// 这条是投给官方号、你作为成员收到的：带出号的身份，客户端显示官方号标签与「以官方号回复」。
+  @JsonKey(
+    name: r'as_app_id',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? asAppId;
+
+  @JsonKey(
+    name: r'as_app_name',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? asAppName;
+
+  @JsonKey(
+    name: r'as_app_avatar_url',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? asAppAvatarUrl;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -116,7 +141,10 @@ class MomentsInboxEntry {
           other.reactionType == reactionType &&
           other.read == read &&
           other.createdAt == createdAt &&
-          other.mentionedMe == mentionedMe;
+          other.mentionedMe == mentionedMe &&
+          other.asAppId == asAppId &&
+          other.asAppName == asAppName &&
+          other.asAppAvatarUrl == asAppAvatarUrl;
 
   @override
   int get hashCode =>
@@ -129,7 +157,10 @@ class MomentsInboxEntry {
       reactionType.hashCode +
       read.hashCode +
       createdAt.hashCode +
-      mentionedMe.hashCode;
+      mentionedMe.hashCode +
+      asAppId.hashCode +
+      asAppName.hashCode +
+      asAppAvatarUrl.hashCode;
 
   factory MomentsInboxEntry.fromJson(Map<String, dynamic> json) =>
       _$MomentsInboxEntryFromJson(json);

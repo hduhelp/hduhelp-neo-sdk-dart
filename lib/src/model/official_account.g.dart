@@ -21,6 +21,11 @@ OfficialAccount _$OfficialAccountFromJson(Map<String, dynamic> json) =>
           followerCount:
               $checkedConvert('follower_count', (v) => (v as num?)?.toInt()),
           followedByMe: $checkedConvert('followed_by_me', (v) => v as bool?),
+          myRole: $checkedConvert('my_role', (v) => v as String?),
+          memberCount:
+              $checkedConvert('member_count', (v) => (v as num?)?.toInt()),
+          status: $checkedConvert('status', (v) => v as String?),
+          statusReason: $checkedConvert('status_reason', (v) => v as String?),
         );
         return val;
       },
@@ -29,7 +34,10 @@ OfficialAccount _$OfficialAccountFromJson(Map<String, dynamic> json) =>
         'avatarUrl': 'avatar_url',
         'postCount': 'post_count',
         'followerCount': 'follower_count',
-        'followedByMe': 'followed_by_me'
+        'followedByMe': 'followed_by_me',
+        'myRole': 'my_role',
+        'memberCount': 'member_count',
+        'statusReason': 'status_reason'
       },
     );
 
@@ -43,4 +51,8 @@ Map<String, dynamic> _$OfficialAccountToJson(OfficialAccount instance) =>
       if (instance.postCount case final value?) 'post_count': value,
       if (instance.followerCount case final value?) 'follower_count': value,
       if (instance.followedByMe case final value?) 'followed_by_me': value,
+      if (instance.myRole case final value?) 'my_role': value,
+      if (instance.memberCount case final value?) 'member_count': value,
+      if (instance.status case final value?) 'status': value,
+      if (instance.statusReason case final value?) 'status_reason': value,
     };

@@ -42,10 +42,15 @@ PublishPostRequestBody _$PublishPostRequestBodyFromJson(
                   ?.map(
                       (e) => PostMediaInput.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          publishAsAppId:
+              $checkedConvert('publish_as_app_id', (v) => v as String?),
         );
         return val;
       },
-      fieldKeyMap: const {'categoryIds': 'category_ids'},
+      fieldKeyMap: const {
+        'categoryIds': 'category_ids',
+        'publishAsAppId': 'publish_as_app_id'
+      },
     );
 
 Map<String, dynamic> _$PublishPostRequestBodyToJson(
@@ -64,4 +69,5 @@ Map<String, dynamic> _$PublishPostRequestBodyToJson(
       if (instance.anonymous case final value?) 'anonymous': value,
       if (instance.media?.map((e) => e.toJson()).toList() case final value?)
         'media': value,
+      if (instance.publishAsAppId case final value?) 'publish_as_app_id': value,
     };

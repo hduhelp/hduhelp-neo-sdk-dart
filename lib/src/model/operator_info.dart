@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/operator_bound_user.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'operator_info.g.dart';
@@ -26,6 +27,9 @@ class OperatorInfo {
     this.roleName,
     this.roleKind,
     this.permissions,
+    this.boundUser,
+    this.opsPushEnabled,
+    this.via,
   });
 
   @JsonKey(
@@ -98,6 +102,28 @@ class OperatorInfo {
   )
   final List<String>? permissions;
 
+  @JsonKey(
+    name: r'boundUser',
+    required: false,
+    includeIfNull: false,
+  )
+  final OperatorBoundUser? boundUser;
+
+  @JsonKey(
+    name: r'opsPushEnabled',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? opsPushEnabled;
+
+  /// via 只在 /admin/auth/me 出现：session（App 里经绑定用户的会话）或 operator（运营令牌）。
+  @JsonKey(
+    name: r'via',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? via;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -111,7 +137,10 @@ class OperatorInfo {
           other.roleId == roleId &&
           other.roleName == roleName &&
           other.roleKind == roleKind &&
-          other.permissions == permissions;
+          other.permissions == permissions &&
+          other.boundUser == boundUser &&
+          other.opsPushEnabled == opsPushEnabled &&
+          other.via == via;
 
   @override
   int get hashCode =>
@@ -124,7 +153,10 @@ class OperatorInfo {
       roleId.hashCode +
       roleName.hashCode +
       roleKind.hashCode +
-      permissions.hashCode;
+      permissions.hashCode +
+      boundUser.hashCode +
+      opsPushEnabled.hashCode +
+      via.hashCode;
 
   factory OperatorInfo.fromJson(Map<String, dynamic> json) =>
       _$OperatorInfoFromJson(json);

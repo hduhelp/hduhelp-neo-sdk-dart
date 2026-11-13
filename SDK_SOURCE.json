@@ -1,6 +1,6 @@
 {
-  "version": "0.3.176",
-  "source_revision": "fd2404aba1b2d04435679e41da62eed69c04c4ce",
-  "openapi_sha256": "15cf5ed0e4f77653b04af025ee0fb15917371bbc374e959438b367f90d1df8c4",
+  "version": "0.3.177",
+  "source_revision": "26d8cc34901d9db40a21021a90fcc750214c9649",
+  "openapi_sha256": "09e0f75e471dd90a7ab495fdaa3abee7e1423aa7a6715a8487b9aba474be78f9",
   "generator": "openapi-generator-cli@7.19.0"
 }

@@ -16,6 +16,7 @@ import 'package:hduhelp_neo/src/model/activity_registration_data.dart';
 import 'package:hduhelp_neo/src/model/activity_registration_response_body.dart';
 import 'package:hduhelp_neo/src/model/activity_summary.dart';
 import 'package:hduhelp_neo/src/model/add_chunk_request_body.dart';
+import 'package:hduhelp_neo/src/model/add_official_member_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_app_detail.dart';
 import 'package:hduhelp_neo/src/model/admin_app_info.dart';
 import 'package:hduhelp_neo/src/model/admin_appeal_list_data.dart';
@@ -24,6 +25,9 @@ import 'package:hduhelp_neo/src/model/admin_apps_data.dart';
 import 'package:hduhelp_neo/src/model/admin_audit_list_data.dart';
 import 'package:hduhelp_neo/src/model/admin_audit_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_authorization_info.dart';
+import 'package:hduhelp_neo/src/model/admin_ban.dart';
+import 'package:hduhelp_neo/src/model/admin_ban_list_data.dart';
+import 'package:hduhelp_neo/src/model/admin_ban_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_campus_info.dart';
 import 'package:hduhelp_neo/src/model/admin_change_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_comment_list_data.dart';
@@ -47,6 +51,14 @@ import 'package:hduhelp_neo/src/model/admin_notice_page.dart';
 import 'package:hduhelp_neo/src/model/admin_notice_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_notice_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_notice_stats.dart';
+import 'package:hduhelp_neo/src/model/admin_official_account.dart';
+import 'package:hduhelp_neo/src/model/admin_official_account_list_data.dart';
+import 'package:hduhelp_neo/src/model/admin_official_account_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_official_account_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_official_application.dart';
+import 'package:hduhelp_neo/src/model/admin_official_application_list_data.dart';
+import 'package:hduhelp_neo/src/model/admin_official_application_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_official_application_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_pigeon_recall_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_pigeon_review_item.dart';
 import 'package:hduhelp_neo/src/model/admin_pigeon_review_page.dart';
@@ -355,6 +367,7 @@ import 'package:hduhelp_neo/src/model/bind_campus_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_campus_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_contact_status.dart';
 import 'package:hduhelp_neo/src/model/bind_email_request_body.dart';
+import 'package:hduhelp_neo/src/model/bind_operator_user_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_page_data.dart';
 import 'package:hduhelp_neo/src/model/bind_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_phone_data.dart';
@@ -376,6 +389,9 @@ import 'package:hduhelp_neo/src/model/blacklist_response_body.dart';
 import 'package:hduhelp_neo/src/model/blacklist_target_request_body.dart';
 import 'package:hduhelp_neo/src/model/bless_review_card_data.dart';
 import 'package:hduhelp_neo/src/model/bless_review_card_params.dart';
+import 'package:hduhelp_neo/src/model/blocked_hashtag.dart';
+import 'package:hduhelp_neo/src/model/blocked_hashtag_list_data.dart';
+import 'package:hduhelp_neo/src/model/blocked_hashtag_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/book_item.dart';
 import 'package:hduhelp_neo/src/model/book_stat.dart';
 import 'package:hduhelp_neo/src/model/booking_calendar_response_body.dart';
@@ -1124,6 +1140,7 @@ import 'package:hduhelp_neo/src/model/model_usage_page.dart';
 import 'package:hduhelp_neo/src/model/model_usage_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/model_usage_summary.dart';
 import 'package:hduhelp_neo/src/model/model_usage_summary_response_body.dart';
+import 'package:hduhelp_neo/src/model/moderation_target.dart';
 import 'package:hduhelp_neo/src/model/moments_inbox_entry.dart';
 import 'package:hduhelp_neo/src/model/month_stat.dart';
 import 'package:hduhelp_neo/src/model/monthly_stat.dart';
@@ -1154,9 +1171,27 @@ import 'package:hduhelp_neo/src/model/o_auth_identity_option.dart';
 import 'package:hduhelp_neo/src/model/o_auth_scope_item.dart';
 import 'package:hduhelp_neo/src/model/official_account.dart';
 import 'package:hduhelp_neo/src/model/official_account_response_body.dart';
+import 'package:hduhelp_neo/src/model/official_applicant.dart';
+import 'package:hduhelp_neo/src/model/official_application.dart';
+import 'package:hduhelp_neo/src/model/official_application_input_body.dart';
+import 'package:hduhelp_neo/src/model/official_application_list_data.dart';
+import 'package:hduhelp_neo/src/model/official_application_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/official_application_response_body.dart';
+import 'package:hduhelp_neo/src/model/official_member.dart';
+import 'package:hduhelp_neo/src/model/official_member_list_data.dart';
+import 'package:hduhelp_neo/src/model/official_member_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/official_mutation_response_body.dart';
+import 'package:hduhelp_neo/src/model/official_state_request_body.dart';
 import 'package:hduhelp_neo/src/model/offset_pagination.dart';
+import 'package:hduhelp_neo/src/model/operator_bound_user.dart';
 import 'package:hduhelp_neo/src/model/operator_info.dart';
+import 'package:hduhelp_neo/src/model/operator_info_response_body.dart';
 import 'package:hduhelp_neo/src/model/operator_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/ops_push_data.dart';
+import 'package:hduhelp_neo/src/model/ops_push_response_body.dart';
+import 'package:hduhelp_neo/src/model/ops_todo_data.dart';
+import 'package:hduhelp_neo/src/model/ops_todo_item.dart';
+import 'package:hduhelp_neo/src/model/ops_todo_response_body.dart';
 import 'package:hduhelp_neo/src/model/overview_response_body.dart';
 import 'package:hduhelp_neo/src/model/pat_item.dart';
 import 'package:hduhelp_neo/src/model/pat_scope_item.dart';
@@ -1270,6 +1305,7 @@ import 'package:hduhelp_neo/src/model/review_card_data.dart';
 import 'package:hduhelp_neo/src/model/review_card_params.dart';
 import 'package:hduhelp_neo/src/model/review_card_private_data.dart';
 import 'package:hduhelp_neo/src/model/review_card_private_params.dart';
+import 'package:hduhelp_neo/src/model/review_official_application_request_body.dart';
 import 'package:hduhelp_neo/src/model/revoke_authorization_response_body.dart';
 import 'package:hduhelp_neo/src/model/revoke_authorized_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/revoke_pat_response_body.dart';
@@ -1372,8 +1408,10 @@ import 'package:hduhelp_neo/src/model/set_default_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_delivery_preference_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_login_methods_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_login_methods_response_body.dart';
+import 'package:hduhelp_neo/src/model/set_official_member_role_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_operator_enabled_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_operator_enabled_response_body.dart';
+import 'package:hduhelp_neo/src/model/set_ops_push_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_rank_boost_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_role_permissions_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_role_permissions_response_body.dart';
@@ -1495,6 +1533,8 @@ import 'package:hduhelp_neo/src/model/update_login_client_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_login_client_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_my_profile_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_my_profile_response_body.dart';
+import 'package:hduhelp_neo/src/model/update_official_account_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_official_application_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_policy_profile_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_post_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_role_request_body.dart';
@@ -1608,6 +1648,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AddChunkRequestBody':
       return AddChunkRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AddOfficialMemberRequestBody':
+      return AddOfficialMemberRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AdminAppDetail':
       return AdminAppDetail.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -1630,6 +1673,14 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AdminAuthorizationInfo':
       return AdminAuthorizationInfo.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminBan':
+      return AdminBan.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AdminBanListData':
+      return AdminBanListData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminBanListResponseBody':
+      return AdminBanListResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AdminCampusInfo':
       return AdminCampusInfo.fromJson(value as Map<String, dynamic>)
@@ -1699,6 +1750,30 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AdminNoticeStats':
       return AdminNoticeStats.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AdminOfficialAccount':
+      return AdminOfficialAccount.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminOfficialAccountListData':
+      return AdminOfficialAccountListData.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AdminOfficialAccountListResponseBody':
+      return AdminOfficialAccountListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AdminOfficialAccountResponseBody':
+      return AdminOfficialAccountResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AdminOfficialApplication':
+      return AdminOfficialApplication.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminOfficialApplicationListData':
+      return AdminOfficialApplicationListData.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AdminOfficialApplicationListResponseBody':
+      return AdminOfficialApplicationListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AdminOfficialApplicationResponseBody':
+      return AdminOfficialApplicationResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AdminPigeonRecallResponseBody':
       return AdminPigeonRecallResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -2593,6 +2668,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BindEmailRequestBody':
       return BindEmailRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'BindOperatorUserRequestBody':
+      return BindOperatorUserRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'BindPageData':
       return BindPageData.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'BindPageResponseBody':
@@ -2654,6 +2732,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BlessReviewCardParams':
       return BlessReviewCardParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'BlockedHashtag':
+      return BlockedHashtag.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BlockedHashtagListData':
+      return BlockedHashtagListData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BlockedHashtagListResponseBody':
+      return BlockedHashtagListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'BookItem':
       return BookItem.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'BookStat':
@@ -4832,6 +4919,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ModelUsageSummaryResponseBody':
       return ModelUsageSummaryResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'ModerationTarget':
+      return ModerationTarget.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'MomentsInboxEntry':
       return MomentsInboxEntry.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -4914,13 +5004,64 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'OfficialAccountResponseBody':
       return OfficialAccountResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'OfficialApplicant':
+      return OfficialApplicant.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'OfficialApplication':
+      return OfficialApplication.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'OfficialApplicationInputBody':
+      return OfficialApplicationInputBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'OfficialApplicationListData':
+      return OfficialApplicationListData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'OfficialApplicationListResponseBody':
+      return OfficialApplicationListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'OfficialApplicationResponseBody':
+      return OfficialApplicationResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'OfficialMember':
+      return OfficialMember.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'OfficialMemberListData':
+      return OfficialMemberListData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'OfficialMemberListResponseBody':
+      return OfficialMemberListResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'OfficialMutationResponseBody':
+      return OfficialMutationResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'OfficialStateRequestBody':
+      return OfficialStateRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'OffsetPagination':
       return OffsetPagination.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'OperatorBoundUser':
+      return OperatorBoundUser.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'OperatorInfo':
       return OperatorInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'OperatorInfoResponseBody':
+      return OperatorInfoResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'OperatorListResponseBody':
       return OperatorListResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'OpsPushData':
+      return OpsPushData.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'OpsPushResponseBody':
+      return OpsPushResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'OpsTodoData':
+      return OpsTodoData.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'OpsTodoItem':
+      return OpsTodoItem.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'OpsTodoResponseBody':
+      return OpsTodoResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'OverviewResponseBody':
       return OverviewResponseBody.fromJson(value as Map<String, dynamic>)
@@ -5241,6 +5382,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ReviewCardPrivateParams':
       return ReviewCardPrivateParams.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ReviewOfficialApplicationRequestBody':
+      return ReviewOfficialApplicationRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'RevokeAuthorizationResponseBody':
       return RevokeAuthorizationResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -5529,12 +5673,18 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SetLoginMethodsResponseBody':
       return SetLoginMethodsResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SetOfficialMemberRoleRequestBody':
+      return SetOfficialMemberRoleRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'SetOperatorEnabledRequestBody':
       return SetOperatorEnabledRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'SetOperatorEnabledResponseBody':
       return SetOperatorEnabledResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'SetOpsPushRequestBody':
+      return SetOpsPushRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SetRankBoostRequestBody':
       return SetRankBoostRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -5884,6 +6034,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UpdateMyProfileResponseBody':
       return UpdateMyProfileResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'UpdateOfficialAccountRequestBody':
+      return UpdateOfficialAccountRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'UpdateOfficialApplicationRequestBody':
+      return UpdateOfficialApplicationRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'UpdatePolicyProfileRequestBody':
       return UpdatePolicyProfileRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;

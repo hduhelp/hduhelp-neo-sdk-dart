@@ -21,9 +21,12 @@ PublishCommentRequestBody _$PublishCommentRequestBodyFromJson(
                           RichTextNode.fromJson(e as Map<String, dynamic>))
                       .toList())
                   .toList()),
+          publishAsAppId:
+              $checkedConvert('publish_as_app_id', (v) => v as String?),
         );
         return val;
       },
+      fieldKeyMap: const {'publishAsAppId': 'publish_as_app_id'},
     );
 
 Map<String, dynamic> _$PublishCommentRequestBodyToJson(
@@ -34,4 +37,5 @@ Map<String, dynamic> _$PublishCommentRequestBodyToJson(
               .toList()
           case final value?)
         'content': value,
+      if (instance.publishAsAppId case final value?) 'publish_as_app_id': value,
     };

@@ -22,6 +22,10 @@ class AdminPostDetailData {
     this.publishedByOperatorId,
     this.reportCount,
     this.anonymousName,
+    this.publishedByUserId,
+    this.pinnedAt,
+    this.featuredAt,
+    this.rankBoost,
   });
 
   @JsonKey(
@@ -60,6 +64,36 @@ class AdminPostDetailData {
   )
   final String? anonymousName;
 
+  /// 同 AdminPostSummary
+  @JsonKey(
+    name: r'published_by_user_id',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? publishedByUserId;
+
+  /// 同 AdminPostSummary
+  @JsonKey(
+    name: r'pinned_at',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? pinnedAt;
+
+  @JsonKey(
+    name: r'featured_at',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? featuredAt;
+
+  @JsonKey(
+    name: r'rank_boost',
+    required: false,
+    includeIfNull: false,
+  )
+  final double? rankBoost;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -68,7 +102,11 @@ class AdminPostDetailData {
           other.realAuthorUserId == realAuthorUserId &&
           other.publishedByOperatorId == publishedByOperatorId &&
           other.reportCount == reportCount &&
-          other.anonymousName == anonymousName;
+          other.anonymousName == anonymousName &&
+          other.publishedByUserId == publishedByUserId &&
+          other.pinnedAt == pinnedAt &&
+          other.featuredAt == featuredAt &&
+          other.rankBoost == rankBoost;
 
   @override
   int get hashCode =>
@@ -76,7 +114,11 @@ class AdminPostDetailData {
       realAuthorUserId.hashCode +
       publishedByOperatorId.hashCode +
       reportCount.hashCode +
-      anonymousName.hashCode;
+      anonymousName.hashCode +
+      publishedByUserId.hashCode +
+      pinnedAt.hashCode +
+      featuredAt.hashCode +
+      rankBoost.hashCode;
 
   factory AdminPostDetailData.fromJson(Map<String, dynamic> json) =>
       _$AdminPostDetailDataFromJson(json);

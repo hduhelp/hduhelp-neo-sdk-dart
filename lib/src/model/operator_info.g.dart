@@ -25,6 +25,13 @@ OperatorInfo _$OperatorInfoFromJson(Map<String, dynamic> json) =>
           roleKind: $checkedConvert('roleKind', (v) => v as String?),
           permissions: $checkedConvert('permissions',
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
+          boundUser: $checkedConvert(
+              'boundUser',
+              (v) => v == null
+                  ? null
+                  : OperatorBoundUser.fromJson(v as Map<String, dynamic>)),
+          opsPushEnabled: $checkedConvert('opsPushEnabled', (v) => v as bool?),
+          via: $checkedConvert('via', (v) => v as String?),
         );
         return val;
       },
@@ -43,4 +50,7 @@ Map<String, dynamic> _$OperatorInfoToJson(OperatorInfo instance) =>
       if (instance.roleName case final value?) 'roleName': value,
       if (instance.roleKind case final value?) 'roleKind': value,
       if (instance.permissions case final value?) 'permissions': value,
+      if (instance.boundUser?.toJson() case final value?) 'boundUser': value,
+      if (instance.opsPushEnabled case final value?) 'opsPushEnabled': value,
+      if (instance.via case final value?) 'via': value,
     };

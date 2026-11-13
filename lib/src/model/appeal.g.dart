@@ -23,6 +23,11 @@ Appeal _$AppealFromJson(Map<String, dynamic> json) => $checkedCreate(
           resolvedAt:
               $checkedConvert('resolved_at', (v) => (v as num?)?.toInt()),
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
+          target: $checkedConvert(
+              'target',
+              (v) => v == null
+                  ? null
+                  : ModerationTarget.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -48,4 +53,5 @@ Map<String, dynamic> _$AppealToJson(Appeal instance) => <String, dynamic>{
         'resolved_by_operator_id': value,
       if (instance.resolvedAt case final value?) 'resolved_at': value,
       if (instance.createdAt case final value?) 'created_at': value,
+      if (instance.target?.toJson() case final value?) 'target': value,
     };

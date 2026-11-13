@@ -31,6 +31,10 @@ class AdminPostSummary {
     this.takedownByOperatorId,
     this.createdAt,
     this.anonymousName,
+    this.publishedByUserId,
+    this.pinnedAt,
+    this.featuredAt,
+    this.rankBoost,
   });
 
   @JsonKey(
@@ -125,6 +129,36 @@ class AdminPostSummary {
   )
   final String? anonymousName;
 
+  /// publishedByUserId 是以官方号身份发帖的那位成员。
+  @JsonKey(
+    name: r'published_by_user_id',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? publishedByUserId;
+
+  /// 运营分发标记：置顶与加精的毫秒时间（未设置不出现），人工权重 1 为不干预。
+  @JsonKey(
+    name: r'pinned_at',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? pinnedAt;
+
+  @JsonKey(
+    name: r'featured_at',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? featuredAt;
+
+  @JsonKey(
+    name: r'rank_boost',
+    required: false,
+    includeIfNull: false,
+  )
+  final double? rankBoost;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -141,7 +175,11 @@ class AdminPostSummary {
           other.takedownReason == takedownReason &&
           other.takedownByOperatorId == takedownByOperatorId &&
           other.createdAt == createdAt &&
-          other.anonymousName == anonymousName;
+          other.anonymousName == anonymousName &&
+          other.publishedByUserId == publishedByUserId &&
+          other.pinnedAt == pinnedAt &&
+          other.featuredAt == featuredAt &&
+          other.rankBoost == rankBoost;
 
   @override
   int get hashCode =>
@@ -157,7 +195,11 @@ class AdminPostSummary {
       takedownReason.hashCode +
       takedownByOperatorId.hashCode +
       createdAt.hashCode +
-      anonymousName.hashCode;
+      anonymousName.hashCode +
+      publishedByUserId.hashCode +
+      pinnedAt.hashCode +
+      featuredAt.hashCode +
+      rankBoost.hashCode;
 
   factory AdminPostSummary.fromJson(Map<String, dynamic> json) =>
       _$AdminPostSummaryFromJson(json);

@@ -27,6 +27,7 @@ class PublishPostRequestBody {
     this.categoryIds,
     this.anonymous,
     this.media,
+    this.publishAsAppId,
   });
 
   @JsonKey(
@@ -82,6 +83,14 @@ class PublishPostRequestBody {
   )
   final List<PostMediaInput>? media;
 
+  /// publishAsAppId 是以本人所在的某个官方号身份发布（取自 posting-identities）。官方号不能匿名； 号被暂停时返回 728000037，客户端据此把身份切回本人、保留草稿。
+  @JsonKey(
+    name: r'publish_as_app_id',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? publishAsAppId;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -92,7 +101,8 @@ class PublishPostRequestBody {
           other.location == location &&
           other.categoryIds == categoryIds &&
           other.anonymous == anonymous &&
-          other.media == media;
+          other.media == media &&
+          other.publishAsAppId == publishAsAppId;
 
   @override
   int get hashCode =>
@@ -102,7 +112,8 @@ class PublishPostRequestBody {
       location.hashCode +
       categoryIds.hashCode +
       anonymous.hashCode +
-      media.hashCode;
+      media.hashCode +
+      publishAsAppId.hashCode;
 
   factory PublishPostRequestBody.fromJson(Map<String, dynamic> json) =>
       _$PublishPostRequestBodyFromJson(json);

@@ -24,6 +24,10 @@ class OfficialAccount {
     this.postCount,
     this.followerCount,
     this.followedByMe,
+    this.myRole,
+    this.memberCount,
+    this.status,
+    this.statusReason,
   });
 
   @JsonKey(
@@ -82,6 +86,36 @@ class OfficialAccount {
   )
   final bool? followedByMe;
 
+  /// myRole 只在调用者是成员时出现。status 取 active | suspended | revoked。
+  @JsonKey(
+    name: r'my_role',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? myRole;
+
+  @JsonKey(
+    name: r'member_count',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? memberCount;
+
+  @JsonKey(
+    name: r'status',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? status;
+
+  /// statusReason 是暂停或取消的原因，active 时不出现。
+  @JsonKey(
+    name: r'status_reason',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? statusReason;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -93,7 +127,11 @@ class OfficialAccount {
           other.verified == verified &&
           other.postCount == postCount &&
           other.followerCount == followerCount &&
-          other.followedByMe == followedByMe;
+          other.followedByMe == followedByMe &&
+          other.myRole == myRole &&
+          other.memberCount == memberCount &&
+          other.status == status &&
+          other.statusReason == statusReason;
 
   @override
   int get hashCode =>
@@ -104,7 +142,11 @@ class OfficialAccount {
       verified.hashCode +
       postCount.hashCode +
       followerCount.hashCode +
-      followedByMe.hashCode;
+      followedByMe.hashCode +
+      myRole.hashCode +
+      memberCount.hashCode +
+      status.hashCode +
+      statusReason.hashCode;
 
   factory OfficialAccount.fromJson(Map<String, dynamic> json) =>
       _$OfficialAccountFromJson(json);

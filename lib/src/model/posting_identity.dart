@@ -20,6 +20,9 @@ class PostingIdentity {
     this.appId,
     this.displayName,
     this.avatarUrl,
+    this.role,
+    this.disabled,
+    this.disabledReason,
   });
 
   /// user | app
@@ -52,6 +55,29 @@ class PostingIdentity {
   )
   final String? avatarUrl;
 
+  /// admin | member，仅 kind=app
+  @JsonKey(
+    name: r'role',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? role;
+
+  /// 号被暂停时为 true，发布器置灰并显示原因。
+  @JsonKey(
+    name: r'disabled',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? disabled;
+
+  @JsonKey(
+    name: r'disabled_reason',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? disabledReason;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -59,14 +85,20 @@ class PostingIdentity {
           other.kind == kind &&
           other.appId == appId &&
           other.displayName == displayName &&
-          other.avatarUrl == avatarUrl;
+          other.avatarUrl == avatarUrl &&
+          other.role == role &&
+          other.disabled == disabled &&
+          other.disabledReason == disabledReason;
 
   @override
   int get hashCode =>
       kind.hashCode +
       appId.hashCode +
       displayName.hashCode +
-      avatarUrl.hashCode;
+      avatarUrl.hashCode +
+      role.hashCode +
+      disabled.hashCode +
+      disabledReason.hashCode;
 
   factory PostingIdentity.fromJson(Map<String, dynamic> json) =>
       _$PostingIdentityFromJson(json);

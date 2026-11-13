@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/moderation_target.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'appeal.g.dart';
@@ -26,6 +27,7 @@ class Appeal {
     this.resolvedByOperatorId,
     this.resolvedAt,
     this.createdAt,
+    this.target,
   });
 
   @JsonKey(
@@ -101,6 +103,13 @@ class Appeal {
   )
   final int? createdAt;
 
+  @JsonKey(
+    name: r'target',
+    required: false,
+    includeIfNull: false,
+  )
+  final ModerationTarget? target;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -114,7 +123,8 @@ class Appeal {
           other.resolution == resolution &&
           other.resolvedByOperatorId == resolvedByOperatorId &&
           other.resolvedAt == resolvedAt &&
-          other.createdAt == createdAt;
+          other.createdAt == createdAt &&
+          other.target == target;
 
   @override
   int get hashCode =>
@@ -127,7 +137,8 @@ class Appeal {
       resolution.hashCode +
       resolvedByOperatorId.hashCode +
       resolvedAt.hashCode +
-      createdAt.hashCode;
+      createdAt.hashCode +
+      target.hashCode;
 
   factory Appeal.fromJson(Map<String, dynamic> json) => _$AppealFromJson(json);
 

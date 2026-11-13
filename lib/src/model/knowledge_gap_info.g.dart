@@ -22,6 +22,8 @@ KnowledgeGapInfo _$KnowledgeGapInfoFromJson(Map<String, dynamic> json) =>
           lastSeen: $checkedConvert('lastSeen', (v) => (v as num?)?.toInt()),
           draftFaqItemId:
               $checkedConvert('draftFaqItemId', (v) => v as String?),
+          sampleQuestion:
+              $checkedConvert('sampleQuestion', (v) => v as String?),
         );
         return val;
       },
@@ -37,4 +39,5 @@ Map<String, dynamic> _$KnowledgeGapInfoToJson(KnowledgeGapInfo instance) =>
       if (instance.firstSeen case final value?) 'firstSeen': value,
       if (instance.lastSeen case final value?) 'lastSeen': value,
       if (instance.draftFaqItemId case final value?) 'draftFaqItemId': value,
+      if (instance.sampleQuestion case final value?) 'sampleQuestion': value,
     };

@@ -24,6 +24,13 @@ AdminPostDetailData _$AdminPostDetailDataFromJson(Map<String, dynamic> json) =>
           reportCount:
               $checkedConvert('report_count', (v) => (v as num?)?.toInt()),
           anonymousName: $checkedConvert('anonymous_name', (v) => v as String?),
+          publishedByUserId:
+              $checkedConvert('published_by_user_id', (v) => v as String?),
+          pinnedAt: $checkedConvert('pinned_at', (v) => (v as num?)?.toInt()),
+          featuredAt:
+              $checkedConvert('featured_at', (v) => (v as num?)?.toInt()),
+          rankBoost:
+              $checkedConvert('rank_boost', (v) => (v as num?)?.toDouble()),
         );
         return val;
       },
@@ -31,7 +38,11 @@ AdminPostDetailData _$AdminPostDetailDataFromJson(Map<String, dynamic> json) =>
         'realAuthorUserId': 'real_author_user_id',
         'publishedByOperatorId': 'published_by_operator_id',
         'reportCount': 'report_count',
-        'anonymousName': 'anonymous_name'
+        'anonymousName': 'anonymous_name',
+        'publishedByUserId': 'published_by_user_id',
+        'pinnedAt': 'pinned_at',
+        'featuredAt': 'featured_at',
+        'rankBoost': 'rank_boost'
       },
     );
 
@@ -45,4 +56,9 @@ Map<String, dynamic> _$AdminPostDetailDataToJson(
         'published_by_operator_id': value,
       if (instance.reportCount case final value?) 'report_count': value,
       if (instance.anonymousName case final value?) 'anonymous_name': value,
+      if (instance.publishedByUserId case final value?)
+        'published_by_user_id': value,
+      if (instance.pinnedAt case final value?) 'pinned_at': value,
+      if (instance.featuredAt case final value?) 'featured_at': value,
+      if (instance.rankBoost case final value?) 'rank_boost': value,
     };

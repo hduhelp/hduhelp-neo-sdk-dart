@@ -30,6 +30,10 @@ MomentsInboxEntry _$MomentsInboxEntryFromJson(Map<String, dynamic> json) =>
           read: $checkedConvert('read', (v) => v as bool?),
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
           mentionedMe: $checkedConvert('mentioned_me', (v) => v as bool?),
+          asAppId: $checkedConvert('as_app_id', (v) => v as String?),
+          asAppName: $checkedConvert('as_app_name', (v) => v as String?),
+          asAppAvatarUrl:
+              $checkedConvert('as_app_avatar_url', (v) => v as String?),
         );
         return val;
       },
@@ -38,7 +42,10 @@ MomentsInboxEntry _$MomentsInboxEntryFromJson(Map<String, dynamic> json) =>
         'commentBrief': 'comment_brief',
         'reactionType': 'reaction_type',
         'createdAt': 'created_at',
-        'mentionedMe': 'mentioned_me'
+        'mentionedMe': 'mentioned_me',
+        'asAppId': 'as_app_id',
+        'asAppName': 'as_app_name',
+        'asAppAvatarUrl': 'as_app_avatar_url'
       },
     );
 
@@ -54,4 +61,7 @@ Map<String, dynamic> _$MomentsInboxEntryToJson(MomentsInboxEntry instance) =>
       if (instance.read case final value?) 'read': value,
       if (instance.createdAt case final value?) 'created_at': value,
       if (instance.mentionedMe case final value?) 'mentioned_me': value,
+      if (instance.asAppId case final value?) 'as_app_id': value,
+      if (instance.asAppName case final value?) 'as_app_name': value,
+      if (instance.asAppAvatarUrl case final value?) 'as_app_avatar_url': value,
     };

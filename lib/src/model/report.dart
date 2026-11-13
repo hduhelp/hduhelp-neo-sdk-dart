@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/moderation_target.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'report.g.dart';
@@ -28,6 +29,8 @@ class Report {
     this.resolvedByOperatorId,
     this.resolvedAt,
     this.createdAt,
+    this.target,
+    this.pendingCount,
   });
 
   @JsonKey(
@@ -116,6 +119,20 @@ class Report {
   )
   final int? createdAt;
 
+  @JsonKey(
+    name: r'target',
+    required: false,
+    includeIfNull: false,
+  )
+  final ModerationTarget? target;
+
+  @JsonKey(
+    name: r'pending_count',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? pendingCount;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -131,7 +148,9 @@ class Report {
           other.note == note &&
           other.resolvedByOperatorId == resolvedByOperatorId &&
           other.resolvedAt == resolvedAt &&
-          other.createdAt == createdAt;
+          other.createdAt == createdAt &&
+          other.target == target &&
+          other.pendingCount == pendingCount;
 
   @override
   int get hashCode =>
@@ -146,7 +165,9 @@ class Report {
       note.hashCode +
       resolvedByOperatorId.hashCode +
       resolvedAt.hashCode +
-      createdAt.hashCode;
+      createdAt.hashCode +
+      target.hashCode +
+      pendingCount.hashCode;
 
   factory Report.fromJson(Map<String, dynamic> json) => _$ReportFromJson(json);
 

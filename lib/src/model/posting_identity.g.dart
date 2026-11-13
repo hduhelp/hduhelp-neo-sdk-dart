@@ -16,13 +16,18 @@ PostingIdentity _$PostingIdentityFromJson(Map<String, dynamic> json) =>
           appId: $checkedConvert('app_id', (v) => v as String?),
           displayName: $checkedConvert('display_name', (v) => v as String?),
           avatarUrl: $checkedConvert('avatar_url', (v) => v as String?),
+          role: $checkedConvert('role', (v) => v as String?),
+          disabled: $checkedConvert('disabled', (v) => v as bool?),
+          disabledReason:
+              $checkedConvert('disabled_reason', (v) => v as String?),
         );
         return val;
       },
       fieldKeyMap: const {
         'appId': 'app_id',
         'displayName': 'display_name',
-        'avatarUrl': 'avatar_url'
+        'avatarUrl': 'avatar_url',
+        'disabledReason': 'disabled_reason'
       },
     );
 
@@ -32,4 +37,7 @@ Map<String, dynamic> _$PostingIdentityToJson(PostingIdentity instance) =>
       if (instance.appId case final value?) 'app_id': value,
       if (instance.displayName case final value?) 'display_name': value,
       if (instance.avatarUrl case final value?) 'avatar_url': value,
+      if (instance.role case final value?) 'role': value,
+      if (instance.disabled case final value?) 'disabled': value,
+      if (instance.disabledReason case final value?) 'disabled_reason': value,
     };

@@ -26,6 +26,13 @@ Report _$ReportFromJson(Map<String, dynamic> json) => $checkedCreate(
           resolvedAt:
               $checkedConvert('resolved_at', (v) => (v as num?)?.toInt()),
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
+          target: $checkedConvert(
+              'target',
+              (v) => v == null
+                  ? null
+                  : ModerationTarget.fromJson(v as Map<String, dynamic>)),
+          pendingCount:
+              $checkedConvert('pending_count', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -35,7 +42,8 @@ Report _$ReportFromJson(Map<String, dynamic> json) => $checkedCreate(
         'reporterUserId': 'reporter_user_id',
         'resolvedByOperatorId': 'resolved_by_operator_id',
         'resolvedAt': 'resolved_at',
-        'createdAt': 'created_at'
+        'createdAt': 'created_at',
+        'pendingCount': 'pending_count'
       },
     );
 
@@ -53,4 +61,6 @@ Map<String, dynamic> _$ReportToJson(Report instance) => <String, dynamic>{
         'resolved_by_operator_id': value,
       if (instance.resolvedAt case final value?) 'resolved_at': value,
       if (instance.createdAt case final value?) 'created_at': value,
+      if (instance.target?.toJson() case final value?) 'target': value,
+      if (instance.pendingCount case final value?) 'pending_count': value,
     };

@@ -38,6 +38,13 @@ AdminPostSummary _$AdminPostSummaryFromJson(Map<String, dynamic> json) =>
               $checkedConvert('takedown_by_operator_id', (v) => v as String?),
           createdAt: $checkedConvert('created_at', (v) => (v as num?)?.toInt()),
           anonymousName: $checkedConvert('anonymous_name', (v) => v as String?),
+          publishedByUserId:
+              $checkedConvert('published_by_user_id', (v) => v as String?),
+          pinnedAt: $checkedConvert('pinned_at', (v) => (v as num?)?.toInt()),
+          featuredAt:
+              $checkedConvert('featured_at', (v) => (v as num?)?.toInt()),
+          rankBoost:
+              $checkedConvert('rank_boost', (v) => (v as num?)?.toDouble()),
         );
         return val;
       },
@@ -48,7 +55,11 @@ AdminPostSummary _$AdminPostSummaryFromJson(Map<String, dynamic> json) =>
         'takedownReason': 'takedown_reason',
         'takedownByOperatorId': 'takedown_by_operator_id',
         'createdAt': 'created_at',
-        'anonymousName': 'anonymous_name'
+        'anonymousName': 'anonymous_name',
+        'publishedByUserId': 'published_by_user_id',
+        'pinnedAt': 'pinned_at',
+        'featuredAt': 'featured_at',
+        'rankBoost': 'rank_boost'
       },
     );
 
@@ -70,4 +81,9 @@ Map<String, dynamic> _$AdminPostSummaryToJson(AdminPostSummary instance) =>
         'takedown_by_operator_id': value,
       if (instance.createdAt case final value?) 'created_at': value,
       if (instance.anonymousName case final value?) 'anonymous_name': value,
+      if (instance.publishedByUserId case final value?)
+        'published_by_user_id': value,
+      if (instance.pinnedAt case final value?) 'pinned_at': value,
+      if (instance.featuredAt case final value?) 'featured_at': value,
+      if (instance.rankBoost case final value?) 'rank_boost': value,
     };

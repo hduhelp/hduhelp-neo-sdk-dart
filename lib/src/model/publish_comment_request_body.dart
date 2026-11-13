@@ -18,6 +18,7 @@ class PublishCommentRequestBody {
   /// Returns a new [PublishCommentRequestBody] instance.
   PublishCommentRequestBody({
     this.content,
+    this.publishAsAppId,
   });
 
   @JsonKey(
@@ -27,13 +28,23 @@ class PublishCommentRequestBody {
   )
   final List<List<RichTextNode>>? content;
 
+  /// publishAsAppId 是以本人所在的某个官方号身份评论或回复。
+  @JsonKey(
+    name: r'publish_as_app_id',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? publishAsAppId;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PublishCommentRequestBody && other.content == content;
+      other is PublishCommentRequestBody &&
+          other.content == content &&
+          other.publishAsAppId == publishAsAppId;
 
   @override
-  int get hashCode => content.hashCode;
+  int get hashCode => content.hashCode + publishAsAppId.hashCode;
 
   factory PublishCommentRequestBody.fromJson(Map<String, dynamic> json) =>
       _$PublishCommentRequestBodyFromJson(json);

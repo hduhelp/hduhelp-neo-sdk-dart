@@ -23,6 +23,7 @@ class KnowledgeGapInfo {
     this.firstSeen,
     this.lastSeen,
     this.draftFaqItemId,
+    this.sampleQuestion,
   });
 
   @JsonKey(
@@ -75,6 +76,14 @@ class KnowledgeGapInfo {
   )
   final String? draftFaqItemId;
 
+  /// 最近一次原始问法（已脱敏），比归一化后的合并键可读
+  @JsonKey(
+    name: r'sampleQuestion',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? sampleQuestion;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -85,7 +94,8 @@ class KnowledgeGapInfo {
           other.status == status &&
           other.firstSeen == firstSeen &&
           other.lastSeen == lastSeen &&
-          other.draftFaqItemId == draftFaqItemId;
+          other.draftFaqItemId == draftFaqItemId &&
+          other.sampleQuestion == sampleQuestion;
 
   @override
   int get hashCode =>
@@ -95,7 +105,8 @@ class KnowledgeGapInfo {
       status.hashCode +
       firstSeen.hashCode +
       lastSeen.hashCode +
-      draftFaqItemId.hashCode;
+      draftFaqItemId.hashCode +
+      sampleQuestion.hashCode;
 
   factory KnowledgeGapInfo.fromJson(Map<String, dynamic> json) =>
       _$KnowledgeGapInfoFromJson(json);
