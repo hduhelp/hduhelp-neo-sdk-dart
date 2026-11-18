@@ -29,6 +29,8 @@ class InboxEntry {
     this.expiresAt,
     this.expired,
     this.recalled,
+    this.topic,
+    this.category,
   });
 
   @JsonKey(
@@ -115,6 +117,22 @@ class InboxEntry {
   )
   final bool? recalled;
 
+  /// 产生这条通知的类型（如 ops.announcement、reminder.exam），客户端按它选图标；旧数据可能为空。
+  @JsonKey(
+    name: r'topic',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? topic;
+
+  /// notice：公告与事务，算未读角标；reminder：订阅提醒，单独一个页签、过期自动已读。
+  @JsonKey(
+    name: r'category',
+    required: false,
+    includeIfNull: false,
+  )
+  final InboxEntryCategoryEnum? category;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -130,7 +148,9 @@ class InboxEntry {
           other.publishedAt == publishedAt &&
           other.expiresAt == expiresAt &&
           other.expired == expired &&
-          other.recalled == recalled;
+          other.recalled == recalled &&
+          other.topic == topic &&
+          other.category == category;
 
   @override
   int get hashCode =>
@@ -145,7 +165,9 @@ class InboxEntry {
       publishedAt.hashCode +
       expiresAt.hashCode +
       expired.hashCode +
-      recalled.hashCode;
+      recalled.hashCode +
+      topic.hashCode +
+      category.hashCode;
 
   factory InboxEntry.fromJson(Map<String, dynamic> json) =>
       _$InboxEntryFromJson(json);
@@ -156,4 +178,22 @@ class InboxEntry {
   String toString() {
     return toJson().toString();
   }
+}
+
+/// notice：公告与事务，算未读角标；reminder：订阅提醒，单独一个页签、过期自动已读。
+enum InboxEntryCategoryEnum {
+  /// notice：公告与事务，算未读角标；reminder：订阅提醒，单独一个页签、过期自动已读。
+  @JsonValue(r'notice')
+  notice(r'notice'),
+
+  /// notice：公告与事务，算未读角标；reminder：订阅提醒，单独一个页签、过期自动已读。
+  @JsonValue(r'reminder')
+  reminder(r'reminder');
+
+  const InboxEntryCategoryEnum(this.value);
+
+  final String value;
+
+  @override
+  String toString() => value;
 }

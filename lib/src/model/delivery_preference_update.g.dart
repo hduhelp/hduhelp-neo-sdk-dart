@@ -37,6 +37,7 @@ Map<String, dynamic> _$DeliveryPreferenceUpdateToJson(
     };
 
 const _$DeliveryPreferenceUpdateProviderEnumEnumMap = {
+  DeliveryPreferenceUpdateProviderEnum.appPush: 'app_push',
   DeliveryPreferenceUpdateProviderEnum.wechatMp: 'wechat_mp',
   DeliveryPreferenceUpdateProviderEnum.dingtalkWork: 'dingtalk_work',
 };

@@ -26,6 +26,8 @@ class AdminUserInfo {
     this.staffName,
     this.staffId,
     this.unitName,
+    this.deletionRequestedAt,
+    this.deletionScheduledAt,
   });
 
   @JsonKey(
@@ -98,6 +100,22 @@ class AdminUserInfo {
   )
   final String? unitName;
 
+  /// 账号注销冷静期中：申请时间（unix millis）
+  @JsonKey(
+    name: r'deletionRequestedAt',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? deletionRequestedAt;
+
+  /// 账号注销冷静期中：到点执行注销的时间（unix millis）
+  @JsonKey(
+    name: r'deletionScheduledAt',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? deletionScheduledAt;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -111,7 +129,9 @@ class AdminUserInfo {
           other.createdAt == createdAt &&
           other.staffName == staffName &&
           other.staffId == staffId &&
-          other.unitName == unitName;
+          other.unitName == unitName &&
+          other.deletionRequestedAt == deletionRequestedAt &&
+          other.deletionScheduledAt == deletionScheduledAt;
 
   @override
   int get hashCode =>
@@ -124,7 +144,9 @@ class AdminUserInfo {
       createdAt.hashCode +
       staffName.hashCode +
       staffId.hashCode +
-      unitName.hashCode;
+      unitName.hashCode +
+      deletionRequestedAt.hashCode +
+      deletionScheduledAt.hashCode;
 
   factory AdminUserInfo.fromJson(Map<String, dynamic> json) =>
       _$AdminUserInfoFromJson(json);

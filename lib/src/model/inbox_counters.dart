@@ -18,6 +18,7 @@ class InboxCounters {
   InboxCounters({
     this.unread,
     this.pendingAck,
+    this.reminderUnread,
   });
 
   @JsonKey(
@@ -34,15 +35,24 @@ class InboxCounters {
   )
   final int? pendingAck;
 
+  @JsonKey(
+    name: r'reminderUnread',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? reminderUnread;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is InboxCounters &&
           other.unread == unread &&
-          other.pendingAck == pendingAck;
+          other.pendingAck == pendingAck &&
+          other.reminderUnread == reminderUnread;
 
   @override
-  int get hashCode => unread.hashCode + pendingAck.hashCode;
+  int get hashCode =>
+      unread.hashCode + pendingAck.hashCode + reminderUnread.hashCode;
 
   factory InboxCounters.fromJson(Map<String, dynamic> json) =>
       _$InboxCountersFromJson(json);

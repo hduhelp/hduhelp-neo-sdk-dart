@@ -15,6 +15,8 @@ InboxCounters _$InboxCountersFromJson(Map<String, dynamic> json) =>
           unread: $checkedConvert('unread', (v) => (v as num?)?.toInt()),
           pendingAck:
               $checkedConvert('pendingAck', (v) => (v as num?)?.toInt()),
+          reminderUnread:
+              $checkedConvert('reminderUnread', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -24,4 +26,5 @@ Map<String, dynamic> _$InboxCountersToJson(InboxCounters instance) =>
     <String, dynamic>{
       if (instance.unread case final value?) 'unread': value,
       if (instance.pendingAck case final value?) 'pendingAck': value,
+      if (instance.reminderUnread case final value?) 'reminderUnread': value,
     };

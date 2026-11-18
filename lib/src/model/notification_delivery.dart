@@ -297,7 +297,9 @@ enum NotificationDeliveryStatusEnum {
   @JsonValue(r'failed')
   failed(r'failed'),
   @JsonValue(r'skipped')
-  skipped(r'skipped');
+  skipped(r'skipped'),
+  @JsonValue(r'uncertain')
+  uncertain(r'uncertain');
 
   const NotificationDeliveryStatusEnum(this.value);
 

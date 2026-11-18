@@ -19,7 +19,6 @@ class NotificationChainTestRequestBody {
   NotificationChainTestRequestBody({
     required this.topicKey,
     required this.mode,
-    required this.targetUserId,
     required this.title,
     this.summary,
     required this.body,
@@ -43,13 +42,6 @@ class NotificationChainTestRequestBody {
     includeIfNull: false,
   )
   final NotificationChainTestRequestBodyModeEnum mode;
-
-  @JsonKey(
-    name: r'target_user_id',
-    required: true,
-    includeIfNull: false,
-  )
-  final String targetUserId;
 
   @JsonKey(
     name: r'title',
@@ -113,7 +105,6 @@ class NotificationChainTestRequestBody {
       other is NotificationChainTestRequestBody &&
           other.topicKey == topicKey &&
           other.mode == mode &&
-          other.targetUserId == targetUserId &&
           other.title == title &&
           other.summary == summary &&
           other.body == body &&
@@ -127,7 +118,6 @@ class NotificationChainTestRequestBody {
   int get hashCode =>
       topicKey.hashCode +
       mode.hashCode +
-      targetUserId.hashCode +
       title.hashCode +
       summary.hashCode +
       body.hashCode +

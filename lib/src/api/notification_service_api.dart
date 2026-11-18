@@ -11,28 +11,21 @@ import 'package:dio/dio.dart';
 
 import 'package:hduhelp_neo/src/model/cancel_task_request_body.dart';
 import 'package:hduhelp_neo/src/model/cancel_task_response_body.dart';
-import 'package:hduhelp_neo/src/model/create_policy_profile_request_body.dart';
 import 'package:hduhelp_neo/src/model/delivery_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/delivery_response_body.dart';
 import 'package:hduhelp_neo/src/model/notification_chain_test_request_body.dart';
 import 'package:hduhelp_neo/src/model/notification_chain_test_response_body.dart';
-import 'package:hduhelp_neo/src/model/notification_topic_configuration_response_body.dart';
-import 'package:hduhelp_neo/src/model/notification_topic_configurations_response_body.dart';
-import 'package:hduhelp_neo/src/model/policy_profile_response_body.dart';
-import 'package:hduhelp_neo/src/model/policy_profiles_response_body.dart';
+import 'package:hduhelp_neo/src/model/notification_topic_settings_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/notification_topic_settings_response_body.dart';
 import 'package:hduhelp_neo/src/model/provider_test_request_body.dart';
 import 'package:hduhelp_neo/src/model/provider_test_response_body.dart';
-import 'package:hduhelp_neo/src/model/rename_policy_profile_request_body.dart';
+import 'package:hduhelp_neo/src/model/recall_task_request_body.dart';
 import 'package:hduhelp_neo/src/model/replay_task_request_body.dart';
 import 'package:hduhelp_neo/src/model/replay_task_response_body.dart';
 import 'package:hduhelp_neo/src/model/runtime_status_response_body.dart';
-import 'package:hduhelp_neo/src/model/save_notification_topic_configuration_request_body.dart';
+import 'package:hduhelp_neo/src/model/save_notification_topic_override_request_body.dart';
 import 'package:hduhelp_neo/src/model/task_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/task_response_body.dart';
-import 'package:hduhelp_neo/src/model/topic_capabilities_response_body.dart';
-import 'package:hduhelp_neo/src/model/update_policy_profile_request_body.dart';
-import 'package:hduhelp_neo/src/model/validate_policy_request_body.dart';
-import 'package:hduhelp_neo/src/model/validate_policy_response_body.dart';
 
 class NotificationServiceApi {
   final Dio _dio;
@@ -142,189 +135,6 @@ class NotificationServiceApi {
     );
   }
 
-  /// notificationServiceCreateNotificationPolicyProfile
-  ///
-  ///
-  /// Parameters:
-  /// * [createPolicyProfileRequestBody]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [PolicyProfileResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<PolicyProfileResponseBody>>
-      notificationServiceCreateNotificationPolicyProfile({
-    required CreatePolicyProfileRequestBody createPolicyProfileRequestBody,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/hduhelp-neo/admin/notifications/policy-profiles';
-    final _options = Options(
-      method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      contentType: 'application/json',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      _bodyData = jsonEncode(createPolicyProfileRequestBody);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    PolicyProfileResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<PolicyProfileResponseBody, PolicyProfileResponseBody>(
-              rawData, 'PolicyProfileResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<PolicyProfileResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// notificationServiceDisableNotificationPolicyProfile
-  ///
-  ///
-  /// Parameters:
-  /// * [id]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [PolicyProfileResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<PolicyProfileResponseBody>>
-      notificationServiceDisableNotificationPolicyProfile({
-    required String id,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/hduhelp-neo/admin/notifications/policy-profiles/{id}'
-        .replaceAll('{' r'id' '}', id.toString());
-    final _options = Options(
-      method: r'DELETE',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    PolicyProfileResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<PolicyProfileResponseBody, PolicyProfileResponseBody>(
-              rawData, 'PolicyProfileResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<PolicyProfileResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
   /// notificationServiceGetNotificationDelivery
   ///
   ///
@@ -397,89 +207,6 @@ class NotificationServiceApi {
     }
 
     return Response<DeliveryResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// notificationServiceGetNotificationPolicyProfile
-  ///
-  ///
-  /// Parameters:
-  /// * [id]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [PolicyProfileResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<PolicyProfileResponseBody>>
-      notificationServiceGetNotificationPolicyProfile({
-    required String id,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/hduhelp-neo/admin/notifications/policy-profiles/{id}'
-        .replaceAll('{' r'id' '}', id.toString());
-    final _options = Options(
-      method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    PolicyProfileResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<PolicyProfileResponseBody, PolicyProfileResponseBody>(
-              rawData, 'PolicyProfileResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<PolicyProfileResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -642,181 +369,6 @@ class NotificationServiceApi {
     }
 
     return Response<TaskResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// notificationServiceGetNotificationTopicCapabilities
-  ///
-  ///
-  /// Parameters:
-  /// * [topicKey]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [TopicCapabilitiesResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<TopicCapabilitiesResponseBody>>
-      notificationServiceGetNotificationTopicCapabilities({
-    required String topicKey,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path =
-        r'/hduhelp-neo/admin/notifications/topics/{topicKey}/capabilities'
-            .replaceAll('{' r'topicKey' '}', topicKey.toString());
-    final _options = Options(
-      method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    TopicCapabilitiesResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<TopicCapabilitiesResponseBody,
-                  TopicCapabilitiesResponseBody>(
-              rawData, 'TopicCapabilitiesResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<TopicCapabilitiesResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// notificationServiceListNotificationPolicyProfiles
-  ///
-  ///
-  /// Parameters:
-  /// * [topicKey]
-  /// * [includeDisabled]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [PolicyProfilesResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<PolicyProfilesResponseBody>>
-      notificationServiceListNotificationPolicyProfiles({
-    required String topicKey,
-    bool? includeDisabled,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/hduhelp-neo/admin/notifications/policy-profiles';
-    final _options = Options(
-      method: r'GET',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _queryParameters = <String, dynamic>{
-      r'topic_key': topicKey,
-      if (includeDisabled != null) r'include_disabled': includeDisabled,
-    };
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      queryParameters: _queryParameters,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    PolicyProfilesResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<PolicyProfilesResponseBody, PolicyProfilesResponseBody>(
-              rawData, 'PolicyProfilesResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<PolicyProfilesResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1044,7 +596,7 @@ class NotificationServiceApi {
     );
   }
 
-  /// notificationServiceListNotificationTopicConfigurations
+  /// 通知类型与投递设置
   ///
   ///
   /// Parameters:
@@ -1055,10 +607,10 @@ class NotificationServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [NotificationTopicConfigurationsResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [NotificationTopicSettingsListResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<NotificationTopicConfigurationsResponseBody>>
-      notificationServiceListNotificationTopicConfigurations({
+  Future<Response<NotificationTopicSettingsListResponseBody>>
+      notificationServiceListNotificationTopicSettings({
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -1066,7 +618,7 @@ class NotificationServiceApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/hduhelp-neo/admin/notifications/topics/configurations';
+    final _path = r'/hduhelp-neo/admin/notifications/topics';
     final _options = Options(
       method: r'GET',
       headers: <String, dynamic>{
@@ -1093,15 +645,15 @@ class NotificationServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    NotificationTopicConfigurationsResponseBody? _responseData;
+    NotificationTopicSettingsListResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<NotificationTopicConfigurationsResponseBody,
-                  NotificationTopicConfigurationsResponseBody>(
-              rawData, 'NotificationTopicConfigurationsResponseBody',
+          : deserialize<NotificationTopicSettingsListResponseBody,
+                  NotificationTopicSettingsListResponseBody>(
+              rawData, 'NotificationTopicSettingsListResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1113,7 +665,7 @@ class NotificationServiceApi {
       );
     }
 
-    return Response<NotificationTopicConfigurationsResponseBody>(
+    return Response<NotificationTopicSettingsListResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1125,12 +677,12 @@ class NotificationServiceApi {
     );
   }
 
-  /// notificationServiceRenameNotificationPolicyProfile
+  /// 撤回通知
   ///
   ///
   /// Parameters:
   /// * [id]
-  /// * [renamePolicyProfileRequestBody]
+  /// * [recallTaskRequestBody]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1138,12 +690,11 @@ class NotificationServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [PolicyProfileResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [TaskResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<PolicyProfileResponseBody>>
-      notificationServiceRenameNotificationPolicyProfile({
+  Future<Response<TaskResponseBody>> notificationServiceRecallNotificationTask({
     required String id,
-    required RenamePolicyProfileRequestBody renamePolicyProfileRequestBody,
+    required RecallTaskRequestBody recallTaskRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -1151,10 +702,10 @@ class NotificationServiceApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/hduhelp-neo/admin/notifications/policy-profiles/{id}/name'
+    final _path = r'/hduhelp-neo/admin/notifications/tasks/{id}/recall'
         .replaceAll('{' r'id' '}', id.toString());
     final _options = Options(
-      method: r'PUT',
+      method: r'POST',
       headers: <String, dynamic>{
         ...?headers,
       },
@@ -1175,7 +726,7 @@ class NotificationServiceApi {
     dynamic _bodyData;
 
     try {
-      _bodyData = jsonEncode(renamePolicyProfileRequestBody);
+      _bodyData = jsonEncode(recallTaskRequestBody);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _options.compose(
@@ -1197,14 +748,14 @@ class NotificationServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    PolicyProfileResponseBody? _responseData;
+    TaskResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<PolicyProfileResponseBody, PolicyProfileResponseBody>(
-              rawData, 'PolicyProfileResponseBody',
+          : deserialize<TaskResponseBody, TaskResponseBody>(
+              rawData, 'TaskResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1216,7 +767,7 @@ class NotificationServiceApi {
       );
     }
 
-    return Response<PolicyProfileResponseBody>(
+    return Response<TaskResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1331,12 +882,11 @@ class NotificationServiceApi {
     );
   }
 
-  /// notificationServiceSaveNotificationTopicConfiguration
+  /// 恢复通知类型的默认投递设置
   ///
   ///
   /// Parameters:
   /// * [topicKey]
-  /// * [saveNotificationTopicConfigurationRequestBody]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -1344,13 +894,11 @@ class NotificationServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [NotificationTopicConfigurationResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [NotificationTopicSettingsResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<NotificationTopicConfigurationResponseBody>>
-      notificationServiceSaveNotificationTopicConfiguration({
+  Future<Response<NotificationTopicSettingsResponseBody>>
+      notificationServiceResetNotificationTopicOverride({
     required String topicKey,
-    required SaveNotificationTopicConfigurationRequestBody
-        saveNotificationTopicConfigurationRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -1358,7 +906,94 @@ class NotificationServiceApi {
     ProgressCallback? onSendProgress,
     ProgressCallback? onReceiveProgress,
   }) async {
-    final _path = r'/hduhelp-neo/admin/notifications/topics/{topicKey}/config'
+    final _path = r'/hduhelp-neo/admin/notifications/topics/{topicKey}/override'
+        .replaceAll('{' r'topicKey' '}', topicKey.toString());
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    NotificationTopicSettingsResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<NotificationTopicSettingsResponseBody,
+                  NotificationTopicSettingsResponseBody>(
+              rawData, 'NotificationTopicSettingsResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<NotificationTopicSettingsResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 覆盖通知类型的投递设置
+  ///
+  ///
+  /// Parameters:
+  /// * [topicKey]
+  /// * [saveNotificationTopicOverrideRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [NotificationTopicSettingsResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<NotificationTopicSettingsResponseBody>>
+      notificationServiceSaveNotificationTopicOverride({
+    required String topicKey,
+    required SaveNotificationTopicOverrideRequestBody
+        saveNotificationTopicOverrideRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/notifications/topics/{topicKey}/override'
         .replaceAll('{' r'topicKey' '}', topicKey.toString());
     final _options = Options(
       method: r'PUT',
@@ -1382,7 +1017,7 @@ class NotificationServiceApi {
     dynamic _bodyData;
 
     try {
-      _bodyData = jsonEncode(saveNotificationTopicConfigurationRequestBody);
+      _bodyData = jsonEncode(saveNotificationTopicOverrideRequestBody);
     } catch (error, stackTrace) {
       throw DioException(
         requestOptions: _options.compose(
@@ -1404,15 +1039,15 @@ class NotificationServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    NotificationTopicConfigurationResponseBody? _responseData;
+    NotificationTopicSettingsResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<NotificationTopicConfigurationResponseBody,
-                  NotificationTopicConfigurationResponseBody>(
-              rawData, 'NotificationTopicConfigurationResponseBody',
+          : deserialize<NotificationTopicSettingsResponseBody,
+                  NotificationTopicSettingsResponseBody>(
+              rawData, 'NotificationTopicSettingsResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1424,91 +1059,7 @@ class NotificationServiceApi {
       );
     }
 
-    return Response<NotificationTopicConfigurationResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// notificationServiceSetDefaultNotificationPolicyProfile
-  ///
-  ///
-  /// Parameters:
-  /// * [id]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [PolicyProfileResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<PolicyProfileResponseBody>>
-      notificationServiceSetDefaultNotificationPolicyProfile({
-    required String id,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path =
-        r'/hduhelp-neo/admin/notifications/policy-profiles/{id}/default'
-            .replaceAll('{' r'id' '}', id.toString());
-    final _options = Options(
-      method: r'PUT',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      validateStatus: validateStatus,
-    );
-
-    final _response = await _dio.request<Object>(
-      _path,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    PolicyProfileResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<PolicyProfileResponseBody, PolicyProfileResponseBody>(
-              rawData, 'PolicyProfileResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<PolicyProfileResponseBody>(
+    return Response<NotificationTopicSettingsResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1710,214 +1261,6 @@ class NotificationServiceApi {
     }
 
     return Response<ProviderTestResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// notificationServiceUpdateNotificationPolicyProfile
-  ///
-  ///
-  /// Parameters:
-  /// * [id]
-  /// * [updatePolicyProfileRequestBody]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [PolicyProfileResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<PolicyProfileResponseBody>>
-      notificationServiceUpdateNotificationPolicyProfile({
-    required String id,
-    required UpdatePolicyProfileRequestBody updatePolicyProfileRequestBody,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path =
-        r'/hduhelp-neo/admin/notifications/policy-profiles/{id}/policy'
-            .replaceAll('{' r'id' '}', id.toString());
-    final _options = Options(
-      method: r'PUT',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      contentType: 'application/json',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      _bodyData = jsonEncode(updatePolicyProfileRequestBody);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    PolicyProfileResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<PolicyProfileResponseBody, PolicyProfileResponseBody>(
-              rawData, 'PolicyProfileResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<PolicyProfileResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// notificationServiceValidateNotificationDeliveryPolicy
-  ///
-  ///
-  /// Parameters:
-  /// * [topicKey]
-  /// * [validatePolicyRequestBody]
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [ValidatePolicyResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<ValidatePolicyResponseBody>>
-      notificationServiceValidateNotificationDeliveryPolicy({
-    required String topicKey,
-    required ValidatePolicyRequestBody validatePolicyRequestBody,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path =
-        r'/hduhelp-neo/admin/notifications/topics/{topicKey}/validate-policy'
-            .replaceAll('{' r'topicKey' '}', topicKey.toString());
-    final _options = Options(
-      method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'OperatorBearerAuth',
-          },
-        ],
-        ...?extra,
-      },
-      contentType: 'application/json',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      _bodyData = jsonEncode(validatePolicyRequestBody);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    ValidatePolicyResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<ValidatePolicyResponseBody, ValidatePolicyResponseBody>(
-              rawData, 'ValidatePolicyResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<ValidatePolicyResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

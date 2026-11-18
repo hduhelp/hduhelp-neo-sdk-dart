@@ -65,6 +65,10 @@ AdminUserDetail _$AdminUserDetailFromJson(Map<String, dynamic> json) =>
                   ?.map((e) => UserDetailPersonalAccessToken.fromJson(
                       e as Map<String, dynamic>))
                   .toList()),
+          deletionRequestedAt: $checkedConvert(
+              'deletionRequestedAt', (v) => (v as num?)?.toInt()),
+          deletionScheduledAt: $checkedConvert(
+              'deletionScheduledAt', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -103,4 +107,8 @@ Map<String, dynamic> _$AdminUserDetailToJson(AdminUserDetail instance) =>
       if (instance.personalAccessTokens?.map((e) => e.toJson()).toList()
           case final value?)
         'personalAccessTokens': value,
+      if (instance.deletionRequestedAt case final value?)
+        'deletionRequestedAt': value,
+      if (instance.deletionScheduledAt case final value?)
+        'deletionScheduledAt': value,
     };

@@ -8,11 +8,11 @@ import 'package:hduhelp_neo/src/auth/basic_auth.dart';
 import 'package:hduhelp_neo/src/auth/bearer_auth.dart';
 import 'package:hduhelp_neo/src/auth/oauth.dart';
 import 'package:hduhelp_neo/src/api/academic_service_api.dart';
-import 'package:hduhelp_neo/src/api/admin_notice_service_api.dart';
 import 'package:hduhelp_neo/src/api/admin_service_api.dart';
 import 'package:hduhelp_neo/src/api/agent_ops_service_api.dart';
 import 'package:hduhelp_neo/src/api/agent_service_api.dart';
 import 'package:hduhelp_neo/src/api/analytics_service_api.dart';
+import 'package:hduhelp_neo/src/api/announcement_service_api.dart';
 import 'package:hduhelp_neo/src/api/apm_service_api.dart';
 import 'package:hduhelp_neo/src/api/campus_life_service_api.dart';
 import 'package:hduhelp_neo/src/api/empty_schedule_service_api.dart';
@@ -24,6 +24,7 @@ import 'package:hduhelp_neo/src/api/health_service_api.dart';
 import 'package:hduhelp_neo/src/api/identity_service_api.dart';
 import 'package:hduhelp_neo/src/api/inbox_service_api.dart';
 import 'package:hduhelp_neo/src/api/knowledge_service_api.dart';
+import 'package:hduhelp_neo/src/api/legal_service_api.dart';
 import 'package:hduhelp_neo/src/api/library_booking_service_api.dart';
 import 'package:hduhelp_neo/src/api/messaging_service_api.dart';
 import 'package:hduhelp_neo/src/api/model_gateway_observability_service_api.dart';
@@ -32,8 +33,9 @@ import 'package:hduhelp_neo/src/api/model_gateway_trace_browser_service_api.dart
 import 'package:hduhelp_neo/src/api/model_proxy_service_api.dart';
 import 'package:hduhelp_neo/src/api/moments_service_api.dart';
 import 'package:hduhelp_neo/src/api/notification_service_api.dart';
-import 'package:hduhelp_neo/src/api/site_announcement_service_api.dart';
-import 'package:hduhelp_neo/src/api/subscription_service_api.dart';
+import 'package:hduhelp_neo/src/api/notification_settings_service_api.dart';
+import 'package:hduhelp_neo/src/api/reminder_service_api.dart';
+import 'package:hduhelp_neo/src/api/site_banner_service_api.dart';
 import 'package:hduhelp_neo/src/api/upload_service_api.dart';
 
 class HduhelpNeo {
@@ -103,12 +105,6 @@ class HduhelpNeo {
     return AcademicServiceApi(dio);
   }
 
-  /// Get AdminNoticeServiceApi instance, base route and serializer can be overridden by a given but be careful,
-  /// by doing that all interceptors will not be executed
-  AdminNoticeServiceApi getAdminNoticeServiceApi() {
-    return AdminNoticeServiceApi(dio);
-  }
-
   /// Get AdminServiceApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   AdminServiceApi getAdminServiceApi() {
@@ -131,6 +127,12 @@ class HduhelpNeo {
   /// by doing that all interceptors will not be executed
   AnalyticsServiceApi getAnalyticsServiceApi() {
     return AnalyticsServiceApi(dio);
+  }
+
+  /// Get AnnouncementServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AnnouncementServiceApi getAnnouncementServiceApi() {
+    return AnnouncementServiceApi(dio);
   }
 
   /// Get ApmServiceApi instance, base route and serializer can be overridden by a given but be careful,
@@ -199,6 +201,12 @@ class HduhelpNeo {
     return KnowledgeServiceApi(dio);
   }
 
+  /// Get LegalServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  LegalServiceApi getLegalServiceApi() {
+    return LegalServiceApi(dio);
+  }
+
   /// Get LibraryBookingServiceApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
   LibraryBookingServiceApi getLibraryBookingServiceApi() {
@@ -247,16 +255,22 @@ class HduhelpNeo {
     return NotificationServiceApi(dio);
   }
 
-  /// Get SiteAnnouncementServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// Get NotificationSettingsServiceApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
-  SiteAnnouncementServiceApi getSiteAnnouncementServiceApi() {
-    return SiteAnnouncementServiceApi(dio);
+  NotificationSettingsServiceApi getNotificationSettingsServiceApi() {
+    return NotificationSettingsServiceApi(dio);
   }
 
-  /// Get SubscriptionServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// Get ReminderServiceApi instance, base route and serializer can be overridden by a given but be careful,
   /// by doing that all interceptors will not be executed
-  SubscriptionServiceApi getSubscriptionServiceApi() {
-    return SubscriptionServiceApi(dio);
+  ReminderServiceApi getReminderServiceApi() {
+    return ReminderServiceApi(dio);
+  }
+
+  /// Get SiteBannerServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  SiteBannerServiceApi getSiteBannerServiceApi() {
+    return SiteBannerServiceApi(dio);
   }
 
   /// Get UploadServiceApi instance, base route and serializer can be overridden by a given but be careful,

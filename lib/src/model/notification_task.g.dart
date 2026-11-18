@@ -29,7 +29,9 @@ NotificationTask _$NotificationTaskFromJson(Map<String, dynamic> json) =>
             'createdById',
             'createdAt',
             'updatedAt',
-            'requiresAck'
+            'requiresAck',
+            'category',
+            'deliveryUncertain'
           ],
         );
         final val = NotificationTask(
@@ -75,6 +77,13 @@ NotificationTask _$NotificationTaskFromJson(Map<String, dynamic> json) =>
               $checkedConvert('cancellationReason', (v) => v as String?),
           title: $checkedConvert('title', (v) => v as String?),
           requiresAck: $checkedConvert('requiresAck', (v) => v as bool),
+          category: $checkedConvert('category', (v) => v as String),
+          deliveryUncertain:
+              $checkedConvert('deliveryUncertain', (v) => (v as num).toInt()),
+          recalledById: $checkedConvert('recalledById', (v) => v as String?),
+          recalledAt:
+              $checkedConvert('recalledAt', (v) => (v as num?)?.toInt()),
+          recallReason: $checkedConvert('recallReason', (v) => v as String?),
         );
         return val;
       },
@@ -112,6 +121,11 @@ Map<String, dynamic> _$NotificationTaskToJson(NotificationTask instance) =>
         'cancellationReason': value,
       if (instance.title case final value?) 'title': value,
       'requiresAck': instance.requiresAck,
+      'category': instance.category,
+      'deliveryUncertain': instance.deliveryUncertain,
+      if (instance.recalledById case final value?) 'recalledById': value,
+      if (instance.recalledAt case final value?) 'recalledAt': value,
+      if (instance.recallReason case final value?) 'recallReason': value,
     };
 
 const _$NotificationTaskStatusEnumEnumMap = {

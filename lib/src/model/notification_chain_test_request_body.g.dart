@@ -14,13 +14,7 @@ NotificationChainTestRequestBody _$NotificationChainTestRequestBodyFromJson(
       ($checkedConvert) {
         $checkKeys(
           json,
-          requiredKeys: const [
-            'topic_key',
-            'mode',
-            'target_user_id',
-            'title',
-            'body'
-          ],
+          requiredKeys: const ['topic_key', 'mode', 'title', 'body'],
         );
         final val = NotificationChainTestRequestBody(
           topicKey: $checkedConvert('topic_key', (v) => v as String),
@@ -28,7 +22,6 @@ NotificationChainTestRequestBody _$NotificationChainTestRequestBodyFromJson(
               'mode',
               (v) => $enumDecode(
                   _$NotificationChainTestRequestBodyModeEnumEnumMap, v)),
-          targetUserId: $checkedConvert('target_user_id', (v) => v as String),
           title: $checkedConvert('title', (v) => v as String),
           summary: $checkedConvert('summary', (v) => v as String?),
           body: $checkedConvert('body', (v) => v as String),
@@ -54,7 +47,6 @@ NotificationChainTestRequestBody _$NotificationChainTestRequestBodyFromJson(
       },
       fieldKeyMap: const {
         'topicKey': 'topic_key',
-        'targetUserId': 'target_user_id',
         'requiresAck': 'requires_ack',
         'expiresAt': 'expires_at',
         'providerContents': 'provider_contents'
@@ -66,7 +58,6 @@ Map<String, dynamic> _$NotificationChainTestRequestBodyToJson(
     <String, dynamic>{
       'topic_key': instance.topicKey,
       'mode': _$NotificationChainTestRequestBodyModeEnumEnumMap[instance.mode]!,
-      'target_user_id': instance.targetUserId,
       'title': instance.title,
       if (instance.summary case final value?) 'summary': value,
       'body': instance.body,

@@ -41,6 +41,11 @@ class NotificationTask {
     this.cancellationReason,
     this.title,
     required this.requiresAck,
+    required this.category,
+    required this.deliveryUncertain,
+    this.recalledById,
+    this.recalledAt,
+    this.recallReason,
   });
 
   @JsonKey(
@@ -218,6 +223,42 @@ class NotificationTask {
   )
   final bool requiresAck;
 
+  @JsonKey(
+    name: r'category',
+    required: true,
+    includeIfNull: false,
+  )
+  final String category;
+
+  /// 结果不确定（可能已送达，无法证实），单独计数、不算失败。
+  @JsonKey(
+    name: r'deliveryUncertain',
+    required: true,
+    includeIfNull: false,
+  )
+  final int deliveryUncertain;
+
+  @JsonKey(
+    name: r'recalledById',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? recalledById;
+
+  @JsonKey(
+    name: r'recalledAt',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? recalledAt;
+
+  @JsonKey(
+    name: r'recallReason',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? recallReason;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -246,7 +287,12 @@ class NotificationTask {
           other.cancelledAt == cancelledAt &&
           other.cancellationReason == cancellationReason &&
           other.title == title &&
-          other.requiresAck == requiresAck;
+          other.requiresAck == requiresAck &&
+          other.category == category &&
+          other.deliveryUncertain == deliveryUncertain &&
+          other.recalledById == recalledById &&
+          other.recalledAt == recalledAt &&
+          other.recallReason == recallReason;
 
   @override
   int get hashCode =>
@@ -274,7 +320,12 @@ class NotificationTask {
       cancelledAt.hashCode +
       cancellationReason.hashCode +
       title.hashCode +
-      requiresAck.hashCode;
+      requiresAck.hashCode +
+      category.hashCode +
+      deliveryUncertain.hashCode +
+      recalledById.hashCode +
+      recalledAt.hashCode +
+      recallReason.hashCode;
 
   factory NotificationTask.fromJson(Map<String, dynamic> json) =>
       _$NotificationTaskFromJson(json);

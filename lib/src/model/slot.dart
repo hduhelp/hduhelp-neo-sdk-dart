@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/member_availability.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'slot.g.dart';
@@ -19,6 +20,8 @@ class Slot {
     this.week,
     this.day,
     this.period,
+    this.freeStudents,
+    this.allFree,
   });
 
   @JsonKey(
@@ -42,16 +45,37 @@ class Slot {
   )
   final int? period;
 
+  @JsonKey(
+    name: r'freeStudents',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<MemberAvailability>? freeStudents;
+
+  @JsonKey(
+    name: r'allFree',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? allFree;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is Slot &&
           other.week == week &&
           other.day == day &&
-          other.period == period;
+          other.period == period &&
+          other.freeStudents == freeStudents &&
+          other.allFree == allFree;
 
   @override
-  int get hashCode => week.hashCode + day.hashCode + period.hashCode;
+  int get hashCode =>
+      week.hashCode +
+      day.hashCode +
+      period.hashCode +
+      freeStudents.hashCode +
+      allFree.hashCode;
 
   factory Slot.fromJson(Map<String, dynamic> json) => _$SlotFromJson(json);
 

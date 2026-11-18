@@ -9,6 +9,7 @@ import 'dart:convert';
 import 'package:hduhelp_neo/src/deserialize.dart';
 import 'package:dio/dio.dart';
 
+import 'package:hduhelp_neo/src/model/account_deletion_response_body.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_internal_request_body.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_internal_response_body.dart';
 import 'package:hduhelp_neo/src/model/approve_device_request_body.dart';
@@ -76,6 +77,7 @@ import 'package:hduhelp_neo/src/model/password_reset_verification_response_body.
 import 'package:hduhelp_neo/src/model/poll_we_chat_qr_login_request_body.dart';
 import 'package:hduhelp_neo/src/model/poll_we_chat_qr_login_response_body.dart';
 import 'package:hduhelp_neo/src/model/refresh_token_request_body.dart';
+import 'package:hduhelp_neo/src/model/request_account_deletion_request_body.dart';
 import 'package:hduhelp_neo/src/model/reset_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/revoke_authorized_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/revoke_pat_response_body.dart';
@@ -1844,6 +1846,87 @@ class IdentityServiceApi {
     );
   }
 
+  /// 撤销注销
+  /// 冷静期内撤销注销申请，账号立即恢复正常；已开始执行时返回 710000464。未申请时幂等返回当前状态。冷静期内仍可调用。仅原生会话可调用。
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AccountDeletionResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AccountDeletionResponseBody>>
+      identityServiceCancelAccountDeletion({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/identity/account/deletion';
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'NativeSessionAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AccountDeletionResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AccountDeletionResponseBody,
+                  AccountDeletionResponseBody>(
+              rawData, 'AccountDeletionResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AccountDeletionResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 取消设备授权
   /// 使用 device_code 取消尚未完成的授权；注册应用必须携带同应用 TAT。
   ///
@@ -2712,6 +2795,87 @@ class IdentityServiceApi {
     }
 
     return Response<DeviceAuthorizationRespBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 账号注销状态与预检
+  /// 返回注销状态（active / pending_deletion）、冷静期截止时间与剩余天数；未申请时附带预检：blockers 非空（绑定了运营账号、是官方号唯一管理员、代登录会话）或 reauthRequired 为真时不能申请。注销冷静期内仍可调用。仅原生会话可调用。
+  ///
+  /// Parameters:
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AccountDeletionResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AccountDeletionResponseBody>>
+      identityServiceGetAccountDeletion({
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/identity/account/deletion';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'NativeSessionAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AccountDeletionResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AccountDeletionResponseBody,
+                  AccountDeletionResponseBody>(
+              rawData, 'AccountDeletionResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AccountDeletionResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -4945,6 +5109,107 @@ class IdentityServiceApi {
     }
 
     return Response<PollWeChatQRLoginResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 申请注销账号
+  /// confirm_text 必须为「注销账号」；当前会话须在 10 分钟内登录（否则 710000463），有 blockers 时拒绝（710000461）。成功后进入 30 天冷静期：除注销状态、撤销注销、退出登录、反馈外的接口一律返回 HTTP 403 + 710000460，到期后删除或匿名化个人数据。已在冷静期内重复申请返回现有状态，不顺延。仅原生会话可调用。
+  ///
+  /// Parameters:
+  /// * [requestAccountDeletionRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AccountDeletionResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AccountDeletionResponseBody>>
+      identityServiceRequestAccountDeletion({
+    RequestAccountDeletionRequestBody? requestAccountDeletionRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/identity/account/deletion';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'NativeSessionAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(requestAccountDeletionRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AccountDeletionResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AccountDeletionResponseBody,
+                  AccountDeletionResponseBody>(
+              rawData, 'AccountDeletionResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AccountDeletionResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

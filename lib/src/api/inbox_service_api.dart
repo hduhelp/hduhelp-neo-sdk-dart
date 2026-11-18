@@ -13,6 +13,8 @@ import 'package:hduhelp_neo/src/model/inbox_counters_response_body.dart';
 import 'package:hduhelp_neo/src/model/inbox_entry_response_body.dart';
 import 'package:hduhelp_neo/src/model/inbox_mutation_response_body.dart';
 import 'package:hduhelp_neo/src/model/inbox_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/inbox_read_all_request_body.dart';
+import 'package:hduhelp_neo/src/model/inbox_read_request_body.dart';
 
 class InboxServiceApi {
   final Dio _dio;
@@ -270,6 +272,8 @@ class InboxServiceApi {
   /// * [page]
   /// * [pageSize]
   /// * [history]
+  /// * [filter] - pending：只看待确认（按截止时间从近到远）；unread：只看未读。与 history 互斥，留空为全部。
+  /// * [category] - notice（缺省）或 reminder。
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -283,6 +287,8 @@ class InboxServiceApi {
     int? page,
     int? pageSize,
     bool? history,
+    String? filter,
+    String? category,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -313,6 +319,8 @@ class InboxServiceApi {
       if (page != null) r'page': page,
       if (pageSize != null) r'page_size': pageSize,
       if (history != null) r'history': history,
+      if (filter != null) r'filter': filter,
+      if (category != null) r'category': category,
     };
 
     final _response = await _dio.request<Object>(
@@ -355,11 +363,111 @@ class InboxServiceApi {
     );
   }
 
+  /// 全部标为已读
+  ///
+  ///
+  /// Parameters:
+  /// * [inboxReadAllRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [InboxMutationResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<InboxMutationResponseBody>> inboxServiceMarkAllInboxRead({
+    InboxReadAllRequestBody? inboxReadAllRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/inbox/read-all';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'NativeSessionAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(inboxReadAllRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    InboxMutationResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<InboxMutationResponseBody, InboxMutationResponseBody>(
+              rawData, 'InboxMutationResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<InboxMutationResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 标记通知已读
   ///
   ///
   /// Parameters:
   /// * [id]
+  /// * [inboxReadRequestBody]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -371,6 +479,7 @@ class InboxServiceApi {
   /// Throws [DioException] if API call or serialization fails
   Future<Response<InboxMutationResponseBody>> inboxServiceMarkInboxRead({
     required String id,
+    InboxReadRequestBody? inboxReadRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
     Map<String, dynamic>? extra,
@@ -395,11 +504,29 @@ class InboxServiceApi {
         ],
         ...?extra,
       },
+      contentType: 'application/json',
       validateStatus: validateStatus,
     );
 
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(inboxReadRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
     final _response = await _dio.request<Object>(
       _path,
+      data: _bodyData,
       options: _options,
       cancelToken: cancelToken,
       onSendProgress: onSendProgress,

@@ -29,6 +29,9 @@ InboxEntry _$InboxEntryFromJson(Map<String, dynamic> json) => $checkedCreate(
           expiresAt: $checkedConvert('expiresAt', (v) => (v as num?)?.toInt()),
           expired: $checkedConvert('expired', (v) => v as bool?),
           recalled: $checkedConvert('recalled', (v) => v as bool?),
+          topic: $checkedConvert('topic', (v) => v as String?),
+          category: $checkedConvert('category',
+              (v) => $enumDecodeNullable(_$InboxEntryCategoryEnumEnumMap, v)),
         );
         return val;
       },
@@ -48,4 +51,12 @@ Map<String, dynamic> _$InboxEntryToJson(InboxEntry instance) =>
       if (instance.expiresAt case final value?) 'expiresAt': value,
       if (instance.expired case final value?) 'expired': value,
       if (instance.recalled case final value?) 'recalled': value,
+      if (instance.topic case final value?) 'topic': value,
+      if (_$InboxEntryCategoryEnumEnumMap[instance.category] case final value?)
+        'category': value,
     };
+
+const _$InboxEntryCategoryEnumEnumMap = {
+  InboxEntryCategoryEnum.notice: 'notice',
+  InboxEntryCategoryEnum.reminder: 'reminder',
+};

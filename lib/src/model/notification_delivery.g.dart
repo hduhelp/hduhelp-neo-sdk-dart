@@ -127,6 +127,7 @@ const _$NotificationDeliveryStatusEnumEnumMap = {
   NotificationDeliveryStatusEnum.succeeded: 'succeeded',
   NotificationDeliveryStatusEnum.failed: 'failed',
   NotificationDeliveryStatusEnum.skipped: 'skipped',
+  NotificationDeliveryStatusEnum.uncertain: 'uncertain',
 };
 
 const _$NotificationDeliveryNextActionEnumEnumMap = {

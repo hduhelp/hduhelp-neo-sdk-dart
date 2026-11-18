@@ -22,6 +22,10 @@ AdminUserInfo _$AdminUserInfoFromJson(Map<String, dynamic> json) =>
           staffName: $checkedConvert('staffName', (v) => v as String?),
           staffId: $checkedConvert('staffId', (v) => v as String?),
           unitName: $checkedConvert('unitName', (v) => v as String?),
+          deletionRequestedAt: $checkedConvert(
+              'deletionRequestedAt', (v) => (v as num?)?.toInt()),
+          deletionScheduledAt: $checkedConvert(
+              'deletionScheduledAt', (v) => (v as num?)?.toInt()),
         );
         return val;
       },
@@ -39,4 +43,8 @@ Map<String, dynamic> _$AdminUserInfoToJson(AdminUserInfo instance) =>
       if (instance.staffName case final value?) 'staffName': value,
       if (instance.staffId case final value?) 'staffId': value,
       if (instance.unitName case final value?) 'unitName': value,
+      if (instance.deletionRequestedAt case final value?)
+        'deletionRequestedAt': value,
+      if (instance.deletionScheduledAt case final value?)
+        'deletionScheduledAt': value,
     };

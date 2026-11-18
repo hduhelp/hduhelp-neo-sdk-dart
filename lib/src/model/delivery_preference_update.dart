@@ -56,6 +56,8 @@ class DeliveryPreferenceUpdate {
 }
 
 enum DeliveryPreferenceUpdateProviderEnum {
+  @JsonValue(r'app_push')
+  appPush(r'app_push'),
   @JsonValue(r'wechat_mp')
   wechatMp(r'wechat_mp'),
   @JsonValue(r'dingtalk_work')

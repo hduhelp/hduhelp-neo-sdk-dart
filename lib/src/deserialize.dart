@@ -3,6 +3,9 @@ import 'package:hduhelp_neo/src/model/academic_config_response_body.dart';
 import 'package:hduhelp_neo/src/model/academic_service_bind_schedule_share429_response.dart';
 import 'package:hduhelp_neo/src/model/academic_term_item.dart';
 import 'package:hduhelp_neo/src/model/academic_year_term.dart';
+import 'package:hduhelp_neo/src/model/account_deletion_blocker.dart';
+import 'package:hduhelp_neo/src/model/account_deletion_data.dart';
+import 'package:hduhelp_neo/src/model/account_deletion_response_body.dart';
 import 'package:hduhelp_neo/src/model/activity.dart';
 import 'package:hduhelp_neo/src/model/activity_detail.dart';
 import 'package:hduhelp_neo/src/model/activity_detail_response_body.dart';
@@ -36,21 +39,16 @@ import 'package:hduhelp_neo/src/model/admin_domain_tree_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_electricity_meter.dart';
 import 'package:hduhelp_neo/src/model/admin_impersonation_log.dart';
 import 'package:hduhelp_neo/src/model/admin_impersonation_logs_data.dart';
+import 'package:hduhelp_neo/src/model/admin_legal_document.dart';
+import 'package:hduhelp_neo/src/model/admin_legal_document_page.dart';
+import 'package:hduhelp_neo/src/model/admin_legal_document_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_legal_document_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_login_client_info.dart';
 import 'package:hduhelp_neo/src/model/admin_login_data.dart';
 import 'package:hduhelp_neo/src/model/admin_login_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_login_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_logout_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_me_response_body.dart';
-import 'package:hduhelp_neo/src/model/admin_notice.dart';
-import 'package:hduhelp_neo/src/model/admin_notice_audience_item.dart';
-import 'package:hduhelp_neo/src/model/admin_notice_audience_page.dart';
-import 'package:hduhelp_neo/src/model/admin_notice_audience_page_response_body.dart';
-import 'package:hduhelp_neo/src/model/admin_notice_event.dart';
-import 'package:hduhelp_neo/src/model/admin_notice_page.dart';
-import 'package:hduhelp_neo/src/model/admin_notice_page_response_body.dart';
-import 'package:hduhelp_neo/src/model/admin_notice_response_body.dart';
-import 'package:hduhelp_neo/src/model/admin_notice_stats.dart';
 import 'package:hduhelp_neo/src/model/admin_official_account.dart';
 import 'package:hduhelp_neo/src/model/admin_official_account_list_data.dart';
 import 'package:hduhelp_neo/src/model/admin_official_account_list_response_body.dart';
@@ -80,6 +78,7 @@ import 'package:hduhelp_neo/src/model/admin_search_data.dart';
 import 'package:hduhelp_neo/src/model/admin_search_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_source_tree_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_tenant_info.dart';
+import 'package:hduhelp_neo/src/model/admin_user_consents_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_user_detail.dart';
 import 'package:hduhelp_neo/src/model/admin_user_info.dart';
 import 'package:hduhelp_neo/src/model/admin_user_state.dart';
@@ -284,6 +283,15 @@ import 'package:hduhelp_neo/src/model/analytics_feature_snapshot.dart';
 import 'package:hduhelp_neo/src/model/analytics_metric.dart';
 import 'package:hduhelp_neo/src/model/analytics_response_body.dart';
 import 'package:hduhelp_neo/src/model/analytics_snapshot.dart';
+import 'package:hduhelp_neo/src/model/announcement.dart';
+import 'package:hduhelp_neo/src/model/announcement_audience_item.dart';
+import 'package:hduhelp_neo/src/model/announcement_audience_page.dart';
+import 'package:hduhelp_neo/src/model/announcement_audience_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/announcement_event.dart';
+import 'package:hduhelp_neo/src/model/announcement_page.dart';
+import 'package:hduhelp_neo/src/model/announcement_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/announcement_response_body.dart';
+import 'package:hduhelp_neo/src/model/announcement_stats.dart';
 import 'package:hduhelp_neo/src/model/apm_alloc.dart';
 import 'package:hduhelp_neo/src/model/apm_app.dart';
 import 'package:hduhelp_neo/src/model/apm_apps_data.dart';
@@ -475,6 +483,10 @@ import 'package:hduhelp_neo/src/model/config_get_response_body.dart';
 import 'package:hduhelp_neo/src/model/config_item.dart';
 import 'package:hduhelp_neo/src/model/config_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/confirm_impersonation_request_body.dart';
+import 'package:hduhelp_neo/src/model/consent_agreement.dart';
+import 'package:hduhelp_neo/src/model/consent_status.dart';
+import 'package:hduhelp_neo/src/model/consent_status_item.dart';
+import 'package:hduhelp_neo/src/model/consent_status_response_body.dart';
 import 'package:hduhelp_neo/src/model/course.dart';
 import 'package:hduhelp_neo/src/model/course_group_item.dart';
 import 'package:hduhelp_neo/src/model/course_groups_response_body.dart';
@@ -487,7 +499,7 @@ import 'package:hduhelp_neo/src/model/course_simulation_replace_item.dart';
 import 'package:hduhelp_neo/src/model/course_simulation_response_body.dart';
 import 'package:hduhelp_neo/src/model/course_simulation_slot.dart';
 import 'package:hduhelp_neo/src/model/crawl_run_info.dart';
-import 'package:hduhelp_neo/src/model/create_admin_notice_request_body.dart';
+import 'package:hduhelp_neo/src/model/create_announcement_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_app_data.dart';
 import 'package:hduhelp_neo/src/model/create_app_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_app_response_body.dart';
@@ -504,6 +516,7 @@ import 'package:hduhelp_neo/src/model/create_grade_chat_group_response_body.dart
 import 'package:hduhelp_neo/src/model/create_group_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_group_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_item_request_body.dart';
+import 'package:hduhelp_neo/src/model/create_legal_document_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_login_client_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_login_client_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_operator_request_body.dart';
@@ -511,7 +524,6 @@ import 'package:hduhelp_neo/src/model/create_operator_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_pat_data.dart';
 import 'package:hduhelp_neo/src/model/create_pat_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_pat_response_body.dart';
-import 'package:hduhelp_neo/src/model/create_policy_profile_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_recruit_chat_group_data.dart';
 import 'package:hduhelp_neo/src/model/create_recruit_chat_group_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_recruit_chat_group_response_body.dart';
@@ -521,7 +533,7 @@ import 'package:hduhelp_neo/src/model/create_room_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_room_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_schedule_share_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_sensitive_word_request_body.dart';
-import 'package:hduhelp_neo/src/model/create_site_announcement_request_body.dart';
+import 'package:hduhelp_neo/src/model/create_site_banner_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_source_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_tenant_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_tenant_response_body.dart';
@@ -543,7 +555,7 @@ import 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_data.dart';
 import 'package:hduhelp_neo/src/model/cursor_reacted_comment_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/cursor_relation_list_data.dart';
 import 'package:hduhelp_neo/src/model/cursor_relation_list_response_body.dart';
-import 'package:hduhelp_neo/src/model/delete_admin_notice_response_body.dart';
+import 'package:hduhelp_neo/src/model/delete_announcement_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_campus_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_electricity_meter_response_body.dart';
@@ -555,10 +567,8 @@ import 'package:hduhelp_neo/src/model/delete_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_room_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_campus_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_social_identity_response_body.dart';
-import 'package:hduhelp_neo/src/model/delivery_group.dart';
 import 'package:hduhelp_neo/src/model/delivery_page.dart';
 import 'package:hduhelp_neo/src/model/delivery_page_response_body.dart';
-import 'package:hduhelp_neo/src/model/delivery_policy.dart';
 import 'package:hduhelp_neo/src/model/delivery_preference.dart';
 import 'package:hduhelp_neo/src/model/delivery_preference_response_body.dart';
 import 'package:hduhelp_neo/src/model/delivery_preference_update.dart';
@@ -585,7 +595,7 @@ import 'package:hduhelp_neo/src/model/domain_delete_response_body.dart';
 import 'package:hduhelp_neo/src/model/domain_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/domain_tree_response_body.dart';
 import 'package:hduhelp_neo/src/model/editable_notice.dart';
-import 'package:hduhelp_neo/src/model/editable_site_announcement.dart';
+import 'package:hduhelp_neo/src/model/editable_site_banner.dart';
 import 'package:hduhelp_neo/src/model/electric.dart';
 import 'package:hduhelp_neo/src/model/electric_balance_data.dart';
 import 'package:hduhelp_neo/src/model/electric_balance_response_body.dart';
@@ -710,6 +720,8 @@ import 'package:hduhelp_neo/src/model/inbox_mark_read_response_body.dart';
 import 'package:hduhelp_neo/src/model/inbox_mutation_response_body.dart';
 import 'package:hduhelp_neo/src/model/inbox_page.dart';
 import 'package:hduhelp_neo/src/model/inbox_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/inbox_read_all_request_body.dart';
+import 'package:hduhelp_neo/src/model/inbox_read_request_body.dart';
 import 'package:hduhelp_neo/src/model/inbox_unread.dart';
 import 'package:hduhelp_neo/src/model/inbox_unread_response_body.dart';
 import 'package:hduhelp_neo/src/model/info_card.dart';
@@ -757,6 +769,9 @@ import 'package:hduhelp_neo/src/model/knowledge_tags_response_body.dart';
 import 'package:hduhelp_neo/src/model/leave_group_response_body.dart';
 import 'package:hduhelp_neo/src/model/leave_room_request_body.dart';
 import 'package:hduhelp_neo/src/model/leave_room_response_body.dart';
+import 'package:hduhelp_neo/src/model/legal_document_type.dart';
+import 'package:hduhelp_neo/src/model/legal_document_type_list.dart';
+import 'package:hduhelp_neo/src/model/legal_document_types_response_body.dart';
 import 'package:hduhelp_neo/src/model/library_attendance_data.dart';
 import 'package:hduhelp_neo/src/model/library_attendance_response_body.dart';
 import 'package:hduhelp_neo/src/model/library_booking_category_list_data.dart';
@@ -777,6 +792,7 @@ import 'package:hduhelp_neo/src/model/list_pat_data.dart';
 import 'package:hduhelp_neo/src/model/list_pat_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_pat_scopes_data.dart';
 import 'package:hduhelp_neo/src/model/list_pat_scopes_response_body.dart';
+import 'package:hduhelp_neo/src/model/list_public_legal_documents_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_sessions_data.dart';
 import 'package:hduhelp_neo/src/model/list_sessions_response_body.dart';
 import 'package:hduhelp_neo/src/model/login_callback_grant_request_body.dart';
@@ -810,6 +826,7 @@ import 'package:hduhelp_neo/src/model/mcp_tool_info.dart';
 import 'package:hduhelp_neo/src/model/mcp_tools_response_body.dart';
 import 'package:hduhelp_neo/src/model/max_month.dart';
 import 'package:hduhelp_neo/src/model/me_response_body.dart';
+import 'package:hduhelp_neo/src/model/member_availability.dart';
 import 'package:hduhelp_neo/src/model/member_info.dart';
 import 'package:hduhelp_neo/src/model/merge_class_chat_group_request_body.dart';
 import 'package:hduhelp_neo/src/model/merge_class_chat_group_response_body.dart';
@@ -1156,17 +1173,27 @@ import 'package:hduhelp_neo/src/model/newer_data.dart';
 import 'package:hduhelp_neo/src/model/news.dart';
 import 'package:hduhelp_neo/src/model/news_response_body.dart';
 import 'package:hduhelp_neo/src/model/notice_action.dart';
+import 'package:hduhelp_neo/src/model/notice_audience_estimate.dart';
+import 'package:hduhelp_neo/src/model/notice_preview_item.dart';
+import 'package:hduhelp_neo/src/model/notice_preview_response_body.dart';
+import 'package:hduhelp_neo/src/model/notice_reach_estimate.dart';
 import 'package:hduhelp_neo/src/model/notification_action.dart';
 import 'package:hduhelp_neo/src/model/notification_chain_test_request_body.dart';
 import 'package:hduhelp_neo/src/model/notification_chain_test_response_body.dart';
 import 'package:hduhelp_neo/src/model/notification_chain_test_result.dart';
 import 'package:hduhelp_neo/src/model/notification_chain_test_stage.dart';
+import 'package:hduhelp_neo/src/model/notification_channel.dart';
+import 'package:hduhelp_neo/src/model/notification_channel_test_response_body.dart';
+import 'package:hduhelp_neo/src/model/notification_channel_test_result.dart';
 import 'package:hduhelp_neo/src/model/notification_delivery.dart';
-import 'package:hduhelp_neo/src/model/notification_limits.dart';
+import 'package:hduhelp_neo/src/model/notification_device_request_body.dart';
+import 'package:hduhelp_neo/src/model/notification_settings.dart';
+import 'package:hduhelp_neo/src/model/notification_settings_mutation_response_body.dart';
+import 'package:hduhelp_neo/src/model/notification_settings_response_body.dart';
 import 'package:hduhelp_neo/src/model/notification_task.dart';
-import 'package:hduhelp_neo/src/model/notification_topic_configuration.dart';
-import 'package:hduhelp_neo/src/model/notification_topic_configuration_response_body.dart';
-import 'package:hduhelp_neo/src/model/notification_topic_configurations_response_body.dart';
+import 'package:hduhelp_neo/src/model/notification_topic_settings.dart';
+import 'package:hduhelp_neo/src/model/notification_topic_settings_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/notification_topic_settings_response_body.dart';
 import 'package:hduhelp_neo/src/model/o_auth_identity_option.dart';
 import 'package:hduhelp_neo/src/model/o_auth_scope_item.dart';
 import 'package:hduhelp_neo/src/model/official_account.dart';
@@ -1204,10 +1231,6 @@ import 'package:hduhelp_neo/src/model/person_info.dart';
 import 'package:hduhelp_neo/src/model/person_info_data.dart';
 import 'package:hduhelp_neo/src/model/person_info_response_body.dart';
 import 'package:hduhelp_neo/src/model/ping_response_body.dart';
-import 'package:hduhelp_neo/src/model/policy_profile.dart';
-import 'package:hduhelp_neo/src/model/policy_profile_response_body.dart';
-import 'package:hduhelp_neo/src/model/policy_profiles_response_body.dart';
-import 'package:hduhelp_neo/src/model/policy_selection.dart';
 import 'package:hduhelp_neo/src/model/poll_we_chat_qr_login_data.dart';
 import 'package:hduhelp_neo/src/model/poll_we_chat_qr_login_request_body.dart';
 import 'package:hduhelp_neo/src/model/poll_we_chat_qr_login_response_body.dart';
@@ -1245,14 +1268,19 @@ import 'package:hduhelp_neo/src/model/provider_test_response_body.dart';
 import 'package:hduhelp_neo/src/model/provider_test_result.dart';
 import 'package:hduhelp_neo/src/model/public_campus_item.dart';
 import 'package:hduhelp_neo/src/model/public_campus_list_response_body.dart';
-import 'package:hduhelp_neo/src/model/publish_admin_notice_response_body.dart';
+import 'package:hduhelp_neo/src/model/public_legal_document.dart';
+import 'package:hduhelp_neo/src/model/public_legal_document_list.dart';
+import 'package:hduhelp_neo/src/model/public_legal_document_response_body.dart';
+import 'package:hduhelp_neo/src/model/publish_announcement_response_body.dart';
 import 'package:hduhelp_neo/src/model/publish_comment_request_body.dart';
+import 'package:hduhelp_neo/src/model/publish_legal_document_request_body.dart';
 import 'package:hduhelp_neo/src/model/publish_post_data.dart';
 import 'package:hduhelp_neo/src/model/publish_post_request_body.dart';
 import 'package:hduhelp_neo/src/model/publish_post_response_body.dart';
 import 'package:hduhelp_neo/src/model/purge_post_data.dart';
 import 'package:hduhelp_neo/src/model/purge_post_request_body.dart';
 import 'package:hduhelp_neo/src/model/purge_post_response_body.dart';
+import 'package:hduhelp_neo/src/model/push_setting.dart';
 import 'package:hduhelp_neo/src/model/react_request_body.dart';
 import 'package:hduhelp_neo/src/model/reacted_comment.dart';
 import 'package:hduhelp_neo/src/model/reaction_bucket.dart';
@@ -1264,6 +1292,9 @@ import 'package:hduhelp_neo/src/model/real_time_data.dart';
 import 'package:hduhelp_neo/src/model/real_time_response_body.dart';
 import 'package:hduhelp_neo/src/model/rebuild_index_data.dart';
 import 'package:hduhelp_neo/src/model/rebuild_index_response_body.dart';
+import 'package:hduhelp_neo/src/model/recall_announcement_request_body.dart';
+import 'package:hduhelp_neo/src/model/recall_task_request_body.dart';
+import 'package:hduhelp_neo/src/model/record_consents_request_body.dart';
 import 'package:hduhelp_neo/src/model/recruitment_item.dart';
 import 'package:hduhelp_neo/src/model/recruitment_page.dart';
 import 'package:hduhelp_neo/src/model/recruitment_response_body.dart';
@@ -1271,7 +1302,7 @@ import 'package:hduhelp_neo/src/model/refresh_token_request_body.dart';
 import 'package:hduhelp_neo/src/model/relation_list_data.dart';
 import 'package:hduhelp_neo/src/model/relation_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/relation_user.dart';
-import 'package:hduhelp_neo/src/model/rename_policy_profile_request_body.dart';
+import 'package:hduhelp_neo/src/model/reminder_setting.dart';
 import 'package:hduhelp_neo/src/model/rename_schedule_share_request_body.dart';
 import 'package:hduhelp_neo/src/model/reparse_request_body.dart';
 import 'package:hduhelp_neo/src/model/replace_course_simulation_request_body.dart';
@@ -1288,6 +1319,7 @@ import 'package:hduhelp_neo/src/model/report_reason_list_data.dart';
 import 'package:hduhelp_neo/src/model/report_reason_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/report_state_data.dart';
 import 'package:hduhelp_neo/src/model/report_state_response_body.dart';
+import 'package:hduhelp_neo/src/model/request_account_deletion_request_body.dart';
 import 'package:hduhelp_neo/src/model/reset_operator_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/reset_operator_password_response_body.dart';
 import 'package:hduhelp_neo/src/model/reset_password_request_body.dart';
@@ -1322,7 +1354,7 @@ import 'package:hduhelp_neo/src/model/runtime_status.dart';
 import 'package:hduhelp_neo/src/model/runtime_status_response_body.dart';
 import 'package:hduhelp_neo/src/model/save_document_request_body.dart';
 import 'package:hduhelp_neo/src/model/save_draft_request_body.dart';
-import 'package:hduhelp_neo/src/model/save_notification_topic_configuration_request_body.dart';
+import 'package:hduhelp_neo/src/model/save_notification_topic_override_request_body.dart';
 import 'package:hduhelp_neo/src/model/scene.dart';
 import 'package:hduhelp_neo/src/model/scene_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/schedule_course.dart';
@@ -1441,11 +1473,11 @@ import 'package:hduhelp_neo/src/model/sign_upload_data.dart';
 import 'package:hduhelp_neo/src/model/sign_upload_request_body.dart';
 import 'package:hduhelp_neo/src/model/sign_upload_response_body.dart';
 import 'package:hduhelp_neo/src/model/simple_response_body.dart';
-import 'package:hduhelp_neo/src/model/site_announcement.dart';
-import 'package:hduhelp_neo/src/model/site_announcement_mutation_response_body.dart';
-import 'package:hduhelp_neo/src/model/site_announcement_page.dart';
-import 'package:hduhelp_neo/src/model/site_announcement_page_response_body.dart';
-import 'package:hduhelp_neo/src/model/site_announcement_response_body.dart';
+import 'package:hduhelp_neo/src/model/site_banner.dart';
+import 'package:hduhelp_neo/src/model/site_banner_mutation_response_body.dart';
+import 'package:hduhelp_neo/src/model/site_banner_page.dart';
+import 'package:hduhelp_neo/src/model/site_banner_page_response_body.dart';
+import 'package:hduhelp_neo/src/model/site_banner_response_body.dart';
 import 'package:hduhelp_neo/src/model/slot.dart';
 import 'package:hduhelp_neo/src/model/social_binding.dart';
 import 'package:hduhelp_neo/src/model/source_delete_response_body.dart';
@@ -1506,14 +1538,14 @@ import 'package:hduhelp_neo/src/model/test_connection_request_body.dart';
 import 'package:hduhelp_neo/src/model/test_connection_response_body.dart';
 import 'package:hduhelp_neo/src/model/time_response_body.dart';
 import 'package:hduhelp_neo/src/model/time_slot_stat.dart';
-import 'package:hduhelp_neo/src/model/topic_capabilities.dart';
-import 'package:hduhelp_neo/src/model/topic_capabilities_response_body.dart';
+import 'package:hduhelp_neo/src/model/topic_delivery.dart';
+import 'package:hduhelp_neo/src/model/topic_override.dart';
 import 'package:hduhelp_neo/src/model/total_time.dart';
 import 'package:hduhelp_neo/src/model/unbind_campus_response_body.dart';
 import 'package:hduhelp_neo/src/model/unbind_social_response_body.dart';
 import 'package:hduhelp_neo/src/model/unreturned_batch_item.dart';
 import 'package:hduhelp_neo/src/model/update_activity_request_body.dart';
-import 'package:hduhelp_neo/src/model/update_admin_notice_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_announcement_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_app_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_asset_request_body.dart';
@@ -1529,18 +1561,19 @@ import 'package:hduhelp_neo/src/model/update_favorite_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_favorite_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_feedback_type_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_item_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_legal_document_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_login_client_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_login_client_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_my_profile_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_my_profile_response_body.dart';
+import 'package:hduhelp_neo/src/model/update_notification_setting_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_official_account_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_official_application_request_body.dart';
-import 'package:hduhelp_neo/src/model/update_policy_profile_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_post_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_role_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_service_authorization_notification_request_body.dart';
-import 'package:hduhelp_neo/src/model/update_site_announcement_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_site_banner_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_source_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_subscription_request_body.dart';
 import 'package:hduhelp_neo/src/model/upload_data.dart';
@@ -1552,6 +1585,8 @@ import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_request_body.d
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_social_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_social_identity_response_body.dart';
+import 'package:hduhelp_neo/src/model/user_consent_record.dart';
+import 'package:hduhelp_neo/src/model/user_consent_record_list.dart';
 import 'package:hduhelp_neo/src/model/user_detail_authorization.dart';
 import 'package:hduhelp_neo/src/model/user_detail_campus_identity.dart';
 import 'package:hduhelp_neo/src/model/user_detail_group_membership.dart';
@@ -1562,10 +1597,7 @@ import 'package:hduhelp_neo/src/model/user_detail_subscription.dart';
 import 'package:hduhelp_neo/src/model/user_info.dart';
 import 'package:hduhelp_neo/src/model/user_profile.dart';
 import 'package:hduhelp_neo/src/model/user_profile_response_body.dart';
-import 'package:hduhelp_neo/src/model/validate_admin_notice_response_body.dart';
-import 'package:hduhelp_neo/src/model/validate_policy_data.dart';
-import 'package:hduhelp_neo/src/model/validate_policy_request_body.dart';
-import 'package:hduhelp_neo/src/model/validate_policy_response_body.dart';
+import 'package:hduhelp_neo/src/model/validate_announcement_response_body.dart';
 import 'package:hduhelp_neo/src/model/venue_availability_data.dart';
 import 'package:hduhelp_neo/src/model/venue_availability_response_body.dart';
 import 'package:hduhelp_neo/src/model/venue_availability_slot.dart';
@@ -1610,6 +1642,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AcademicYearTerm':
       return AcademicYearTerm.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AccountDeletionBlocker':
+      return AccountDeletionBlocker.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AccountDeletionData':
+      return AccountDeletionData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AccountDeletionResponseBody':
+      return AccountDeletionResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'Activity':
       return Activity.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -1706,6 +1747,18 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AdminImpersonationLogsData':
       return AdminImpersonationLogsData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AdminLegalDocument':
+      return AdminLegalDocument.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminLegalDocumentPage':
+      return AdminLegalDocumentPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminLegalDocumentPageResponseBody':
+      return AdminLegalDocumentPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AdminLegalDocumentResponseBody':
+      return AdminLegalDocumentResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AdminLoginClientInfo':
       return AdminLoginClientInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -1723,32 +1776,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AdminMeResponseBody':
       return AdminMeResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'AdminNotice':
-      return AdminNotice.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'AdminNoticeAudienceItem':
-      return AdminNoticeAudienceItem.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'AdminNoticeAudiencePage':
-      return AdminNoticeAudiencePage.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'AdminNoticeAudiencePageResponseBody':
-      return AdminNoticeAudiencePageResponseBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
-    case 'AdminNoticeEvent':
-      return AdminNoticeEvent.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'AdminNoticePage':
-      return AdminNoticePage.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'AdminNoticePageResponseBody':
-      return AdminNoticePageResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'AdminNoticeResponseBody':
-      return AdminNoticeResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'AdminNoticeStats':
-      return AdminNoticeStats.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AdminOfficialAccount':
       return AdminOfficialAccount.fromJson(value as Map<String, dynamic>)
@@ -1837,6 +1864,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AdminTenantInfo':
       return AdminTenantInfo.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AdminUserConsentsResponseBody':
+      return AdminUserConsentsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AdminUserDetail':
       return AdminUserDetail.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2437,6 +2467,32 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AnalyticsSnapshot':
       return AnalyticsSnapshot.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'Announcement':
+      return Announcement.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AnnouncementAudienceItem':
+      return AnnouncementAudienceItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnnouncementAudiencePage':
+      return AnnouncementAudiencePage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnnouncementAudiencePageResponseBody':
+      return AnnouncementAudiencePageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AnnouncementEvent':
+      return AnnouncementEvent.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnnouncementPage':
+      return AnnouncementPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnnouncementPageResponseBody':
+      return AnnouncementPageResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'AnnouncementResponseBody':
+      return AnnouncementResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AnnouncementStats':
+      return AnnouncementStats.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'ApmAlloc':
       return ApmAlloc.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ApmApp':
@@ -2980,6 +3036,18 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ConfirmImpersonationRequestBody':
       return ConfirmImpersonationRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'ConsentAgreement':
+      return ConsentAgreement.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ConsentStatus':
+      return ConsentStatus.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ConsentStatusItem':
+      return ConsentStatusItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ConsentStatusResponseBody':
+      return ConsentStatusResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Course':
       return Course.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'CourseGroupItem':
@@ -3014,8 +3082,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'CrawlRunInfo':
       return CrawlRunInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'CreateAdminNoticeRequestBody':
-      return CreateAdminNoticeRequestBody.fromJson(
+    case 'CreateAnnouncementRequestBody':
+      return CreateAnnouncementRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'CreateAppData':
       return CreateAppData.fromJson(value as Map<String, dynamic>)
@@ -3065,6 +3133,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CreateItemRequestBody':
       return CreateItemRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'CreateLegalDocumentRequestBody':
+      return CreateLegalDocumentRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'CreateLoginClientRequestBody':
       return CreateLoginClientRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -3086,9 +3157,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CreatePATResponseBody':
       return CreatePATResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'CreatePolicyProfileRequestBody':
-      return CreatePolicyProfileRequestBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
     case 'CreateRecruitChatGroupData':
       return CreateRecruitChatGroupData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -3116,9 +3184,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CreateSensitiveWordRequestBody':
       return CreateSensitiveWordRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'CreateSiteAnnouncementRequestBody':
-      return CreateSiteAnnouncementRequestBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
+    case 'CreateSiteBannerRequestBody':
+      return CreateSiteBannerRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'CreateSourceRequestBody':
       return CreateSourceRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -3180,8 +3248,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'CursorRelationListResponseBody':
       return CursorRelationListResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'DeleteAdminNoticeResponseBody':
-      return DeleteAdminNoticeResponseBody.fromJson(
+    case 'DeleteAnnouncementResponseBody':
+      return DeleteAnnouncementResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'DeleteAppResponseBody':
       return DeleteAppResponseBody.fromJson(value as Map<String, dynamic>)
@@ -3216,16 +3284,10 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'DeleteUserSocialIdentityResponseBody':
       return DeleteUserSocialIdentityResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'DeliveryGroup':
-      return DeliveryGroup.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'DeliveryPage':
       return DeliveryPage.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'DeliveryPageResponseBody':
       return DeliveryPageResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'DeliveryPolicy':
-      return DeliveryPolicy.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'DeliveryPreference':
       return DeliveryPreference.fromJson(value as Map<String, dynamic>)
@@ -3305,8 +3367,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'EditableNotice':
       return EditableNotice.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'EditableSiteAnnouncement':
-      return EditableSiteAnnouncement.fromJson(value as Map<String, dynamic>)
+    case 'EditableSiteBanner':
+      return EditableSiteBanner.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'Electric':
       return Electric.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -3645,6 +3707,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'InboxPageResponseBody':
       return InboxPageResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'InboxReadAllRequestBody':
+      return InboxReadAllRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'InboxReadRequestBody':
+      return InboxReadRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'InboxUnread':
       return InboxUnread.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'InboxUnreadResponseBody':
@@ -3782,6 +3850,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'LeaveRoomResponseBody':
       return LeaveRoomResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'LegalDocumentType':
+      return LegalDocumentType.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'LegalDocumentTypeList':
+      return LegalDocumentTypeList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'LegalDocumentTypesResponseBody':
+      return LegalDocumentTypesResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'LibraryAttendanceData':
       return LibraryAttendanceData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -3841,6 +3918,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ListPATScopesResponseBody':
       return ListPATScopesResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ListPublicLegalDocumentsResponseBody':
+      return ListPublicLegalDocumentsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'ListSessionsData':
       return ListSessionsData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -3933,6 +4013,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
       return MaxMonth.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MeResponseBody':
       return MeResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'MemberAvailability':
+      return MemberAvailability.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'MemberInfo':
       return MemberInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -4959,6 +5042,18 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'NoticeAction':
       return NoticeAction.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'NoticeAudienceEstimate':
+      return NoticeAudienceEstimate.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'NoticePreviewItem':
+      return NoticePreviewItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'NoticePreviewResponseBody':
+      return NoticePreviewResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'NoticeReachEstimate':
+      return NoticeReachEstimate.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'NotificationAction':
       return NotificationAction.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -4974,23 +5069,41 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'NotificationChainTestStage':
       return NotificationChainTestStage.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'NotificationChannel':
+      return NotificationChannel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'NotificationChannelTestResponseBody':
+      return NotificationChannelTestResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'NotificationChannelTestResult':
+      return NotificationChannelTestResult.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'NotificationDelivery':
       return NotificationDelivery.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'NotificationLimits':
-      return NotificationLimits.fromJson(value as Map<String, dynamic>)
+    case 'NotificationDeviceRequestBody':
+      return NotificationDeviceRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'NotificationSettings':
+      return NotificationSettings.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'NotificationSettingsMutationResponseBody':
+      return NotificationSettingsMutationResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'NotificationSettingsResponseBody':
+      return NotificationSettingsResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'NotificationTask':
       return NotificationTask.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'NotificationTopicConfiguration':
-      return NotificationTopicConfiguration.fromJson(
+    case 'NotificationTopicSettings':
+      return NotificationTopicSettings.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'NotificationTopicSettingsListResponseBody':
+      return NotificationTopicSettingsListResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'NotificationTopicConfigurationResponseBody':
-      return NotificationTopicConfigurationResponseBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
-    case 'NotificationTopicConfigurationsResponseBody':
-      return NotificationTopicConfigurationsResponseBody.fromJson(
+    case 'NotificationTopicSettingsResponseBody':
+      return NotificationTopicSettingsResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'OAuthIdentityOption':
       return OAuthIdentityOption.fromJson(value as Map<String, dynamic>)
@@ -5096,18 +5209,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'PingResponseBody':
       return PingResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'PolicyProfile':
-      return PolicyProfile.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'PolicyProfileResponseBody':
-      return PolicyProfileResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'PolicyProfilesResponseBody':
-      return PolicyProfilesResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'PolicySelection':
-      return PolicySelection.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'PollWeChatQRLoginData':
       return PollWeChatQRLoginData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -5207,12 +5308,24 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'PublicCampusListResponseBody':
       return PublicCampusListResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'PublishAdminNoticeResponseBody':
-      return PublishAdminNoticeResponseBody.fromJson(
+    case 'PublicLegalDocument':
+      return PublicLegalDocument.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'PublicLegalDocumentList':
+      return PublicLegalDocumentList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'PublicLegalDocumentResponseBody':
+      return PublicLegalDocumentResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'PublishAnnouncementResponseBody':
+      return PublishAnnouncementResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'PublishCommentRequestBody':
       return PublishCommentRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'PublishLegalDocumentRequestBody':
+      return PublishLegalDocumentRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'PublishPostData':
       return PublishPostData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -5231,6 +5344,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'PurgePostResponseBody':
       return PurgePostResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'PushSetting':
+      return PushSetting.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'ReactRequestBody':
       return ReactRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -5263,6 +5378,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'RebuildIndexResponseBody':
       return RebuildIndexResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'RecallAnnouncementRequestBody':
+      return RecallAnnouncementRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'RecallTaskRequestBody':
+      return RecallTaskRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'RecordConsentsRequestBody':
+      return RecordConsentsRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RecruitmentItem':
       return RecruitmentItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -5283,9 +5407,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'RelationUser':
       return RelationUser.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'RenamePolicyProfileRequestBody':
-      return RenamePolicyProfileRequestBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
+    case 'ReminderSetting':
+      return ReminderSetting.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'RenameScheduleShareRequestBody':
       return RenameScheduleShareRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -5332,6 +5456,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ReportStateResponseBody':
       return ReportStateResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'RequestAccountDeletionRequestBody':
+      return RequestAccountDeletionRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'ResetOperatorPasswordRequestBody':
       return ResetOperatorPasswordRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -5431,8 +5558,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SaveDraftRequestBody':
       return SaveDraftRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SaveNotificationTopicConfigurationRequestBody':
-      return SaveNotificationTopicConfigurationRequestBody.fromJson(
+    case 'SaveNotificationTopicOverrideRequestBody':
+      return SaveNotificationTopicOverrideRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'Scene':
       return Scene.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -5770,21 +5897,20 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SimpleResponseBody':
       return SimpleResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SiteAnnouncement':
-      return SiteAnnouncement.fromJson(value as Map<String, dynamic>)
+    case 'SiteBanner':
+      return SiteBanner.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'SiteBannerMutationResponseBody':
+      return SiteBannerMutationResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'SiteBannerPage':
+      return SiteBannerPage.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SiteAnnouncementMutationResponseBody':
-      return SiteAnnouncementMutationResponseBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
-    case 'SiteAnnouncementPage':
-      return SiteAnnouncementPage.fromJson(value as Map<String, dynamic>)
+    case 'SiteBannerPageResponseBody':
+      return SiteBannerPageResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'SiteAnnouncementPageResponseBody':
-      return SiteAnnouncementPageResponseBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
-    case 'SiteAnnouncementResponseBody':
-      return SiteAnnouncementResponseBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
+    case 'SiteBannerResponseBody':
+      return SiteBannerResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Slot':
       return Slot.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SocialBinding':
@@ -5954,12 +6080,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'TimeSlotStat':
       return TimeSlotStat.fromJson(value as Map<String, dynamic>) as ReturnType;
-    case 'TopicCapabilities':
-      return TopicCapabilities.fromJson(value as Map<String, dynamic>)
+    case 'TopicDelivery':
+      return TopicDelivery.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'TopicCapabilitiesResponseBody':
-      return TopicCapabilitiesResponseBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
+    case 'TopicOverride':
+      return TopicOverride.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'TotalTime':
       return TotalTime.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'UnbindCampusResponseBody':
@@ -5974,8 +6100,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UpdateActivityRequestBody':
       return UpdateActivityRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'UpdateAdminNoticeRequestBody':
-      return UpdateAdminNoticeRequestBody.fromJson(
+    case 'UpdateAnnouncementRequestBody':
+      return UpdateAnnouncementRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'UpdateAppRequestBody':
       return UpdateAppRequestBody.fromJson(value as Map<String, dynamic>)
@@ -6022,6 +6148,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UpdateItemRequestBody':
       return UpdateItemRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'UpdateLegalDocumentRequestBody':
+      return UpdateLegalDocumentRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'UpdateLoginClientRequestBody':
       return UpdateLoginClientRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -6034,14 +6163,14 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UpdateMyProfileResponseBody':
       return UpdateMyProfileResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'UpdateNotificationSettingRequestBody':
+      return UpdateNotificationSettingRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'UpdateOfficialAccountRequestBody':
       return UpdateOfficialAccountRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'UpdateOfficialApplicationRequestBody':
       return UpdateOfficialApplicationRequestBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
-    case 'UpdatePolicyProfileRequestBody':
-      return UpdatePolicyProfileRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'UpdatePostRequestBody':
       return UpdatePostRequestBody.fromJson(value as Map<String, dynamic>)
@@ -6055,9 +6184,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UpdateServiceAuthorizationNotificationRequestBody':
       return UpdateServiceAuthorizationNotificationRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'UpdateSiteAnnouncementRequestBody':
-      return UpdateSiteAnnouncementRequestBody.fromJson(
-          value as Map<String, dynamic>) as ReturnType;
+    case 'UpdateSiteBannerRequestBody':
+      return UpdateSiteBannerRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'UpdateSourceRequestBody':
       return UpdateSourceRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -6089,6 +6218,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UpsertUserSocialIdentityResponseBody':
       return UpsertUserSocialIdentityResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'UserConsentRecord':
+      return UserConsentRecord.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'UserConsentRecordList':
+      return UserConsentRecordList.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'UserDetailAuthorization':
       return UserDetailAuthorization.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -6117,18 +6252,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UserProfileResponseBody':
       return UserProfileResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'ValidateAdminNoticeResponseBody':
-      return ValidateAdminNoticeResponseBody.fromJson(
+    case 'ValidateAnnouncementResponseBody':
+      return ValidateAnnouncementResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
-    case 'ValidatePolicyData':
-      return ValidatePolicyData.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'ValidatePolicyRequestBody':
-      return ValidatePolicyRequestBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'ValidatePolicyResponseBody':
-      return ValidatePolicyResponseBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'VenueAvailabilityData':
       return VenueAvailabilityData.fromJson(value as Map<String, dynamic>)
           as ReturnType;

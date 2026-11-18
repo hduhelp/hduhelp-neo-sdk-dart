@@ -40,6 +40,8 @@ class AdminUserDetail {
     this.groupMemberships,
     this.authorizations,
     this.personalAccessTokens,
+    this.deletionRequestedAt,
+    this.deletionScheduledAt,
   });
 
   @JsonKey(
@@ -163,6 +165,22 @@ class AdminUserDetail {
   )
   final List<UserDetailPersonalAccessToken>? personalAccessTokens;
 
+  /// 账号注销冷静期中：申请时间（unix millis）
+  @JsonKey(
+    name: r'deletionRequestedAt',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? deletionRequestedAt;
+
+  /// 账号注销冷静期中：到点执行注销的时间（unix millis）
+  @JsonKey(
+    name: r'deletionScheduledAt',
+    required: false,
+    includeIfNull: false,
+  )
+  final int? deletionScheduledAt;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -183,7 +201,9 @@ class AdminUserDetail {
           other.subscriptions == subscriptions &&
           other.groupMemberships == groupMemberships &&
           other.authorizations == authorizations &&
-          other.personalAccessTokens == personalAccessTokens;
+          other.personalAccessTokens == personalAccessTokens &&
+          other.deletionRequestedAt == deletionRequestedAt &&
+          other.deletionScheduledAt == deletionScheduledAt;
 
   @override
   int get hashCode =>
@@ -203,7 +223,9 @@ class AdminUserDetail {
       subscriptions.hashCode +
       groupMemberships.hashCode +
       authorizations.hashCode +
-      personalAccessTokens.hashCode;
+      personalAccessTokens.hashCode +
+      deletionRequestedAt.hashCode +
+      deletionScheduledAt.hashCode;
 
   factory AdminUserDetail.fromJson(Map<String, dynamic> json) =>
       _$AdminUserDetailFromJson(json);
