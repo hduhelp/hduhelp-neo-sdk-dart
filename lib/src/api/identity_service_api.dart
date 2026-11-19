@@ -28,7 +28,6 @@ import 'package:hduhelp_neo/src/model/bind_campus_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_email_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_phone_request_body.dart';
-import 'package:hduhelp_neo/src/model/bind_phone_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_social_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_social_response_body.dart';
 import 'package:hduhelp_neo/src/model/bindings_response_body.dart';
@@ -37,6 +36,7 @@ import 'package:hduhelp_neo/src/model/change_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/change_phone_request_body.dart';
 import 'package:hduhelp_neo/src/model/common_response_body.dart';
 import 'package:hduhelp_neo/src/model/complete_login_intent_request_body.dart';
+import 'package:hduhelp_neo/src/model/contact_bind_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_pat_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_pat_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_we_chat_qr_login_request_body.dart';
@@ -71,8 +71,6 @@ import 'package:hduhelp_neo/src/model/merge_confirm_request_body.dart';
 import 'package:hduhelp_neo/src/model/merge_confirm_response_body.dart';
 import 'package:hduhelp_neo/src/model/merge_preview_request_body.dart';
 import 'package:hduhelp_neo/src/model/merge_preview_response_body.dart';
-import 'package:hduhelp_neo/src/model/merge_start_request_body.dart';
-import 'package:hduhelp_neo/src/model/merge_start_response_body.dart';
 import 'package:hduhelp_neo/src/model/password_reset_verification_response_body.dart';
 import 'package:hduhelp_neo/src/model/poll_we_chat_qr_login_request_body.dart';
 import 'package:hduhelp_neo/src/model/poll_we_chat_qr_login_response_body.dart';
@@ -1178,10 +1176,10 @@ class IdentityServiceApi {
   }
 
   /// 授权单个校园服务
-  /// 二课与图书馆不带密码时优先复用已有有效授权，无法复用则返回 40934；重新验证时账号缺省为当前学号。阳光长跑仍需提交独立 Sportmeta 账号与密码，登录后校验学生身份属于当前学号。仅一方原生会话可调用。
+  /// 二课、图书馆与学习通不带密码时优先复用已有有效授权，无法复用则返回 40934；重新验证时使用当前学号和杭电统一身份认证密码，不允许指定其他学号。阳光长跑仍需提交独立 Sportmeta 账号与密码，登录后校验学生身份属于当前学号。学习通通过杭电泛雅 SSO 换取超星会话，保存学号、加密密码及超星 Cookie，查询失败时最多重新登录一次，并支持定时续期；不保存学校 SSO Cookie。仅一方原生会话可调用。
   ///
   /// Parameters:
-  /// * [service] - erke | library | sunrun
+  /// * [service] - erke | library | sunrun | chaoxing
   /// * [authorizeServiceRequestBody]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -1390,9 +1388,9 @@ class IdentityServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [CommonResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [ContactBindResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CommonResponseBody>> identityServiceBindEmail({
+  Future<Response<ContactBindResponseBody>> identityServiceBindEmail({
     BindEmailRequestBody? bindEmailRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -1446,14 +1444,14 @@ class IdentityServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    CommonResponseBody? _responseData;
+    ContactBindResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<CommonResponseBody, CommonResponseBody>(
-              rawData, 'CommonResponseBody',
+          : deserialize<ContactBindResponseBody, ContactBindResponseBody>(
+              rawData, 'ContactBindResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1465,7 +1463,7 @@ class IdentityServiceApi {
       );
     }
 
-    return Response<CommonResponseBody>(
+    return Response<ContactBindResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -1570,7 +1568,7 @@ class IdentityServiceApi {
   }
 
   /// 绑定手机号
-  /// 为当前账号绑定手机号，需提供手机号、国家代码和短信验证码。需要用户已登录。返回 status&#x3D;BOUND 表示绑定成功。
+  /// 为当前账号绑定手机号，需提供手机号、国家代码和短信验证码。需要用户已登录。status&#x3D;BOUND 表示绑定成功；号码已属于另一个账号时返回 status&#x3D;MERGE_REQUIRED 与 mergeToken，用于账号合并。
   ///
   /// Parameters:
   /// * [bindPhoneRequestBody] - 绑定手机号
@@ -1581,9 +1579,9 @@ class IdentityServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [BindPhoneResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [ContactBindResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<BindPhoneResponseBody>> identityServiceBindPhone({
+  Future<Response<ContactBindResponseBody>> identityServiceBindPhone({
     BindPhoneRequestBody? bindPhoneRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -1637,14 +1635,14 @@ class IdentityServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    BindPhoneResponseBody? _responseData;
+    ContactBindResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<BindPhoneResponseBody, BindPhoneResponseBody>(
-              rawData, 'BindPhoneResponseBody',
+          : deserialize<ContactBindResponseBody, ContactBindResponseBody>(
+              rawData, 'ContactBindResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -1656,7 +1654,7 @@ class IdentityServiceApi {
       );
     }
 
-    return Response<BindPhoneResponseBody>(
+    return Response<ContactBindResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2033,9 +2031,9 @@ class IdentityServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [CommonResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [ContactBindResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CommonResponseBody>> identityServiceChangeEmail({
+  Future<Response<ContactBindResponseBody>> identityServiceChangeEmail({
     ChangeEmailRequestBody? changeEmailRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -2089,14 +2087,14 @@ class IdentityServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    CommonResponseBody? _responseData;
+    ContactBindResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<CommonResponseBody, CommonResponseBody>(
-              rawData, 'CommonResponseBody',
+          : deserialize<ContactBindResponseBody, ContactBindResponseBody>(
+              rawData, 'ContactBindResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -2108,7 +2106,7 @@ class IdentityServiceApi {
       );
     }
 
-    return Response<CommonResponseBody>(
+    return Response<ContactBindResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2231,9 +2229,9 @@ class IdentityServiceApi {
   /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
   /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
   ///
-  /// Returns a [Future] containing a [Response] with a [CommonResponseBody] as data
+  /// Returns a [Future] containing a [Response] with a [ContactBindResponseBody] as data
   /// Throws [DioException] if API call or serialization fails
-  Future<Response<CommonResponseBody>> identityServiceChangePhone({
+  Future<Response<ContactBindResponseBody>> identityServiceChangePhone({
     ChangePhoneRequestBody? changePhoneRequestBody,
     CancelToken? cancelToken,
     Map<String, dynamic>? headers,
@@ -2287,14 +2285,14 @@ class IdentityServiceApi {
       onReceiveProgress: onReceiveProgress,
     );
 
-    CommonResponseBody? _responseData;
+    ContactBindResponseBody? _responseData;
 
     try {
       final rawData = _response.data;
       _responseData = rawData == null
           ? null
-          : deserialize<CommonResponseBody, CommonResponseBody>(
-              rawData, 'CommonResponseBody',
+          : deserialize<ContactBindResponseBody, ContactBindResponseBody>(
+              rawData, 'ContactBindResponseBody',
               growable: true);
     } catch (error, stackTrace) {
       throw DioException(
@@ -2306,7 +2304,7 @@ class IdentityServiceApi {
       );
     }
 
-    return Response<CommonResponseBody>(
+    return Response<ContactBindResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -3392,7 +3390,7 @@ class IdentityServiceApi {
   }
 
   /// 查询服务授权状态
-  /// 返回当前学号的二课、图书馆与阳光长跑授权状态、有效性及失效通知开关；绝不返回已存 token、Cookie 或加密密码。仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
+  /// 返回当前学号的二课、图书馆、阳光长跑与学习通授权状态、有效性及失效通知开关；绝不返回已存 token、Cookie 或加密密码。仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -4729,7 +4727,7 @@ class IdentityServiceApi {
   }
 
   /// 账号合并确认
-  /// 将源账号 B 的资源按 user_id 改挂到目标 A（同类冲突默认保留 A、丢弃 B 重复项，或按 conflictResolutions）；社交身份固定“两者保留”不受策略影响；注销 B 并失效其全部会话（sourceInvalidated&#x3D;true）。幂等、事务、审计。消费 merge_token。仅原生会话可调用。
+  /// 保留 survivorUserId，把另一个账号的全部数据按合并清单迁过来、联系方式与密码在保留方没有时转过来；被并掉的账号软删除、会话全部撤销，之后用它的任何凭据登录都落到保留账号。lostLogins 非空时须 acceptLostLogins。确认时重算计划，与预览不一致返回 710000470。幂等、事务、审计；消费 merge_token。仅原生会话可调用。
   ///
   /// Parameters:
   /// * [mergeConfirmRequestBody]
@@ -4828,10 +4826,10 @@ class IdentityServiceApi {
   }
 
   /// 账号合并预览
-  /// 校验 merge_token 的 target 为当前会话用户（A），预览源账号 B 将迁移的校园/社交身份、订阅、群、应用授权、PAT 等资源与冲突项（默认保留 A）。不发生变更。仅原生会话可调用。
+  /// 列出两个账号（第一个是当前登录的）与默认保留方，并分别给出保留每一个账号的计划：迁过来的数据、冲突项、会失去的登录方式。预览会钉住计划供确认比对，不延长令牌、不发生变更。仅原生会话可调用。
   ///
   /// Parameters:
-  /// * [mergePreviewRequestBody] - ==== 多身份体系 E §7: 账号合并（安全关键：需同时证明 A、B 的控制权） ==== ---- MergePreview: 预览合并（authSessionUser，token 的 target 必须为当前会话用户） ----
+  /// * [mergePreviewRequestBody] - ==== 多身份体系 E §7: 账号合并（安全关键：需同时证明 A、B 的控制权） ==== ---- 账号合并：撞上「这个学号 / 邮箱 / 手机号已属于另一个账号」时由用户确认 ---- 两个账号都由当前用户证明了控制权（当前会话 + 验证码或第三方登录），由用户选保留哪个。
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -4915,105 +4913,6 @@ class IdentityServiceApi {
     }
 
     return Response<MergePreviewResponseBody>(
-      data: _responseData,
-      headers: _response.headers,
-      isRedirect: _response.isRedirect,
-      requestOptions: _response.requestOptions,
-      redirects: _response.redirects,
-      statusCode: _response.statusCode,
-      statusMessage: _response.statusMessage,
-      extra: _response.extra,
-    );
-  }
-
-  /// 主动发起账号合并/关联
-  /// 当前会话用户 A 主动开启一次以合并为目的的第三方登录，返回授权 URL。A 在第三方证明对另一账号 B 的控制后回到 /login/callback，若解析到不同账号 B 即签发一次性 merge_token（target&#x3D;A，source&#x3D;B），随后走 preview/confirm。安全模型不变：仅原生会话可发起，target 恒为当前会话用户。
-  ///
-  /// Parameters:
-  /// * [mergeStartRequestBody] - ---- MergeStart: 主动发起“合并/关联其他账号”（authSessionUser） ---- 当前会话用户 A 主动开启一次以合并为目的的第三方登录（如 CAS）。返回第三方授权 URL；A 在第三方证明对账号 B 的控制后回到 /login/callback，若解析到另一账号 B，即 签发一次性 merge_token（target=当前会话用户 A，source=B），随后走 preview/confirm。
-  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
-  /// * [headers] - Can be used to add additional headers to the request
-  /// * [extras] - Can be used to add flags to the request
-  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
-  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
-  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
-  ///
-  /// Returns a [Future] containing a [Response] with a [MergeStartResponseBody] as data
-  /// Throws [DioException] if API call or serialization fails
-  Future<Response<MergeStartResponseBody>> identityServiceMergeStart({
-    MergeStartRequestBody? mergeStartRequestBody,
-    CancelToken? cancelToken,
-    Map<String, dynamic>? headers,
-    Map<String, dynamic>? extra,
-    ValidateStatus? validateStatus,
-    ProgressCallback? onSendProgress,
-    ProgressCallback? onReceiveProgress,
-  }) async {
-    final _path = r'/hduhelp-neo/identity/account/merge/start';
-    final _options = Options(
-      method: r'POST',
-      headers: <String, dynamic>{
-        ...?headers,
-      },
-      extra: <String, dynamic>{
-        'secure': <Map<String, String>>[
-          {
-            'type': 'http',
-            'scheme': 'bearer',
-            'name': 'NativeSessionAuth',
-          },
-        ],
-        ...?extra,
-      },
-      contentType: 'application/json',
-      validateStatus: validateStatus,
-    );
-
-    dynamic _bodyData;
-
-    try {
-      _bodyData = jsonEncode(mergeStartRequestBody);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _options.compose(
-          _dio.options,
-          _path,
-        ),
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    final _response = await _dio.request<Object>(
-      _path,
-      data: _bodyData,
-      options: _options,
-      cancelToken: cancelToken,
-      onSendProgress: onSendProgress,
-      onReceiveProgress: onReceiveProgress,
-    );
-
-    MergeStartResponseBody? _responseData;
-
-    try {
-      final rawData = _response.data;
-      _responseData = rawData == null
-          ? null
-          : deserialize<MergeStartResponseBody, MergeStartResponseBody>(
-              rawData, 'MergeStartResponseBody',
-              growable: true);
-    } catch (error, stackTrace) {
-      throw DioException(
-        requestOptions: _response.requestOptions,
-        response: _response,
-        type: DioExceptionType.unknown,
-        error: error,
-        stackTrace: stackTrace,
-      );
-    }
-
-    return Response<MergeStartResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -5571,7 +5470,7 @@ class IdentityServiceApi {
   /// 删除当前学号指定服务的已存凭据并清除登录态缓存，操作幂等。仅一方原生会话可调用。
   ///
   /// Parameters:
-  /// * [service] - erke | library | sunrun
+  /// * [service] - erke | library | sunrun | chaoxing
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -6673,7 +6572,7 @@ class IdentityServiceApi {
   }
 
   /// 设置服务授权失效通知
-  /// 按 erke/library/sunrun 设置当前学号的授权失效钉钉通知；默认关闭，仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
+  /// 按 erke/library/sunrun/chaoxing 设置当前学号的授权失效钉钉通知；默认关闭，仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
   ///
   /// Parameters:
   /// * [updateServiceAuthorizationNotificationRequestBody]

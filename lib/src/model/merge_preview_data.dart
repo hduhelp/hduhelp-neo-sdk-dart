@@ -3,9 +3,8 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/merge_resource_count.dart';
-import 'package:hduhelp_neo/src/model/merge_conflict_item.dart';
-import 'package:hduhelp_neo/src/model/merge_identity_item.dart';
+import 'package:hduhelp_neo/src/model/merge_plan.dart';
+import 'package:hduhelp_neo/src/model/merge_account.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'merge_preview_data.g.dart';
@@ -19,65 +18,45 @@ part 'merge_preview_data.g.dart';
 class MergePreviewData {
   /// Returns a new [MergePreviewData] instance.
   MergePreviewData({
-    this.targetUserId,
-    this.sourceUserId,
-    this.sourceIdentities,
-    this.sourceResources,
-    this.conflicts,
+    this.accounts,
+    this.defaultSurvivorUserId,
+    this.plans,
   });
 
+  /// 第一个是当前登录的账号
   @JsonKey(
-    name: r'targetUserId',
+    name: r'accounts',
     required: false,
     includeIfNull: false,
   )
-  final String? targetUserId;
+  final List<MergeAccount>? accounts;
 
   @JsonKey(
-    name: r'sourceUserId',
+    name: r'defaultSurvivorUserId',
     required: false,
     includeIfNull: false,
   )
-  final String? sourceUserId;
+  final String? defaultSurvivorUserId;
 
+  /// 保留每一个账号各一份
   @JsonKey(
-    name: r'sourceIdentities',
+    name: r'plans',
     required: false,
     includeIfNull: false,
   )
-  final List<MergeIdentityItem>? sourceIdentities;
-
-  @JsonKey(
-    name: r'sourceResources',
-    required: false,
-    includeIfNull: false,
-  )
-  final List<MergeResourceCount>? sourceResources;
-
-  @JsonKey(
-    name: r'conflicts',
-    required: false,
-    includeIfNull: false,
-  )
-  final List<MergeConflictItem>? conflicts;
+  final List<MergePlan>? plans;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MergePreviewData &&
-          other.targetUserId == targetUserId &&
-          other.sourceUserId == sourceUserId &&
-          other.sourceIdentities == sourceIdentities &&
-          other.sourceResources == sourceResources &&
-          other.conflicts == conflicts;
+          other.accounts == accounts &&
+          other.defaultSurvivorUserId == defaultSurvivorUserId &&
+          other.plans == plans;
 
   @override
   int get hashCode =>
-      targetUserId.hashCode +
-      sourceUserId.hashCode +
-      sourceIdentities.hashCode +
-      sourceResources.hashCode +
-      conflicts.hashCode;
+      accounts.hashCode + defaultSurvivorUserId.hashCode + plans.hashCode;
 
   factory MergePreviewData.fromJson(Map<String, dynamic> json) =>
       _$MergePreviewDataFromJson(json);

@@ -13,9 +13,9 @@ MergeConflictItem _$MergeConflictItemFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = MergeConflictItem(
           resource: $checkedConvert('resource', (v) => v as String?),
+          name: $checkedConvert('name', (v) => v as String?),
           key: $checkedConvert('key', (v) => v as String?),
           resolution: $checkedConvert('resolution', (v) => v as String?),
-          overridable: $checkedConvert('overridable', (v) => v as bool?),
         );
         return val;
       },
@@ -24,7 +24,7 @@ MergeConflictItem _$MergeConflictItemFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MergeConflictItemToJson(MergeConflictItem instance) =>
     <String, dynamic>{
       if (instance.resource case final value?) 'resource': value,
+      if (instance.name case final value?) 'name': value,
       if (instance.key case final value?) 'key': value,
       if (instance.resolution case final value?) 'resolution': value,
-      if (instance.overridable case final value?) 'overridable': value,
     };

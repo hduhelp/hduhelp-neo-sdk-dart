@@ -20,7 +20,7 @@ class UpdateServiceAuthorizationNotificationRequestBody {
     this.enabled,
   });
 
-  /// erke | library | sunrun
+  /// erke | library | sunrun | chaoxing
   @JsonKey(
     name: r'type',
     required: false,

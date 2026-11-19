@@ -6,6 +6,7 @@ import 'package:hduhelp_neo/src/model/academic_year_term.dart';
 import 'package:hduhelp_neo/src/model/account_deletion_blocker.dart';
 import 'package:hduhelp_neo/src/model/account_deletion_data.dart';
 import 'package:hduhelp_neo/src/model/account_deletion_response_body.dart';
+import 'package:hduhelp_neo/src/model/account_merge_record.dart';
 import 'package:hduhelp_neo/src/model/activity.dart';
 import 'package:hduhelp_neo/src/model/activity_detail.dart';
 import 'package:hduhelp_neo/src/model/activity_detail_response_body.dart';
@@ -49,6 +50,12 @@ import 'package:hduhelp_neo/src/model/admin_login_request_body.dart';
 import 'package:hduhelp_neo/src/model/admin_login_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_logout_response_body.dart';
 import 'package:hduhelp_neo/src/model/admin_me_response_body.dart';
+import 'package:hduhelp_neo/src/model/admin_merge_account.dart';
+import 'package:hduhelp_neo/src/model/admin_merge_conflict.dart';
+import 'package:hduhelp_neo/src/model/admin_merge_migrated.dart';
+import 'package:hduhelp_neo/src/model/admin_merge_plan.dart';
+import 'package:hduhelp_neo/src/model/admin_merge_resolution.dart';
+import 'package:hduhelp_neo/src/model/admin_merge_resource_count.dart';
 import 'package:hduhelp_neo/src/model/admin_official_account.dart';
 import 'package:hduhelp_neo/src/model/admin_official_account_list_data.dart';
 import 'package:hduhelp_neo/src/model/admin_official_account_list_response_body.dart';
@@ -378,9 +385,7 @@ import 'package:hduhelp_neo/src/model/bind_email_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_operator_user_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_page_data.dart';
 import 'package:hduhelp_neo/src/model/bind_page_response_body.dart';
-import 'package:hduhelp_neo/src/model/bind_phone_data.dart';
 import 'package:hduhelp_neo/src/model/bind_phone_request_body.dart';
-import 'package:hduhelp_neo/src/model/bind_phone_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_provider_status.dart';
 import 'package:hduhelp_neo/src/model/bind_room_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_schedule_share_request_body.dart';
@@ -446,6 +451,9 @@ import 'package:hduhelp_neo/src/model/change_email_request_body.dart';
 import 'package:hduhelp_neo/src/model/change_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/change_password_response_body.dart';
 import 'package:hduhelp_neo/src/model/change_phone_request_body.dart';
+import 'package:hduhelp_neo/src/model/chaoxing_homework_item.dart';
+import 'package:hduhelp_neo/src/model/chaoxing_homework_page.dart';
+import 'package:hduhelp_neo/src/model/chaoxing_homework_response_body.dart';
 import 'package:hduhelp_neo/src/model/chat_group.dart';
 import 'package:hduhelp_neo/src/model/check_update_data.dart';
 import 'package:hduhelp_neo/src/model/check_update_response_body.dart';
@@ -487,6 +495,8 @@ import 'package:hduhelp_neo/src/model/consent_agreement.dart';
 import 'package:hduhelp_neo/src/model/consent_status.dart';
 import 'package:hduhelp_neo/src/model/consent_status_item.dart';
 import 'package:hduhelp_neo/src/model/consent_status_response_body.dart';
+import 'package:hduhelp_neo/src/model/contact_bind_data.dart';
+import 'package:hduhelp_neo/src/model/contact_bind_response_body.dart';
 import 'package:hduhelp_neo/src/model/course.dart';
 import 'package:hduhelp_neo/src/model/course_group_item.dart';
 import 'package:hduhelp_neo/src/model/course_groups_response_body.dart';
@@ -499,6 +509,9 @@ import 'package:hduhelp_neo/src/model/course_simulation_replace_item.dart';
 import 'package:hduhelp_neo/src/model/course_simulation_response_body.dart';
 import 'package:hduhelp_neo/src/model/course_simulation_slot.dart';
 import 'package:hduhelp_neo/src/model/crawl_run_info.dart';
+import 'package:hduhelp_neo/src/model/create_account_merge_data.dart';
+import 'package:hduhelp_neo/src/model/create_account_merge_request_body.dart';
+import 'package:hduhelp_neo/src/model/create_account_merge_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_announcement_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_app_data.dart';
 import 'package:hduhelp_neo/src/model/create_app_request_body.dart';
@@ -566,6 +579,7 @@ import 'package:hduhelp_neo/src/model/delete_operator_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_room_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_campus_identity_response_body.dart';
+import 'package:hduhelp_neo/src/model/delete_user_contact_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_social_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/delivery_page.dart';
 import 'package:hduhelp_neo/src/model/delivery_page_response_body.dart';
@@ -778,6 +792,7 @@ import 'package:hduhelp_neo/src/model/library_booking_category_list_data.dart';
 import 'package:hduhelp_neo/src/model/library_booking_category_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/library_reading_data.dart';
 import 'package:hduhelp_neo/src/model/library_reading_response_body.dart';
+import 'package:hduhelp_neo/src/model/list_account_merges_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_assets_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_audit_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_authorized_apps_data.dart';
@@ -828,6 +843,7 @@ import 'package:hduhelp_neo/src/model/max_month.dart';
 import 'package:hduhelp_neo/src/model/me_response_body.dart';
 import 'package:hduhelp_neo/src/model/member_availability.dart';
 import 'package:hduhelp_neo/src/model/member_info.dart';
+import 'package:hduhelp_neo/src/model/merge_account.dart';
 import 'package:hduhelp_neo/src/model/merge_class_chat_group_request_body.dart';
 import 'package:hduhelp_neo/src/model/merge_class_chat_group_response_body.dart';
 import 'package:hduhelp_neo/src/model/merge_confirm_data.dart';
@@ -835,15 +851,12 @@ import 'package:hduhelp_neo/src/model/merge_confirm_request_body.dart';
 import 'package:hduhelp_neo/src/model/merge_confirm_response_body.dart';
 import 'package:hduhelp_neo/src/model/merge_conflict_item.dart';
 import 'package:hduhelp_neo/src/model/merge_conflict_resolution.dart';
-import 'package:hduhelp_neo/src/model/merge_identity_item.dart';
 import 'package:hduhelp_neo/src/model/merge_migrated_item.dart';
+import 'package:hduhelp_neo/src/model/merge_plan.dart';
 import 'package:hduhelp_neo/src/model/merge_preview_data.dart';
 import 'package:hduhelp_neo/src/model/merge_preview_request_body.dart';
 import 'package:hduhelp_neo/src/model/merge_preview_response_body.dart';
 import 'package:hduhelp_neo/src/model/merge_resource_count.dart';
-import 'package:hduhelp_neo/src/model/merge_start_data.dart';
-import 'package:hduhelp_neo/src/model/merge_start_request_body.dart';
-import 'package:hduhelp_neo/src/model/merge_start_response_body.dart';
 import 'package:hduhelp_neo/src/model/message_item.dart';
 import 'package:hduhelp_neo/src/model/message_page_data.dart';
 import 'package:hduhelp_neo/src/model/message_page_response_body.dart';
@@ -1260,6 +1273,9 @@ import 'package:hduhelp_neo/src/model/predict_day.dart';
 import 'package:hduhelp_neo/src/model/predict_hour.dart';
 import 'package:hduhelp_neo/src/model/predict_response_body.dart';
 import 'package:hduhelp_neo/src/model/preference.dart';
+import 'package:hduhelp_neo/src/model/preview_account_merge_data.dart';
+import 'package:hduhelp_neo/src/model/preview_account_merge_request_body.dart';
+import 'package:hduhelp_neo/src/model/preview_account_merge_response_body.dart';
 import 'package:hduhelp_neo/src/model/preview_data.dart';
 import 'package:hduhelp_neo/src/model/preview_schedule_share_claim_request_body.dart';
 import 'package:hduhelp_neo/src/model/preview_tagging_prompt_response_body.dart';
@@ -1583,6 +1599,9 @@ import 'package:hduhelp_neo/src/model/upload_urls_request_body.dart';
 import 'package:hduhelp_neo/src/model/upload_urls_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_response_body.dart';
+import 'package:hduhelp_neo/src/model/upsert_user_contact_data.dart';
+import 'package:hduhelp_neo/src/model/upsert_user_contact_request_body.dart';
+import 'package:hduhelp_neo/src/model/upsert_user_contact_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_social_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_social_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/user_consent_record.dart';
@@ -1651,6 +1670,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AccountDeletionResponseBody':
       return AccountDeletionResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AccountMergeRecord':
+      return AccountMergeRecord.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'Activity':
       return Activity.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -1776,6 +1798,24 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'AdminMeResponseBody':
       return AdminMeResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminMergeAccount':
+      return AdminMergeAccount.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminMergeConflict':
+      return AdminMergeConflict.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminMergeMigrated':
+      return AdminMergeMigrated.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminMergePlan':
+      return AdminMergePlan.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminMergeResolution':
+      return AdminMergeResolution.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AdminMergeResourceCount':
+      return AdminMergeResourceCount.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'AdminOfficialAccount':
       return AdminOfficialAccount.fromJson(value as Map<String, dynamic>)
@@ -2732,14 +2772,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'BindPageResponseBody':
       return BindPageResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'BindPhoneData':
-      return BindPhoneData.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'BindPhoneRequestBody':
       return BindPhoneRequestBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'BindPhoneResponseBody':
-      return BindPhoneResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'BindProviderStatus':
       return BindProviderStatus.fromJson(value as Map<String, dynamic>)
@@ -2929,6 +2963,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ChangePhoneRequestBody':
       return ChangePhoneRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ChaoxingHomeworkItem':
+      return ChaoxingHomeworkItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ChaoxingHomeworkPage':
+      return ChaoxingHomeworkPage.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ChaoxingHomeworkResponseBody':
+      return ChaoxingHomeworkResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'ChatGroup':
       return ChatGroup.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'CheckUpdateData':
@@ -3048,6 +3091,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ConsentStatusResponseBody':
       return ConsentStatusResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ContactBindData':
+      return ContactBindData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'ContactBindResponseBody':
+      return ContactBindResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Course':
       return Course.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'CourseGroupItem':
@@ -3082,6 +3131,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'CrawlRunInfo':
       return CrawlRunInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'CreateAccountMergeData':
+      return CreateAccountMergeData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'CreateAccountMergeRequestBody':
+      return CreateAccountMergeRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'CreateAccountMergeResponseBody':
+      return CreateAccountMergeResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'CreateAnnouncementRequestBody':
       return CreateAnnouncementRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -3280,6 +3338,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'DeleteUserCampusIdentityResponseBody':
       return DeleteUserCampusIdentityResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'DeleteUserContactResponseBody':
+      return DeleteUserContactResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'DeleteUserSocialIdentityResponseBody':
       return DeleteUserSocialIdentityResponseBody.fromJson(
@@ -3877,6 +3938,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'LibraryReadingResponseBody':
       return LibraryReadingResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ListAccountMergesResponseBody':
+      return ListAccountMergesResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'ListAssetsResponseBody':
       return ListAssetsResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -4019,6 +4083,8 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'MemberInfo':
       return MemberInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'MergeAccount':
+      return MergeAccount.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MergeClassChatGroupRequestBody':
       return MergeClassChatGroupRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
@@ -4040,12 +4106,11 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'MergeConflictResolution':
       return MergeConflictResolution.fromJson(value as Map<String, dynamic>)
           as ReturnType;
-    case 'MergeIdentityItem':
-      return MergeIdentityItem.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
     case 'MergeMigratedItem':
       return MergeMigratedItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'MergePlan':
+      return MergePlan.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'MergePreviewData':
       return MergePreviewData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -4057,15 +4122,6 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'MergeResourceCount':
       return MergeResourceCount.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'MergeStartData':
-      return MergeStartData.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'MergeStartRequestBody':
-      return MergeStartRequestBody.fromJson(value as Map<String, dynamic>)
-          as ReturnType;
-    case 'MergeStartResponseBody':
-      return MergeStartResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'MessageItem':
       return MessageItem.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -5285,6 +5341,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'Preference':
       return Preference.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'PreviewAccountMergeData':
+      return PreviewAccountMergeData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'PreviewAccountMergeRequestBody':
+      return PreviewAccountMergeRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'PreviewAccountMergeResponseBody':
+      return PreviewAccountMergeResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'PreviewData':
       return PreviewData.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'PreviewScheduleShareClaimRequestBody':
@@ -6211,6 +6276,15 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           value as Map<String, dynamic>) as ReturnType;
     case 'UpsertUserCampusIdentityResponseBody':
       return UpsertUserCampusIdentityResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'UpsertUserContactData':
+      return UpsertUserContactData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'UpsertUserContactRequestBody':
+      return UpsertUserContactRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'UpsertUserContactResponseBody':
+      return UpsertUserContactResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'UpsertUserSocialIdentityRequestBody':
       return UpsertUserSocialIdentityRequestBody.fromJson(

@@ -3,10 +3,10 @@
 //
 
 // ignore_for_file: unused_element
-import 'package:hduhelp_neo/src/model/merge_start_data.dart';
+import 'package:hduhelp_neo/src/model/upsert_user_contact_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'merge_start_response_body.g.dart';
+part 'upsert_user_contact_response_body.g.dart';
 
 @JsonSerializable(
   checked: true,
@@ -14,9 +14,9 @@ part 'merge_start_response_body.g.dart';
   disallowUnrecognizedKeys: false,
   explicitToJson: true,
 )
-class MergeStartResponseBody {
-  /// Returns a new [MergeStartResponseBody] instance.
-  MergeStartResponseBody({
+class UpsertUserContactResponseBody {
+  /// Returns a new [UpsertUserContactResponseBody] instance.
+  UpsertUserContactResponseBody({
     this.data,
     this.code,
     this.msg,
@@ -27,7 +27,7 @@ class MergeStartResponseBody {
     required: false,
     includeIfNull: false,
   )
-  final MergeStartData? data;
+  final UpsertUserContactData? data;
 
   @JsonKey(
     name: r'code',
@@ -46,7 +46,7 @@ class MergeStartResponseBody {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is MergeStartResponseBody &&
+      other is UpsertUserContactResponseBody &&
           other.data == data &&
           other.code == code &&
           other.msg == msg;
@@ -54,10 +54,10 @@ class MergeStartResponseBody {
   @override
   int get hashCode => data.hashCode + code.hashCode + msg.hashCode;
 
-  factory MergeStartResponseBody.fromJson(Map<String, dynamic> json) =>
-      _$MergeStartResponseBodyFromJson(json);
+  factory UpsertUserContactResponseBody.fromJson(Map<String, dynamic> json) =>
+      _$UpsertUserContactResponseBodyFromJson(json);
 
-  Map<String, dynamic> toJson() => _$MergeStartResponseBodyToJson(this);
+  Map<String, dynamic> toJson() => _$UpsertUserContactResponseBodyToJson(this);
 
   @override
   String toString() {

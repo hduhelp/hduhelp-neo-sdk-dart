@@ -22,7 +22,7 @@ class ServiceAuthorizationItem {
     this.notifyOnExpiry,
   });
 
-  /// erke | library | sunrun
+  /// erke | library | sunrun | chaoxing
   @JsonKey(
     name: r'type',
     required: false,

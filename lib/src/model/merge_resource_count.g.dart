@@ -13,6 +13,7 @@ MergeResourceCount _$MergeResourceCountFromJson(Map<String, dynamic> json) =>
       ($checkedConvert) {
         final val = MergeResourceCount(
           resource: $checkedConvert('resource', (v) => v as String?),
+          name: $checkedConvert('name', (v) => v as String?),
           count: $checkedConvert('count', (v) => (v as num?)?.toInt()),
         );
         return val;
@@ -22,5 +23,6 @@ MergeResourceCount _$MergeResourceCountFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MergeResourceCountToJson(MergeResourceCount instance) =>
     <String, dynamic>{
       if (instance.resource case final value?) 'resource': value,
+      if (instance.name case final value?) 'name': value,
       if (instance.count case final value?) 'count': value,
     };

@@ -20,7 +20,7 @@ class AuthorizeServiceRequestBody {
     this.account,
   });
 
-  /// 二课/图书馆缺省时优先复用已有有效授权；需要重认时返回 40934
+  /// 二课/图书馆/学习通缺省时优先复用已有有效授权；需要重认时返回 40934
   @JsonKey(
     name: r'password',
     required: false,
@@ -28,7 +28,7 @@ class AuthorizeServiceRequestBody {
   )
   final String? password;
 
-  /// 二课/图书馆缺省时使用当前学号；阳光长跑必须提交独立账号
+  /// 二课/图书馆/学习通缺省时使用当前学号；阳光长跑必须提交独立账号
   @JsonKey(
     name: r'account',
     required: false,

@@ -28,6 +28,8 @@ import 'package:hduhelp_neo/src/model/change_password_response_body.dart';
 import 'package:hduhelp_neo/src/model/config_get_response_body.dart';
 import 'package:hduhelp_neo/src/model/config_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/confirm_impersonation_request_body.dart';
+import 'package:hduhelp_neo/src/model/create_account_merge_request_body.dart';
+import 'package:hduhelp_neo/src/model/create_account_merge_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_app_request_body.dart';
 import 'package:hduhelp_neo/src/model/create_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/create_campus_request_body.dart';
@@ -48,12 +50,14 @@ import 'package:hduhelp_neo/src/model/delete_login_client_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_operator_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_campus_identity_response_body.dart';
+import 'package:hduhelp_neo/src/model/delete_user_contact_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_social_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/electricity_meter_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/electricity_meter_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/impersonation_result_response_body.dart';
 import 'package:hduhelp_neo/src/model/issue_user_session_request_body.dart';
 import 'package:hduhelp_neo/src/model/issue_user_session_response_body.dart';
+import 'package:hduhelp_neo/src/model/list_account_merges_response_body.dart';
 import 'package:hduhelp_neo/src/model/list_impersonation_logs_response_body.dart';
 import 'package:hduhelp_neo/src/model/login_client_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/login_method_list_response_body.dart';
@@ -63,6 +67,8 @@ import 'package:hduhelp_neo/src/model/operator_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/ops_push_response_body.dart';
 import 'package:hduhelp_neo/src/model/ops_todo_response_body.dart';
 import 'package:hduhelp_neo/src/model/permission_catalog_response_body.dart';
+import 'package:hduhelp_neo/src/model/preview_account_merge_request_body.dart';
+import 'package:hduhelp_neo/src/model/preview_account_merge_response_body.dart';
 import 'package:hduhelp_neo/src/model/report_impersonation_request_body.dart';
 import 'package:hduhelp_neo/src/model/reset_operator_password_request_body.dart';
 import 'package:hduhelp_neo/src/model/reset_operator_password_response_body.dart';
@@ -109,6 +115,8 @@ import 'package:hduhelp_neo/src/model/update_role_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_response_body.dart';
+import 'package:hduhelp_neo/src/model/upsert_user_contact_request_body.dart';
+import 'package:hduhelp_neo/src/model/upsert_user_contact_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_social_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_social_identity_response_body.dart';
 
@@ -855,6 +863,107 @@ class AdminServiceApi {
     }
 
     return Response<ImpersonationResultResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 合并两个账号
+  /// 按预览的计划合并，plan_digest 与当前计划不一致时拒绝；必须填写理由。被并掉的账号软删除、会话撤销，保留账号的消息通知里会留一条说明。
+  ///
+  /// Parameters:
+  /// * [createAccountMergeRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [CreateAccountMergeResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<CreateAccountMergeResponseBody>>
+      adminServiceCreateAccountMerge({
+    CreateAccountMergeRequestBody? createAccountMergeRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/account-merges';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(createAccountMergeRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    CreateAccountMergeResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<CreateAccountMergeResponseBody,
+                  CreateAccountMergeResponseBody>(
+              rawData, 'CreateAccountMergeResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<CreateAccountMergeResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2167,6 +2276,100 @@ class AdminServiceApi {
     );
   }
 
+  /// 解绑用户邮箱或手机号
+  /// 记审计。
+  ///
+  /// Parameters:
+  /// * [userId]
+  /// * [kind]
+  /// * [reason]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [DeleteUserContactResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<DeleteUserContactResponseBody>>
+      adminServiceDeleteUserContact({
+    String? userId,
+    String? kind,
+    String? reason,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/bindings/contact';
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (userId != null) r'user_id': userId,
+      if (kind != null) r'kind': kind,
+      if (reason != null) r'reason': reason,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    DeleteUserContactResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<DeleteUserContactResponseBody,
+                  DeleteUserContactResponseBody>(
+              rawData, 'DeleteUserContactResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<DeleteUserContactResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 删除用户第三方绑定
   /// 按绑定ID删除指定用户的第三方登录关系
   ///
@@ -2670,6 +2873,94 @@ class AdminServiceApi {
     }
 
     return Response<IssueUserSessionResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 账号合并记录
+  /// 该用户作为保留方或被并掉一方的全部合并，最新在前。
+  ///
+  /// Parameters:
+  /// * [userId] - 作为保留方或被并掉的一方
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ListAccountMergesResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ListAccountMergesResponseBody>>
+      adminServiceListAccountMerges({
+    String? userId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/account-merges';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (userId != null) r'user_id': userId,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ListAccountMergesResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ListAccountMergesResponseBody,
+                  ListAccountMergesResponseBody>(
+              rawData, 'ListAccountMergesResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ListAccountMergesResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -3870,6 +4161,107 @@ class AdminServiceApi {
     }
 
     return Response<TenantListResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 预览合并两个账号
+  /// 与用户自己合并同一个引擎：两个账号摘要、默认保留方、保留每一个账号的计划（迁移的数据、冲突、会失去的登录方式与计划摘要）。不发生变更。
+  ///
+  /// Parameters:
+  /// * [previewAccountMergeRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [PreviewAccountMergeResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<PreviewAccountMergeResponseBody>>
+      adminServicePreviewAccountMerge({
+    PreviewAccountMergeRequestBody? previewAccountMergeRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/account-merges/preview';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(previewAccountMergeRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    PreviewAccountMergeResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<PreviewAccountMergeResponseBody,
+                  PreviewAccountMergeResponseBody>(
+              rawData, 'PreviewAccountMergeResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<PreviewAccountMergeResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -6430,7 +6822,7 @@ class AdminServiceApi {
   /// 新增或编辑指定用户的校园身份；默认拒绝占用其他账号的学工号，replace_existing&#x3D;true 时显式转移归属
   ///
   /// Parameters:
-  /// * [upsertUserCampusIdentityRequestBody] - -------------------- 用户身份绑定人工调整 --------------------
+  /// * [upsertUserCampusIdentityRequestBody]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -6516,6 +6908,107 @@ class AdminServiceApi {
     }
 
     return Response<UpsertUserCampusIdentityResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 修改用户邮箱或手机号
+  /// 号码属于别的账号时不修改，返回 status&#x3D;TAKEN 与 ownerUserId；replace_existing&#x3D;true 时从对方身上移走。不撤销用户会话，记审计。
+  ///
+  /// Parameters:
+  /// * [upsertUserContactRequestBody] - -------------------- 用户身份绑定人工调整 -------------------- ---- 用户联系方式：运营直接修改邮箱 / 手机号 ----
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [UpsertUserContactResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<UpsertUserContactResponseBody>>
+      adminServiceUpsertUserContact({
+    UpsertUserContactRequestBody? upsertUserContactRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/bindings/contact';
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(upsertUserContactRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    UpsertUserContactResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<UpsertUserContactResponseBody,
+                  UpsertUserContactResponseBody>(
+              rawData, 'UpsertUserContactResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<UpsertUserContactResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

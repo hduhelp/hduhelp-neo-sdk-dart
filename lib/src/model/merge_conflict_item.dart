@@ -17,9 +17,9 @@ class MergeConflictItem {
   /// Returns a new [MergeConflictItem] instance.
   MergeConflictItem({
     this.resource,
+    this.name,
     this.key,
     this.resolution,
-    this.overridable,
   });
 
   @JsonKey(
@@ -30,13 +30,20 @@ class MergeConflictItem {
   final String? resource;
 
   @JsonKey(
+    name: r'name',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? name;
+
+  @JsonKey(
     name: r'key',
     required: false,
     includeIfNull: false,
   )
   final String? key;
 
-  /// 该冲突在合并时的处理结果（keep_target/keep_source/keep_both）
+  /// 默认 keep_target（保留方的为准），可改为 keep_source
   @JsonKey(
     name: r'resolution',
     required: false,
@@ -44,29 +51,18 @@ class MergeConflictItem {
   )
   final String? resolution;
 
-  /// 是否可用 conflictResolutions 覆盖：社交身份固定“两者保留”(overridable=false)，校园/电费等按策略迁移(overridable=true)
-  @JsonKey(
-    name: r'overridable',
-    required: false,
-    includeIfNull: false,
-  )
-  final bool? overridable;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MergeConflictItem &&
           other.resource == resource &&
+          other.name == name &&
           other.key == key &&
-          other.resolution == resolution &&
-          other.overridable == overridable;
+          other.resolution == resolution;
 
   @override
   int get hashCode =>
-      resource.hashCode +
-      key.hashCode +
-      resolution.hashCode +
-      overridable.hashCode;
+      resource.hashCode + name.hashCode + key.hashCode + resolution.hashCode;
 
   factory MergeConflictItem.fromJson(Map<String, dynamic> json) =>
       _$MergeConflictItemFromJson(json);

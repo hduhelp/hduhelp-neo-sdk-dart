@@ -17,6 +17,7 @@ class MergeMigratedItem {
   /// Returns a new [MergeMigratedItem] instance.
   MergeMigratedItem({
     this.resource,
+    this.name,
     this.migrated,
     this.dropped,
   });
@@ -27,6 +28,13 @@ class MergeMigratedItem {
     includeIfNull: false,
   )
   final String? resource;
+
+  @JsonKey(
+    name: r'name',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? name;
 
   @JsonKey(
     name: r'migrated',
@@ -47,11 +55,13 @@ class MergeMigratedItem {
       identical(this, other) ||
       other is MergeMigratedItem &&
           other.resource == resource &&
+          other.name == name &&
           other.migrated == migrated &&
           other.dropped == dropped;
 
   @override
-  int get hashCode => resource.hashCode + migrated.hashCode + dropped.hashCode;
+  int get hashCode =>
+      resource.hashCode + name.hashCode + migrated.hashCode + dropped.hashCode;
 
   factory MergeMigratedItem.fromJson(Map<String, dynamic> json) =>
       _$MergeMigratedItemFromJson(json);

@@ -12,17 +12,24 @@ MergeConfirmData _$MergeConfirmDataFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = MergeConfirmData(
-          targetUserId: $checkedConvert('targetUserId', (v) => v as String?),
-          sourceUserId: $checkedConvert('sourceUserId', (v) => v as String?),
+          survivorUserId:
+              $checkedConvert('survivorUserId', (v) => v as String?),
+          loserUserId: $checkedConvert('loserUserId', (v) => v as String?),
           migrated: $checkedConvert(
               'migrated',
               (v) => (v as List<dynamic>?)
                   ?.map((e) =>
                       MergeMigratedItem.fromJson(e as Map<String, dynamic>))
                   .toList()),
+          lostLogins: $checkedConvert('lostLogins',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           alreadyMerged: $checkedConvert('alreadyMerged', (v) => v as bool?),
-          sourceInvalidated:
-              $checkedConvert('sourceInvalidated', (v) => v as bool?),
+          resetRequired: $checkedConvert('resetRequired', (v) => v as bool?),
+          session: $checkedConvert(
+              'session',
+              (v) => v == null
+                  ? null
+                  : LoginData.fromJson(v as Map<String, dynamic>)),
         );
         return val;
       },
@@ -30,11 +37,12 @@ MergeConfirmData _$MergeConfirmDataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MergeConfirmDataToJson(MergeConfirmData instance) =>
     <String, dynamic>{
-      if (instance.targetUserId case final value?) 'targetUserId': value,
-      if (instance.sourceUserId case final value?) 'sourceUserId': value,
+      if (instance.survivorUserId case final value?) 'survivorUserId': value,
+      if (instance.loserUserId case final value?) 'loserUserId': value,
       if (instance.migrated?.map((e) => e.toJson()).toList() case final value?)
         'migrated': value,
+      if (instance.lostLogins case final value?) 'lostLogins': value,
       if (instance.alreadyMerged case final value?) 'alreadyMerged': value,
-      if (instance.sourceInvalidated case final value?)
-        'sourceInvalidated': value,
+      if (instance.resetRequired case final value?) 'resetRequired': value,
+      if (instance.session?.toJson() case final value?) 'session': value,
     };

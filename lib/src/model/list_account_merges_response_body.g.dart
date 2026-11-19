@@ -1,23 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'merge_start_response_body.dart';
+part of 'list_account_merges_response_body.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MergeStartResponseBody _$MergeStartResponseBodyFromJson(
+ListAccountMergesResponseBody _$ListAccountMergesResponseBodyFromJson(
         Map<String, dynamic> json) =>
     $checkedCreate(
-      'MergeStartResponseBody',
+      'ListAccountMergesResponseBody',
       json,
       ($checkedConvert) {
-        final val = MergeStartResponseBody(
+        final val = ListAccountMergesResponseBody(
           data: $checkedConvert(
               'data',
-              (v) => v == null
-                  ? null
-                  : MergeStartData.fromJson(v as Map<String, dynamic>)),
+              (v) => (v as List<dynamic>?)
+                  ?.map((e) =>
+                      AccountMergeRecord.fromJson(e as Map<String, dynamic>))
+                  .toList()),
           code: $checkedConvert('code', (v) => (v as num?)?.toInt()),
           msg: $checkedConvert('msg', (v) => v as String?),
         );
@@ -25,10 +26,11 @@ MergeStartResponseBody _$MergeStartResponseBodyFromJson(
       },
     );
 
-Map<String, dynamic> _$MergeStartResponseBodyToJson(
-        MergeStartResponseBody instance) =>
+Map<String, dynamic> _$ListAccountMergesResponseBodyToJson(
+        ListAccountMergesResponseBody instance) =>
     <String, dynamic>{
-      if (instance.data?.toJson() case final value?) 'data': value,
+      if (instance.data?.map((e) => e.toJson()).toList() case final value?)
+        'data': value,
       if (instance.code case final value?) 'code': value,
       if (instance.msg case final value?) 'msg': value,
     };

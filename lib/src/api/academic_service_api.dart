@@ -14,6 +14,7 @@ import 'package:hduhelp_neo/src/model/academic_service_bind_schedule_share429_re
 import 'package:hduhelp_neo/src/model/all_person_info_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_schedule_share_request_body.dart';
 import 'package:hduhelp_neo/src/model/birthdays_response_body.dart';
+import 'package:hduhelp_neo/src/model/chaoxing_homework_response_body.dart';
 import 'package:hduhelp_neo/src/model/class_query_fav_get_response_body.dart';
 import 'package:hduhelp_neo/src/model/class_query_fav_rank_response_body.dart';
 import 'package:hduhelp_neo/src/model/class_query_fav_set_request_body.dart';
@@ -2380,6 +2381,100 @@ class AcademicServiceApi {
     }
 
     return Response<SharedLibraryReportResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 查询本人学习通作业
+  /// 重新读取学习通跨课程聚合列表；不保证完整历史。page 从 0 开始，limit 默认 20、最大 100，pendingOnly 默认 true。complete&#x3D;false 表示列表或截止时间补充不完整。只读，不领取、作答或提交作业。支持原生会话及持有 academic:homework:read 的 PAT，仅查询本人作业。学习通未授权或授权失效时，返回 40932，请前往学生端“服务授权”（/account/security）授权学习通后重试。
+  ///
+  /// Parameters:
+  /// * [page]
+  /// * [limit]
+  /// * [pendingOnly]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [ChaoxingHomeworkResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<ChaoxingHomeworkResponseBody>>
+      academicServiceListChaoxingHomework({
+    int? page,
+    int? limit,
+    bool? pendingOnly,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/academic/homework/chaoxing';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'BearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (page != null) r'page': page,
+      if (limit != null) r'limit': limit,
+      if (pendingOnly != null) r'pendingOnly': pendingOnly,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    ChaoxingHomeworkResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<ChaoxingHomeworkResponseBody,
+                  ChaoxingHomeworkResponseBody>(
+              rawData, 'ChaoxingHomeworkResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<ChaoxingHomeworkResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

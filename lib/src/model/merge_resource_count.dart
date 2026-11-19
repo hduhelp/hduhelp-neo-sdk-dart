@@ -17,6 +17,7 @@ class MergeResourceCount {
   /// Returns a new [MergeResourceCount] instance.
   MergeResourceCount({
     this.resource,
+    this.name,
     this.count,
   });
 
@@ -26,6 +27,13 @@ class MergeResourceCount {
     includeIfNull: false,
   )
   final String? resource;
+
+  @JsonKey(
+    name: r'name',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? name;
 
   @JsonKey(
     name: r'count',
@@ -39,10 +47,11 @@ class MergeResourceCount {
       identical(this, other) ||
       other is MergeResourceCount &&
           other.resource == resource &&
+          other.name == name &&
           other.count == count;
 
   @override
-  int get hashCode => resource.hashCode + count.hashCode;
+  int get hashCode => resource.hashCode + name.hashCode + count.hashCode;
 
   factory MergeResourceCount.fromJson(Map<String, dynamic> json) =>
       _$MergeResourceCountFromJson(json);

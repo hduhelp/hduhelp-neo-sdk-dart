@@ -12,25 +12,17 @@ MergePreviewData _$MergePreviewDataFromJson(Map<String, dynamic> json) =>
       json,
       ($checkedConvert) {
         final val = MergePreviewData(
-          targetUserId: $checkedConvert('targetUserId', (v) => v as String?),
-          sourceUserId: $checkedConvert('sourceUserId', (v) => v as String?),
-          sourceIdentities: $checkedConvert(
-              'sourceIdentities',
+          accounts: $checkedConvert(
+              'accounts',
               (v) => (v as List<dynamic>?)
-                  ?.map((e) =>
-                      MergeIdentityItem.fromJson(e as Map<String, dynamic>))
+                  ?.map((e) => MergeAccount.fromJson(e as Map<String, dynamic>))
                   .toList()),
-          sourceResources: $checkedConvert(
-              'sourceResources',
+          defaultSurvivorUserId:
+              $checkedConvert('defaultSurvivorUserId', (v) => v as String?),
+          plans: $checkedConvert(
+              'plans',
               (v) => (v as List<dynamic>?)
-                  ?.map((e) =>
-                      MergeResourceCount.fromJson(e as Map<String, dynamic>))
-                  .toList()),
-          conflicts: $checkedConvert(
-              'conflicts',
-              (v) => (v as List<dynamic>?)
-                  ?.map((e) =>
-                      MergeConflictItem.fromJson(e as Map<String, dynamic>))
+                  ?.map((e) => MergePlan.fromJson(e as Map<String, dynamic>))
                   .toList()),
         );
         return val;
@@ -39,14 +31,10 @@ MergePreviewData _$MergePreviewDataFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MergePreviewDataToJson(MergePreviewData instance) =>
     <String, dynamic>{
-      if (instance.targetUserId case final value?) 'targetUserId': value,
-      if (instance.sourceUserId case final value?) 'sourceUserId': value,
-      if (instance.sourceIdentities?.map((e) => e.toJson()).toList()
-          case final value?)
-        'sourceIdentities': value,
-      if (instance.sourceResources?.map((e) => e.toJson()).toList()
-          case final value?)
-        'sourceResources': value,
-      if (instance.conflicts?.map((e) => e.toJson()).toList() case final value?)
-        'conflicts': value,
+      if (instance.accounts?.map((e) => e.toJson()).toList() case final value?)
+        'accounts': value,
+      if (instance.defaultSurvivorUserId case final value?)
+        'defaultSurvivorUserId': value,
+      if (instance.plans?.map((e) => e.toJson()).toList() case final value?)
+        'plans': value,
     };

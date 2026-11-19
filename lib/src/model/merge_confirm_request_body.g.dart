@@ -14,6 +14,10 @@ MergeConfirmRequestBody _$MergeConfirmRequestBodyFromJson(
       ($checkedConvert) {
         final val = MergeConfirmRequestBody(
           mergeToken: $checkedConvert('merge_token', (v) => v as String?),
+          survivorUserId:
+              $checkedConvert('survivorUserId', (v) => v as String?),
+          acceptLostLogins:
+              $checkedConvert('acceptLostLogins', (v) => v as bool?),
           conflictResolutions: $checkedConvert(
               'conflictResolutions',
               (v) => (v as List<dynamic>?)
@@ -30,6 +34,9 @@ Map<String, dynamic> _$MergeConfirmRequestBodyToJson(
         MergeConfirmRequestBody instance) =>
     <String, dynamic>{
       if (instance.mergeToken case final value?) 'merge_token': value,
+      if (instance.survivorUserId case final value?) 'survivorUserId': value,
+      if (instance.acceptLostLogins case final value?)
+        'acceptLostLogins': value,
       if (instance.conflictResolutions?.map((e) => e.toJson()).toList()
           case final value?)
         'conflictResolutions': value,

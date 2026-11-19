@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/login_data.dart';
 import 'package:hduhelp_neo/src/model/merge_migrated_item.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -17,26 +18,28 @@ part 'merge_confirm_data.g.dart';
 class MergeConfirmData {
   /// Returns a new [MergeConfirmData] instance.
   MergeConfirmData({
-    this.targetUserId,
-    this.sourceUserId,
+    this.survivorUserId,
+    this.loserUserId,
     this.migrated,
+    this.lostLogins,
     this.alreadyMerged,
-    this.sourceInvalidated,
+    this.resetRequired,
+    this.session,
   });
 
   @JsonKey(
-    name: r'targetUserId',
+    name: r'survivorUserId',
     required: false,
     includeIfNull: false,
   )
-  final String? targetUserId;
+  final String? survivorUserId;
 
   @JsonKey(
-    name: r'sourceUserId',
+    name: r'loserUserId',
     required: false,
     includeIfNull: false,
   )
-  final String? sourceUserId;
+  final String? loserUserId;
 
   @JsonKey(
     name: r'migrated',
@@ -46,37 +49,55 @@ class MergeConfirmData {
   final List<MergeMigratedItem>? migrated;
 
   @JsonKey(
+    name: r'lostLogins',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? lostLogins;
+
+  @JsonKey(
     name: r'alreadyMerged',
     required: false,
     includeIfNull: false,
   )
   final bool? alreadyMerged;
 
-  /// 源账号 B 已被注销、其全部登录会话将被撤销（合并完成后恒为 true）
+  /// 客户端清掉与用户相关的本机状态后重新加载
   @JsonKey(
-    name: r'sourceInvalidated',
+    name: r'resetRequired',
     required: false,
     includeIfNull: false,
   )
-  final bool? sourceInvalidated;
+  final bool? resetRequired;
+
+  @JsonKey(
+    name: r'session',
+    required: false,
+    includeIfNull: false,
+  )
+  final LoginData? session;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is MergeConfirmData &&
-          other.targetUserId == targetUserId &&
-          other.sourceUserId == sourceUserId &&
+          other.survivorUserId == survivorUserId &&
+          other.loserUserId == loserUserId &&
           other.migrated == migrated &&
+          other.lostLogins == lostLogins &&
           other.alreadyMerged == alreadyMerged &&
-          other.sourceInvalidated == sourceInvalidated;
+          other.resetRequired == resetRequired &&
+          other.session == session;
 
   @override
   int get hashCode =>
-      targetUserId.hashCode +
-      sourceUserId.hashCode +
+      survivorUserId.hashCode +
+      loserUserId.hashCode +
       migrated.hashCode +
+      lostLogins.hashCode +
       alreadyMerged.hashCode +
-      sourceInvalidated.hashCode;
+      resetRequired.hashCode +
+      session.hashCode;
 
   factory MergeConfirmData.fromJson(Map<String, dynamic> json) =>
       _$MergeConfirmDataFromJson(json);
