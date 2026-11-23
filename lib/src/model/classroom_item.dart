@@ -19,13 +19,10 @@ class ClassroomItem {
     this.buildingID,
     this.locationID,
     this.locationName,
-    this.capacity,
     this.selfStudy,
     this.schoolYear,
     this.semester,
     this.available,
-    this.hasProjector,
-    this.hasWhiteboard,
   });
 
   @JsonKey(
@@ -48,13 +45,6 @@ class ClassroomItem {
     includeIfNull: false,
   )
   final String? locationName;
-
-  @JsonKey(
-    name: r'capacity',
-    required: false,
-    includeIfNull: false,
-  )
-  final int? capacity;
 
   @JsonKey(
     name: r'selfStudy',
@@ -84,21 +74,6 @@ class ClassroomItem {
   )
   final bool? available;
 
-  /// optional 保留“尚未实地确认”与“已确认没有”的区别。
-  @JsonKey(
-    name: r'hasProjector',
-    required: false,
-    includeIfNull: false,
-  )
-  final bool? hasProjector;
-
-  @JsonKey(
-    name: r'hasWhiteboard',
-    required: false,
-    includeIfNull: false,
-  )
-  final bool? hasWhiteboard;
-
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -106,26 +81,20 @@ class ClassroomItem {
           other.buildingID == buildingID &&
           other.locationID == locationID &&
           other.locationName == locationName &&
-          other.capacity == capacity &&
           other.selfStudy == selfStudy &&
           other.schoolYear == schoolYear &&
           other.semester == semester &&
-          other.available == available &&
-          other.hasProjector == hasProjector &&
-          other.hasWhiteboard == hasWhiteboard;
+          other.available == available;
 
   @override
   int get hashCode =>
       buildingID.hashCode +
       locationID.hashCode +
       locationName.hashCode +
-      capacity.hashCode +
       selfStudy.hashCode +
       schoolYear.hashCode +
       semester.hashCode +
-      available.hashCode +
-      hasProjector.hashCode +
-      hasWhiteboard.hashCode;
+      available.hashCode;
 
   factory ClassroomItem.fromJson(Map<String, dynamic> json) =>
       _$ClassroomItemFromJson(json);

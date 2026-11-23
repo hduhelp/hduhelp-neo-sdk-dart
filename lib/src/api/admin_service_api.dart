@@ -21,6 +21,8 @@ import 'package:hduhelp_neo/src/model/assign_operator_role_request_body.dart';
 import 'package:hduhelp_neo/src/model/assign_operator_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/authorization_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_operator_user_request_body.dart';
+import 'package:hduhelp_neo/src/model/bind_user_email_request_body.dart';
+import 'package:hduhelp_neo/src/model/bind_user_email_response_body.dart';
 import 'package:hduhelp_neo/src/model/caiyun_config_response_body.dart';
 import 'package:hduhelp_neo/src/model/campus_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/campus_mutate_response_body.dart';
@@ -113,6 +115,8 @@ import 'package:hduhelp_neo/src/model/update_login_client_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_login_client_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_role_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_role_response_body.dart';
+import 'package:hduhelp_neo/src/model/update_user_profile_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_user_profile_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_campus_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/upsert_user_contact_request_body.dart';
@@ -768,6 +772,105 @@ class AdminServiceApi {
     }
 
     return Response<OperatorInfoResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 绑定用户邮箱
+  /// 为当前没有邮箱的用户补充邮箱登录入口；管理员需先完成线下核验，已有邮箱或邮箱已被其他账号占用时拒绝
+  ///
+  /// Parameters:
+  /// * [bindUserEmailRequestBody] - 为没有邮箱的历史账号补充邮箱登录入口。仅允许新增绑定，不支持覆盖已有邮箱。
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [BindUserEmailResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<BindUserEmailResponseBody>> adminServiceBindUserEmail({
+    BindUserEmailRequestBody? bindUserEmailRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/bindings/email';
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(bindUserEmailRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    BindUserEmailResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<BindUserEmailResponseBody, BindUserEmailResponseBody>(
+              rawData, 'BindUserEmailResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<BindUserEmailResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -3496,11 +3599,12 @@ class AdminServiceApi {
     );
   }
 
-  /// 查询代登录审计记录
-  /// 独立只读权限，按操作者、目标用户、时间和结果分页查询；已签发不代表用户页面已打开。
+  /// 查询管理员留痕记录
+  /// 独立只读权限，按类型、操作者、目标用户、时间和结果分页查询；资料编辑类型包含邮箱绑定，代登录已签发不代表用户页面已打开。
   ///
   /// Parameters:
   /// * [result]
+  /// * [kind] - user_profile_update 包含基础资料编辑及邮箱绑定；user_email_bind 保留兼容旧客户端
   /// * [keyword] - 代登录人或被代登录人的姓名、学号/工号
   /// * [operatorId]
   /// * [targetUserId]
@@ -3521,6 +3625,7 @@ class AdminServiceApi {
   Future<Response<ListImpersonationLogsResponseBody>>
       adminServiceListImpersonationLogs({
     String? result,
+    String? kind,
     String? keyword,
     String? operatorId,
     String? targetUserId,
@@ -3557,6 +3662,7 @@ class AdminServiceApi {
 
     final _queryParameters = <String, dynamic>{
       if (result != null) r'result': result,
+      if (kind != null) r'kind': kind,
       if (keyword != null) r'keyword': keyword,
       if (operatorId != null) r'operator_id': operatorId,
       if (targetUserId != null) r'target_user_id': targetUserId,
@@ -6807,6 +6913,107 @@ class AdminServiceApi {
     }
 
     return Response<UpdateRoleResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 编辑用户基础资料
+  /// 管理员直接编辑用户昵称、手机号和邮箱；未提供的字段保持原值，不发送短信或邮箱验证码
+  ///
+  /// Parameters:
+  /// * [updateUserProfileRequestBody] - 编辑用户基础资料。未提供的字段保持原值；手机号和邮箱由管理员直接录入， 不经过短信/邮箱验证码流程。
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [UpdateUserProfileResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<UpdateUserProfileResponseBody>>
+      adminServiceUpdateUserProfile({
+    UpdateUserProfileRequestBody? updateUserProfileRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/profile';
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(updateUserProfileRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    UpdateUserProfileResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<UpdateUserProfileResponseBody,
+                  UpdateUserProfileResponseBody>(
+              rawData, 'UpdateUserProfileResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<UpdateUserProfileResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

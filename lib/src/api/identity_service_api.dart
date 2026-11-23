@@ -1176,10 +1176,10 @@ class IdentityServiceApi {
   }
 
   /// 授权单个校园服务
-  /// 二课、图书馆与学习通不带密码时优先复用已有有效授权，无法复用则返回 40934；重新验证时使用当前学号和杭电统一身份认证密码，不允许指定其他学号。阳光长跑仍需提交独立 Sportmeta 账号与密码，登录后校验学生身份属于当前学号。学习通通过杭电泛雅 SSO 换取超星会话，保存学号、加密密码及超星 Cookie，查询失败时最多重新登录一次，并支持定时续期；不保存学校 SSO Cookie。仅一方原生会话可调用。
+  /// 二课、图书馆、学习通与上课啦不带密码时优先复用已有有效授权，无法复用则返回 40934；重新验证时使用当前学号和杭电统一身份认证密码，不允许指定其他学号。阳光长跑仍需提交独立 Sportmeta 账号与密码，登录后校验学生身份属于当前学号。学习通通过杭电泛雅 SSO 换取超星会话；上课啦通过杭电统一身份认证重新获取托管凭据，均保存必要的密封登录信息并支持定时续期，不保存学校 SSO Cookie。仅一方原生会话可调用。
   ///
   /// Parameters:
-  /// * [service] - erke | library | sunrun | chaoxing
+  /// * [service] - erke | library | sunrun | chaoxing | skl
   /// * [authorizeServiceRequestBody]
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
@@ -3390,7 +3390,7 @@ class IdentityServiceApi {
   }
 
   /// 查询服务授权状态
-  /// 返回当前学号的二课、图书馆、阳光长跑与学习通授权状态、有效性及失效通知开关；绝不返回已存 token、Cookie 或加密密码。仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
+  /// 返回当前学号的二课、图书馆、阳光长跑、学习通与上课啦授权状态、有效性及失效通知开关；绝不返回已存 token、Cookie 或加密密码。仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
   ///
   /// Parameters:
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
@@ -5470,7 +5470,7 @@ class IdentityServiceApi {
   /// 删除当前学号指定服务的已存凭据并清除登录态缓存，操作幂等。仅一方原生会话可调用。
   ///
   /// Parameters:
-  /// * [service] - erke | library | sunrun | chaoxing
+  /// * [service] - erke | library | sunrun | chaoxing | skl
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -6572,7 +6572,7 @@ class IdentityServiceApi {
   }
 
   /// 设置服务授权失效通知
-  /// 按 erke/library/sunrun/chaoxing 设置当前学号的授权失效钉钉通知；默认关闭，仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
+  /// 按 erke/library/sunrun/chaoxing/skl 设置当前学号的授权失效钉钉通知；默认关闭，仅一方原生会话可调用，不向 CLI/PAT/UAT 暴露。
   ///
   /// Parameters:
   /// * [updateServiceAuthorizationNotificationRequestBody]

@@ -34,6 +34,8 @@ class AdminImpersonationLog {
     this.result,
     this.resultCompletedAt,
     this.resultErrorCode,
+    this.kind,
+    this.details,
   });
 
   @JsonKey(
@@ -166,6 +168,22 @@ class AdminImpersonationLog {
   )
   final String? resultErrorCode;
 
+  /// 统一管理员留痕分类；历史记录归类为 impersonation
+  @JsonKey(
+    name: r'kind',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? kind;
+
+  /// JSON 编码的脱敏操作详情，不保存原始手机号或邮箱
+  @JsonKey(
+    name: r'details',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? details;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -187,7 +205,9 @@ class AdminImpersonationLog {
           other.operatorStaffId == operatorStaffId &&
           other.result == result &&
           other.resultCompletedAt == resultCompletedAt &&
-          other.resultErrorCode == resultErrorCode;
+          other.resultErrorCode == resultErrorCode &&
+          other.kind == kind &&
+          other.details == details;
 
   @override
   int get hashCode =>
@@ -208,7 +228,9 @@ class AdminImpersonationLog {
       operatorStaffId.hashCode +
       result.hashCode +
       resultCompletedAt.hashCode +
-      resultErrorCode.hashCode;
+      resultErrorCode.hashCode +
+      kind.hashCode +
+      details.hashCode;
 
   factory AdminImpersonationLog.fromJson(Map<String, dynamic> json) =>
       _$AdminImpersonationLogFromJson(json);

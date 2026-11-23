@@ -392,6 +392,8 @@ import 'package:hduhelp_neo/src/model/bind_schedule_share_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_social_request_body.dart';
 import 'package:hduhelp_neo/src/model/bind_social_response_body.dart';
 import 'package:hduhelp_neo/src/model/bind_status_data.dart';
+import 'package:hduhelp_neo/src/model/bind_user_email_request_body.dart';
+import 'package:hduhelp_neo/src/model/bind_user_email_response_body.dart';
 import 'package:hduhelp_neo/src/model/bindings_data.dart';
 import 'package:hduhelp_neo/src/model/bindings_response_body.dart';
 import 'package:hduhelp_neo/src/model/birthday_base_data.dart';
@@ -1343,6 +1345,10 @@ import 'package:hduhelp_neo/src/model/resolve_appeal_request_body.dart';
 import 'package:hduhelp_neo/src/model/resolve_report_data.dart';
 import 'package:hduhelp_neo/src/model/resolve_report_request_body.dart';
 import 'package:hduhelp_neo/src/model/resolve_report_response_body.dart';
+import 'package:hduhelp_neo/src/model/resolve_social_identity_batch_data.dart';
+import 'package:hduhelp_neo/src/model/resolve_social_identity_batch_item.dart';
+import 'package:hduhelp_neo/src/model/resolve_social_identity_batch_request_body.dart';
+import 'package:hduhelp_neo/src/model/resolve_social_identity_batch_response_body.dart';
 import 'package:hduhelp_neo/src/model/resolve_social_identity_data.dart';
 import 'package:hduhelp_neo/src/model/resolve_social_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/resolve_social_identity_response_body.dart';
@@ -1494,6 +1500,12 @@ import 'package:hduhelp_neo/src/model/site_banner_mutation_response_body.dart';
 import 'package:hduhelp_neo/src/model/site_banner_page.dart';
 import 'package:hduhelp_neo/src/model/site_banner_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/site_banner_response_body.dart';
+import 'package:hduhelp_neo/src/model/skl_add_leave_request_body.dart';
+import 'package:hduhelp_neo/src/model/skl_attachment_item.dart';
+import 'package:hduhelp_neo/src/model/skl_attachment_request_body.dart';
+import 'package:hduhelp_neo/src/model/skl_leave_detail_item.dart';
+import 'package:hduhelp_neo/src/model/skl_response_body_body.dart';
+import 'package:hduhelp_neo/src/model/skl_sign_in_request_body.dart';
 import 'package:hduhelp_neo/src/model/slot.dart';
 import 'package:hduhelp_neo/src/model/social_binding.dart';
 import 'package:hduhelp_neo/src/model/source_delete_response_body.dart';
@@ -1592,6 +1604,8 @@ import 'package:hduhelp_neo/src/model/update_service_authorization_notification_
 import 'package:hduhelp_neo/src/model/update_site_banner_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_source_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_subscription_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_user_profile_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_user_profile_response_body.dart';
 import 'package:hduhelp_neo/src/model/upload_data.dart';
 import 'package:hduhelp_neo/src/model/upload_target.dart';
 import 'package:hduhelp_neo/src/model/upload_urls_data.dart';
@@ -2792,6 +2806,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'BindStatusData':
       return BindStatusData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BindUserEmailRequestBody':
+      return BindUserEmailRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'BindUserEmailResponseBody':
+      return BindUserEmailResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'BindingsData':
       return BindingsData.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -5545,6 +5565,18 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ResolveReportResponseBody':
       return ResolveReportResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'ResolveSocialIdentityBatchData':
+      return ResolveSocialIdentityBatchData.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ResolveSocialIdentityBatchItem':
+      return ResolveSocialIdentityBatchItem.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ResolveSocialIdentityBatchRequestBody':
+      return ResolveSocialIdentityBatchRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'ResolveSocialIdentityBatchResponseBody':
+      return ResolveSocialIdentityBatchResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'ResolveSocialIdentityData':
       return ResolveSocialIdentityData.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -5976,6 +6008,24 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SiteBannerResponseBody':
       return SiteBannerResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SklAddLeaveRequestBody':
+      return SklAddLeaveRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SklAttachmentItem':
+      return SklAttachmentItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SklAttachmentRequestBody':
+      return SklAttachmentRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SklLeaveDetailItem':
+      return SklLeaveDetailItem.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SklResponseBodyBody':
+      return SklResponseBodyBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'SklSignInRequestBody':
+      return SklSignInRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'Slot':
       return Slot.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SocialBinding':
@@ -6257,6 +6307,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'UpdateSubscriptionRequestBody':
       return UpdateSubscriptionRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'UpdateUserProfileRequestBody':
+      return UpdateUserProfileRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'UpdateUserProfileResponseBody':
+      return UpdateUserProfileResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'UploadData':
       return UploadData.fromJson(value as Map<String, dynamic>) as ReturnType;

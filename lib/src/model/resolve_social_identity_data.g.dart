@@ -20,10 +20,17 @@ ResolveSocialIdentityData _$ResolveSocialIdentityDataFromJson(
           clientId: $checkedConvert('client_id', (v) => v as String),
           bound: $checkedConvert('bound', (v) => v as bool),
           userId: $checkedConvert('user_id', (v) => v as String?),
+          staffId: $checkedConvert('staff_id', (v) => v as String?),
+          staffName: $checkedConvert('staff_name', (v) => v as String?),
         );
         return val;
       },
-      fieldKeyMap: const {'clientId': 'client_id', 'userId': 'user_id'},
+      fieldKeyMap: const {
+        'clientId': 'client_id',
+        'userId': 'user_id',
+        'staffId': 'staff_id',
+        'staffName': 'staff_name'
+      },
     );
 
 Map<String, dynamic> _$ResolveSocialIdentityDataToJson(
@@ -32,4 +39,6 @@ Map<String, dynamic> _$ResolveSocialIdentityDataToJson(
       'client_id': instance.clientId,
       'bound': instance.bound,
       if (instance.userId case final value?) 'user_id': value,
+      if (instance.staffId case final value?) 'staff_id': value,
+      if (instance.staffName case final value?) 'staff_name': value,
     };

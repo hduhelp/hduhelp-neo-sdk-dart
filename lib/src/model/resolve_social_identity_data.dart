@@ -19,6 +19,8 @@ class ResolveSocialIdentityData {
     required this.clientId,
     required this.bound,
     this.userId,
+    this.staffId,
+    this.staffName,
   });
 
   @JsonKey(
@@ -42,16 +44,38 @@ class ResolveSocialIdentityData {
   )
   final String? userId;
 
+  /// Current default campus identity, when the Neo account has one.
+  @JsonKey(
+    name: r'staff_id',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? staffId;
+
+  @JsonKey(
+    name: r'staff_name',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? staffName;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ResolveSocialIdentityData &&
           other.clientId == clientId &&
           other.bound == bound &&
-          other.userId == userId;
+          other.userId == userId &&
+          other.staffId == staffId &&
+          other.staffName == staffName;
 
   @override
-  int get hashCode => clientId.hashCode + bound.hashCode + userId.hashCode;
+  int get hashCode =>
+      clientId.hashCode +
+      bound.hashCode +
+      userId.hashCode +
+      staffId.hashCode +
+      staffName.hashCode;
 
   factory ResolveSocialIdentityData.fromJson(Map<String, dynamic> json) =>
       _$ResolveSocialIdentityDataFromJson(json);

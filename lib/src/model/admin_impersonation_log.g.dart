@@ -37,6 +37,8 @@ AdminImpersonationLog _$AdminImpersonationLogFromJson(
               $checkedConvert('resultCompletedAt', (v) => (v as num?)?.toInt()),
           resultErrorCode:
               $checkedConvert('resultErrorCode', (v) => v as String?),
+          kind: $checkedConvert('kind', (v) => v as String?),
+          details: $checkedConvert('details', (v) => v as String?),
         );
         return val;
       },
@@ -65,4 +67,6 @@ Map<String, dynamic> _$AdminImpersonationLogToJson(
       if (instance.resultCompletedAt case final value?)
         'resultCompletedAt': value,
       if (instance.resultErrorCode case final value?) 'resultErrorCode': value,
+      if (instance.kind case final value?) 'kind': value,
+      if (instance.details case final value?) 'details': value,
     };
