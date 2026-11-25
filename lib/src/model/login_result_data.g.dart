@@ -27,6 +27,12 @@ LoginResultData _$LoginResultDataFromJson(Map<String, dynamic> json) =>
           mergeToken: $checkedConvert('mergeToken', (v) => v as String?),
           mergeSourceUserId:
               $checkedConvert('mergeSourceUserId', (v) => v as String?),
+          features: $checkedConvert(
+              'features',
+              (v) => v == null
+                  ? null
+                  : SessionFeatures.fromJson(v as Map<String, dynamic>)),
+          demoAccount: $checkedConvert('demoAccount', (v) => v as bool?),
         );
         return val;
       },
@@ -45,4 +51,6 @@ Map<String, dynamic> _$LoginResultDataToJson(LoginResultData instance) =>
       if (instance.mergeToken case final value?) 'mergeToken': value,
       if (instance.mergeSourceUserId case final value?)
         'mergeSourceUserId': value,
+      if (instance.features?.toJson() case final value?) 'features': value,
+      if (instance.demoAccount case final value?) 'demoAccount': value,
     };

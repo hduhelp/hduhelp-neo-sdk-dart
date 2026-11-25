@@ -54,6 +54,7 @@ import 'package:hduhelp_neo/src/model/delete_role_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_campus_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_contact_response_body.dart';
 import 'package:hduhelp_neo/src/model/delete_user_social_identity_response_body.dart';
+import 'package:hduhelp_neo/src/model/demo_account_response_body.dart';
 import 'package:hduhelp_neo/src/model/electricity_meter_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/electricity_meter_mutate_response_body.dart';
 import 'package:hduhelp_neo/src/model/impersonation_result_response_body.dart';
@@ -89,6 +90,7 @@ import 'package:hduhelp_neo/src/model/set_caiyun_config_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_caiyun_config_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_config_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_config_response_body.dart';
+import 'package:hduhelp_neo/src/model/set_demo_account_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_login_methods_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_login_methods_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_operator_enabled_request_body.dart';
@@ -105,6 +107,7 @@ import 'package:hduhelp_neo/src/model/set_user_status_response_body.dart';
 import 'package:hduhelp_neo/src/model/tenant_list_response_body.dart';
 import 'package:hduhelp_neo/src/model/test_connection_request_body.dart';
 import 'package:hduhelp_neo/src/model/test_connection_response_body.dart';
+import 'package:hduhelp_neo/src/model/unlock_demo_account_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_app_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_campus_request_body.dart';
@@ -871,6 +874,92 @@ class AdminServiceApi {
     }
 
     return Response<BindUserEmailResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 取消审核演示账号
+  /// 清除影子与固定验证码，账号恢复为普通账号（后台设的密码保留）；吊销该账号全部会话、PAT 与应用授权；记审计
+  ///
+  /// Parameters:
+  /// * [userId]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [DemoAccountResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<DemoAccountResponseBody>> adminServiceClearDemoAccount({
+    String? userId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/demo';
+    final _options = Options(
+      method: r'DELETE',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (userId != null) r'user_id': userId,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    DemoAccountResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<DemoAccountResponseBody, DemoAccountResponseBody>(
+              rawData, 'DemoAccountResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<DemoAccountResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -2718,6 +2807,92 @@ class AdminServiceApi {
     }
 
     return Response<ConfigGetResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 查看审核演示账号设置
+  /// 是否为演示账号、影子用户及其当前本科学号与身份类型；不返回固定验证码
+  ///
+  /// Parameters:
+  /// * [userId]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [DemoAccountResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<DemoAccountResponseBody>> adminServiceGetDemoAccount({
+    String? userId,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/demo';
+    final _options = Options(
+      method: r'GET',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _queryParameters = <String, dynamic>{
+      if (userId != null) r'user_id': userId,
+    };
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      queryParameters: _queryParameters,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    DemoAccountResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<DemoAccountResponseBody, DemoAccountResponseBody>(
+              rawData, 'DemoAccountResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<DemoAccountResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
@@ -5388,6 +5563,105 @@ class AdminServiceApi {
     );
   }
 
+  /// 设置审核演示账号
+  /// 把有邮箱、没有手机号、没有任何校园与第三方绑定、不是官方号成员的账号设为演示账号，指定影子用户（只能是本科身份）、6 位固定验证码（拒绝全同、连续的弱码）与可选的登录密码；首次设定、换影子、设密码时吊销该账号全部会话、PAT 与应用授权，只换码时只清零锁定；记审计
+  ///
+  /// Parameters:
+  /// * [setDemoAccountRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [DemoAccountResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<DemoAccountResponseBody>> adminServiceSetDemoAccount({
+    SetDemoAccountRequestBody? setDemoAccountRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/demo';
+    final _options = Options(
+      method: r'PUT',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(setDemoAccountRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    DemoAccountResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<DemoAccountResponseBody, DemoAccountResponseBody>(
+              rawData, 'DemoAccountResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<DemoAccountResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
   /// 设置登录方式启用状态
   /// 提交被停用的登录方式 key 列表；被停用的方式在 GetAuthConfig 中报告为 disabled
   ///
@@ -6291,6 +6565,105 @@ class AdminServiceApi {
     }
 
     return Response<OperatorInfoResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 解锁演示账号固定码登录
+  /// 清零固定验证码的错误计数与锁定；记审计
+  ///
+  /// Parameters:
+  /// * [unlockDemoAccountRequestBody]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [DemoAccountResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<DemoAccountResponseBody>> adminServiceUnlockDemoAccount({
+    UnlockDemoAccountRequestBody? unlockDemoAccountRequestBody,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/admin/users/demo/unlock';
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'OperatorBearerAuth',
+          },
+        ],
+        ...?extra,
+      },
+      contentType: 'application/json',
+      validateStatus: validateStatus,
+    );
+
+    dynamic _bodyData;
+
+    try {
+      _bodyData = jsonEncode(unlockDemoAccountRequestBody);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _options.compose(
+          _dio.options,
+          _path,
+        ),
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    final _response = await _dio.request<Object>(
+      _path,
+      data: _bodyData,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    DemoAccountResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<DemoAccountResponseBody, DemoAccountResponseBody>(
+              rawData, 'DemoAccountResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<DemoAccountResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,

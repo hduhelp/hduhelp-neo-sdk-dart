@@ -601,6 +601,8 @@ import 'package:hduhelp_neo/src/model/delivery_preference_response_body.dart';
 import 'package:hduhelp_neo/src/model/delivery_preference_update.dart';
 import 'package:hduhelp_neo/src/model/delivery_provider_option.dart';
 import 'package:hduhelp_neo/src/model/delivery_response_body.dart';
+import 'package:hduhelp_neo/src/model/demo_account_data.dart';
+import 'package:hduhelp_neo/src/model/demo_account_response_body.dart';
 import 'package:hduhelp_neo/src/model/deny_device_resp_body.dart';
 import 'package:hduhelp_neo/src/model/device_authorization_resp_body.dart';
 import 'package:hduhelp_neo/src/model/device_cancel_request_body.dart';
@@ -1456,6 +1458,7 @@ import 'package:hduhelp_neo/src/model/service_authorization_status_response_body
 import 'package:hduhelp_neo/src/model/service_chat_data.dart';
 import 'package:hduhelp_neo/src/model/service_chat_request_body.dart';
 import 'package:hduhelp_neo/src/model/service_chat_response_body.dart';
+import 'package:hduhelp_neo/src/model/session_features.dart';
 import 'package:hduhelp_neo/src/model/session_info.dart';
 import 'package:hduhelp_neo/src/model/set_academic_settings_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_app_enabled_request_body.dart';
@@ -1471,6 +1474,7 @@ import 'package:hduhelp_neo/src/model/set_current_campus_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_default_identity_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_default_identity_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_delivery_preference_request_body.dart';
+import 'package:hduhelp_neo/src/model/set_demo_account_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_login_methods_request_body.dart';
 import 'package:hduhelp_neo/src/model/set_login_methods_response_body.dart';
 import 'package:hduhelp_neo/src/model/set_official_member_role_request_body.dart';
@@ -1582,6 +1586,7 @@ import 'package:hduhelp_neo/src/model/topic_override.dart';
 import 'package:hduhelp_neo/src/model/total_time.dart';
 import 'package:hduhelp_neo/src/model/unbind_campus_response_body.dart';
 import 'package:hduhelp_neo/src/model/unbind_social_response_body.dart';
+import 'package:hduhelp_neo/src/model/unlock_demo_account_request_body.dart';
 import 'package:hduhelp_neo/src/model/unreturned_batch_item.dart';
 import 'package:hduhelp_neo/src/model/update_activity_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_announcement_request_body.dart';
@@ -3427,6 +3432,12 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'DeliveryResponseBody':
       return DeliveryResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'DemoAccountData':
+      return DemoAccountData.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'DemoAccountResponseBody':
+      return DemoAccountResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'DenyDeviceRespBody':
       return DenyDeviceRespBody.fromJson(value as Map<String, dynamic>)
@@ -5890,6 +5901,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'ServiceChatResponseBody':
       return ServiceChatResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'SessionFeatures':
+      return SessionFeatures.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SessionInfo':
       return SessionInfo.fromJson(value as Map<String, dynamic>) as ReturnType;
     case 'SetAcademicSettingsRequestBody':
@@ -5934,6 +5948,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'SetDeliveryPreferenceRequestBody':
       return SetDeliveryPreferenceRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'SetDemoAccountRequestBody':
+      return SetDemoAccountRequestBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'SetLoginMethodsRequestBody':
       return SetLoginMethodsRequestBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -6252,6 +6269,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'UnbindSocialResponseBody':
       return UnbindSocialResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'UnlockDemoAccountRequestBody':
+      return UnlockDemoAccountRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'UnreturnedBatchItem':
       return UnreturnedBatchItem.fromJson(value as Map<String, dynamic>)
           as ReturnType;

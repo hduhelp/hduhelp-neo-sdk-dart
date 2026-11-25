@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/session_features.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'auth_status_data.g.dart';
@@ -21,6 +22,8 @@ class AuthStatusData {
     this.activeIdentityType,
     this.switchableIdentityTypes,
     this.defaultIdentityType,
+    this.features,
+    this.demoAccount,
   });
 
   @JsonKey(
@@ -58,6 +61,21 @@ class AuthStatusData {
   )
   final String? defaultIdentityType;
 
+  @JsonKey(
+    name: r'features',
+    required: false,
+    includeIfNull: false,
+  )
+  final SessionFeatures? features;
+
+  /// 已登录时带
+  @JsonKey(
+    name: r'demoAccount',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? demoAccount;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -66,7 +84,9 @@ class AuthStatusData {
           other.userId == userId &&
           other.activeIdentityType == activeIdentityType &&
           other.switchableIdentityTypes == switchableIdentityTypes &&
-          other.defaultIdentityType == defaultIdentityType;
+          other.defaultIdentityType == defaultIdentityType &&
+          other.features == features &&
+          other.demoAccount == demoAccount;
 
   @override
   int get hashCode =>
@@ -74,7 +94,9 @@ class AuthStatusData {
       userId.hashCode +
       activeIdentityType.hashCode +
       switchableIdentityTypes.hashCode +
-      defaultIdentityType.hashCode;
+      defaultIdentityType.hashCode +
+      features.hashCode +
+      demoAccount.hashCode;
 
   factory AuthStatusData.fromJson(Map<String, dynamic> json) =>
       _$AuthStatusDataFromJson(json);

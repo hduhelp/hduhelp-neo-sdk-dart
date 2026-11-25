@@ -4,6 +4,7 @@
 
 // ignore_for_file: unused_element
 import 'package:hduhelp_neo/src/model/user_info.dart';
+import 'package:hduhelp_neo/src/model/session_features.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'login_result_data.g.dart';
@@ -27,6 +28,8 @@ class LoginResultData {
     this.mergeAvailable,
     this.mergeToken,
     this.mergeSourceUserId,
+    this.features,
+    this.demoAccount,
   });
 
   /// 是否已完成登录并签发 token
@@ -106,6 +109,21 @@ class LoginResultData {
   )
   final String? mergeSourceUserId;
 
+  @JsonKey(
+    name: r'features',
+    required: false,
+    includeIfNull: false,
+  )
+  final SessionFeatures? features;
+
+  /// 审核演示账号
+  @JsonKey(
+    name: r'demoAccount',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? demoAccount;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -119,7 +137,9 @@ class LoginResultData {
           other.user == user &&
           other.mergeAvailable == mergeAvailable &&
           other.mergeToken == mergeToken &&
-          other.mergeSourceUserId == mergeSourceUserId;
+          other.mergeSourceUserId == mergeSourceUserId &&
+          other.features == features &&
+          other.demoAccount == demoAccount;
 
   @override
   int get hashCode =>
@@ -132,7 +152,9 @@ class LoginResultData {
       user.hashCode +
       mergeAvailable.hashCode +
       mergeToken.hashCode +
-      mergeSourceUserId.hashCode;
+      mergeSourceUserId.hashCode +
+      features.hashCode +
+      demoAccount.hashCode;
 
   factory LoginResultData.fromJson(Map<String, dynamic> json) =>
       _$LoginResultDataFromJson(json);

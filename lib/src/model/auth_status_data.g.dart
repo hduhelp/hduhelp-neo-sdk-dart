@@ -20,6 +20,12 @@ AuthStatusData _$AuthStatusDataFromJson(Map<String, dynamic> json) =>
               (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
           defaultIdentityType:
               $checkedConvert('defaultIdentityType', (v) => v as String?),
+          features: $checkedConvert(
+              'features',
+              (v) => v == null
+                  ? null
+                  : SessionFeatures.fromJson(v as Map<String, dynamic>)),
+          demoAccount: $checkedConvert('demoAccount', (v) => v as bool?),
         );
         return val;
       },
@@ -35,4 +41,6 @@ Map<String, dynamic> _$AuthStatusDataToJson(AuthStatusData instance) =>
         'switchableIdentityTypes': value,
       if (instance.defaultIdentityType case final value?)
         'defaultIdentityType': value,
+      if (instance.features?.toJson() case final value?) 'features': value,
+      if (instance.demoAccount case final value?) 'demoAccount': value,
     };

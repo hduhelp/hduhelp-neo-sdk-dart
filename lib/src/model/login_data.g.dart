@@ -17,6 +17,12 @@ LoginData _$LoginDataFromJson(Map<String, dynamic> json) => $checkedCreate(
               'accessTokenExpireAt', (v) => (v as num?)?.toInt()),
           refreshTokenExpireAt: $checkedConvert(
               'refreshTokenExpireAt', (v) => (v as num?)?.toInt()),
+          features: $checkedConvert(
+              'features',
+              (v) => v == null
+                  ? null
+                  : SessionFeatures.fromJson(v as Map<String, dynamic>)),
+          demoAccount: $checkedConvert('demoAccount', (v) => v as bool?),
         );
         return val;
       },
@@ -29,4 +35,6 @@ Map<String, dynamic> _$LoginDataToJson(LoginData instance) => <String, dynamic>{
         'accessTokenExpireAt': value,
       if (instance.refreshTokenExpireAt case final value?)
         'refreshTokenExpireAt': value,
+      if (instance.features?.toJson() case final value?) 'features': value,
+      if (instance.demoAccount case final value?) 'demoAccount': value,
     };

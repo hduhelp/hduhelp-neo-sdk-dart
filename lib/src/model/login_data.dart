@@ -3,6 +3,7 @@
 //
 
 // ignore_for_file: unused_element
+import 'package:hduhelp_neo/src/model/session_features.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'login_data.g.dart';
@@ -20,6 +21,8 @@ class LoginData {
     this.refreshToken,
     this.accessTokenExpireAt,
     this.refreshTokenExpireAt,
+    this.features,
+    this.demoAccount,
   });
 
   @JsonKey(
@@ -50,6 +53,21 @@ class LoginData {
   )
   final int? refreshTokenExpireAt;
 
+  @JsonKey(
+    name: r'features',
+    required: false,
+    includeIfNull: false,
+  )
+  final SessionFeatures? features;
+
+  /// 审核演示账号
+  @JsonKey(
+    name: r'demoAccount',
+    required: false,
+    includeIfNull: false,
+  )
+  final bool? demoAccount;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -57,14 +75,18 @@ class LoginData {
           other.accessToken == accessToken &&
           other.refreshToken == refreshToken &&
           other.accessTokenExpireAt == accessTokenExpireAt &&
-          other.refreshTokenExpireAt == refreshTokenExpireAt;
+          other.refreshTokenExpireAt == refreshTokenExpireAt &&
+          other.features == features &&
+          other.demoAccount == demoAccount;
 
   @override
   int get hashCode =>
       accessToken.hashCode +
       refreshToken.hashCode +
       accessTokenExpireAt.hashCode +
-      refreshTokenExpireAt.hashCode;
+      refreshTokenExpireAt.hashCode +
+      features.hashCode +
+      demoAccount.hashCode;
 
   factory LoginData.fromJson(Map<String, dynamic> json) =>
       _$LoginDataFromJson(json);
