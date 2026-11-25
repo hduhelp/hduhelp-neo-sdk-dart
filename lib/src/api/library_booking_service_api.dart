@@ -780,7 +780,7 @@ class LibraryBookingServiceApi {
   }
 
   /// 实时查询图书馆座位
-  /// 仅在空间、日期、开始时间和时长都确定后调用。只返回普通座位。Skill 使用随包模板生成可缩放页面供用户选座。
+  /// 仅在空间、日期、开始时间和时长都确定后调用。只返回普通座位。用户需要选座且有空座时，立即加载 hdu-library-booking Skill，用本次完整结果和随包模板展示交互座位图。在 HDU Mate 工作模式调用 workspace 的 show_html，把选座卡片放在本轮回复里。
   ///
   /// Parameters:
   /// * [categoryId] - 空间分类接口返回的 categoryId。

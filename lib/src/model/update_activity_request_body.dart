@@ -21,6 +21,7 @@ class UpdateActivityRequestBody {
     this.endAt,
     this.description,
     this.status,
+    this.imageKeys,
   });
 
   @JsonKey(
@@ -58,6 +59,14 @@ class UpdateActivityRequestBody {
   )
   final String? status;
 
+  /// 上传后的 key，最多 3 个
+  @JsonKey(
+    name: r'image_keys',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? imageKeys;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -66,7 +75,8 @@ class UpdateActivityRequestBody {
           other.startAt == startAt &&
           other.endAt == endAt &&
           other.description == description &&
-          other.status == status;
+          other.status == status &&
+          other.imageKeys == imageKeys;
 
   @override
   int get hashCode =>
@@ -74,7 +84,8 @@ class UpdateActivityRequestBody {
       startAt.hashCode +
       endAt.hashCode +
       description.hashCode +
-      status.hashCode;
+      status.hashCode +
+      imageKeys.hashCode;
 
   factory UpdateActivityRequestBody.fromJson(Map<String, dynamic> json) =>
       _$UpdateActivityRequestBodyFromJson(json);

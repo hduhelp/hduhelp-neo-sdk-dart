@@ -14,6 +14,7 @@ import 'package:hduhelp_neo/src/api/agent_service_api.dart';
 import 'package:hduhelp_neo/src/api/analytics_service_api.dart';
 import 'package:hduhelp_neo/src/api/announcement_service_api.dart';
 import 'package:hduhelp_neo/src/api/apm_service_api.dart';
+import 'package:hduhelp_neo/src/api/app_dist_service_api.dart';
 import 'package:hduhelp_neo/src/api/campus_life_service_api.dart';
 import 'package:hduhelp_neo/src/api/empty_schedule_service_api.dart';
 import 'package:hduhelp_neo/src/api/feed_service_api.dart';
@@ -139,6 +140,12 @@ class HduhelpNeo {
   /// by doing that all interceptors will not be executed
   ApmServiceApi getApmServiceApi() {
     return ApmServiceApi(dio);
+  }
+
+  /// Get AppDistServiceApi instance, base route and serializer can be overridden by a given but be careful,
+  /// by doing that all interceptors will not be executed
+  AppDistServiceApi getAppDistServiceApi() {
+    return AppDistServiceApi(dio);
   }
 
   /// Get CampusLifeServiceApi instance, base route and serializer can be overridden by a given but be careful,

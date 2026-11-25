@@ -35,7 +35,7 @@ class AgentWorkPromptAnswerRequestBody {
   )
   final String choice;
 
-  /// submit 时必填：键是问题原文，单选为选项 label（「其他」的文字优先），多选为数组（「其他」的文字追加）
+  /// submit 时必填：键是问题原文，单选为选项 label（「其他」的文字优先），多选为数组（「其他」的文字追加）；跳过的题不放进来，一题都没答返回 400；工作环境的执行器还不支持跳过时有题没答返回 400 730000031「请先回答所有问题」
   @JsonKey(
     name: r'answers',
     required: false,

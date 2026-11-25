@@ -276,6 +276,7 @@ import 'package:hduhelp_neo/src/model/agent_work_session_page_response_body.dart
 import 'package:hduhelp_neo/src/model/agent_work_session_patch_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_work_session_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_work_session_state.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_work_turn.dart';
 import 'package:hduhelp_neo/src/model/agent_work_turn_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_work_turn_response_body.dart';
@@ -340,7 +341,17 @@ import 'package:hduhelp_neo/src/model/apm_totals.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_data.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_internal_request_body.dart';
 import 'package:hduhelp_neo/src/model/app_access_token_internal_response_body.dart';
+import 'package:hduhelp_neo/src/model/app_client_config.dart';
+import 'package:hduhelp_neo/src/model/app_client_config_response_body.dart';
+import 'package:hduhelp_neo/src/model/app_distribution.dart';
+import 'package:hduhelp_neo/src/model/app_distribution_channel.dart';
+import 'package:hduhelp_neo/src/model/app_distribution_response_body.dart';
+import 'package:hduhelp_neo/src/model/app_download_response_body.dart';
+import 'package:hduhelp_neo/src/model/app_downloads.dart';
+import 'package:hduhelp_neo/src/model/app_downloads_response_body.dart';
 import 'package:hduhelp_neo/src/model/app_list_response_body.dart';
+import 'package:hduhelp_neo/src/model/app_release.dart';
+import 'package:hduhelp_neo/src/model/app_release_response_body.dart';
 import 'package:hduhelp_neo/src/model/appeal.dart';
 import 'package:hduhelp_neo/src/model/appeal_response_body.dart';
 import 'package:hduhelp_neo/src/model/approve_device_request_body.dart';
@@ -1574,6 +1585,7 @@ import 'package:hduhelp_neo/src/model/unbind_social_response_body.dart';
 import 'package:hduhelp_neo/src/model/unreturned_batch_item.dart';
 import 'package:hduhelp_neo/src/model/update_activity_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_announcement_request_body.dart';
+import 'package:hduhelp_neo/src/model/update_app_distribution_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_app_request_body.dart';
 import 'package:hduhelp_neo/src/model/update_app_response_body.dart';
 import 'package:hduhelp_neo/src/model/update_asset_request_body.dart';
@@ -2479,6 +2491,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AgentWorkSessionState':
       return AgentWorkSessionState.fromJson(value as Map<String, dynamic>)
           as ReturnType;
+    case 'AgentWorkSessionStateResponseBody':
+      return AgentWorkSessionStateResponseBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
     case 'AgentWorkTurn':
       return AgentWorkTurn.fromJson(value as Map<String, dynamic>)
           as ReturnType;
@@ -2657,8 +2672,36 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
     case 'AppAccessTokenInternalResponseBody':
       return AppAccessTokenInternalResponseBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
+    case 'AppClientConfig':
+      return AppClientConfig.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AppClientConfigResponseBody':
+      return AppClientConfigResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AppDistribution':
+      return AppDistribution.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AppDistributionChannel':
+      return AppDistributionChannel.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AppDistributionResponseBody':
+      return AppDistributionResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AppDownloadResponseBody':
+      return AppDownloadResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AppDownloads':
+      return AppDownloads.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AppDownloadsResponseBody':
+      return AppDownloadsResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
     case 'AppListResponseBody':
       return AppListResponseBody.fromJson(value as Map<String, dynamic>)
+          as ReturnType;
+    case 'AppRelease':
+      return AppRelease.fromJson(value as Map<String, dynamic>) as ReturnType;
+    case 'AppReleaseResponseBody':
+      return AppReleaseResponseBody.fromJson(value as Map<String, dynamic>)
           as ReturnType;
     case 'Appeal':
       return Appeal.fromJson(value as Map<String, dynamic>) as ReturnType;
@@ -6217,6 +6260,9 @@ ReturnType deserialize<ReturnType, BaseType>(dynamic value, String targetType,
           as ReturnType;
     case 'UpdateAnnouncementRequestBody':
       return UpdateAnnouncementRequestBody.fromJson(
+          value as Map<String, dynamic>) as ReturnType;
+    case 'UpdateAppDistributionRequestBody':
+      return UpdateAppDistributionRequestBody.fromJson(
           value as Map<String, dynamic>) as ReturnType;
     case 'UpdateAppRequestBody':
       return UpdateAppRequestBody.fromJson(value as Map<String, dynamic>)

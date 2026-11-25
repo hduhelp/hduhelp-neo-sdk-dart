@@ -27,6 +27,8 @@ class VolunteerActivityDetail {
     this.publishedAt,
     this.createdAt,
     this.updatedAt,
+    this.imageUrls,
+    this.imageKeys,
   });
 
   @JsonKey(
@@ -106,6 +108,22 @@ class VolunteerActivityDetail {
   )
   final int? updatedAt;
 
+  /// 海报/群二维码地址，顺序即展示顺序
+  @JsonKey(
+    name: r'imageUrls',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? imageUrls;
+
+  /// 上传 key，仅管理端编辑时回填
+  @JsonKey(
+    name: r'imageKeys',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? imageKeys;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -120,7 +138,9 @@ class VolunteerActivityDetail {
           other.urgentAt == urgentAt &&
           other.publishedAt == publishedAt &&
           other.createdAt == createdAt &&
-          other.updatedAt == updatedAt;
+          other.updatedAt == updatedAt &&
+          other.imageUrls == imageUrls &&
+          other.imageKeys == imageKeys;
 
   @override
   int get hashCode =>
@@ -134,7 +154,9 @@ class VolunteerActivityDetail {
       urgentAt.hashCode +
       publishedAt.hashCode +
       createdAt.hashCode +
-      updatedAt.hashCode;
+      updatedAt.hashCode +
+      imageUrls.hashCode +
+      imageKeys.hashCode;
 
   factory VolunteerActivityDetail.fromJson(Map<String, dynamic> json) =>
       _$VolunteerActivityDetailFromJson(json);

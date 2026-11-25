@@ -3754,6 +3754,42 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ApmTlogTaskResponseBody'
+  /hduhelp-neo/admin/app/distribution:
+    get:
+      tags:
+      - AppDistService
+      summary: App 发布配置
+      description: 需要 app.distribution:view。附带各安卓渠道 fir 上的最新包。
+      operationId: AppDistService_GetAppDistribution
+      security:
+      - OperatorBearerAuth: []
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDistributionResponseBody'
+    put:
+      tags:
+      - AppDistService
+      summary: 修改 App 发布配置
+      description: 需要 app.distribution:configure。强制更新线不能高于该渠道 fir 上的最新构建（731000002）。
+      operationId: AppDistService_UpdateAppDistribution
+      security:
+      - OperatorBearerAuth: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateAppDistributionRequestBody'
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AppDistributionResponseBody'
   /hduhelp-neo/admin/apps:
     get:
       tags:
@@ -14579,7 +14615,7 @@ paths:
           type: string
       requestBody:
         required: true
-        description: 只改传了的字段；换模型或接入点在下一回合生效。version 落后返回 409。
+        description: 只改传了的字段；换模型或接入点在下一回合生效，权限模式立即对正在跑的回合生效。version 落后返回 409。
         content:
           application/json:
             schema:
@@ -14789,6 +14825,29 @@ paths:
       x-hduhelp-http:
         auth: native_session
         request_body_required: true
+  /hduhelp-neo/agent/sessions/{id}/queue/resume:
+    post:
+      tags:
+      - AgentService
+      summary: 继续发送暂停的排队消息（没暂停时什么也不做）
+      operationId: AgentService_AgentResumeWorkQueue
+      security:
+      - NativeSessionAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AgentWorkSessionStateResponseBody'
+      x-hduhelp-http:
+        auth: native_session
   /hduhelp-neo/agent/sessions/{id}/stream-token:
     post:
       tags:
@@ -19145,7 +19204,7 @@ paths:
       tags:
       - LibraryBookingService
       summary: 实时查询图书馆座位
-      description: 仅在空间、日期、开始时间和时长都确定后调用。只返回普通座位。Skill 使用随包模板生成可缩放页面供用户选座。
+      description: 仅在空间、日期、开始时间和时长都确定后调用。只返回普通座位。用户需要选座且有空座时，立即加载 hdu-library-booking Skill，用本次完整结果和随包模板展示交互座位图。在 HDU Mate 工作模式调用 workspace 的 show_html，把选座卡片放在本轮回复里。
       operationId: LibraryBookingService_SearchAvailableSeats
       security:
       - BearerAuth: []
@@ -22136,6 +22195,11 @@ components:
         updatedAt:
           type: integer
           format: int64
+        imageUrls:
+          type: array
+          items:
+            type: string
+          description: 海报/群二维码地址，顺序即展示顺序
       description: All timestamps are Unix milliseconds. Status values are stable strings.
     AddChunkRequestBody:
       type: object
@@ -26942,7 +27006,7 @@ components:
           description: 工具入参原样（超过 64 KB 截断）
         options:
           type: object
-          description: title、display_name、description、decision_reason、decision_reason_type、blocked_path、suggestions、requires_user_interaction、suppress_always_allow_rule、default_to_no、mcp_server、request_id
+          description: title、display_name、description、decision_reason、decision_reason_type、blocked_path、suggestions、requires_user_interaction、suppress_always_allow_rule、default_to_no、mcp_server、request_id；提问卡有选项带 preview（input.questions[].options[].preview）时还有 preview_format（markdown）
         status:
           enum:
           - waiting
@@ -26973,7 +27037,7 @@ components:
           type: string
         answers:
           type: object
-          description: submit 时必填：键是问题原文，单选为选项 label（「其他」的文字优先），多选为数组（「其他」的文字追加）
+          description: submit 时必填：键是问题原文，单选为选项 label（「其他」的文字优先），多选为数组（「其他」的文字追加）；跳过的题不放进来，一题都没答返回 400；工作环境的执行器还不支持跳过时有题没答返回 400 730000031「请先回答所有问题」
     AgentWorkPromptResponseBody:
       required:
       - code
@@ -27195,6 +27259,29 @@ components:
           format: int64
         context_lost:
           type: boolean
+        queue_paused:
+          enum:
+          - stopped
+          - failed
+          - quota
+          type: string
+          description: 排队已暂停：用户停止（stopped）或回合失败且不再自动重试（failed；额度用尽为 quota）后，本人排的消息不自动发出；发一条新消息、立即发送其中一条或 POST /queue/resume 恢复。只在队列里有被暂停的消息时返回
+        suggestion:
+          type: string
+          description: Claude 猜的下一句（空输入框里的建议，用户确认后才发）；只在 status=idle 时返回，新回合开始即清掉
+    AgentWorkSessionStateResponseBody:
+      required:
+      - code
+      - msg
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AgentWorkSessionState'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
     AgentWorkTurn:
       required:
       - turn_id
@@ -28398,11 +28485,129 @@ components:
           format: int64
         msg:
           type: string
+    AppClientConfig:
+      type: object
+      properties:
+        humanCheckEnabled:
+          type: boolean
+        whatsNewEnabled:
+          type: boolean
+    AppClientConfigResponseBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AppClientConfig'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AppDistribution:
+      type: object
+      properties:
+        channels:
+          type: array
+          items:
+            $ref: '#/components/schemas/AppDistributionChannel'
+        iosDownloadUrl:
+          type: string
+        androidBetaPageUrl:
+          type: string
+        whatsNewEnabled:
+          type: boolean
+        humanCheckEnabled:
+          type: boolean
+    AppDistributionChannel:
+      type: object
+      properties:
+        channel:
+          type: string
+        label:
+          type: string
+        minBuild:
+          type: integer
+          format: int64
+        latest:
+          $ref: '#/components/schemas/AppRelease'
+    AppDistributionResponseBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AppDistribution'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AppDownloadResponseBody:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AppDownloads:
+      type: object
+      properties:
+        android:
+          $ref: '#/components/schemas/AppRelease'
+        androidBeta:
+          $ref: '#/components/schemas/AppRelease'
+        androidBetaPageUrl:
+          type: string
+        iosUrl:
+          type: string
+    AppDownloadsResponseBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AppDownloads'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
     AppListResponseBody:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/AdminAppsData'
+        code:
+          type: integer
+          format: int64
+        msg:
+          type: string
+    AppRelease:
+      type: object
+      properties:
+        version:
+          type: string
+        build:
+          type: integer
+          format: int64
+        changelog:
+          type: string
+        installUrl:
+          type: string
+        sizeBytes:
+          type: integer
+          format: int64
+        sha256:
+          type: string
+        minBuild:
+          type: integer
+          format: int64
+        updatedAt:
+          type: string
+      description: 'App 分发：Poplar App 的版本检查、远程开关、下载跳转与运营配置。
+
+        原先由独立站点 poplar.hduhelp.com 提供；字段名沿用它，旧版 App 经 Ingress 改写后照常解析。'
+    AppReleaseResponseBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/AppRelease'
         code:
           type: integer
           format: int64
@@ -31349,6 +31554,11 @@ components:
           type: string
         status:
           type: string
+        image_keys:
+          type: array
+          items:
+            type: string
+          description: 上传后的 key，最多 3 个
     CreateWeChatQRLoginData:
       type: object
       properties:
@@ -49840,6 +50050,11 @@ components:
           type: string
         status:
           type: string
+        image_keys:
+          type: array
+          items:
+            type: string
+          description: 上传后的 key，最多 3 个
     UpdateAnnouncementRequestBody:
       required:
       - notice
@@ -49847,6 +50062,21 @@ components:
       properties:
         notice:
           $ref: '#/components/schemas/EditableNotice'
+    UpdateAppDistributionRequestBody:
+      type: object
+      properties:
+        android_min_build:
+          type: integer
+          format: int64
+        android_beta_min_build:
+          type: integer
+          format: int64
+        ios_download_url:
+          type: string
+        android_beta_page_url:
+          type: string
+        whats_new_enabled:
+          type: boolean
     UpdateAppRequestBody:
       type: object
       properties:
@@ -50782,6 +51012,16 @@ components:
         updatedAt:
           type: integer
           format: int64
+        imageUrls:
+          type: array
+          items:
+            type: string
+          description: 海报/群二维码地址，顺序即展示顺序
+        imageKeys:
+          type: array
+          items:
+            type: string
+          description: 上传 key，仅管理端编辑时回填
     VolunteerActivityDetailResponseBody:
       type: object
       properties:
@@ -50833,6 +51073,7 @@ tags:
 - name: AnalyticsService
 - name: AnnouncementService
 - name: ApmService
+- name: AppDistService
 - name: CampusLifeService
 - name: DingTalkWorkbenchService
 - name: EmptyScheduleService

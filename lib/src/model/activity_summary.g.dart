@@ -23,6 +23,8 @@ ActivitySummary _$ActivitySummaryFromJson(Map<String, dynamic> json) =>
               $checkedConvert('publishedAt', (v) => (v as num?)?.toInt()),
           createdAt: $checkedConvert('createdAt', (v) => (v as num?)?.toInt()),
           updatedAt: $checkedConvert('updatedAt', (v) => (v as num?)?.toInt()),
+          imageUrls: $checkedConvert('imageUrls',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
         );
         return val;
       },
@@ -40,4 +42,5 @@ Map<String, dynamic> _$ActivitySummaryToJson(ActivitySummary instance) =>
       if (instance.publishedAt case final value?) 'publishedAt': value,
       if (instance.createdAt case final value?) 'createdAt': value,
       if (instance.updatedAt case final value?) 'updatedAt': value,
+      if (instance.imageUrls case final value?) 'imageUrls': value,
     };

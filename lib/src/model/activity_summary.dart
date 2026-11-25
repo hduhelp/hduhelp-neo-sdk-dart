@@ -26,6 +26,7 @@ class ActivitySummary {
     this.publishedAt,
     this.createdAt,
     this.updatedAt,
+    this.imageUrls,
   });
 
   @JsonKey(
@@ -98,6 +99,14 @@ class ActivitySummary {
   )
   final int? updatedAt;
 
+  /// 海报/群二维码地址，顺序即展示顺序
+  @JsonKey(
+    name: r'imageUrls',
+    required: false,
+    includeIfNull: false,
+  )
+  final List<String>? imageUrls;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -111,7 +120,8 @@ class ActivitySummary {
           other.urgentAt == urgentAt &&
           other.publishedAt == publishedAt &&
           other.createdAt == createdAt &&
-          other.updatedAt == updatedAt;
+          other.updatedAt == updatedAt &&
+          other.imageUrls == imageUrls;
 
   @override
   int get hashCode =>
@@ -124,7 +134,8 @@ class ActivitySummary {
       urgentAt.hashCode +
       publishedAt.hashCode +
       createdAt.hashCode +
-      updatedAt.hashCode;
+      updatedAt.hashCode +
+      imageUrls.hashCode;
 
   factory ActivitySummary.fromJson(Map<String, dynamic> json) =>
       _$ActivitySummaryFromJson(json);

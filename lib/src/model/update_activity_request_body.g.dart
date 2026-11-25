@@ -18,10 +18,16 @@ UpdateActivityRequestBody _$UpdateActivityRequestBodyFromJson(
           endAt: $checkedConvert('end_at', (v) => (v as num?)?.toInt()),
           description: $checkedConvert('description', (v) => v as String?),
           status: $checkedConvert('status', (v) => v as String?),
+          imageKeys: $checkedConvert('image_keys',
+              (v) => (v as List<dynamic>?)?.map((e) => e as String).toList()),
         );
         return val;
       },
-      fieldKeyMap: const {'startAt': 'start_at', 'endAt': 'end_at'},
+      fieldKeyMap: const {
+        'startAt': 'start_at',
+        'endAt': 'end_at',
+        'imageKeys': 'image_keys'
+      },
     );
 
 Map<String, dynamic> _$UpdateActivityRequestBodyToJson(
@@ -32,4 +38,5 @@ Map<String, dynamic> _$UpdateActivityRequestBodyToJson(
       if (instance.endAt case final value?) 'end_at': value,
       if (instance.description case final value?) 'description': value,
       if (instance.status case final value?) 'status': value,
+      if (instance.imageKeys case final value?) 'image_keys': value,
     };

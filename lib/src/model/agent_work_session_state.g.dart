@@ -31,13 +31,19 @@ AgentWorkSessionState _$AgentWorkSessionStateFromJson(
           queued: $checkedConvert('queued', (v) => (v as num).toInt()),
           headSeq: $checkedConvert('head_seq', (v) => (v as num).toInt()),
           contextLost: $checkedConvert('context_lost', (v) => v as bool?),
+          queuePaused: $checkedConvert(
+              'queue_paused',
+              (v) => $enumDecodeNullable(
+                  _$AgentWorkSessionStateQueuePausedEnumEnumMap, v)),
+          suggestion: $checkedConvert('suggestion', (v) => v as String?),
         );
         return val;
       },
       fieldKeyMap: const {
         'sessionId': 'session_id',
         'headSeq': 'head_seq',
-        'contextLost': 'context_lost'
+        'contextLost': 'context_lost',
+        'queuePaused': 'queue_paused'
       },
     );
 
@@ -50,6 +56,10 @@ Map<String, dynamic> _$AgentWorkSessionStateToJson(
       'queued': instance.queued,
       'head_seq': instance.headSeq,
       if (instance.contextLost case final value?) 'context_lost': value,
+      if (_$AgentWorkSessionStateQueuePausedEnumEnumMap[instance.queuePaused]
+          case final value?)
+        'queue_paused': value,
+      if (instance.suggestion case final value?) 'suggestion': value,
     };
 
 const _$AgentWorkSessionStateStatusEnumEnumMap = {
@@ -63,4 +73,10 @@ const _$AgentWorkSessionStateSandboxEnumEnumMap = {
   AgentWorkSessionStateSandboxEnum.ready: 'ready',
   AgentWorkSessionStateSandboxEnum.starting: 'starting',
   AgentWorkSessionStateSandboxEnum.paused: 'paused',
+};
+
+const _$AgentWorkSessionStateQueuePausedEnumEnumMap = {
+  AgentWorkSessionStateQueuePausedEnum.stopped: 'stopped',
+  AgentWorkSessionStateQueuePausedEnum.failed: 'failed',
+  AgentWorkSessionStateQueuePausedEnum.quota: 'quota',
 };

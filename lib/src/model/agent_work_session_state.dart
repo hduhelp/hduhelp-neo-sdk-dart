@@ -22,6 +22,8 @@ class AgentWorkSessionState {
     required this.queued,
     required this.headSeq,
     this.contextLost,
+    this.queuePaused,
+    this.suggestion,
   });
 
   @JsonKey(
@@ -66,6 +68,22 @@ class AgentWorkSessionState {
   )
   final bool? contextLost;
 
+  /// 排队已暂停：用户停止（stopped）或回合失败且不再自动重试（failed；额度用尽为 quota）后，本人排的消息不自动发出；发一条新消息、立即发送其中一条或 POST /queue/resume 恢复。只在队列里有被暂停的消息时返回
+  @JsonKey(
+    name: r'queue_paused',
+    required: false,
+    includeIfNull: false,
+  )
+  final AgentWorkSessionStateQueuePausedEnum? queuePaused;
+
+  /// Claude 猜的下一句（空输入框里的建议，用户确认后才发）；只在 status=idle 时返回，新回合开始即清掉
+  @JsonKey(
+    name: r'suggestion',
+    required: false,
+    includeIfNull: false,
+  )
+  final String? suggestion;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -75,7 +93,9 @@ class AgentWorkSessionState {
           other.sandbox == sandbox &&
           other.queued == queued &&
           other.headSeq == headSeq &&
-          other.contextLost == contextLost;
+          other.contextLost == contextLost &&
+          other.queuePaused == queuePaused &&
+          other.suggestion == suggestion;
 
   @override
   int get hashCode =>
@@ -84,7 +104,9 @@ class AgentWorkSessionState {
       sandbox.hashCode +
       queued.hashCode +
       headSeq.hashCode +
-      contextLost.hashCode;
+      contextLost.hashCode +
+      queuePaused.hashCode +
+      suggestion.hashCode;
 
   factory AgentWorkSessionState.fromJson(Map<String, dynamic> json) =>
       _$AgentWorkSessionStateFromJson(json);
@@ -124,6 +146,28 @@ enum AgentWorkSessionStateSandboxEnum {
   paused(r'paused');
 
   const AgentWorkSessionStateSandboxEnum(this.value);
+
+  final String value;
+
+  @override
+  String toString() => value;
+}
+
+/// 排队已暂停：用户停止（stopped）或回合失败且不再自动重试（failed；额度用尽为 quota）后，本人排的消息不自动发出；发一条新消息、立即发送其中一条或 POST /queue/resume 恢复。只在队列里有被暂停的消息时返回
+enum AgentWorkSessionStateQueuePausedEnum {
+  /// 排队已暂停：用户停止（stopped）或回合失败且不再自动重试（failed；额度用尽为 quota）后，本人排的消息不自动发出；发一条新消息、立即发送其中一条或 POST /queue/resume 恢复。只在队列里有被暂停的消息时返回
+  @JsonValue(r'stopped')
+  stopped(r'stopped'),
+
+  /// 排队已暂停：用户停止（stopped）或回合失败且不再自动重试（failed；额度用尽为 quota）后，本人排的消息不自动发出；发一条新消息、立即发送其中一条或 POST /queue/resume 恢复。只在队列里有被暂停的消息时返回
+  @JsonValue(r'failed')
+  failed(r'failed'),
+
+  /// 排队已暂停：用户停止（stopped）或回合失败且不再自动重试（failed；额度用尽为 quota）后，本人排的消息不自动发出；发一条新消息、立即发送其中一条或 POST /queue/resume 恢复。只在队列里有被暂停的消息时返回
+  @JsonValue(r'quota')
+  quota(r'quota');
+
+  const AgentWorkSessionStateQueuePausedEnum(this.value);
 
   final String value;
 

@@ -81,7 +81,7 @@ class AgentWorkPrompt {
   )
   final Object input;
 
-  /// title、display_name、description、decision_reason、decision_reason_type、blocked_path、suggestions、requires_user_interaction、suppress_always_allow_rule、default_to_no、mcp_server、request_id
+  /// title、display_name、description、decision_reason、decision_reason_type、blocked_path、suggestions、requires_user_interaction、suppress_always_allow_rule、default_to_no、mcp_server、request_id；提问卡有选项带 preview（input.questions[].options[].preview）时还有 preview_format（markdown）
   @JsonKey(
     name: r'options',
     required: true,

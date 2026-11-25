@@ -91,6 +91,7 @@ import 'package:hduhelp_neo/src/model/agent_work_session_detail_response_body.da
 import 'package:hduhelp_neo/src/model/agent_work_session_page_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_work_session_patch_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_work_session_response_body.dart';
+import 'package:hduhelp_neo/src/model/agent_work_session_state_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_work_turn_request_body.dart';
 import 'package:hduhelp_neo/src/model/agent_work_turn_response_body.dart';
 import 'package:hduhelp_neo/src/model/agent_write_request_body.dart';
@@ -5445,7 +5446,7 @@ class AgentServiceApi {
   ///
   /// Parameters:
   /// * [id]
-  /// * [agentWorkSessionPatchRequestBody] - 只改传了的字段；换模型或接入点在下一回合生效。version 落后返回 409。
+  /// * [agentWorkSessionPatchRequestBody] - 只改传了的字段；换模型或接入点在下一回合生效，权限模式立即对正在跑的回合生效。version 落后返回 409。
   /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
   /// * [headers] - Can be used to add additional headers to the request
   /// * [extras] - Can be used to add flags to the request
@@ -5963,6 +5964,90 @@ class AgentServiceApi {
     }
 
     return Response<AgentWorkAssetResponseBody>(
+      data: _responseData,
+      headers: _response.headers,
+      isRedirect: _response.isRedirect,
+      requestOptions: _response.requestOptions,
+      redirects: _response.redirects,
+      statusCode: _response.statusCode,
+      statusMessage: _response.statusMessage,
+      extra: _response.extra,
+    );
+  }
+
+  /// 继续发送暂停的排队消息（没暂停时什么也不做）
+  ///
+  ///
+  /// Parameters:
+  /// * [id]
+  /// * [cancelToken] - A [CancelToken] that can be used to cancel the operation
+  /// * [headers] - Can be used to add additional headers to the request
+  /// * [extras] - Can be used to add flags to the request
+  /// * [validateStatus] - A [ValidateStatus] callback that can be used to determine request success based on the HTTP status of the response
+  /// * [onSendProgress] - A [ProgressCallback] that can be used to get the send progress
+  /// * [onReceiveProgress] - A [ProgressCallback] that can be used to get the receive progress
+  ///
+  /// Returns a [Future] containing a [Response] with a [AgentWorkSessionStateResponseBody] as data
+  /// Throws [DioException] if API call or serialization fails
+  Future<Response<AgentWorkSessionStateResponseBody>>
+      agentServiceAgentResumeWorkQueue({
+    required String id,
+    CancelToken? cancelToken,
+    Map<String, dynamic>? headers,
+    Map<String, dynamic>? extra,
+    ValidateStatus? validateStatus,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
+  }) async {
+    final _path = r'/hduhelp-neo/agent/sessions/{id}/queue/resume'
+        .replaceAll('{' r'id' '}', id.toString());
+    final _options = Options(
+      method: r'POST',
+      headers: <String, dynamic>{
+        ...?headers,
+      },
+      extra: <String, dynamic>{
+        'secure': <Map<String, String>>[
+          {
+            'type': 'http',
+            'scheme': 'bearer',
+            'name': 'NativeSessionAuth',
+          },
+        ],
+        ...?extra,
+      },
+      validateStatus: validateStatus,
+    );
+
+    final _response = await _dio.request<Object>(
+      _path,
+      options: _options,
+      cancelToken: cancelToken,
+      onSendProgress: onSendProgress,
+      onReceiveProgress: onReceiveProgress,
+    );
+
+    AgentWorkSessionStateResponseBody? _responseData;
+
+    try {
+      final rawData = _response.data;
+      _responseData = rawData == null
+          ? null
+          : deserialize<AgentWorkSessionStateResponseBody,
+                  AgentWorkSessionStateResponseBody>(
+              rawData, 'AgentWorkSessionStateResponseBody',
+              growable: true);
+    } catch (error, stackTrace) {
+      throw DioException(
+        requestOptions: _response.requestOptions,
+        response: _response,
+        type: DioExceptionType.unknown,
+        error: error,
+        stackTrace: stackTrace,
+      );
+    }
+
+    return Response<AgentWorkSessionStateResponseBody>(
       data: _responseData,
       headers: _response.headers,
       isRedirect: _response.isRedirect,
